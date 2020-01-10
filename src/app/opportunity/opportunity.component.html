@@ -1,0 +1,160 @@
+<ngx-loading [show]="loading"></ngx-loading> 
+
+<div class="width-98">
+
+  <div class="container-fluid border shadow-sm bg-white">
+
+    <div class="row">
+      <div class="col-6">
+        <small> You are here : <a [routerLink]="[ '/opportunity' ]">Opportunity</a> </small>
+      </div>
+
+    </div>
+    <div class="row container-header">
+
+      <div class="col-6">
+        <h5>OPPORTUNITY</h5>
+      </div>
+      <div class="col-6 text-right">
+
+        <button type="button" class="btn btn-primary btn-sm  mr-1" [routerLink]="[ '/opportunity/new/0/0' ]"> <i
+            class="fas fa-plus"></i> New opportunity </button>
+      </div>
+    </div>
+
+    <div class=" bg-light  border border-top-brown rounded p-1 my-3">
+
+      <div class="row mb-3">
+        <div class="col-8">
+
+          <span class="dropdown">
+            <button class="btn btn-classic btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-cog"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" (click)="open(markUpdate)"> Mart to delete</a>
+
+            </div>
+          </span>
+
+          <label class="pl-2">Total Count :{{total}} </label>
+        </div>
+
+        <div class="col-4 text-right">
+          <input type="text" class="form-control-sm form-radius" placeholder="Search">
+        </div>
+
+      </div>
+
+      <div class="scroll-x max-height">
+
+        <table class="table table-hover border bg-white border-top border-bottom pointer">
+          <thead class="thead-light">
+            <tr>
+              <th></th>
+              <th>No</th>
+
+              <th scope="col">Name</th>
+
+              <th scope="col">Stage</th>
+              <th scope="col" class="text-right">Progress</th>
+              <th scope="col" class="text-right" colspan="2">Amount</th>
+
+              <th scope="col">Started Date</th>
+              <th scope="col">Account Manager</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let x of items; let i = index" (click)="fn_check(x);">
+              <td width="50"> <span class="text-primary ">
+                  <i class=" {{ x.check ? 'fas fa-check-square' : 'far fa-square' }}"></i> </span>
+              </td>
+              <td width="50"> {{ i + 1}} </td>
+              <td><a [routerLink]="[ '/opportunity/',x.id]"> {{x.name}}</a>
+                <div style="line-height: 110%;"><strong> {{x.company}}</strong></div>
+                <div style="line-height: 110%;"> <small>{{x.contact}}</small></div>
+              </td>
+
+              <td>{{x.stage}}</td>
+              <td class="text-right">{{x.progress}} %</td>
+              <td width="50">{{x.currency}}</td>
+              <td class="text-right">{{x.amount | number:''}},-</td>
+              <td>{{x.input_date | date }}</td>
+              <td>{{x.input_by}}</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<ng-template #markUpdate let-modal>
+  <div class="modal-header">
+    <strong class="modal-title" id="modal-basic-title">Delete Opportunity</strong>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body bg-white">
+
+    <div [hidden]="!itemsSelected.length">
+        <div class="form-group row">
+            <div class="col-3">
+              <div class="text-danger">
+                Delete selected Opportunity ?
+              </div>
+            </div>
+            <div class="col-4">
+              <button type="button" class="btn btn-classic btn-sm mx-1" (click)="fn_delete();">Yes</button>
+
+              <button type="button" class="btn btn-classic btn-sm mx-1" (click)="modal.dismiss('Cross click')">Cancel</button>
+            </div>
+          </div>
+      <table class="table border table-hover  table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name Opportunity</th>
+            <th>Company</th>
+            <th>Contact</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let x of itemsSelected; let i = index">
+            <td>{{ i + 1}}</td>
+            <td>{{x.name}}</td>
+            <td>{{x.company}}</td>
+            <td>{{x.contact}}</td>
+            <th> <a href="javascript:;" (click)="fn_removeItemSelected(x)"><i class="fas fa-times"></i></a> </th>
+          </tr>
+        </tbody>
+
+
+      </table>
+    </div>
+    <div [hidden]="itemsSelected.length">
+      <div class="text-center">
+        Empty data.
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-classic btn-sm" (click)="modal.dismiss('Cross click')">Cancel</button> 
+
+  </div>
+</ng-template>

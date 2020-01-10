@@ -1,0 +1,672 @@
+<div class="border bg-white ml-2 p-2">
+    <div class="row">
+      <div class="col-12 mb-2">
+        <strong class="text-secondary">ACTIVITY</strong>
+  
+      </div>
+    </div>
+  
+  
+    <div class="scroll-style-2" style="overflow-y: auto; max-height: 84vh; overflow-x: hidden">
+      <form (ngSubmit)="onSubmit()" #myForm="ngForm">
+  
+        <ngb-tabset (tabChange)="tabEvent($event)">
+  
+          <ngb-tab id="1">
+            <ng-template ngbTabTitle>
+              <div class="text-header px-3">Task</div>
+            </ng-template>
+            <ng-template ngbTabContent>
+              <div class="border border-top-0 p-2 bg-task pb-3 ">
+  
+                <small class="text-monospace"><code>{{diagnostic}} </code> </small>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-2">
+                      <label for="a1">Subject</label>
+                    </div>
+                    <div class="col-10 text-right">
+  
+                      <label class="mx-1" for="a5">Priority : </label>
+                      <select class="form-control-sm border mx-1" id="a5" [(ngModel)]="model.id_priority"
+                        name="id_priority">
+                        <option [ngValue]="x.id" *ngFor="let x of items.activity_priority">{{x.name}}</option>
+                      </select>
+                    </div>
+                    <div class="col-12 mt-1">
+  
+                      <input type="text" class="form-control  border" (click)="newtask=true;" id="a1"
+                        placeholder="Activity Subject" required [(ngModel)]="model.subject" name="subject"
+                        #subject="ngModel">
+                      <div class="ml-1" [hidden]="!newtask">
+                        <small [hidden]="subject.valid || subject.pristine" class="text-danger"> Subject is
+                          required</small>
+                      </div>
+                    </div>
+                  </div>
+  
+  
+                </div>
+  
+                <span [hidden]="!newtask">
+  
+                  <div class="row no-gutters">
+                    <div class="col-8">
+                      <div class="form-group">
+                        <label for="a2">Assign to</label>
+                        <div class=" mr-1">
+                          <select class="form-control-sm border width-100" id="a2" [(ngModel)]="model.id_user"
+                            name="id_user">
+                            <option [ngValue]="x.id" *ngFor="let x of items.user">{{x.name}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label for="a3">Due Date</label>
+                        <div>
+                          <input type="text" class="form-control-sm border" readonly required placeholder="YYYY-MM-DD"
+                            [(ngModel)]="model.date" name="date" ngbDatepicker #dp="ngbDatepicker" (click)="dp.toggle()">
+                        </div>
+                      </div>
+                    </div>
+  
+                  </div>
+  
+                  <div class="form-group">
+                    <div class="row no-gutters">
+  
+                      <div class="col-12">
+                        <div [ngSwitch]="items.request">
+                          <!-- the same view can be shown in more than one case -->
+                          <span *ngSwitchCase="'company'">
+                            <label for="a442"> Contact :</label>
+                            <select class="form-control-sm border" id="a442" style="width: 100%;"
+                              [(ngModel)]="model.id_contact" name="id_contact" required #id_contact="ngModel">
+                              <option value="">- Select Contact -</option>
+                              <option [ngValue]="x.id" *ngFor="let x of items.name">{{x.name}}</option>
+                            </select>
+  
+                            <div>
+                              <small [hidden]="id_contact.valid || id_contact.pristine" class="text-danger"> Contact is
+                                required</small>
+                            </div>
+                          </span>
+  
+                          <span *ngSwitchCase="'opportunity'">
+                            <label for="a442"> Contact :</label>
+                            <select class="form-control-sm border" id="a442" style="width: 100%;"
+                              [(ngModel)]="model.id_contact" name="id_contact" required #id_contact="ngModel">
+                              <option value="">- Select Contact -</option>
+                              <option [ngValue]="x.id" *ngFor="let x of items.name">{{x.name}}</option>
+                            </select>
+  
+                            <div>
+                              <small [hidden]="id_contact.valid || id_contact.pristine" class="text-danger"> Contact is
+                                required</small>
+                            </div>
+                          </span>
+  
+                          <span *ngSwitchDefault>
+                            <label for="a423"> {{items.request | titlecase }} :</label>
+                            <div class="bg-white border px-3">
+                              <b>{{items.name}} </b>
+                            </div>
+                          </span>
+                        </div>
+  
+                      </div>
+                    </div>
+                  </div>
+  
+                  <div class="form-group" [hidden]="opportunity.length < 1">
+                    <label for="a4">Related to</label>
+                    <select class="form-control-sm border" style="width: 100%;" [(ngModel)]="model.id_opportunity" name="id_opportunity">
+                      <option [ngValue]="x.id" *ngFor="let x of opportunity">{{x.name}}</option>
+                    </select>
+                  </div>
+  
+  
+                  <div class="row no-gutters">
+                    <div class="col-12 mb-2">
+                      <fieldset class="bg-white">
+                        <legend><label for="ab1">Comment </label></legend>
+                        <textarea class="bg-white border-0" [(ngModel)]="model.comment" name="comment"
+                          id="ab1"></textarea>
+                      </fieldset>
+                    </div>
+  
+                    <div class="col-6">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck1" [(ngModel)]="model.closed"
+                          name="closed">
+                        <label class="custom-control-label" for="customCheck1">Closed Activity</label>
+                      </div>
+                    </div>
+  
+                    <div class="col-6 text-right">
+  
+                      <button type="button" class="btn btn-sm btn-outline-primary"
+                        (click)="cancelNewTask()">Cancel</button>
+                      <button type="button" class="btn btn-sm btn-primary" (click)="onSubmit();"
+                        [disabled]="!myForm.form.valid">Submit</button>
+                    </div>
+  
+                  </div>
+  
+                </span>
+  
+              </div>
+            </ng-template>
+          </ngb-tab>
+  
+          <ngb-tab id="200">
+            <ng-template ngbTabTitle>
+              <div class="text-header px-3">Visit</div>
+            </ng-template>
+            <ng-template ngbTabContent>
+              <div class="border border-top-0 p-2 bg-visit pb-3 ">
+  
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-2">
+                      <label for="a1">Subject</label>
+                    </div>
+                    <div class="col-10 text-right">
+                      <label class="mx-1" for="a5">Priority : </label>
+                      <select class="form-control-sm border mx-1" id="a5" [(ngModel)]="model.id_priority"
+                        name="id_priority">
+                        <option [ngValue]="x.id" *ngFor="let x of items.activity_priority">{{x.name}}</option>
+  
+                      </select>
+                    </div>
+                    <div class="col-12 mt-1">
+                      <input type="text" class="form-control  border" (click)="newtask=true;" id="a1"
+                        placeholder="Activity Subject" required [(ngModel)]="model.subject" name="subject"
+                        #subject="ngModel">
+                      <div class="ml-1" [hidden]="!newtask">
+                        <small [hidden]="subject.valid || subject.pristine" class="text-danger"> Subject is
+                          required</small>
+                      </div>
+                    </div>
+                  </div>
+  
+  
+                </div>
+  
+                <span [hidden]="!newtask">
+  
+                  <div class="row no-gutters">
+  
+                    <div class="col-12">
+                      <div class="form-group">
+                        <label for="a3">Location</label>
+                        <div>
+                          <textarea class="form-control-sm border" required [(ngModel)]="model.location"
+                            name="location"></textarea>
+                        </div>
+                      </div>
+                    </div>
+  
+                  </div>
+  
+                  <div class="row">
+  
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label for="a3">Date (Check In)</label>
+                        <div>
+                          <input type="text" class="form-control-sm border" readonly required placeholder="YYYY-MM-DD"
+                            [(ngModel)]="model.date" name="date" ngbDatepicker #dp="ngbDatepicker" (click)="dp.toggle()">
+                        </div>
+                      </div>
+                    </div>
+  
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label for="a3">Hour</label>
+                        <div>
+                          <input type="text" class="form-control-sm border" readonly required placeholder="hh:mm">
+                        </div>
+                      </div>
+                    </div>
+  
+                  </div>
+  
+  
+  
+                  <div class="row no-gutters">
+                    <div class="col-12">
+                      <div class="form-group">
+                        <label for="a2">Assign to</label>
+                        <div class=" mr-1">
+                          <select class="form-control-sm border width-100" id="a2" [(ngModel)]="model.id_user"
+                            name="id_user">
+                            <option [ngValue]="x.id" *ngFor="let x of items.user">{{x.name}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+  
+                  </div>
+  
+  
+  
+                  <div class="form-group">
+                    <div class="row no-gutters">
+  
+  
+                      <div class="col-12">
+                        <div [ngSwitch]="items.request">
+                          <!-- the same view can be shown in more than one case -->
+                          <span *ngSwitchCase="'company'">
+                            <label for="a442"> Contact :</label>
+                            <select class="form-control-sm border" id="a442" style="width: 100%;"
+                              [(ngModel)]="model.id_contact" name="id_contact" required #id_contact="ngModel">
+                              <option value="">- Select Contact -</option>
+                              <option [ngValue]="x.id" *ngFor="let x of items.name">{{x.name}}</option>
+                            </select>
+  
+                            <div>
+                              <small [hidden]="id_contact.valid || id_contact.pristine" class="text-danger"> Contact is
+                                required</small>
+                            </div>
+                          </span>
+  
+                          <span *ngSwitchCase="'opportunity'">
+                            <label for="a442"> Contact :</label>
+                            <select class="form-control-sm border" id="a442" style="width: 100%;"
+                              [(ngModel)]="model.id_contact" name="id_contact" required #id_contact="ngModel">
+                              <option value="">- Select Contact -</option>
+                              <option [ngValue]="x.id" *ngFor="let x of items.name">{{x.name}}</option>
+                            </select>
+  
+                            <div>
+                              <small [hidden]="id_contact.valid || id_contact.pristine" class="text-danger"> Contact is
+                                required</small>
+                            </div>
+                          </span>
+  
+                          <span *ngSwitchDefault>
+                            <label for="a423"> {{items.request | titlecase }} :</label>
+                            <div class="bg-white border px-3">
+                              <b>{{items.name}} </b>
+                            </div>
+                          </span>
+                        </div>
+  
+                      </div>
+  
+  
+  
+                    </div>
+                  </div>
+  
+                  <div class="form-group" [hidden]="opportunity.length < 1">
+                    <label for="a4">Related to</label>
+                    <select class="form-control-sm border" style="width: 100%;" [(ngModel)]="model.id_opportunity"
+                      name="id_opportunity">
+                      <option [ngValue]="x.id" *ngFor="let x of opportunity">{{x.name}}</option>
+                    </select>
+                  </div>
+  
+  
+                  <div class="row no-gutters">
+                    <div class="col-12 mb-2">
+                      <fieldset class="bg-white">
+                        <legend><label for="ab1">Comment </label></legend>
+                        <textarea class="bg-white border-0" [(ngModel)]="model.comment" name="comment"
+                          id="ab1"></textarea>
+                      </fieldset>
+                    </div>
+  
+                    <div class="col-6">
+  
+                    </div>
+  
+                    <div class="col-6 text-right">
+  
+                      <button type="button" class="btn btn-sm btn-outline-primary"
+                        (click)="cancelNewTask()">Cancel</button>
+                      <button type="button" class="btn btn-sm btn-primary" (click)="onSubmit();"
+                        [disabled]="!myForm.form.valid">Submit</button>
+                    </div>
+  
+                  </div>
+  
+                </span>
+  
+              </div>
+            </ng-template>
+          </ngb-tab>
+  
+          <ngb-tab id="300">
+            <ng-template ngbTabTitle>
+              <div class="text-header px-3">Event</div>
+            </ng-template>
+            <ng-template ngbTabContent>
+              <div class="border border-top-0 p-2 bg-event pb-3 ">
+  
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-2">
+                      <label for="a1">Event</label>
+                    </div>
+                    <div class="col-10 text-right">
+                      <label class="mx-1" for="a5">Priority : </label>
+                      <select class="form-control-sm border mx-1" id="a5" [(ngModel)]="model.id_priority"
+                        name="id_priority">
+                        <option [ngValue]="x.id" *ngFor="let x of items.activity_priority">{{x.name}}</option>
+  
+                      </select>
+                    </div>
+                    <div class="col-12 mt-1">
+                      <input type="text" class="form-control  border" (click)="newtask=true;" id="a1"
+                        placeholder="Activity Subject" required [(ngModel)]="model.subject" name="subject"
+                        #subject="ngModel">
+                      <div class="ml-1" [hidden]="!newtask">
+                        <small [hidden]="subject.valid || subject.pristine" class="text-danger"> Subject is
+                          required</small>
+                      </div>
+                    </div>
+  
+                    <div class="col-12 mt-1" [hidden]="!newtask">
+                      <input type="text" class="form-control  border" id="a41" placeholder="Location" required
+                        [(ngModel)]="model.location" name="location" (click)="newtask=true;">
+                    </div>
+                  </div>
+  
+  
+                </div>
+  
+                <span [hidden]="!newtask">
+  
+                  <div class="row">
+                    <div class="col-6">
+                      <label for="a221">From Date</label>
+                    </div>
+                    <div class="col-6">
+                      <label for="a222">To Date</label>
+                    </div>
+  
+                  </div>
+                  <div class="row mb-2">
+                    <div class="col-6">
+                      <input type="text" class="form-control-sm border" required readonly placeholder="YYYY-MM-DD"
+                        id="a221" [(ngModel)]="model.start_date" name="start_date" ngbDatepicker #dpa="ngbDatepicker"
+                        (click)="dpa.toggle()">
+                    </div>
+                    <div class="col-6">
+                      <input type="text" class="form-control-sm border" required readonly placeholder="YYYY-MM-DD"
+                        id="a222" [(ngModel)]="model.to_date" name="to_date" ngbDatepicker #dpb="ngbDatepicker"
+                        (click)="dpb.toggle()">
+                    </div>
+                  </div>
+  
+                  <div class="row no-gutters">
+                    <div class="col-12">
+                      <div class="form-group">
+                        <label for="a2">Assign to</label>
+                        <div class=" mr-1">
+                          <select class="form-control-sm border width-100" id="a2" [(ngModel)]="model.id_user"
+                            name="id_user">
+                            <option [ngValue]="x.id" *ngFor="let x of items.user">{{x.name}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+  
+  
+                  <div class="row no-gutters">
+  
+                    <div class="col-12 mb-2">
+                      <fieldset class="bg-white">
+                        <legend><label for="ab1">Description </label></legend>
+                        <textarea class="bg-white border-0" [(ngModel)]="model.comment" name="comment"
+                          id="ab1"></textarea>
+                      </fieldset>
+                    </div>
+  
+                    <div class="col-6">
+  
+                    </div>
+  
+                    <div class="col-6 text-right">
+                      <button type="button" class="btn btn-sm btn-outline-primary"
+                        (click)="cancelNewTask()">Cancel</button>
+                      <button type="button" class="btn btn-sm btn-primary" (click)="onSubmit();"
+                        [disabled]="!myForm.form.valid">Submit</button>
+                    </div>
+  
+                  </div>
+  
+                </span>
+  
+              </div>
+  
+            </ng-template>
+          </ngb-tab>
+  
+          <ngb-tab id="400">
+            <ng-template ngbTabTitle>
+              <div class="text-header px-3">Note</div>
+            </ng-template>
+            <ng-template ngbTabContent>
+              <div class="border border-top-0 p-2 bg-note">
+  
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-2">
+                      <label for="a1">Subject</label>
+                    </div>
+                    <div class="col-10 text-right">
+                      <label class="mx-1" for="a5">Priority : </label>
+                      <select class="form-control-sm border mx-1" id="a5" [(ngModel)]="model.id_priority"
+                        name="id_priority">
+                        <option [ngValue]="x.id" *ngFor="let x of items.activity_priority">{{x.name}}</option>
+  
+                      </select>
+                    </div>
+                    <div class="col-12 mt-1">
+                      <input type="text" class="form-control  border" (click)="newtask=true;" id="a1"
+                        placeholder="Activity Subject" required [(ngModel)]="model.subject" name="subject"
+                        #subject="ngModel">
+                      <div class="ml-1" [hidden]="!newtask">
+                        <small [hidden]="subject.valid || subject.pristine" class="text-danger"> Subject is
+                          required</small>
+                      </div>
+                    </div>
+                  </div>
+  
+  
+                </div>
+  
+  
+  
+                <textarea class="border bg-yellow-light" placeholder="Note..." required [(ngModel)]="model.comment"
+                  name="comment" #comment="ngModel"></textarea>
+  
+                <small [hidden]="comment.valid || comment.pristine" class="text-danger"> Notes is
+                  required</small>
+  
+  
+                <div class="text-right mt-2">
+                  <button type="button" class="btn btn-sm btn-primary" (click)="onSubmit();"
+                    [disabled]="!myForm.form.valid">Submit</button>
+                </div>
+              </div>
+  
+            </ng-template>
+          </ngb-tab>
+  
+        </ngb-tabset>
+  
+      </form>
+  
+      <div class="my-3" [hidden]="!activity.length">
+        <div class="subheader">
+          <span class="text-header"> <a [routerLink]="[ '/activity/' ]">Next Step</a> </span>
+        </div>
+      </div>
+      <div class="text-center" [hidden]="!loading">
+        <div class="spinner-border text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <div><small>Loading...</small></div>
+      </div>
+      <div class="row no-gutters line-height-sm mb-3" *ngFor="let x of activity">
+        <div class="col-1">
+          <span [ngSwitch]="x.activity_type.id" class="text-primary mx-2">
+            <!-- the same view can be shown in more than one case -->
+            <span *ngSwitchCase="1"><i class="fas fa-tasks"></i> </span>
+            <span *ngSwitchCase="400"> <i class="fas fa-sticky-note"></i> </span>
+            <span *ngSwitchCase="200"><i class="fas fa-map-marker-alt"></i> </span>
+            <span *ngSwitchDefault></span>
+          </span>
+        </div>
+        <div class="col-11">
+  
+          <div class="row">
+            <div class="col-12">
+              <a href="javascript:;" (click)="fn_editActivity(x);" class="font-title"> {{x.subject}}
+                <span [hidden]="x.edit"> <i class="fas fa-caret-square-down"></i> </span>
+                <span [hidden]="!x.edit"> <i class="fas fa-caret-square-up"></i> </span>
+              </a>
+            </div>
+          </div>
+  
+  
+          <div class="row">
+            <div class="col-12">
+              <span [ngSwitch]="request">
+                <!-- the same view can be shown in more than one case -->
+                <small *ngSwitchCase="'company'"> {{x.name}} </small>
+                <small *ngSwitchCase="'opportunity'"> {{x.name}} </small>
+  
+                <small *ngSwitchDefault></small>
+              </span>
+            </div>
+            <div class="col-6">
+  
+              <small>{{x.activity_type.name}}, {{x.due_date | date:'d MMM y'}} </small>
+              <small class="px-2 text-{{x.priority.color}}" title="{{x.priority.name}} Priority"> <i
+                  class="fas fa-square"></i> </small>
+  
+            </div>
+  
+            <div class="col-6 text-right">
+              <small> {{x.user.name}} </small>
+            </div>
+          </div>
+  
+  
+          <div class="row no-gutters {{!x.edit ? 'd-none': false }}">
+            <div class="col-12 mb-2">
+              <fieldset class="bg-light">
+                <legend>Comment</legend>
+                <textarea class="bg-light border-0"
+                  (change)="onComment($event.target.value, x.id)">{{x.comment}}</textarea>
+  
+              </fieldset>
+            </div>
+            <div class="col-6">
+              <div class="custom-control custom-checkbox ml-2">
+                <input type="checkbox" class="custom-control-input" id="customCheck{{x.id}}" value="{{x.id}}"
+                  (change)="onClosed($event.target.value)">
+                <label class="custom-control-label" for="customCheck{{x.id}}">Close Activity</label>
+              </div>
+            </div>
+  
+            <div class="col-6 text-right">
+              <button type="button" (click)="fn_deleteSolo(x.id);" class="btn btn-sm btn-outline-dark">Delete</button>
+            </div>
+  
+          </div>
+  
+  
+        </div>
+      </div>
+  
+  
+  
+      <div class="my-3 pt-2" [hidden]="!history.length">
+        <div class="subheader">
+          <span class="text-header"> <a [routerLink]="[ '/activity/history/' ]"> History</a></span>
+        </div>
+      </div>
+      <div class="text-center" [hidden]="!loading">
+        <div class="spinner-border text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <div><small>Loading...</small></div>
+      </div>
+      <div class="row no-gutters line-height-sm mb-3" *ngFor="let x of history">
+        <div class="col-1">
+          <span [ngSwitch]="x.activity_type.id" class="text-primary mx-2">
+            <!-- the same view can be shown in more than one case -->
+            <span *ngSwitchCase="1"><i class="fas fa-tasks"></i> </span>
+            <span *ngSwitchCase="400"> <i class="fas fa-sticky-note"></i> </span>
+            <span *ngSwitchCase="200"><i class="fas fa-map-marker-alt"></i> </span>
+            <span *ngSwitchDefault></span>
+          </span>
+        </div>
+  
+        <div class="col-11">
+  
+          <div class="row">
+            <div class="col-12">
+  
+              <a href="javascript:;" (click)="fn_detailHistory(x);" class="font-title"> {{x.subject}}
+                <span [hidden]="x.edit"> <i class="fas fa-caret-square-down"></i> </span>
+                <span [hidden]="!x.edit"> <i class="fas fa-caret-square-up"></i> </span>
+              </a>
+  
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="col-12">
+              <span [ngSwitch]="request">
+                <!-- the same view can be shown in more than one case -->
+                <small *ngSwitchCase="'company'"> {{x.name}} </small>
+                <small *ngSwitchCase="'opportunity'"> {{x.name}} </small>
+  
+                <small *ngSwitchDefault></small>
+              </span>
+            </div>
+            <div class="col-6">
+              <small>{{x.activity_type.name}}, {{x.due_date | date:'d MMM y'}} </small>
+              <small class="px-2 text-{{x.priority.color}}" title="{{x.priority.name}} Priority"> <i
+                  class="fas fa-square"></i> </small>
+  
+            </div>
+  
+            <div class="col-6 text-right">
+              <small> {{x.user.name}} </small>
+            </div>
+          </div>
+  
+  
+          <div class="row no-gutters {{!x.edit ? 'd-none': false }}">
+            <div class="col-12 mb-2">
+              <fieldset class="bg-light" style="white-space: pre-wrap;">
+                <legend>Comment</legend>
+                {{x.comment}}
+              </fieldset>
+            </div>
+          </div>
+  
+  
+        </div>
+      </div>
+  
+  
+  
+    </div>
+  
+  
+  
+  
+  </div>

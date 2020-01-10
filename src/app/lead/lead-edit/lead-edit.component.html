@@ -1,0 +1,289 @@
+<ngx-loading [show]="loading"></ngx-loading> 
+
+
+
+<div class="container-fluid bg-light border-bottom py-1">
+  <div class="row">
+    <div class="col-6">
+      <small> You are here : <a [routerLink]="[ '/lead' ]">Lead</a> / <a [routerLink]="[ '/lead/', id ]">
+        {{items.name}}</a> / <a [routerLink]="[ '/lead/edit/', id ]">
+        Edit </a> </small>
+    </div>
+  </div>
+</div>
+
+
+<form (ngSubmit)="onSubmit()" #myForm="ngForm">
+
+  <div class="container-fluid border shadow-sm bg-white mb-5">
+
+   
+
+    <div class="row container-header my-2">
+
+      <div class="col-6 ">
+        <h5>LEAD</h5>
+      </div>
+
+      <div class="col-6 text-right">
+
+        <button type="button" class="btn btn-outline-secondary btn-sm" [routerLink]="[ '/lead/', id ]" title="back"> <i
+            class="fas fa-times"></i> </button>
+      </div>
+
+    </div>
+    <h5 class="my-3">Information</h5>
+    <div class="row mb-3">
+
+      <div class="col-6">
+        <strong>Contact</strong>
+        <table class="table table-list">
+          <tbody>
+
+            <tr>
+              <td width="30%"><label>First Name</label></td>
+              <td>
+                <select class="bg-light border-right" style="width: 20%" [(ngModel)]="model.id_title" name="id_title">
+                  <option [ngValue]="x.id" *ngFor="let x of selected.title">{{x.name}}</option>
+                </select>
+
+                <input type="text" class="bg-light border-right" style="width: 80%" required
+                  [(ngModel)]="model.first_name" name="first_name" #first_name="ngModel">
+
+                <div class="ml-1">
+                  <small [hidden]="first_name.valid || first_name.pristine" class="text-danger"> First name is
+                    required</small>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td width="30%"><label>Last Name</label></td>
+              <td>
+                <input type="text" class="bg-light " [(ngModel)]="model.last_name" name="last_name">
+              </td>
+            </tr>
+
+            <tr>
+              <td><label for="h2">Email</label></td>
+              <td> <input type="email" class="bg-light" [(ngModel)]="model.email" name="email" id="h2"> </td>
+            </tr>
+
+
+            <tr>
+              <td><label for="h3">Phone</label></td>
+              <td> <input type="text" class="bg-light" [(ngModel)]="model.phone" name="phone" id="h3"> </td>
+            </tr>
+            <tr>
+              <td><label for="h4">Mobile</label></td>
+              <td> <input type="text" class="bg-light" [(ngModel)]="model.mobile" name="mobile" id="h4"> </td>
+            </tr>
+            <tr>
+              <td><label>Lead source</label></td>
+              <td> <select class="bg-light" [(ngModel)]="model.id_lead_source" name="id_lead_source">
+                  <option [ngValue]="x.id" *ngFor="let x of selected.lead_source">{{x.name}}</option>
+                </select> </td>
+            </tr>
+
+            <tr>
+              <td><label>Lead owner </label></td>
+              <td>
+                <select class="bg-light" [(ngModel)]="model.id_user" name="id_user">
+                  <option [ngValue]="x.id" *ngFor="let x of selected.id_user">{{x.name}}</option>
+                </select>
+
+              </td>
+            </tr>
+
+            <tr>
+              <td><label>Lead Status </label></td>
+              <td>
+                <select class="bg-light" [(ngModel)]="model.id_lead_status" name="id_lead_status">
+                  <option [ngValue]="x.id" *ngFor="let x of selected.status">{{x.name}}</option>
+                </select>
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <strong>Input Information</strong>
+        <table class="table table-list">
+
+          <tbody>
+
+
+            <tr>
+              <td width="30%"><label>Created Date</label></td>
+              <td> {{items.input_date | date:'d MMM y  hh:mm a'}}, <small> by {{items.input_by}}</small> </td>
+            </tr>
+            <tr [hidden]="items.update_by == false">
+              <td><label>Update Date</label></td>
+              <td> {{items.update_date | date:'d MMM y  hh:mm a'}}, <small> by {{items.update_by}} </small> </td>
+            </tr>
+            <tr>
+              <td><label>ID Lead</label></td>
+              <td><span class="text-monospace">{{id}}</span></td>
+            </tr>
+          </tbody>
+
+
+        </table>
+
+
+
+      </div>
+
+      <div class="col-6">
+
+        <strong>Company </strong>
+        <table class="table table-list">
+          <tbody>
+            <tr>
+              <td width="30%"><label>Company</label></td>
+              <td>
+                <span [ngSwitch]="dbCompany">
+                  <span *ngSwitchCase="true">
+                    <select class="bg-light" id="h14" [(ngModel)]="model.id_company" name="id_company" id="h20"
+                      #id_company="ngModel" required (change)="onChange($event.target.value)">
+                      <option value="0"> - Select - </option>
+                      <option [ngValue]="x.id" *ngFor="let x of selectedCompany">{{x.id}} {{x.name}}</option>
+                    </select>
+                    <div class="ml-2">
+                      <small [hidden]="id_company.valid || id_company.pristine" class="text-danger"> Company is
+                        required</small>
+                    </div>
+                
+                    <div>
+                      <small><a href="javascript:;" class="ml-2" (click)=" dbCompany = false;model.id_company='0' ">Input manual</a></small>
+                    </div>
+                  </span>
+
+                  <span *ngSwitchDefault>
+                    <input type="text" class="bg-light" id="h4" required [(ngModel)]="model.company" name="company"
+                      #company="ngModel" #company="ngModel">
+                    <div>
+                      <div class="ml-2">
+                        <small [hidden]="company.valid || company.pristine" class="text-danger"> Company is
+                          required</small>
+                      </div>
+                      <small><a href="javascript:;" class="ml-2" (click)=" dbCompany = true; dbWebsite='' ">Select from
+                          database</a></small>
+                    </div>
+                  </span>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td><label>Website</label></td>
+              <td>
+                <span [ngSwitch]="dbCompany">
+                  <span *ngSwitchCase="true">
+                    {{dbWebsite}}
+                  </span>
+                  <span *ngSwitchDefault>
+                    <input type="text" class="bg-light" id="h4" [(ngModel)]="model.website" name="website">
+
+                  </span>
+                </span>
+              </td>
+            </tr>
+
+            <tr>
+              <td><label>Industry</label></td>
+              <td>
+                <span [ngSwitch]="dbCompany">
+                  <span *ngSwitchCase="true">
+                    {{dbIndustry}}
+                  </span>
+                  <span *ngSwitchDefault>
+                    <select class="bg-light" id="h14" [(ngModel)]="model.id_industry" name="id_industry">
+                      <option value="0"> - Select - </option>
+                      <option [ngValue]="x.id" *ngFor="let x of selected.industry">{{x.name}}</option>
+
+                    </select>
+                  </span>
+                </span>
+              </td>
+            </tr>
+
+            <tr>
+              <td><label>Address</label></td>
+              <td>
+
+                <span [ngSwitch]="dbCompany">
+                  <span *ngSwitchCase="true">
+                    {{dbAddress}}
+                  </span>
+                  <span *ngSwitchDefault>
+                    <input type="text" class="bg-light mb-1" id="h4" [(ngModel)]="model.address_street" name="address_street"
+                      placeholder="street">
+
+                    <input type="text" class="bg-light mb-1" id="h4" [(ngModel)]="model.address_city" name="address_city"
+                      placeholder="city">
+
+                    <input type="text" class="bg-light mb-1" id="h4" [(ngModel)]="model.address_state" name="address_state"
+                      placeholder="state">
+
+                    <input type="text" class="bg-light mb-1" id="h4" [(ngModel)]="model.address_code" name="address_code"
+                      placeholder="code">
+                  </span>
+                </span>
+
+
+              </td>
+            </tr>
+           
+
+          </tbody>
+
+
+        </table>
+
+
+        <strong>Opportunity</strong>
+        <table class="table table-list">
+
+          <tbody>
+
+            <tr>
+              <td width="30%"><label>Name Opportunity</label></td>
+              <td> <input type="text" class="bg-light mb-1" id="h4" [(ngModel)]="model.opportunity" name="opportunity"
+                placeholder="Opportunity Name"> </td>
+            </tr>
+
+          </tbody>
+
+
+        </table>
+
+
+
+      </div>
+    </div>
+
+
+    <div class="border p-1 bg-gray">
+      debuging only
+      <code>{{diagnostic}}</code>
+    </div>
+    <br>
+  </div>
+
+
+  <div class="footer-menu bg-white shadow border-top">
+    <div class="container">
+      <div class="row">
+        <div class="offset-1 col-10 text-center p-1">
+          <a class="btn btn-outline-secondary m-1" [routerLink]="[ '/lead/',id ]">Cancel</a>
+          <button type="submit" class="btn btn-primary m-1" (click)="onSubmit('next');"
+            [disabled]="!myForm.form.valid">Save</button>
+        </div>
+        <div class="col-1">
+          <div class="py-3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</form>

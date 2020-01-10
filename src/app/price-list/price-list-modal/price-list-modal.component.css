@@ -1,0 +1,8 @@
+.bodyarea{
+    overflow-y: auto;
+    height: 300px;;
+}
+
+.addlist{
+    display: inline-block;
+}

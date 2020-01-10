@@ -1,0 +1,509 @@
+<ngx-loading [show]="loading"></ngx-loading>
+
+<app-navigator></app-navigator>
+
+<div class="container-fluid bg-light border py-1">
+  <div class="row">
+    <div class="col-12">
+      <small> You are here : <a [routerLink]="[ '/quote' ]">Quote</a> </small>
+    </div>
+  </div>
+</div>
+
+<form (ngSubmit)="fn_updateQuote()" #quoteForm="ngForm">
+
+  <div class="container-fluid  bg-white">
+
+    <div class="row">
+      <div class="col-9">
+
+        <div class="row container-header">
+
+          <div class="col-6">
+            <h5>QUOTE</h5>
+          </div>
+          <div class="col-6 text-right">
+
+            <button type="button" class="btn btn-classic btn-sm  mr-1"> <i class="fas fa-paper-plane"></i>
+              Email Quote </button>
+
+            <button type="button" class="btn btn-classic btn-sm  mr-1"> <i class="fas fa-print"></i>
+              Prints </button>
+
+            <button type="button" class="btn btn-classic btn-sm  mr-1" [hidden]="!isReadOnly"
+              (click)="isReadOnly=false"> <i class="fas fa-edit"></i>
+              Edit </button>
+
+            <button type="button" class="btn btn-outline-secondary btn-sm" [routerLink]="[ '/quote' ]" title="back"> <i
+                class="fas fa-times"></i> </button>
+
+          </div>
+        </div>
+
+        <div class="row mt-2 mb-2">
+
+          <div class="col-12">
+
+            <ngb-tabset type="pills">
+
+              <ngb-tab>
+                <ng-template ngbTabTitle>
+                  <div class="px-3">Related</div>
+                </ng-template>
+                <ng-template ngbTabContent>
+                  <div class="border-top mt-2">
+                    <div class="row py-2">
+                      <div class="col-6">
+                        <strong>Quote line Items ({{total}})</strong>
+                      </div>
+                      <div class="col-6 text-right" [hidden]="isReadOnly">
+                        <button type="button" class="btn btn-light btn-sm  mr-1" (click)="open(pricelist);"> <i
+                            class="fas fa-plus"></i>
+                          Add Items </button>
+
+                        <button type="button" class="btn btn-light btn-sm  mr-1" (click)="open(sorting);"> <i
+                            class="fas fa-bars"></i>
+                          Sorting </button>
+                      </div>
+                    </div>
+
+                    <table class="table table-list table-bordered table-striped">
+                      <thead class="thead-light border-top-yellowgreen">
+                        <tr>
+
+                          <th width="400">PRODUCT NAME</th>
+                          <th class="text-right" width="150">PRICE</th>
+                          <th class="text-right" width="80">QTY </th>
+                          <th class="text-right" width="80">ADDITIONAL DISC </th>
+                          <th class="text-right" width="150">NET TOTAL </th>
+                          <th width="20"> </th>
+                        </tr>
+                      </thead>
+                      <tbody class="">
+                        <tr *ngFor="let x of quote_item; let i = index" id="{{x.id}}">
+
+                          <td> {{x.product}}
+
+                            <div [hidden]="!isReadOnly">
+                              <small [hidden]="x.hide_description" style=" white-space: pre-line;"> {{x.description}}
+                              </small>
+
+                              <div [hidden]="!x.hide_description"><a href="javascript:;"
+                                  (click)="show_description(x);"><small>Show detail</small></a> </div>
+                              <div [hidden]="x.hide_description"><a href="javascript:;"
+                                  (click)="hide_description(x);"><small>Hide detail</small></a> </div>
+                            </div>
+
+                            <textarea [hidden]="isReadOnly" class="form-control form-control-sm w-100"
+                              [(ngModel)]="x.description" [ngModelOptions]="{standalone: true}"
+                              (change)="fn_updateQuoteitem(x)"> </textarea>
+                          </td>
+
+                          <td class="text-right">{{items.currency}} {{x.price | number}}</td>
+                          <td class="text-right">
+                            <span [hidden]="!isReadOnly"> {{x.qty}}
+                            </span>
+                            <input [hidden]="isReadOnly" type="number" class="form-control-sm border pr-0 text-right"
+                              style="width: 80px;" [(ngModel)]="x.qty" [ngModelOptions]="{standalone: true}"
+                              (change)="fn_updateQuoteitem(x)">
+                          </td>
+                          <td class="text-right">
+                            <span [hidden]="!isReadOnly"> {{x.discount}} </span>
+
+                            <input [hidden]="isReadOnly" type="number" class="form-control-sm border pr-0 text-right"
+                              style="width: 50px;" [(ngModel)]="x.discount" [ngModelOptions]="{standalone: true}"
+                              (change)="fn_updateQuoteitem(x)">
+                            %</td>
+                          <td class="text-right">{{items.currency}} {{x.total | number}}</td>
+                          <td>
+
+                            <span [hidden]="isReadOnly"> <a href="javascript:;" class="px-1"
+                                (click)="fn_removeQuoteitem(x);"> <i class="fas fa-trash-alt"></i> </a> </span>
+
+                          </td>
+                        </tr>
+
+
+                      </tbody>
+                      <tfoot>
+
+                        <tr>
+                          <td colspan="4" class="text-right">Total</td>
+                          <td class="text-right">{{items.currency}} {{pricing.total | number}}</td>
+                          <td></td>
+                        </tr>
+
+                        <tr>
+                          <td colspan="4" class="text-right">Discount {{items.discount}} %</td>
+
+                          <td class="text-right">{{items.currency}} {{pricing.discount | number}} </td>
+                          <td></td>
+                        </tr>
+
+                        <tr>
+                          <td colspan="4" class="text-right">Tax {{items.tax}} %</td>
+
+                          <td class="text-right">{{items.currency}} {{pricing.tax | number}} </td>
+                          <td></td>
+                        </tr>
+
+                        <tr>
+                          <td colspan="4" class="text-right">shipping and handling</td>
+                          <td class="text-right">{{items.currency}} {{pricing.shipping | number}} </td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td colspan="4" class="text-right">Final Total</td>
+                          <td class="text-right">{{items.currency}} {{pricing.grand_total | number}} </td>
+                          <td></td>
+                        </tr>
+
+
+                      </tfoot>
+                    </table>
+
+
+
+
+                    <div class="row py-2">
+                      <div class="col-6">
+                        <strong>Attachment</strong>
+                      </div>
+                      <div class="col-6 text-right">
+                        <button type="button" class="btn btn-light btn-sm  mr-1"> <i
+                            class="fas fa-plus"></i>
+                          Add Items </button>
+
+                        <button type="button" class="btn btn-light btn-sm  mr-1"> <i
+                            class="fas fa-edit"></i>
+                          Edit Product </button>
+                      </div>
+                    </div>
+
+                  </div>
+                </ng-template>
+              </ngb-tab>
+
+              <ngb-tab>
+                <ng-template ngbTabTitle>
+                  <div class="px-3">Details </div>
+                </ng-template>
+                <ng-template ngbTabContent>
+                  <div class="border-top py-2 my-2">
+
+                    <!-- detail -->
+
+                    <div class="row">
+                      <div class="col-12 bg-light">
+                        <strong>Quotes Information</strong>
+                      </div>
+                      <div class="col-6">
+                        <table class="table table-borderless">
+                          <tr>
+                            <td width="40%">Quotes Name</td>
+                            <td>
+                              <input type="text" class="form-control form-modal" id="name" required
+                                [(ngModel)]="quoteModel.name" name="name" #name="ngModel" [readonly]="isReadOnly">
+                              <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                                Name is required
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Opportunity Name</td>
+                            <td> <b> {{items.opportunity}} </b> </td>
+                          </tr>
+                          <tr>
+                            <td>Company Name</td>
+                            <td> <b>{{items.company}} </b> </td>
+                          </tr>
+
+                          <tr>
+                            <td>Account Manager</td>
+                            <td> <select class="form-control form-modal" [disabled]="isReadOnly">
+                                <option value="1">Admin</option>
+                                <option value="1">Admin</option>
+                                <option value="1">Admin</option>
+                              </select> </td>
+                          </tr>
+                        </table>
+
+                      </div>
+                      <div class="col-6">
+
+                        <table class="table table-borderless">
+                          <tr>
+                            <td width="40%">Expiration Date</td>
+                            <td> <input type="text" class="form-control form-modal" placeholder="yyyy-mm-dd"
+                                (click)="d.toggle()" readonly name="d" [(ngModel)]="quoteModel.expirationDate"
+                                ngbDatepicker #d="ngbDatepicker" required [readonly]="isReadOnly">
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Syncing</td>
+                            <td><input type="checkbox" [(ngModel)]="quoteModel.syncing" name="syncing">
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td>Description</td>
+                            <td>
+                              <textarea class="form-control form-modal" [(ngModel)]="quoteModel.description"
+                                name="description" [readonly]="isReadOnly"></textarea>
+
+                            </td>
+                          </tr>
+                        </table>
+
+                      </div>
+                    </div>
+
+
+                    <div class="row">
+                      <div class="col-12 bg-light">
+                        <strong> Total</strong>
+                      </div>
+                      <div class="col-6">
+                        <table class="table table-borderless">
+                          <tr>
+                            <td width="40%">Discount (%)</td>
+                            <td> <input type="text" class="form-control form-modal" id="" style="width:40%"
+                                maxlength="4" [(ngModel)]="quoteModel.discount" name="discount" [readonly]="isReadOnly">
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                      <div class="col-6">
+                        <table class="table table-borderless">
+                          <tr>
+                            <td width="40%">Tax (%)</td>
+                            <td><input type="text" class="form-control form-modal" id="" style="width:40%" maxlength="4"
+                                [(ngModel)]="quoteModel.tax" name="tax" [readonly]="isReadOnly"></td>
+                          </tr>
+                          <tr>
+                            <td>Shipping and Handing</td>
+                            <td><input type="number" class="form-control form-modal text-right"
+                                [(ngModel)]="quoteModel.shipping" name="shipping" [readonly]="isReadOnly"> </td>
+                          </tr>
+                          <tr>
+                            <td>Grand Total</td>
+                            <td> <b>{{items.currency}} {{pricing.grand_total | number}},-</b></td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+
+
+                    <div class="row">
+                      <div class="col-12 bg-light">
+                        <strong> Prepared For</strong>
+                      </div>
+                      <div class="col-6">
+                        <table class="table table-borderless">
+                          <tr>
+                            <td width="40%">Contact Name</td>
+                            <td><select class="form-control form-modal" [disabled]="isReadOnly">
+                                <option></option>
+                              </select></td>
+                          </tr>
+                          <tr>
+                            <td>Email</td>
+                            <td>
+                              <input type="text" class="form-control form-modal" id="" [(ngModel)]="quoteModel.email"
+                                name="email" [readonly]="isReadOnly">
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                      <div class="col-6">
+                        <table class="table table-borderless">
+                          <tr>
+                            <td width="40%">Phone</td>
+                            <td> <input type="text" class="form-control form-modal" id="" [(ngModel)]="quoteModel.phone"
+                                name="phone" [readonly]="isReadOnly"></td>
+                          </tr>
+                          <tr>
+                            <td>Fax</td>
+                            <td> <input type="text" class="form-control form-modal" id="" [(ngModel)]="quoteModel.fax"
+                                name="fax" [readonly]="isReadOnly"></td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+
+
+                    <div class="row">
+                      <div class="col-12 bg-light">
+                        <strong> Address Information</strong>
+                      </div>
+                      <div class="col-6">
+                        <table class="table table-borderless">
+                          <tr>
+                            <td width="40%">Bill To Name</td>
+                            <td><input type="text" class="form-control form-modal" id=""
+                                [(ngModel)]="quoteModel.bill_name" name="bill_name" [readonly]="isReadOnly"></td>
+                          </tr>
+                          <tr>
+                            <td>Bill To Street 1</td>
+                            <td><input type="text" class="form-control form-modal" id=""
+                                [(ngModel)]="quoteModel.bill_street1" name="bill_street1" [readonly]="isReadOnly"></td>
+                          </tr>
+                          <tr>
+                            <td>Bill To Street 2</td>
+                            <td><input type="text" class="form-control form-modal" id=""
+                                [(ngModel)]="quoteModel.bill_street2" name="bill_street2" [readonly]="isReadOnly"></td>
+                          </tr>
+
+                          <tr>
+                            <td>Bill To City</td>
+                            <td><input type="text" class="form-control form-modal" id=""
+                                [(ngModel)]="quoteModel.bill_city" name="bill_city" [readonly]="isReadOnly"></td>
+                          </tr>
+                          <tr>
+                            <td>Bill To State /Province</td>
+                            <td><input type="text" class="form-control form-modal" id=""
+                                [(ngModel)]="quoteModel.bill_state" name="bill_state" [readonly]="isReadOnly"></td>
+                          </tr>
+                          <tr>
+                            <td>Bill To Postal Code</td>
+                            <td><input type="text" class="form-control form-modal" id=""
+                                [(ngModel)]="quoteModel.bill_code" name="bill_code" [readonly]="isReadOnly"></td>
+                          </tr>
+                        </table>
+                      </div>
+                      <div class="col-6">
+                        <table class="table table-borderless">
+                          <tr>
+                            <td width="40%">Ship To Name</td>
+                            <td><input type="text" class="form-control form-modal" id=""
+                                [(ngModel)]="quoteModel.ship_name" name="ship_name" [readonly]="isReadOnly"></td>
+                          </tr>
+                          <tr>
+                            <td>Ship To Street 1</td>
+                            <td><input type="text" class="form-control form-modal" id=""
+                                [(ngModel)]="quoteModel.ship_street1" name="ship_street1" [readonly]="isReadOnly"></td>
+                          </tr>
+                          <tr>
+                            <td>Ship To Street 2</td>
+                            <td><input type="text" class="form-control form-modal" id=""
+                                [(ngModel)]="quoteModel.ship_street2" name="ship_street2" [readonly]="isReadOnly"></td>
+                          </tr>
+
+                          <tr>
+                            <td>Ship To City</td>
+                            <td><input type="text" class="form-control form-modal" id=""
+                                [(ngModel)]="quoteModel.ship_city" name="ship_city" [readonly]="isReadOnly"></td>
+                          </tr>
+                          <tr>
+                            <td>Ship To State /Province</td>
+                            <td><input type="text" class="form-control form-modal" id=""
+                                [(ngModel)]="quoteModel.ship_state" name="ship_state" [readonly]="isReadOnly"></td>
+                          </tr>
+                          <tr>
+                            <td>Ship To Postal Code</td>
+                            <td><input type="text" class="form-control form-modal" id=""
+                                [(ngModel)]="quoteModel.ship_code" name="ship_code" [readonly]="isReadOnly"></td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+
+                    <!-- End detail-->
+
+
+
+                  </div>
+                </ng-template>
+              </ngb-tab>
+
+
+
+            </ngb-tabset>
+
+          </div>
+
+
+
+
+        </div>
+
+      </div>
+
+      <!-- right side-->
+      <div class="col-3 border border-top-0">
+        <div class="row container-header">
+          <h5>HISTORY</h5>
+        </div>
+
+        <div class="row">
+          <strong>Past Activity</strong>
+        </div>
+
+      </div>
+      <!-- end right side-->
+
+    </div>
+
+  </div>
+
+
+  <div [hidden]="isReadOnly"><br><br></div>
+
+  <div class="footer-menu bg-white shadow border-top" [hidden]="isReadOnly">
+    <div class="container">
+      <div class="row">
+        <div class="offset-1 col-10 text-center p-1">
+          <a class="btn btn-outline-secondary m-1" (click)="isReadOnly=true">Close</a>
+          <button type="submit" class="btn btn-primary m-1" [disabled]="!quoteForm.form.valid">Save</button>
+        </div>
+        <div class="col-1">
+          <div class="py-3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</form>
+
+
+
+<ng-template #pricelist let-modal>
+  <div class="modal-header">
+    <strong class="modal-title" id="modal-basic-title">Price List </strong>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <app-price-list-modal (uploaded)="requestEmit($event)"></app-price-list-modal>
+
+</ng-template>
+
+
+<ng-template #sorting let-modal>
+  <div class="modal-header">
+    <strong class="modal-title" id="modal-basic-title">Price List </strong>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body bg-light ">
+
+  
+    <h2>Drag / drop the item</h2>
+      <div [sortablejs]="quote_item" [sortablejsOptions]="eventOptions">
+        <div *ngFor="let x of quote_item">{{ x.product }}
+
+          <div>{{x.description}}</div>
+        </div>
+      </div>
+
+  </div>
+
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-sm btn-light" (click)="modal.close('Close click')">Close</button> 
+  </div>
+
+</ng-template>
+
+ 

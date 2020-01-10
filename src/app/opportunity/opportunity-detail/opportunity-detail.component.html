@@ -1,0 +1,866 @@
+<ngx-loading [show]="loading"></ngx-loading>
+
+
+
+<div class="container-fluid" [hidden]="items.length < 1">
+
+  <div class="row no-gutters">
+    <div class="col-9">
+
+      <div class="container-fluid bg-light border py-1">
+        <div class="row">
+          <div class="col-12">
+            <small> You are here : <a [routerLink]="[ '/opportunity' ]">Opportunity</a> / <a
+                [routerLink]="[ '/opportunity/',id ]">{{items.name}}</a> </small>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="container-fluid bg-white">
+
+
+        <div class="container-header">
+
+          <div class="row ">
+
+            <div class="col-3">
+              <h5>OPPORTUNITY</h5>
+            </div>
+            <div class="col-9 text-right">
+              <span [hidden]="!items.final_stage">
+
+
+                <button type="button" class="btn btn-success  mr-1" (click)="open(win)"> <i
+                    class="fas fa-thumbs-up"></i>
+                  CLosed Win </button>
+
+                <button type="button" class="btn btn-warning   mr-3" (click)="open(lose)"> <i
+                    class="fas fa-thumbs-down"></i> CLosed Lose </button>
+              </span>
+
+              <button type="button" class="btn btn-outline-primary btn-sm mr-1"
+                [routerLink]="[ '/opportunity/edit/',id ]"> <i class="fas fa-edit"></i> Edit </button>
+
+              <button type="button" class="btn btn-danger btn-sm  mr-1" (click)="fn_delete();"> <i
+                  class="fas fa-trash-alt"></i>
+                Delete </button>
+
+              <button type="button" class="btn btn-outline-secondary btn-sm" [routerLink]="[ '/opportunity' ]"
+                title="back"> <i class="fas fa-times"></i> </button>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="row mt-3 mb-5">
+
+          <div class="col-6">
+
+            <strong>Information</strong>
+            <table class="table table-list">
+
+              <tbody>
+
+                <tr>
+                  <td width="30%"><label>Name</label></td>
+                  <td> {{items.name}}</td>
+                </tr>
+                <tr>
+                  <td><label>Amount</label></td>
+                  <td> {{items.currency}} {{items.amount | number:''}} </td>
+                </tr>
+                <tr>
+                  <td><label>stage</label></td>
+                  <td> <strong style="font-size: 14px"> {{items.stage}}</strong>
+
+                    <div [hidden]="!showUpdateStage"><a href="javascript:;" (click)="updateStage();"><small>Update to
+                          {{stageCurrent}} </small></a></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><label>Progress</label></td>
+                  <td> {{items.progress}} % </td>
+                </tr>
+                <tr>
+                  <td><label>Lead Source</label></td>
+                  <td> {{items.lead_source}} </td>
+                </tr>
+
+                <tr>
+                  <td><label>Account Manager</label></td>
+                  <td> {{items.user}} </td>
+                </tr>
+              </tbody>
+
+
+            </table>
+
+
+          </div>
+
+          <div class="col-6">
+
+            <Br>
+            <table class="table table-list">
+              <tbody>
+                <tr>
+                  <td width="30%"><label>Company</label></td>
+                  <td> <a [routerLink]="[ '/company', items.id_company ]"> {{items.company}} </a></td>
+                </tr>
+                <tr>
+                  <td> <label>Contact Person</label></td>
+                  <td> <a [routerLink]="[ '/contact/',items.id_contact ]"> {{items.contact}} </a> </td>
+                </tr>
+                <tr>
+                  <td><label>Industry</label></td>
+                  <td> {{items.industry}} </td>
+                </tr>
+                <tr>
+                  <td><label>Created Date</label></td>
+                  <td> {{items.input_date | date:'d MMM y  hh:mm a'}}, <small> by {{items.input_by}}</small> </td>
+                </tr>
+                <tr [hidden]="items.update_by == false">
+                  <td><label>Update Date</label></td>
+                  <td> {{items.update_date | date:'d MMM y  hh:mm a'}}, <small> by {{items.update_by}} </small> </td>
+                </tr>
+                <tr>
+                  <td><label>ID Opportunity</label></td>
+                  <td><span class="text-monospace">{{items.id}}</span></td>
+                </tr>
+              </tbody>
+            </table>
+
+
+          </div>
+
+        </div>
+
+
+        <div class="border bg-light my-4">
+
+          <div class="row mb-2">
+
+            <div class="col-12">
+
+              <div class="arrow-steps clearfix" style="margin-top: -20px; z-index: 10;">
+
+                <div *ngFor="let x of stage" (click)="nextStage(x);"
+                  class="step {{ x.done ? 'done' : false }} {{ x.current ? 'current' : false }}"
+                  [ngStyle]="{'width': width+'%'}"> <strong class="font-source-sans-pro"> {{x.name}}
+                    <span [hidden]="!x.done"> <i class="fas fa-check-circle"></i> </span>
+                  </strong>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-12 col-lg-8">
+
+
+              <form class="p-3 ">
+
+
+                <div class="form-group row " [hidden]="id_stage != '100'">
+                  <label for="h2" class="col-sm-6 col-form-label"> Total of Employees </label>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control border" id="h2">
+                  </div>
+                </div>
+
+                <div class="form-group row " [hidden]="id_stage != '101'">
+                  <label for="h3" class="col-sm-6 col-form-label"> How many Branches ?</label>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control border" id="h3">
+                  </div>
+                </div>
+
+                <div class="form-group row " [hidden]="id_stage != '103'">
+                  <label for="h4" class="col-sm-6 col-form-label"> Does the company have a good finance ? </label>
+                  <div class="col-sm-6">
+                    <select class="form-control border">
+                      <option>select</option>
+                      <option>Yes</option>
+                      <option>No</option>
+
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group row " [hidden]="id_stage != '104'">
+                  <label for="h2" class="col-sm-6 col-form-label"> Why they need our product ?</label>
+                  <div class="col-sm-6">
+                    <textarea class="form-control border"> </textarea>
+                  </div>
+                </div>
+
+
+                <span class="form-group row " *ngFor="let x of stage" [hidden]="id_stage != x.id">
+                  <div class="col-sm-6 offset-6">
+                    <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                      <input type="checkbox" class="custom-control-input" id="c{{x.id}}" (change)="doneStage(x);"
+                        [checked]="x.done ? true:false">
+                      <label class="custom-control-label" for="c{{x.id}}">Done {{x.name}}'s Step
+                      </label>{{ x.done ? 'checked' : '' }}
+                    </div>
+                  </div>
+                </span>
+
+                <div class="form-group row">
+                  <div class="col-sm-6 offset-6">
+                    <button type="button" class="btn btn-primary">Submit</button>
+                  </div>
+                </div>
+
+              </form>
+
+            </div>
+
+            <div class="col-12 col-lg-4">
+              <div class="p-3 m-3 bg-yellow-light shadow">
+                <span *ngFor="let x of stage" [hidden]="id_stage != x.id">
+                  <strong> {{x.name}}'s step notes</strong>
+                  <div class="description">
+                    {{stageNotes}}
+                  </div>
+                </span>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="pb-2">
+          <strong>Products (Strategic Customer Price List) </strong>
+        </div>
+        <div class=" bg-light  border border-top-brown rounded p-1 mb-3">
+          <div class="my-2">
+
+            <button type="button" class="btn btn-classic btn-sm mr-1" (click)="openLg(addProduct);">
+              <i class="fas fa-plus"></i> Add
+              Products</button>
+
+
+            <button type="button" class="btn btn-classic btn-sm mr-1" (click)="fn_editable();"> <i
+                class="fas fa-edit"></i>
+              {{ editable ? 'Done':'Edit' }}</button>
+
+          </div>
+
+          <table class="table table-hover border bg-white border-top border-bottom pointer">
+            <thead class="thead-light">
+              <tr>
+                <th class="text-center"></th>
+                <th scope="col">Product Code</th>
+                <th scope="col">Product Name</th>
+                <th scope="col" class="text-right">Qty</th>
+                <th scope="col" class="text-right">Price</th>
+
+                <th scope="col" class="text-right">Additional Disc.</th>
+                <th scope="col" class="text-right">Net Unit Price</th>
+                <th scope="col" class="text-right">Net Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td width="50"><i class="far fa-trash-alt"></i> </td>
+                <td> AP-MBPRO </td>
+                <td> Graco CP2001 </td>
+                <td class="text-right"> 2 </td>
+                <td class="text-right">IDR 200.000.000,- </td>
+                <td class="text-right">
+                  <span [hidden]="editable">
+                    <span class="text-danger"> 10% </span>
+                  </span>
+
+                  <span [hidden]="!editable">
+                    <input type="number" class="border text-right" value="10" style="width: 80px;"> %
+                  </span>
+                </td>
+                <td class="text-right"> IDR 180.000.000,- </td>
+                <td class="text-right"> <span class="text-danger"> IDR 180.000.000,- <i
+                      class="fas fa-exclamation-circle"></i>
+                  </span></td>
+              </tr>
+
+            </tbody>
+
+            <tfoot>
+              <tr>
+                <td colspan="7" class="text-right">Total</td>
+                <td class="text-right"> IDR 180.000.000,- </td>
+
+              </tr>
+
+              <tr>
+                <td colspan="7" class="text-right"> Tax
+
+                  <span [hidden]="editable">
+                    10
+                  </span>
+
+                  <span [hidden]="!editable">
+                    <input type="number" class="border text-right" value="10" style="width: 80px;">
+                  </span>
+                  %
+                </td>
+                <td class="text-right"> IDR 0,- </td>
+
+              </tr>
+
+              <tr>
+                <td colspan="7" class="text-right">Final Total</td>
+                <td class="text-right"> IDR 180.000.000,- </td>
+
+              </tr>
+            </tfoot>
+
+          </table>
+
+        </div>
+
+        <div class="pb-2">
+          <strong>Quotes </strong>
+        </div>
+        <div class=" bg-light  border border-top-brown rounded p-1 mb-3">
+
+          <div class="my-2">
+            <button type="button" class="btn btn-classic btn-sm mr-1" (click)="openLg(addQuote);"> <i
+                class="fas fa-file-alt"></i>
+              Generate New Quotes</button>
+          </div>
+
+          <table class="table table-hover border bg-white border-top border-bottom pointer">
+            <thead class="thead-light">
+              <tr>
+
+                <th scope="col">Quotes Number</th>
+                <th scope="col">Quotes Name</th>
+                <th scope="col">Expiration Date</th>
+                <th scope="col">Grand Total</th>
+
+                <th scope="col">Sales Person</th>
+                <th scope="col">Created Date</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td> <a [routerLink]="[ '/quote/3021' ]" class="text-monospace"> QO/2019/III/40023</a> </td>
+                <td> Grands Hotel Kitchen Genertor Quotes 2 </td>
+                <td> 12 Mar 2019 </td>
+
+                <td> IDR 2.000.000.000 </td>
+                <td>Sharika </td>
+                <td> 20 Feb 2019, Sharika</td>
+
+
+
+              </tr>
+            </tbody>
+
+          </table>
+
+        </div>
+
+        <div class="py-2">
+          <strong>Competitor</strong>
+        </div>
+        <div class=" bg-light  border border-top-red rounded p-1 mb-4">
+          <div class="mb-4">
+
+            <table class="table   border bg-white border-top border-bottom pointer">
+
+              <tbody>
+                <tr>
+                  <td rowspan="3" class="border">fromyouflowers.com</td>
+                  <td class="border" width="200">Strengths</td>
+                  <td>
+                    <ul>
+                      <li>Offers flowers online</li>
+                      <li>Delivers at home though whole the region within 24 hours</li>
+                      <li>Package deals – get discount on a vase when flowers are bought</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="border">Waknesses</td>
+                  <td>
+                    <ul>
+                      <li>There is no way that a customer can see the flowers before they are ordered</li>
+                      <li>Delivers at home though whole the region within 24 hours</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="border">Most Important Findings</td>
+                  <td>
+                    Customers seem to think that buying flowers is a personal and special occasion. They do not like it
+                    when buying flowers is less personal. They also do not like that they cannot create their own
+                    bouquet
+                  </td>
+                </tr>
+              </tbody>
+
+              <tfoot>
+                <tr>
+                  <td colspan="7"> <button type="button" class="btn btn-classic btn-sm"> <i class="fas fa-plus"></i> Add
+                      Competitor</button> </td>
+                </tr>
+              </tfoot>
+            </table>
+
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+
+
+    <div class="col-3">
+      <div class="position-fixed">
+
+
+        <div class="border bg-white ml-2 p-2">
+          <div class="row">
+            <div class="col-12 mb-2">
+              <strong class="text-secondary">Quotes PDF</strong>
+
+            </div>
+            <div class="col-12">
+              <button type="button" class="btn btn-classic btn-sm mr-1" (click)="openLg(addQuote);"> <i class="fas fa-file-alt"></i>  
+                Generate New Quotes</button>
+
+            </div>
+
+            <div class="col-12 mt-2">
+
+              <div class="border-bottom" *ngFor="let x of quotes">
+                 
+                <ul class="list-1">
+                  <li>  <a [routerLink]="[ '/quote/',x.id ]" class="text-monospace"> {{x.quotes_number}}</a> </li>
+                  <li> <small>{{x.name}}</small> </li>
+                  <li> <small> Grand Total : {{x.grand_total}}</small> </li>
+                  
+                </ul>
+              
+                
+              </div>
+
+             
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<ng-template #win let-modal>
+  <div class="modal-header">
+    <strong class="modal-title" id="modal-basic-title">Close Opportunity</strong>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body bg-light">
+
+    <form (ngSubmit)="onClosed('win')" #myFormWin="ngForm">
+      <div class="row">
+        <div class="col-12 mb-4">
+          <div class="display-2 text-center text-warning"><i class="fas fa-crown"></i></div>
+          <h4 class="text-center text-warning">Closed Win</h4>
+        </div>
+        <div class="col-12">
+
+          <div class="form-group row no-gutters">
+            <label for="h2" class="col-sm-3 col-form-label"> Closed Date</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control border" placeholder="{{modelClosedWin.date}}"
+                [(ngModel)]="modelClosedWin.date" name="date" ngbDatepicker #d="ngbDatepicker" readonly
+                (click)="d.toggle()">
+            </div>
+          </div>
+
+
+
+          <div class="form-group row no-gutters">
+            <label for="h4" class="col-sm-3 col-form-label">Notes</label>
+            <div class="col-sm-8">
+              <textarea class="form-control border" required [(ngModel)]="modelClosedWin.notes" name="notes"
+                #notesWin="ngModel"></textarea>
+              <small [hidden]="notesWin.valid || notesWin.pristine" class="text-danger"> Notes is
+                required</small>
+            </div>
+          </div>
+
+
+          <div class="form-group row no-gutters">
+            <label for="h4" class="col-sm-3 col-form-label">Account Manager </label>
+            <div class="col-sm-8">
+              <select class="form-control border" [(ngModel)]="modelClosedWin.id_user" name="id_user">
+                <option [ngValue]="x.id" *ngFor="let x of user">{{x.name}}</option>
+
+              </select>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-12 text-center">
+          <span [hidden]="finish">
+            <button type="submit" class="btn btn-success m-1" (click)="onClosed('win');"
+              [disabled]="!myFormWin.form.valid"> <i class="fas fa-thumbs-down"></i> Closed Win</button>
+
+          </span>
+          <span [hidden]="!finish">
+
+            <button type="submit" class="btn btn-outline-dark m-1" (click)="modal.dismiss('Cross click')">
+              Close</button>
+          </span>
+        </div>
+
+      </div>
+
+    </form>
+  </div>
+
+</ng-template>
+
+
+<ng-template #lose let-modal>
+  <div class="modal-header">
+    <strong class="modal-title" id="modal-basic-title">Close Opportunity</strong>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body bg-light">
+
+    <form (ngSubmit)="onClosed('lose')" #myFormLose="ngForm">
+      <div class="row">
+        <div class="col-12 mb-4">
+          <div class="display-2 text-center text-gray"><i class="fas fa-sad-tear"></i> </div>
+          <h4 class="text-center text-gray">Closed Lose</h4>
+        </div>
+        <div class="col-12">
+
+
+          <div class="form-group row no-gutters">
+            <label for="h2" class="col-sm-3 col-form-label"> Closed Date</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control border" placeholder="{{modelClosedLose.date}}"
+                [(ngModel)]="modelClosedLose.date" name="date" ngbDatepicker #d="ngbDatepicker" readonly
+                (click)="d.toggle()">
+            </div>
+          </div>
+
+
+
+          <div class="form-group row no-gutters">
+            <label for="h4" class="col-sm-3 col-form-label">Reason</label>
+            <div class="col-sm-8">
+              <textarea class="form-control border" required [(ngModel)]="modelClosedLose.notes" name="notes"
+                #notesLose="ngModel"></textarea>
+              <small [hidden]="notesLose.valid || notesLose.pristine" class="text-danger"> Notes is
+                required</small>
+            </div>
+          </div>
+
+
+          <div class="form-group row no-gutters">
+            <label for="h4" class="col-sm-3 col-form-label">Account Manager </label>
+            <div class="col-sm-8">
+              <select class="form-control border" [(ngModel)]="modelClosedLose.id_user" name="id_user">
+                <option [ngValue]="x.id" *ngFor="let x of user">{{x.name}}</option>
+
+              </select>
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="col-12 text-center">
+
+          <span [hidden]="finish">
+            <button type="submit" class="btn btn-dark m-1" (click)="onClosed('lose');"
+              [disabled]="!myFormLose.form.valid"> <i class="fas fa-thumbs-down"></i> Closed Lose</button>
+
+          </span>
+          <span [hidden]="!finish">
+
+            <button type="submit" class="btn btn-outline-dark m-1" (click)="modal.dismiss('Cross click')">
+              Close</button>
+          </span>
+        </div>
+
+      </div>
+
+    </form>
+  </div>
+
+</ng-template>
+
+
+
+<ng-template #addProduct let-modal>
+  <div class="modal-header">
+    <strong class="modal-title" id="modal-basic-title">Add Products </strong>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body bg-white">
+    <table>
+      <thead>
+        <tr>
+          <th>asdfasdf</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-sm btn-outline-dark" (click)="modal.close('Save click')">Closed</button>
+  </div>
+</ng-template>
+
+
+
+<ng-template #addQuote let-modal>
+  <form (ngSubmit)="fn_newQuote()" #quoteForm="ngForm">
+    <div class="modal-header">
+      <strong class="modal-title" id="modal-basic-title">New Quote </strong>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body bg-white">
+      <div class="container-fluid">
+
+        <div class="row">
+          <div class="col-12 bg-light">
+            <strong>Quotes Information</strong>
+          </div>
+          <div class="col-6">
+            <table class="table table-borderless">
+              <tr>
+                <td width="40%">Quotes Name</td>
+                <td>
+                  <input type="text" class="form-control form-modal" id="name" required [(ngModel)]="quoteModel.name"
+                    name="name" #name="ngModel">
+                  <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                    Name is required
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Opportunity Name</td>
+                <td> <b> {{items.name}} </b> </td>
+              </tr>
+              <tr>
+                <td>Company Name</td>
+                <td> <b>{{items.company}} </b> </td>
+              </tr>
+
+              <tr>
+                <td>Account Manager</td>
+                <td>  <select class="form-control form-modal">
+                  <option value="1">Admin</option>
+                </select> </td>
+              </tr>
+            </table>
+
+          </div>
+          <div class="col-6">
+
+            <table class="table table-borderless">
+              <tr>
+                <td width="40%">Expiration Date</td>
+                <td> <input  type="text" class="form-control form-modal" placeholder="yyyy-mm-dd" (click)="d.toggle()" readonly
+                  name="d" [(ngModel)]="quoteModel.expirationDate" ngbDatepicker #d="ngbDatepicker" required>
+                </td>
+              </tr>
+              <tr>
+                <td>Syncing</td>
+                <td><input type="checkbox" checked name=""  [(ngModel)]="quoteModel.syncing" name="syncing"></td>
+              </tr>
+              <tr>
+                <td>Status</td>
+                <td>
+                  <select class="form-control form-modal" [(ngModel)]="quoteModel.status" name="status">
+                    <option value="1">Draft</option>
+                  </select>
+
+                </td>
+              </tr>
+              <tr>
+                <td>Description</td>
+                <td>
+                  <textarea class="form-control form-modal" [(ngModel)]="quoteModel.desciption" name="desciption" ></textarea>
+
+                </td>
+              </tr>
+            </table>
+
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-12 bg-light">
+            <strong> Total</strong>
+          </div>
+          <div class="col-6">
+            <table class="table table-borderless">
+              <tr>
+                <td width="40%">Discount (%)</td>
+                <td> <input type="text" class="form-control form-modal" id=""   style="width:40%"
+                  [(ngModel)]="quoteModel.discount" name="discount" > </td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-6">
+            <table class="table table-borderless">
+              <tr>
+                <td width="40%">Tax (%)</td>
+                <td><input type="text" class="form-control form-modal" id="" style="width:40%" [(ngModel)]="quoteModel.tax" name="tax" ></td>
+              </tr>
+              <tr>
+                <td>Shipping and Handing</td>
+                <td><input type="text" class="form-control form-modal" id=""  [(ngModel)]="quoteModel.shipping" name="shipping" > </td>
+              </tr>
+              <tr>
+                <td>Grand Total</td>
+                <td> <b>IDR 0</b></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-12 bg-light">
+            <strong> Prepared For</strong>
+          </div>
+          <div class="col-6">
+            <table class="table table-borderless">
+              <tr>
+                <td width="40%">Contact Name</td>
+                <td><select class="form-control form-modal">
+                    <option (value)="items.id_contact">{{items.contact}}</option>
+                  </select></td>
+              </tr>
+              <tr>
+                <td>Email</td>
+                <td>
+                  <input type="text" class="form-control form-modal" id=""   [(ngModel)]="quoteModel.email" name="email" >
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-6">
+            <table class="table table-borderless">
+              <tr>
+                <td width="40%">Phone</td>
+                <td> <input type="text" class="form-control form-modal" id=""  [(ngModel)]="quoteModel.phone" name="phone" ></td>
+              </tr>
+              <tr>
+                <td>Fax</td>
+                <td> <input type="text" class="form-control form-modal" id=""  [(ngModel)]="quoteModel.fax" name="fax" ></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-12 bg-light">
+            <strong> Address Information</strong>
+          </div>
+          <div class="col-6">
+            <table class="table table-borderless">
+              <tr>
+                <td width="40%">Bill To Name</td>
+                <td><input type="text" class="form-control form-modal" id=""  name=""></td>
+              </tr>
+              <tr>
+                <td>Bill To Street 1</td>
+                <td><input type="text" class="form-control form-modal" id="" [(ngModel)]="quoteModel.bill_street1" name="bill_street1" ></td>
+              </tr>
+              <tr>
+                <td>Bill To Street 2</td>
+                <td><input type="text" class="form-control form-modal" id=""   [(ngModel)]="quoteModel.bill_street2" name="bill_street2" ></td>
+              </tr>
+
+              <tr>
+                <td>Bill To City</td>
+                <td><input type="text" class="form-control form-modal" id=""  [(ngModel)]="quoteModel.bill_city" name="bill_city"  ></td>
+              </tr>
+              <tr>
+                <td>Bill To State /Province</td>
+                <td><input type="text" class="form-control form-modal" id=""   [(ngModel)]="quoteModel.bill_state" name="bill_state"  ></td>
+              </tr>
+              <tr>
+                <td>Bill To Postal Code</td>
+                <td><input type="text" class="form-control form-modal" id="" [(ngModel)]="quoteModel.bill_code" name="bill_code"  ></td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-6">
+            <table class="table table-borderless">
+              <tr>
+                <td width="40%">Ship To Name</td>
+                <td><input type="text" class="form-control form-modal" id=""  name=""></td>
+              </tr>
+              <tr>
+                <td>Ship To Street 1</td>
+                <td><input type="text" class="form-control form-modal" id=""  [(ngModel)]="quoteModel.ship_street1" name="ship_street1" ></td>
+              </tr>
+              <tr>
+                <td>Ship To Street 2</td>
+                <td><input type="text" class="form-control form-modal" id=""  [(ngModel)]="quoteModel.ship_street2" name="ship_street2"></td>
+              </tr>
+
+              <tr>
+                <td>Ship To City</td>
+                <td><input type="text" class="form-control form-modal" id=""  [(ngModel)]="quoteModel.ship_city" name="ship_city" ></td>
+              </tr>
+              <tr>
+                <td>Ship To State /Province</td>
+                <td><input type="text" class="form-control form-modal" id=""  [(ngModel)]="quoteModel.ship_state" name="ship_state" ></td>
+              </tr>
+              <tr>
+                <td>Ship To Postal Code</td>
+                <td><input type="text" class="form-control form-modal" id="" [(ngModel)]="quoteModel.ship_code" name="ship_code" ></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      {{quoteModel | json}}
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-sm btn-outline-dark" (click)="modal.close('Save click')">Closed</button>
+
+      <button type="submit" class="btn btn-success" [disabled]="!quoteForm.form.valid">Submit</button>
+    </div>
+  </form>
+</ng-template>

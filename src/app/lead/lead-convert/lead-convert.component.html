@@ -1,0 +1,61 @@
+<ngx-loading [show]="loading"></ngx-loading> 
+<div class="container border shadow-sm bg-white p-3">
+
+  <div class="row mb-3">
+    <div class="col-12">
+      <h5>Converted Lead</h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <table class="table table-list">
+        <tbody>
+          <tr>
+            <td width="30%">Lead</td>
+            <td>{{items.lead}}</td>
+          </tr>
+
+          <tr>
+            <td>Contact</td>
+            <td> <a [routerLink]="[ '/contact', items.id_contact ]">{{items.contact}}</a> </td>
+          </tr>
+
+          <tr>
+            <td>Company </td>
+            <td> <a [routerLink]="[ '/company', items.id_company ]">{{items.company}} </a> </td>
+          </tr>
+
+          <tr [hidden]="!items.opportunity">
+            <td>Opportunity</td>
+            <td>{{items.opportunity}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="table table-list">
+          <tbody>
+            <tr>
+              <td width="30%">Lead Created Date</td>
+              <td>{{items.lead_input_date | date:'d MMM y  hh:mm a'}}</td>
+            </tr>
+  
+          </tbody>
+        </table>
+  
+    </div>
+
+  
+  </div>
+
+
+  <div class="row">
+
+    <div class="col-12 text-center">
+      <a [routerLink]="[ '/lead' ]" class="btn btn-outline-dark m-1">Back to Lead</a>
+
+      <a [routerLink]="[ '/opportunity/',items.id_opportunity ]" [hidden]="!items.opportunity" class="btn btn-danger  m-1">Go To Opportunity</a>
+
+    </div>
+  </div>
+</div>

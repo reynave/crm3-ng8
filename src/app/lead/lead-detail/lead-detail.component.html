@@ -1,0 +1,312 @@
+<ngx-loading [show]="loading"></ngx-loading>
+
+
+<div class="container-fluid bg-light border-bottom py-1">
+  <div class="row">
+    <div class="col-6">
+      <small> You are here : <a [routerLink]="[ '/lead' ]">Lead</a> / <a [routerLink]="[ '/lead/',items.id ]">
+          {{items.name}}</a> </small>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid" [hidden]="items.length < 1">
+
+  <div class="row container-header my-2">
+
+    <div class="col-3 ">
+      <h5>LEAD</h5>
+    </div>
+
+    <div class="col-9 text-right">
+      <button type="button" class="btn btn-success  btn-sm  mr-1" (click)="open(convert)"> <i
+          class="fas fa-funnel-dollar"></i> Convert To Opportunity </button>
+
+      <button type="button" class="btn btn-outline-primary  btn-sm  mr-1" [routerLink]="[ '/lead/edit/',items.id ]"> <i
+          class="fas fa-edit"></i> Edit </button>
+
+      <button type="button" class="btn btn-danger btn-sm  mr-1" (click)="fn_delete();"> <i class="fas fa-trash-alt"></i>
+        Delete </button>
+
+      <button type="button" class="btn btn-outline-secondary  btn-sm" [routerLink]="[ '/lead' ]" title="back"> <i
+          class="fas fa-times"></i> </button>
+    </div>
+
+  </div>
+
+  <div class="row my-3">
+    <div class="col-4">
+      <h5>Information</h5>
+    </div>
+    <div class="col-8 text-right">
+      <label>Lead Status : </label>
+      <label class="px-3 mx-2"> <span class="text-{{items.lead_status_color }}"> <i class="fas fa-square"></i> </span>
+        {{items.lead_status_name }}</label>
+
+    </div>
+  </div>
+
+
+  <div class="row mb-3">
+
+    <div class="col-6">
+
+      <strong>Contact</strong>
+      <table class="table table-list">
+        <tbody>
+
+          <tr>
+            <td width="30%"><label>Name</label></td>
+            <td> {{items.name}} </td>
+          </tr>
+
+          <tr>
+            <td><label>Email</label></td>
+            <td> {{items.email}} </td>
+          </tr>
+
+          <tr>
+            <td><label>Phone</label></td>
+            <td> {{items.phone}} </td>
+          </tr>
+          <tr>
+            <td><label>Mobile</label></td>
+            <td>{{items.mobile}} </td>
+          </tr>
+          <tr>
+            <td><label>Lead source</label></td>
+            <td> {{items.lead_source}} </td>
+          </tr>
+
+          <tr>
+            <td><label>Lead owner </label></td>
+            <td>{{items.user}} </td>
+          </tr>
+
+          <tr>
+            <td><label>Lead Status </label></td>
+            <td>
+              <select class="form-control form-control-sm" [(ngModel)]="items.id_lead_status"
+                (change)="onChangeLeadStatus($event.target.value)">
+                <option [ngValue]="x.id" *ngFor="let x of lead_status">
+                  {{x.name}}
+                </option>
+              </select>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <span class="d-none">
+        <strong>Input Information</strong>
+        <table class="table table-list">
+
+          <tbody>
+
+            <tr>
+              <td><label>Created Date</label></td>
+              <td> {{items.input_date | date:'d MMM y  hh:mm a'}}, <small> by {{items.input_by}}</small> </td>
+            </tr>
+            <tr [hidden]="items.update_by == false">
+              <td><label>Update Date</label></td>
+              <td> {{items.update_date | date:'d MMM y  hh:mm a'}}, <small> by {{items.update_by}} </small> </td>
+            </tr>
+            <tr>
+              <td><label>ID Lead</label></td>
+              <td><span class="text-monospace">{{items.id}}</span></td>
+            </tr>
+          </tbody>
+
+
+        </table>
+      </span>
+
+
+    </div>
+
+    <div class="col-6">
+
+      <strong>Company </strong>
+      <table class="table table-list">
+        <tbody>
+          <tr>
+            <td width="30%"><label>Company</label></td>
+            <td> {{items.company}}</td>
+          </tr>
+          <tr>
+            <td><label>Website</label></td>
+            <td><a href="">{{items.website}}</a></td>
+          </tr>
+
+          <tr>
+            <td><label>Address</label></td>
+            <td>{{items.address}}</td>
+          </tr>
+
+          <tr>
+            <td><label>Industry</label></td>
+            <td> {{items.industry}} </td>
+          </tr>
+
+        </tbody>
+
+
+      </table>
+
+
+      <strong>Opportunity</strong>
+      <table class="table table-list">
+
+        <tbody>
+
+          <tr>
+            <td width="30%"><label>Subject</label></td>
+            <td> {{items.opportunity}} </td>
+          </tr>
+          <tr>
+            <td><label>Expected Revenue</label></td>
+            <td> {{items.currency }} {{items.amount| number:''}},- </td>
+          </tr>
+
+        </tbody>
+
+
+      </table>
+
+
+
+    </div>
+  </div>
+
+  <div class="py-2">
+    <strong>Product Interest </strong>
+  </div>
+
+  <div class=" bg-light  border border-top-brown rounded p-1 mb-4">
+    <div class="scroll-x max-height mb-4">
+
+      <table class="table table-hover border bg-white border-top border-bottom pointer">
+        <thead class="thead-light">
+          <tr>
+            <th class="text-center"></th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Price List</th>
+            <th scope="col">Catalog</th>
+            <th scope="col" colspan="2">Price</th>
+            <th scope="col">Created Date</th>
+            <th scope="col">Created By</th>
+
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td width="50"><i class="far fa-trash-alt"></i> </td>
+            <td> Graco X2099 </td>
+            <td> Graco 2019 </td>
+            <td> Tools and Setting </td>
+            <td width="50"> IDR </td>
+            <td class="text-right"> 200.000.000,- </td>
+
+            <td> 20 Jun 2019 </td>
+            <td> Sabrina </td>
+          </tr>
+
+
+
+        </tbody>
+        <tfoot>
+          <tr>
+            <td></td>
+            <td colspan="7"> <button type="button" class="btn btn-classic btn-sm"> <i class="fas fa-plus"></i> Add
+                Products</button> </td>
+          </tr>
+        </tfoot>
+      </table>
+
+    </div>
+  </div>
+ 
+
+  <!-- <div class="col-4">
+      <div class="position-fixed">
+        <app-widget-activity></app-widget-activity>
+      </div>
+
+    </div>-->
+
+</div>
+
+<ng-template #convert let-modal>
+  <div class="modal-header">
+    <strong class="modal-title" id="modal-basic-title">Convert to Opportunity</strong>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="onConvert()" #myFormConvert="ngForm">
+      <div class="row">
+
+        <div class="col-8">
+          <div class="form-group">
+
+
+            <table width="100%" class="mb-1">
+              <tr>
+                <td width="35%"><label> <span [hidden]="!items.id_company">Create New</span> Company </label></td>
+                <td> {{items.company}}</td>
+              </tr>
+              <tr>
+                <td><label>Create New Contact </label></td>
+                <td> {{items.name}} </td>
+              </tr>
+
+              <tr>
+                <td> <label for="h61">Name of Business Opportunity</label> </td>
+                <td> <input type="text" class="form-control border" [(ngModel)]="modelOpportunity.opportunityName"
+                    name="opportunityName" id="h61">
+                  <small id="emailHelp" class="form-text text-muted mb-3">Please leave empty if you dont need
+                    opportunity now.</small>
+
+                </td>
+              </tr>
+
+              <tr [hidden]="!modelOpportunity.opportunityName">
+                <td><label>Assign to </label></td>
+                <td> <select class="form-control border mb-1" [(ngModel)]="modelOpportunity.id_user" name="id_user">
+                    <option [ngValue]="x.id" *ngFor="let x of user">{{x.name}}</option>
+                  </select> </td>
+              </tr>
+
+
+            </table>
+
+          </div>
+        </div>
+
+        <div class="col-4">
+          <div class="text-center">
+            <img src="../../../assets/imgs/lead-convert.jpg" width="80%">
+          </div>
+        </div>
+
+      </div>
+
+    </form>
+
+    <div class="border p-1 bg-gray">
+      debuging only
+      <code>{{diagnostic}}</code>
+    </div>
+    <br>
+  </div>
+
+  <div class="modal-footer">
+    <span [hidden]="!loadingConvert">Converting, please wait...</span>
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+    <button type="button" class="btn btn-success" (click)="onConvert();">Convert</button>
+
+  </div>
+</ng-template>

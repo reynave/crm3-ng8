@@ -1,16 +1,92 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
 
+import { FormsModule }   from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+
+import { NgModule } from '@angular/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LeadComponent } from './lead/lead.component';
+import { LeadDetailComponent } from './lead/lead-detail/lead-detail.component';
+import { LeadEditComponent } from './lead/lead-edit/lead-edit.component';
+import { LeadConvertComponent } from './lead/lead-convert/lead-convert.component';
+import { ActivityComponent } from './activity/activity.component';
+import { WidgetActivityComponent } from './activity/widget-activity/widget-activity.component';
+import { CompanyComponent } from './company/company.component';
+import { CompanyDetailComponent } from './company/company-detail/company-detail.component';
+import { CompanyEditComponent } from './company/company-edit/company-edit.component';
+import { ContactComponent } from './contact/contact.component';
+import { ContactEditComponent } from './contact/contact-edit/contact-edit.component';
+import { ContactDetailComponent } from './contact/contact-detail/contact-detail.component';
+import { OpportunityComponent } from './opportunity/opportunity.component';
+import { OpportunityDetailComponent } from './opportunity/opportunity-detail/opportunity-detail.component';
+import { OpportunityEditComponent } from './opportunity/opportunity-edit/opportunity-edit.component';
+import { OpportunityNewComponent } from './opportunity/opportunity-new/opportunity-new.component';
+import { ModalOpportunityComponent } from './opportunity/modal-opportunity/modal-opportunity.component';
+import { PriceListComponent } from './price-list/price-list.component';
+import { PriceListCatalogComponent } from './price-list/price-list-catalog/price-list-catalog.component';
+import { PriceListModalComponent } from './price-list/price-list-modal/price-list-modal.component';
+import { PriceListProductComponent } from './price-list/price-list-product/price-list-product.component';
+import { ProductComponent } from './product/product.component';
+import { QuoteComponent } from './quote/quote.component';
+import { DealComponent } from './deal/deal.component';
+import { LoseComponent } from './lose/lose.component';
+import { DealDetailComponent } from './deal/deal-detail/deal-detail.component';
+import { QuoteDetailComponent } from './quote/quote-detail/quote-detail.component';
+import { NavigatorComponent } from './navigator/navigator.component';
+import { SortablejsModule } from 'ngx-sortablejs';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LeadComponent,
+    LeadDetailComponent,
+    LeadEditComponent,
+    LeadConvertComponent,
+    ActivityComponent,
+    WidgetActivityComponent,
+    CompanyComponent,
+    CompanyDetailComponent,
+    CompanyEditComponent,
+    ContactComponent,
+    ContactEditComponent,
+    ContactDetailComponent,
+    OpportunityComponent,
+    OpportunityDetailComponent,
+    OpportunityEditComponent,
+    OpportunityNewComponent,
+    ModalOpportunityComponent,
+    PriceListComponent,
+    PriceListCatalogComponent,
+    PriceListModalComponent,
+    PriceListProductComponent,
+    ProductComponent,
+    QuoteComponent,
+    DealComponent,
+    LoseComponent,
+    DealDetailComponent,
+    QuoteDetailComponent,
+    NavigatorComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule, 
+    FormsModule,
+    HttpModule,
+    HttpClientModule,
+    SortablejsModule,
+    NgxLoadingModule.forRoot({
+      animationType: ngxLoadingAnimationTypes.wanderingCubes,
+      backdropBackgroundColour: 'rgba(0,0,0,0.1)',
+      backdropBorderRadius: '4px',
+      primaryColour: '#ffffff',
+      secondaryColour: '#ffffff',
+      tertiaryColour: '#ffffff'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

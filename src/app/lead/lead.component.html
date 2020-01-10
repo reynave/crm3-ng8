@@ -1,0 +1,401 @@
+<ngx-loading [show]="loading"></ngx-loading>
+
+
+<div class="container-fluid bg-light border-bottom py-1">
+  <div class="row">
+    <div class="col-6">
+      <small> You are here : <a [routerLink]="[ '/lead' ]">Lead</a> </small>
+    </div> 
+  </div>
+</div>
+
+<div class="container-fluid">
+ 
+  <div class="row container-header"> 
+    <div class="col-6">
+      <h5>LEADS</h5>
+    </div>
+    <div class="col-6 text-right"> 
+      <span [hidden]="!loadingSelected">Loading Attribute...</span> 
+      <a type="button" (click)="open(newLead)"><i class="fas fa-plus"></i> New Lead</a> 
+    </div>
+  </div>
+
+
+  <div class=" bg-light  border border-top-brown rounded p-1 my-2">
+
+    <div class="row my-2 ">
+      <div class="col-8">
+
+        <select class="border form-control-sm  mr-1" [(ngModel)]="leadStatus">
+          <option value="0">Lead Status : All</option>
+          <option [ngValue]="x.id" *ngFor="let x of selected.status">{{x.name}}</option>
+        </select>
+
+
+        <span class="dropdown">
+          <button class="btn btn-classic btn-sm dropdown-toggle mx-1" type="button" id="dropdownMenuButton"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+            <i class="fas fa-check-circle"></i>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" (click)="open(markUpdate); selectModal = '1';"> Update Lead Status</a>
+            <a class="dropdown-item" (click)="open(markUpdate); selectModal = '2';"> Delete</a>
+
+          </div>
+        </span>
+
+        <button type="button" class="btn btn-classic  btn-sm mx-1" (click)="httpGet();"> <i class="fas fa-sync-alt"></i>
+          Refresh</button>
+
+        <button type="button" class="btn btn-classic  btn-sm mx-1"><i class="fas fa-cog"></i> </button>
+
+      </div>
+      <div class="col-4 text-right">
+        <input type="text" class="form-control-sm form-radius" placeholder="Search">
+      </div>
+    </div>
+ 
+    <div class="scroll-x scroll-style-2 max-height">
+
+      <table class="table table-hover border bg-white border-top border-bottom pointer">
+        <thead class="thead-light">
+          <tr>
+            <th></th>
+
+            <th width="50" scope="col">Status</th>
+            <th class="text-center">ID</th>
+            <th scope="col">Lead Name</th>
+            <th scope="col">Company</th>
+            <th scope="col">Website</th>
+            <th scope="col">Industry</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Mobile</th>
+
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of items">
+            <td width="50" (click)="fn_check(x);"> <span class="text-primary ">
+                <i class=" {{ x.check ? 'fas fa-check-square' : 'far fa-square' }}"></i> </span>
+            </td>
+            <td (click)="fn_check(x);" class="text-center"> <span title="{{x.lead_status}}"
+                class="text-{{x.lead_status_color}}">
+                <i class="fas fa-square"></i> </span> </td>
+            <td> <a [routerLink]="[ '/lead/',x.id]" class="text-monospace"> {{x.id}} </a> </td>
+            <td (click)="fn_check(x);">{{x.name}}</td>
+            <td (click)="fn_check(x);">{{x.company}}</td>
+            <td (click)="fn_check(x);">{{x.website}}</td>
+            <td (click)="fn_check(x);">{{x.industry}}</td>
+            <td (click)="fn_check(x);">{{x.email}}</td>
+            <td (click)="fn_check(x);">{{x.phone}}</td>
+            <td (click)="fn_check(x);">{{x.mobile}}</td>
+
+
+          </tr>
+
+
+
+        </tbody>
+      </table>
+
+    </div>
+
+
+  </div>
+
+</div>
+
+
+<ng-template #newLead let-modal>
+  <div class="modal-header">
+    <strong class="modal-title" id="modal-basic-title">New Lead</strong>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body bg-light">
+
+    <form (ngSubmit)="onSubmit()" #myForm="ngForm">
+      <div class="row">
+
+        <div class="col-6">
+
+
+          <div class="form-group row no-gutters">
+            <label for="h1" class="col-4 col-form-label"> First Name* </label>
+            <div class="col-2">
+              <select class="form-control border" [(ngModel)]="model.id_title" name="id_title">
+                <option [ngValue]="x.id" *ngFor="let x of selected.title">{{x.name}}</option>
+              </select>
+            </div>
+            <div class="col-6">
+              <input type="text" class="form-control border" [(ngModel)]="model.first_name" name="first_name"
+                #first_name="ngModel" id="h1" required>
+              <small [hidden]="first_name.valid || first_name.pristine" class="text-danger"> First name is
+                required</small>
+            </div>
+
+          </div>
+          <div class="form-group row no-gutters">
+            <label for="h2" class="col-sm-4 col-form-label"> Last Name</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control border" [(ngModel)]="model.last_name" name="last_name" id="h2">
+            </div>
+          </div>
+
+
+          <div class="form-group row no-gutters">
+            <label for="h3" class="col-sm-4 col-form-label">Email</label>
+            <div class="col-sm-8">
+              <input type="email" class="form-control border" [(ngModel)]="model.email" name="email" id="h3">
+            </div>
+          </div>
+
+          <div class="form-group row no-gutters">
+            <label for="h31" class="col-sm-4 col-form-label">Mobile</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control border" [(ngModel)]="model.mobile" name="mobile" id="h31">
+            </div>
+          </div>
+
+
+          <div class="form-group row no-gutters">
+            <label for="h4" class="col-sm-4 col-form-label">Phone</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control border" [(ngModel)]="model.phone" name="phone" id="h4">
+            </div>
+          </div>
+
+
+          <div class="form-group row no-gutters">
+            <label for="h5" class="col-sm-4 col-form-label">Lead source </label>
+            <div class="col-sm-8">
+              <select class="form-control border" [(ngModel)]="model.id_lead_source" name="id_lead_source" id="h5">
+                <option [ngValue]="x.id" *ngFor="let x of selected.lead_source">{{x.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row no-gutters">
+            <label for="h6" class="col-sm-4 col-form-label"> Lead owner </label>
+            <div class="col-sm-8">
+              <select class="form-control border" [(ngModel)]="model.id_user" name="id_user" id="h6">
+                <option [ngValue]="x.id" *ngFor="let x of selected.id_user">{{x.name}}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row no-gutters">
+            <label for="h5" class="col-sm-4 col-form-label">Lead Status </label>
+            <div class="col-sm-8">
+              <select class="form-control border" style="width: auto;" [(ngModel)]="model.id_lead_status"
+                name="id_lead_status" id="h5">
+                <option [ngValue]="x.id" *ngFor="let x of selected.status">{{x.name}}</option>
+              </select>
+            </div>
+          </div>
+
+
+        </div>
+
+
+        <div class="col-6">
+
+
+          <span [hidden]="!dbCompany">
+            <div class="form-group row no-gutters">
+              <label for="h20" class="col-sm-4 col-form-label">Company*</label>
+              <div class="col-sm-8">
+                <select class="form-control border" id="h14" [(ngModel)]="model.id_company" name="id_company" id="h20"
+                  required>
+                  <option value="0"> - Select - </option>
+                  <option [ngValue]="x.id" *ngFor="let x of selectedCompany">{{x.name}}</option>
+                </select>
+                <div>
+                  <small><a href="javascript:;"
+                      (click)="dbCompany=false; model.company ='';  model.id_company ='0'; ">Back</a></small>
+                </div>
+              </div>
+            </div>
+
+
+          </span>
+
+
+          <span [hidden]="dbCompany">
+            <div class="form-group row no-gutters">
+              <label for="h12" class="col-sm-4 col-form-label">Company*</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control border" [(ngModel)]="model.company" name="company"
+                  #company="ngModel" id="h12" required>
+                <small [hidden]="company.valid || company.pristine" class="text-danger"> Company is required</small>
+                <div>
+
+                  <small><a href="javascript:;" (click)="dbCompany=true; model.company ='null';httpCompany(); ">Select
+                      from database</a></small>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row no-gutters">
+              <label for="h14" class="col-sm-4 col-form-label">Industry</label>
+              <div class="col-sm-8">
+                <select class="form-control border" id="h14" [(ngModel)]="model.id_industry" name="id_industry">
+                  <option value="0"> - Select - </option>
+                  <option [ngValue]="x.id" *ngFor="let x of selected.industry">{{x.name}}</option>
+
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row no-gutters">
+              <label for="h15" class="col-sm-4 col-form-label">Website</label>
+              <div class="col-sm-8" id="15">
+                <input type="text" class="form-control border" [(ngModel)]="model.website" name="website" id="h15">
+              </div>
+            </div>
+
+            <div class="form-group row no-gutters">
+              <label for="h21" class="col-sm-4 col-form-label">Address</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control border" maxlength="250" [(ngModel)]="model.address_street"
+                  name="address_street" id="h21">
+              </div>
+
+              <div class="col-sm-8 offset-4 mb-1">
+                <input type="text" class="form-control border" maxlength="250" [(ngModel)]="model.address_city"
+                  name="address_city" id="h21">
+              </div>
+
+              <div class="col-sm-8 offset-4 mb-1">
+                <input type="text" class="form-control border" maxlength="250" [(ngModel)]="model.address_state"
+                  name="address_state" id="h21">
+              </div>
+
+              <div class="col-sm-8 offset-4 mb-1">
+                <input type="text" class="form-control border" maxlength="6" [(ngModel)]="model.address_code"
+                  name="address_code" id="h21">
+              </div>
+            </div>
+
+          </span>
+
+
+        </div>
+
+
+      </div>
+
+
+
+    </form>
+
+    <div class="border p-1 bg-gray">
+      debuging only
+      <code>{{diagnostic}}</code>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+
+    <span [hidden]="!submit">Saving, Please wait...</span>
+    <button type="button" class="btn btn-light" (click)="modal.dismiss('Cross click')">Cancel</button>
+    <button type="submit" class="btn btn-outline-primary" (click)="onSubmit('next');"
+      [disabled]="!myForm.form.valid">Save &
+      Next</button>
+    <button type="submit" class="btn btn-primary" (click)="onSubmit();" [disabled]="!myForm.form.valid">Save &
+      Go To Detail</button>
+  </div>
+
+</ng-template>
+
+
+<ng-template #markUpdate let-modal>
+  <div class="modal-header">
+    <strong class="modal-title" id="modal-basic-title">Update Status
+
+
+    </strong>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body bg-white">
+    <div [hidden]="!itemsSelected.length">
+
+      <div [ngSwitch]="selectModal">
+        <!-- the same view can be shown in more than one case -->
+        <span *ngSwitchCase="1">
+          <div class="form-group row">
+            <label for="h50" class="col-2 col-form-label">Lead Status </label>
+            <div class="col-3">
+              <select class="form-control border" [(ngModel)]="id_lead_status" id="h50">
+                <option [ngValue]="x.id" *ngFor="let x of selected.status">{{x.name}}</option>
+              </select>
+            </div>
+            <div class="col-4">
+              <button type="button" class="btn btn-classic btn-sm" (click)="fn_updateLeadStatus();">Yes</button>
+              <button type="button" class="btn btn-classic btn-sm"
+                (click)="modal.dismiss('Cross click')">Cancel</button>
+            </div>
+          </div>
+
+        </span>
+
+        <span *ngSwitchCase="2">
+          <div class="form-group row">
+            <div class="col-3">
+              <div class="text-danger">
+                Delete selected lead ?
+              </div>
+            </div>
+            <div class="col-4">
+              <button type="button" class="btn btn-classic btn-sm" (click)="fn_delete();">Yes</button>
+              <button type="button" class="btn btn-classic btn-sm"
+                (click)="modal.dismiss('Cross click')">Cancel</button>
+            </div>
+          </div>
+        </span>
+        <span *ngSwitchDefault>.3.</span>
+      </div>
+
+
+
+      <table class="table border table-hover  table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Company</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let x of itemsSelected; let i = index">
+            <td>{{ i + 1}}</td>
+            <td>{{x.id}}</td>
+            <td>{{x.name}}</td>
+            <td>{{x.company}}</td>
+
+            <th> <a href="javascript:;" (click)="fn_removeItemSelected(x)"><i class="fas fa-times"></i></a> </th>
+          </tr>
+        </tbody>
+
+
+      </table>
+    </div>
+    <div [hidden]="itemsSelected.length">
+      <div class="text-center">
+        Empty data.
+      </div>
+    </div>
+
+  </div>
+
+
+
+</ng-template>

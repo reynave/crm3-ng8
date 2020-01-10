@@ -1,0 +1,33 @@
+.description{
+    line-height: 130%;
+    font-size: 14px;
+  }
+
+  .form-control{
+    font-size: 13px;
+    border: 1px solid #ddd;
+  }
+
+  .list-1{
+    list-style: none;
+    padding: 5px 0px;
+    margin: 0px;;
+
+  }
+  .list-1 li{ 
+    
+    margin: 0px;;
+    line-height: 110%;
+
+  }
+  
+  input[type="text"]:read-only,   input[type="number"]:read-only,  select:read-only,  textarea:read-only {
+    background: #fff;
+    border:none;
+    border-bottom: 1px solid #ccc;
+}
+
+
+input[type="text"]:read-only:required,input[type="number"]:read-only:required, select:read-only:required, textarea:read-only:required {
+  border-right: none !important;
+}

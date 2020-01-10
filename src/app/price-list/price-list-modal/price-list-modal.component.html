@@ -1,0 +1,95 @@
+<ngx-loading [show]="loading"></ngx-loading> 
+<div class="modal-body bg-light ">
+
+    <div class="row" [hidden]="step == 2">
+        <div class="col-12 ">
+            <div class="p-3 text-center">
+                <p>Select a price list for this quote. You can add product only from a price list. <br> Changing a
+                    selected
+                    price list will delete all existing products from this quote</p>
+                <div class="my-3 col-4 offset-4">
+                    <select class="form-control form-control-sm" [(ngModel)]="id_price_list">
+
+                        <option *ngFor="let x of pricelist" value="{{x.id}}"> {{x.name}}</option>
+                    </select>
+                </div>
+                <button type="button" class="btn btn-primary btn-sm" (click)="goStep2();">Next</button>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row no-gutters" [hidden]="step == 1">
+
+        <div class="col-12 ">
+            <div class="p-3">
+                <div class="text-center">
+                    <a href="javascript:;" (click)="step=1"> <small> Back to Price List</small></a>
+                </div>
+
+                <small>Select catalog product</small>
+                <select class="form-control form-control-sm" [(ngModel)]="id_catalog" (change)="productlist();">
+                    <option *ngFor="let x of catalog" value="{{x.id}}"> {{x.name}}</option>
+                </select>
+                <input type="text" class="form-control form-control-sm border my-1" placeholder="Search Products">
+                <small>Selected ({{total}})</small>
+                <div>
+                    <div class="hahaha">
+                        <span class="border px-1 bg-white mr-1 shadow-sm mb-1 addlist"
+                            *ngFor="let x of addProduct"><small>
+                                {{x.product}}</small> <a href="javascript:;" class="text-danger"
+                                (click)="removeList(x);">
+                                <small class="px-1"> <i class="fas fa-times"></i></small> </a></span>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-12  ">
+
+            <table class="table table-hover border bg-white border-top border-bottom mb-0">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Product Name</th>
+                        <th class="text-right">Price</th>
+                        <td width="10"></td>
+                    </tr>
+                </thead>
+            </table>
+            <div class="bodyarea">
+                <table class="table table-hover border bg-white border-top border-bottom pointer">
+
+                    <tbody>
+                        <tr *ngFor="let x of items" (click)="addList(x);">
+                            <td>{{x.product}}</td>
+                            <td class="text-right"> {{x.currency}} {{x.price | number}}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div class="text-center py-5" [hidden]="!loading_productlist">
+                    <div class="spinner-border text-dark" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+
+        
+    </div>
+
+</div>
+
+
+<div class="modal-footer">
+    <div class="col-12 text-right" [hidden]="total < 1"> 
+        <a href="javascript:;" class="btn btn-primary btn-sm" (click)="save();">Next</a>
+    </div>
+</div>

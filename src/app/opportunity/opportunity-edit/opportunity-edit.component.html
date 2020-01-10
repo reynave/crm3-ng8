@@ -1,0 +1,146 @@
+<ngx-loading [show]="loading"></ngx-loading> 
+
+<form (ngSubmit)="onSubmit()" #myForm="ngForm">
+  <div class="container border shadow-sm bg-white">
+
+    <div class="row ">
+      <div class="col-6">
+        <small> You are here : <a [routerLink]="[ '/opportunity' ]">Opportunity</a> / <a
+            [routerLink]="[ '/opportunity/', id ]">
+            {{model.name}}</a> / <a [routerLink]="[ '/opportunity/edit/', id ]">
+            Edit </a> </small>
+      </div>
+    </div>
+
+    <div class="row container-header">
+
+      <div class="col-6 ">
+        <h5>OPPORTUNITY</h5>
+      </div>
+
+      <div class="col-6 text-right">
+
+        <button type="button" class="btn btn-outline-secondary btn-sm" [routerLink]="[ '/opportunity/',id ]" title="back"> <i
+            class="fas fa-times"></i> </button>
+      </div>
+
+    </div>
+    <div class="row my-3">
+
+      <div class="col-6">
+         
+        <table class="table table-list">
+          <tbody>
+
+            <tr>
+              <td width="30%"><label>Opportunity Name</label></td>
+              <td>
+                <input type="text" class="bg-light"  required  [(ngModel)]="model.name" name="name" #name="ngModel">
+                <small [hidden]="name.valid || name.pristine" class="text-danger"> Opportunity name is
+                  required</small>
+              </td>
+            </tr>
+
+
+            <tr>
+              <td><label>Amount</label></td>
+              <td>
+                IDR 200.000.000,-
+              </td>
+            </tr>
+
+            <tr>
+              <td><label>Stage</label></td>
+              <td>
+                Qualification
+              </td>
+            </tr>
+            <tr>
+              <td><label>Progress</label></td>
+              <td>
+                30%
+              </td>
+            </tr>
+
+
+
+
+            <tr>
+              <td><label>Lead Source</label></td>
+              <td>
+                <select class="bg-light" [(ngModel)]="model.id_lead_source" name="id_lead_source">
+                  <option value="0"> - Select - </option>
+                  <option [ngValue]="x.id" *ngFor="let x of lead_source">{{x.name}}</option>
+                </select>
+              </td>
+            </tr>
+
+            <tr>
+              <td><label>Account Manager </label></td>
+              <td>
+                <select class="bg-light" [(ngModel)]="model.id_user" name="id_user">
+                  <option [ngValue]="x.id" *ngFor="let x of user">{{x.name}}</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+
+
+
+
+      </div>
+
+      <div class="col-6">
+        
+        <table class="table table-list">
+
+          <tbody>
+
+            <tr>
+              <td width="30%"><label>Company</label></td>
+              <td> {{items.company}}</td>
+            </tr>
+            <tr>
+              <td><label>Contact</label></td>
+              <td>
+                <select class="bg-light" [(ngModel)]="model.id_contact" name="id_contact"> 
+                  <option [ngValue]="x.id" *ngFor="let x of contact">{{x.name}}</option>
+                </select>
+
+              </td>
+            </tr>
+            <tr>
+              <td><label>ID Opportunity</label></td>
+              <td><span class="text-monospace">{{id}}</span></td>
+            </tr>
+          </tbody>
+
+
+        </table>
+
+
+
+      </div>
+    </div>
+
+    <br>
+
+  </div>
+
+  <div class="footer-menu bg-white shadow border-top">
+    <div class="container">
+      <div class="row">
+        <div class="offset-1 col-10 text-center p-1">
+          <a class="btn btn-outline-secondary m-1" [routerLink]="[ '/opportunity/',id ]">Cancel</a>
+          <button type="submit" class="btn btn-primary m-1" (click)="onSubmit();"
+            [disabled]="!myForm.form.valid">Save</button>
+        </div>
+        <div class="col-1">
+          <div class="py-3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
