@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-navigator',
@@ -7,19 +8,28 @@ import { Router } from '@angular/router';
   styleUrls: ['./navigator.component.css']
 })
 export class NavigatorComponent implements OnInit {
-  menu :string;
+  current :string;
   
-  constructor(private router: Router) { 
+  constructor(
+    private router: Router,
+    private titleService: Title,
+    private activatedRoute: ActivatedRoute,
+  ) { 
  
-    router.events.subscribe((val) => {
-      // see also 
-     // console.log(router);
-    });
   }
+  nav : any = [];
+  ngOnInit() { 
+    this.activatedRoute.data.subscribe(
+      data => { 
+        console.log(data);
+        this.titleService.setTitle( data['title'] );
+      }
+    );
 
-  ngOnInit() {
-    console.log('masuk');
 
+    
+    this.nav = this.activatedRoute.snapshot.routeConfig.path.split("/")
+    this.current = this.nav[0];
   }
 
 }

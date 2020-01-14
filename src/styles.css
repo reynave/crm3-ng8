@@ -41,6 +41,9 @@ body {  min-height: 100vh;
     border-radius: 0px;
 }
  
+.btn{
+    font-size: 12px;
+}
 
 .nav-scroller {
   position: relative;
@@ -110,7 +113,21 @@ body {  min-height: 100vh;
 .container-header{
     margin: 10px auto;
 }
- 
+
+.module-name strong{
+    display: block;
+    line-height: 90%;
+}
+
+table{
+    width: 100%;
+}
+
+.table-p0 tr{
+    line-height: 110%;
+}
+
+
 td {
     vertical-align: text-top;
 }
@@ -312,10 +329,11 @@ table thead th { position: sticky; top: 0; }
 
 
 .btn-classic{
-    background-image: linear-gradient(to bottom, #fdfdfd, #fafafa, #f6f6f6, #f3f3f3, #f0f0f0);
-    border: 1px solid #c9c9c9;
-    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
-   
+    background: #fff;
+    border: 1.3px solid #ddd; 
+}
+.btn-classic:hover{
+    background: #F8F9FA; 
 }
  
 label {
@@ -419,3 +437,42 @@ fieldset table td{
 	-webkit-box-shadow: inset 0 0 6px #F8F8F8;
 	background-color: #CCC;
 }
+
+
+
+
+
+
+.activity-log{
+    padding: 0px 10px 3px 20px;
+    position: relative;
+    border:1px solid #fff;
+    border-left: 3px solid #d9e3f7;
+    margin-bottom: 20px;
+    margin-left: 7px; 
+}
+.activity-log  .content{
+    margin-top: -5px;
+}
+.activity-log .text{
+    font-size: 14px; 
+}
+.activity-log .icon{
+    position: absolute;
+    left: -12px;
+    top: -2px;
+    border: 3px solid #fff;
+    background: #d9e3f7;
+    color: #fff;
+    padding: 1px 3px;
+    font-size: 11px;
+    border-radius: 2px;
+}
+
+
+.act-1{    border-left-color:  #e2e09b !important;}
+.act-1 .icon{     background: #e2e09b !important; }
+
+
+.act-1001{    border-left-color:  #d9e3f7 !important;}
+.act-1001 .icon{     background: #d9e3f7 !important; }

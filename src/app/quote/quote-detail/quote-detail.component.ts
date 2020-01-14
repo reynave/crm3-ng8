@@ -5,6 +5,7 @@ import { SortablejsOptions } from 'ngx-sortablejs';
 import { ConfigService } from './../../service/config.service';
 import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Editquote } from './../quote';
+import { config } from 'rxjs';
 
 //declare var $: any;
 
@@ -21,10 +22,12 @@ export class QuoteDetailComponent implements OnInit {
   public loading = true;
   public id: number;
   public closeResult: string;
-  quoteModel: any;
+  quoteModel: any = [];
   isReadOnly: boolean = true;
   total: string;
   pricing: any = [];
+  faC: string = '<i class="far fa-check-square"></i>';
+  faUC: string = '<i class="far fa-square"></i>';
 
 
 
@@ -45,9 +48,17 @@ export class QuoteDetailComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params.id;
+    this.quoteModel = {
+      expirationDate: {
+        year: 0,
+        month: 0,
+        day: 0,
+      }
+    }
     this.httpGet();
   }
-
+  quote_status: any = [];
+  activity: any = [];
   httpGet() {
     this.loading = true;
     this.http.get(this.configService.base_url() + 'quote/detail/' + this.id, {
@@ -58,7 +69,10 @@ export class QuoteDetailComponent implements OnInit {
       this.quote_item = data['result']['quote_item'];
       this.pricing = data['result']['pricing'];
       this.loading = false;
+      this.quote_status = data['result']['quote_status'];
       this.total = data['result']['total'];
+      this.activity = data['result']['activity'];
+
       this.quoteModel = new Editquote(
         data['result']['data']['name'],
         data['result']['data']['expired_date'],
@@ -101,14 +115,14 @@ export class QuoteDetailComponent implements OnInit {
       console.log(this.quote_item);
       this.loading = true;
       this.http.post(this.configService.base_url() + 'quote/fn_sortable_item',
-        { 
+        {
           "data": this.quote_item
         }, {
         headers: this.configService.headers()
       }).subscribe(
         data => {
           console.log(data);
-          this.loading = false; 
+          this.loading = false;
         },
         error => {
           console.log(error);
@@ -118,6 +132,39 @@ export class QuoteDetailComponent implements OnInit {
     },
   };
 
+  fn_sync(status) {
+    var note;
+    if (status == true) {
+      note = "Do you want disable syncing with Opportunity ? ";
+    } else if (status == false) {
+      note = "Do you want syncing with Opportunity ? ";
+    }
+    if (confirm(note)) {
+
+      this.loading = true;
+      this.http.post(this.configService.base_url() + 'quote/fn_sync',
+        {
+          "id": this.id,
+          "status": status
+        }, {
+        headers: this.configService.headers()
+      }).subscribe(
+        data => {
+          console.log(data);
+          this.loading = false;
+          this.items['syncing'] = status;
+        },
+        error => {
+          console.log(error);
+          console.log(error.error.text);
+        }
+      );
+
+    }
+
+
+
+  }
 
   fn_updateQuote() {
     this.loading = true;
@@ -214,6 +261,31 @@ export class QuoteDetailComponent implements OnInit {
     );
   }
 
+  fn_update_status(id_quote_status) {
+    if (id_quote_status != this.items['id_quote_status']) {
+
+
+      this.loading = true;
+      this.http.post(this.configService.base_url() + 'quote/fn_update_status',
+        {
+          "id": this.id,
+          "id_quote_status": id_quote_status
+        }, {
+        headers: this.configService.headers()
+      }).subscribe(
+        data => {
+          console.log(data);
+          this.loading = false;
+          this.items['id_quote_status'] = id_quote_status;
+        },
+        error => {
+          console.log(error);
+          console.log(error.error.text);
+        }
+      );
+    }
+  }
+
   show_description(x) {
     var objIndex = this.quote_item.findIndex((obj => obj.id == x.id));
     this.quote_item[objIndex]['hide_description'] = false;
@@ -223,6 +295,11 @@ export class QuoteDetailComponent implements OnInit {
     var objIndex = this.quote_item.findIndex((obj => obj.id == x.id));
     this.quote_item[objIndex]['hide_description'] = true;
 
+  }
+
+  print(){
+    var url = 'quote/print/'+this.id;
+    window.open(url, '_blank'); 
   }
 
 

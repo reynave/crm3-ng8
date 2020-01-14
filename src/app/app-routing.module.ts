@@ -24,6 +24,7 @@ import { PriceListComponent } from './price-list/price-list.component';
 import { PriceListCatalogComponent } from './price-list/price-list-catalog/price-list-catalog.component';
 import { PriceListProductComponent } from './price-list/price-list-product/price-list-product.component';
 import { PriceListModalComponent } from './price-list/price-list-modal/price-list-modal.component';
+import { QuotePrintComponent } from './quote/quote-print/quote-print.component';
 
 
 const routes: Routes = [
@@ -56,8 +57,9 @@ const routes: Routes = [
   { path: "lose", component: LoseComponent },
   { path: "lose/:id", component: LoseComponent },
 
-  { path: "quote", component: QuoteComponent},
-  { path: "quote/:id", component: QuoteDetailComponent }, 
+  { path: "quote", component: QuoteComponent, data : {title : 'Quote'}},
+  { path: "quote/:id", component: QuoteDetailComponent, data : {title : 'Quote'} }, 
+  { path: "quote/print/:id", component: QuotePrintComponent, data : {title : 'Print Quote'}  }, 
 
   { path: "priceList", component: PriceListComponent },
   { path: "priceList/modal/:module", component: PriceListModalComponent },

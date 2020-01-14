@@ -5,7 +5,7 @@
 <div class="container-fluid bg-light border py-1">
   <div class="row">
     <div class="col-12">
-      <small> You are here : <a [routerLink]="[ '/quote' ]">Quote</a> </small>
+      <small> You are here : <a [routerLink]="[ '/quote' ]">Quote</a> /  <a [routerLink]="[ '/quote',id ]">{{items.name}}</a></small>
     </div>
   </div>
 </div>
@@ -15,32 +15,97 @@
   <div class="container-fluid  bg-white">
 
     <div class="row">
-      <div class="col-9">
+      <!-- Left side-->
+      <div class="col-9 col-md-8" >
 
-        <div class="row container-header">
+        <!-- Menu & Information -->
+        <div class="row py-3">
 
-          <div class="col-6">
-            <h5>QUOTE</h5>
+          <div class="col-3">
+            <div class="module-name">
+              <strong>QUOTE</strong>
+              <b class="text-primary">{{items.name}}</b>
+            </div>
           </div>
-          <div class="col-6 text-right">
 
-            <button type="button" class="btn btn-classic btn-sm  mr-1"> <i class="fas fa-paper-plane"></i>
-              Email Quote </button>
+          <div class="col-9 text-right">
+            <div [hidden]="!isReadOnly">
+              <button type="button" class="btn btn-classic btn-sm  mr-1"> <i class="fas fa-paper-plane"></i>
+                Email Quote </button>
 
-            <button type="button" class="btn btn-classic btn-sm  mr-1"> <i class="fas fa-print"></i>
-              Prints </button>
+              <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="print();" > <i class="fas fa-print"></i>
+                Prints </button>
 
-            <button type="button" class="btn btn-classic btn-sm  mr-1" [hidden]="!isReadOnly"
-              (click)="isReadOnly=false"> <i class="fas fa-edit"></i>
-              Edit </button>
+              <button type="button" class="btn btn-classic btn-sm  mr-1"> <i class="far fa-file-pdf"></i>
+                Create PDF </button>
 
-            <button type="button" class="btn btn-outline-secondary btn-sm" [routerLink]="[ '/quote' ]" title="back"> <i
-                class="fas fa-times"></i> </button>
+              <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="isReadOnly=false"> <i
+                  class="fas fa-edit"></i>
+                Edit </button>
+
+              <button type="button" [hidden]="items.syncing" class="btn btn-classic btn-sm  mr-1"
+                (click)="fn_sync(true)"> <i class="fas fa-sync"></i> Sync </button>
+
+              <button type="button" [hidden]="!items.syncing" class="btn btn-classic btn-sm  mr-1"
+                (click)="fn_sync(false)"> <i class="fas fa-sync"></i> Disable Sync </button>
+
+              <button type="button" class="btn btn-classic btn-sm" [routerLink]="[ '/quote' ]" title="back"> <i
+                  class="fas fa-times"></i> </button>
+
+            </div>
+
+            <div [hidden]="isReadOnly">
+              <button type="button" class="btn btn-classic btn-sm" (click)="isReadOnly=true" title="Done"><i
+                  class="fas fa-check"></i> Finish Edit </button>
+            </div>
+
+          </div>
+
+          <div class="col-12 mt-3">
+            <table class="table-p0">
+              <tr>
+                <td> <small> Quote No.</small> </td>
+                <td> <small> Expired Date </small> </td>
+                <td> <small> Syncing </small> </td>
+                <td> <small> Opportunity </small> </td>
+                <td> <small> Grand Total </small></td>
+                <td> <small> Type </small> </td>
+              </tr>
+
+              <tr>
+                <td> <b class="text-primary">{{items.quotes_number}} </b> </td>
+                <td> <b class="text-primary">
+                    {{quoteModel.expirationDate.day}}/{{quoteModel.expirationDate.month}}/{{quoteModel.expirationDate.year}}
+                  </b> </td>
+                <td>
+                  <div class="text-primary" [innerHTML]="items.syncing ?  faC:faUC"></div>
+                </td>
+                <td><b class="text-primary">  <a [routerLink]="[ '/opportunity', items.id_opportunity ]"> {{items.opportunity}}</a>  </b></td>
+                <td> <b class="text-primary"> {{items.currency}} {{pricing.grand_total | number}} </b> </td>
+                <td><b class="text-primary"> New Customer </b></td>
+              </tr>
+            </table>
+          </div>
+
+        </div>
+
+        <!-- Step Bar -->
+        <div class="row py-2 bg-light border-top border-bottom">
+          <div class="col-12">
+
+            <div class="wrapper">
+              <div class="arrow-steps clearfix">
+                <div *ngFor="let x of quote_status" class="step {{x.id > items.id_quote_status ? '':'current'}}"
+                  style="width: 24%;">
+                  <a href="javascript:;" (click)="fn_update_status(x.id);"> {{x.name}}</a> </div>
+              </div>
+
+            </div>
 
           </div>
         </div>
 
-        <div class="row mt-2 mb-2">
+        <div class="row my-2">
 
           <div class="col-12">
 
@@ -57,13 +122,13 @@
                         <strong>Quote line Items ({{total}})</strong>
                       </div>
                       <div class="col-6 text-right" [hidden]="isReadOnly">
-                        <button type="button" class="btn btn-light btn-sm  mr-1" (click)="open(pricelist);"> <i
+                        <button type="button" class="btn btn-light btn-sm border mr-1" (click)="open(pricelist);"> <i
                             class="fas fa-plus"></i>
                           Add Items </button>
 
-                        <button type="button" class="btn btn-light btn-sm  mr-1" (click)="open(sorting);"> <i
+                        <button type="button" class="btn btn-light btn-sm  border mr-1" (click)="open(sorting);"> <i
                             class="fas fa-bars"></i>
-                          Sorting </button>
+                          Sort Items </button>
                       </div>
                     </div>
 
@@ -89,12 +154,16 @@
                               </small>
 
                               <div [hidden]="!x.hide_description"><a href="javascript:;"
-                                  (click)="show_description(x);"><small>Show detail</small></a> </div>
+                                  (click)="show_description(x);"><small>Show detail</small></a>
+                              </div>
+
                               <div [hidden]="x.hide_description"><a href="javascript:;"
-                                  (click)="hide_description(x);"><small>Hide detail</small></a> </div>
+                                  (click)="hide_description(x);"><small>Hide detail</small></a>
+                              </div>
+
                             </div>
 
-                            <textarea [hidden]="isReadOnly" class="form-control form-control-sm w-100"
+                            <textarea [hidden]="isReadOnly" class="form-control form-control-sm w-100 form-description"
                               [(ngModel)]="x.description" [ngModelOptions]="{standalone: true}"
                               (change)="fn_updateQuoteitem(x)"> </textarea>
                           </td>
@@ -162,24 +231,6 @@
                       </tfoot>
                     </table>
 
-
-
-
-                    <div class="row py-2">
-                      <div class="col-6">
-                        <strong>Attachment</strong>
-                      </div>
-                      <div class="col-6 text-right">
-                        <button type="button" class="btn btn-light btn-sm  mr-1"> <i
-                            class="fas fa-plus"></i>
-                          Add Items </button>
-
-                        <button type="button" class="btn btn-light btn-sm  mr-1"> <i
-                            class="fas fa-edit"></i>
-                          Edit Product </button>
-                      </div>
-                    </div>
-
                   </div>
                 </ng-template>
               </ngb-tab>
@@ -234,22 +285,26 @@
                         <table class="table table-borderless">
                           <tr>
                             <td width="40%">Expiration Date</td>
-                            <td> <input type="text" class="form-control form-modal" placeholder="yyyy-mm-dd"
-                                (click)="d.toggle()" readonly name="d" [(ngModel)]="quoteModel.expirationDate"
-                                ngbDatepicker #d="ngbDatepicker" required [readonly]="isReadOnly">
+                            <td>
+                              <span [hidden]="!isReadOnly">
+                                {{quoteModel.expirationDate.day}}/{{quoteModel.expirationDate.month}}/{{quoteModel.expirationDate.year}}
+                              </span>
+
+                              <span [hidden]="isReadOnly">
+                                <input type="text" class="form-control form-modal" placeholder="yyyy-mm-dd"
+                                  (click)="d.toggle()" readonly name="d" [(ngModel)]="quoteModel.expirationDate"
+                                  ngbDatepicker #d="ngbDatepicker" required>
+                              </span>
+
                             </td>
                           </tr>
-                          <tr>
-                            <td>Syncing</td>
-                            <td><input type="checkbox" [(ngModel)]="quoteModel.syncing" name="syncing">
-                            </td>
-                          </tr>
+
 
                           <tr>
                             <td>Description</td>
                             <td>
                               <textarea class="form-control form-modal" [(ngModel)]="quoteModel.description"
-                                name="description" [readonly]="isReadOnly"></textarea>
+                                name="description" [readonly]="isReadOnly" rows="4"></textarea>
 
                             </td>
                           </tr>
@@ -421,22 +476,64 @@
             </ngb-tabset>
 
           </div>
+        </div>
 
+        <div class="row my-2">
+          <div class="col-6">
+            <strong>Attachment</strong>
+          </div>
+          <div class="col-6 text-right">
+            <button type="button" class="btn btn-light border btn-sm  mr-1"> <i class="fas fa-plus"></i>
+              Add Files </button>
+          </div>
 
+        </div>
 
+        <div class="row">
+          <div class="col-12">
+            <table class="table">
+              <thead class="thead-light border-top-yellowgreen">
+                <tr>
+                  <th>Files</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    sdfasdfasdf
+                  </td>
+                </tr>
+              </tbody>
 
+            </table>
+          </div>
         </div>
 
       </div>
 
       <!-- right side-->
-      <div class="col-3 border border-top-0">
-        <div class="row container-header">
-          <h5>HISTORY</h5>
+      <div class="col-3 col-md-4 border border-top-0">
+ 
+        <div class="row py-3">
+          <div class="col-6">
+            <strong>History Activities</strong>
+          </div>
+          <div class="col-6 text-right">
+            <button type="button" class="btn btn-classic btn-sm btn-block  mr-1"> <i class="fab fa-rocketchat"></i>
+              Activity </button>
+          </div>
         </div>
+ 
+        <div>
+          <div class="bg-light px-2 mb-2"> <strong> Latest activity</strong> </div>
 
-        <div class="row">
-          <strong>Past Activity</strong>
+          <div class="activity-log act-{{x.id_activity_type}}" *ngFor="let x of activity">
+            <div class="icon"  [innerHTML]="x.fas"></div>
+            <div class="content">
+              <small> {{x.input_date | date:'medium'}}</small>
+              <div class="text" [innerHTML]="x.log"></div>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -481,29 +578,29 @@
 
 <ng-template #sorting let-modal>
   <div class="modal-header">
-    <strong class="modal-title" id="modal-basic-title">Price List </strong>
+    <strong class="modal-title" id="modal-basic-title">Sort Items </strong>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body bg-light ">
+  <div class="modal-body bg-light p-0">
 
-  
-    <h2>Drag / drop the item</h2>
-      <div [sortablejs]="quote_item" [sortablejsOptions]="eventOptions">
-        <div *ngFor="let x of quote_item">{{ x.product }}
 
-          <div>{{x.description}}</div>
-        </div>
-      </div>
+    <div class="text-center py-2"> Drag the items into the order you want. It will save. <i
+        class="fas fa-exclamation-circle"></i> </div>
+
+    <table class="table border bg-white table-hover" [sortablejs]="quote_item" [sortablejsOptions]="eventOptions">
+      <tr *ngFor="let x of quote_item">
+        <td width="20"> <i class="fas fa-bars"></i> </td>
+        <td> {{ x.product }} </td>
+      </tr>
+    </table>
 
   </div>
 
 
   <div class="modal-footer">
-    <button type="button" class="btn btn-sm btn-light" (click)="modal.close('Close click')">Close</button> 
+    <button type="button" class="btn btn-sm btn-light" (click)="modal.close('Close click')">Close</button>
   </div>
 
 </ng-template>
-
- 

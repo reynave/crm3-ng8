@@ -38,6 +38,7 @@ import { DealDetailComponent } from './deal/deal-detail/deal-detail.component';
 import { QuoteDetailComponent } from './quote/quote-detail/quote-detail.component';
 import { NavigatorComponent } from './navigator/navigator.component';
 import { SortablejsModule } from 'ngx-sortablejs';
+import { QuotePrintComponent } from './quote/quote-print/quote-print.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { SortablejsModule } from 'ngx-sortablejs';
     LoseComponent,
     DealDetailComponent,
     QuoteDetailComponent,
-    NavigatorComponent
+    NavigatorComponent,
+    QuotePrintComponent
   ],
   imports: [
     BrowserModule,
