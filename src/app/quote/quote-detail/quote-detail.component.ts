@@ -136,9 +136,9 @@ export class QuoteDetailComponent implements OnInit {
   fn_sync(status) {
     var note;
     if (status == true) {
-      note = "Do you want disable syncing with Opportunity ? ";
-    } else if (status == false) {
       note = "Do you want syncing with Opportunity ? ";
+    } else if (status == false) {
+      note = "Do you want disable syncing with Opportunity ? ";
     }
     if (confirm(note)) {
 

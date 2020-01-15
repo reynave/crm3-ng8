@@ -17,21 +17,22 @@
         <li class="nav-item {{current == 'lead' ? 'active' : false}}">
           <a class="nav-link py-0" href="javascript:;" [routerLink]="[ '/lead']">Lead</a>
         </li> 
-   
-        <li class="nav-item dropdown {{current == 'contact' ? 'active' : false}} {{current == 'company' ? 'active' : false}}">
-          <a class="nav-link dropdown-toggle py-0" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">Account</a>
-          <div class="dropdown-menu" aria-labelledby="dropdown01">
-            <a class="dropdown-item" href="javascript:;" [routerLink]="[ '/contact']">Contact</a>
-            <a class="dropdown-item" href="javascript:;" [routerLink]="[ '/company']">Company</a> 
-          </div>
-        </li>
+    
+        <li class="nav-item {{current == 'contact' ? 'active' : false}}">
+          <a class="nav-link py-0" href="javascript:;" [routerLink]="[ '/contact']">Contact</a>
+        </li> 
+
+        <li class="nav-item {{current == 'company' ? 'active' : false}}">
+          <a class="nav-link py-0" href="javascript:;" [routerLink]="[ '/company']">Company</a>
+        </li> 
   
+
         <li class="nav-item {{current == 'opportunity' ? 'active' : false}}">
           <a class="nav-link py-0" href="javascript:;" [routerLink]="[ '/opportunity']">Opportunity</a>
         </li> 
   
   
-        <li class="nav-item {{current == 'pricelist' ? 'active' : false}}">
+        <li class="nav-item {{current == 'priceList' ? 'active' : false}}">
           <a class="nav-link py-0" href="javascript:;" [routerLink]="[ '/priceList']">Price List</a>
         </li> 
   
