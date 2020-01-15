@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient, HttpEventType } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 import { SortablejsOptions } from 'ngx-sortablejs';
 import { ConfigService } from './../../service/config.service';
 import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
@@ -20,7 +20,7 @@ export class QuoteDetailComponent implements OnInit {
   quote_item: any = [];
   myContact: any = [];
   public loading = true;
-  public id: number;
+  public id: string;
   public closeResult: string;
   quoteModel: any = [];
   isReadOnly: boolean = true;
@@ -33,7 +33,6 @@ export class QuoteDetailComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private router: Router,
     private activatedRoute: ActivatedRoute,
     private modalService: NgbModal,
     config: NgbModalConfig,
@@ -59,6 +58,7 @@ export class QuoteDetailComponent implements OnInit {
   }
   quote_status: any = [];
   activity: any = [];
+  attachment : any = [];
   httpGet() {
     this.loading = true;
     this.http.get(this.configService.base_url() + 'quote/detail/' + this.id, {
@@ -72,6 +72,7 @@ export class QuoteDetailComponent implements OnInit {
       this.quote_status = data['result']['quote_status'];
       this.total = data['result']['total'];
       this.activity = data['result']['activity'];
+      this.attachment = data['result']['attachment'];
 
       this.quoteModel = new Editquote(
         data['result']['data']['name'],
@@ -286,6 +287,62 @@ export class QuoteDetailComponent implements OnInit {
     }
   }
 
+
+  selectedFile=null;
+  onFileSelected(event){
+    this.selectedFile = event.target.files[0];
+  }
+  onUpload(){
+    const fd = new FormData();
+    fd.append('files',this.selectedFile, this.selectedFile.name);
+    fd.append('token', this.configService.token() );
+    fd.append('id_module', this.id );
+    
+    console.log(fd, this.configService.token() );
+    this.http.post(this.configService.base_url() + 'upload/quotes_attachment',fd,{
+      reportProgress: true,
+      observe: 'events'
+    })
+    .subscribe(
+      event => {
+        if(event.type === HttpEventType.UploadProgress){
+          console.log(event ); // handle event here
+        }else if( event.type === HttpEventType.Response ){
+          console.log(event ); // handle event here
+        }
+       
+      },
+      data => {
+        console.log(data); 
+        this.attachment = data['result']['attachment'];
+
+      }
+      
+    );
+  }
+
+  fn_attach_delete(x){
+    this.loading = true;
+   
+    this.http.post(this.configService.base_url() + 'quote/fn_attach_delete',
+      {
+        "id": x.id, 
+      }, {
+      headers: this.configService.headers()
+    }).subscribe(
+      data => {
+        console.log(data);
+        this.loading = false;
+        var objIndex = this.attachment.findIndex((obj => obj.id == x.id));
+        this.attachment.splice(objIndex, 1); 
+      },
+      error => {
+        console.log(error);
+        console.log(error.error.text);
+      }
+    );
+  }
+
   show_description(x) {
     var objIndex = this.quote_item.findIndex((obj => obj.id == x.id));
     this.quote_item[objIndex]['hide_description'] = false;
@@ -302,5 +359,8 @@ export class QuoteDetailComponent implements OnInit {
     window.open(url, '_blank'); 
   }
 
+
+
+  test:string = "<!DOCTYPE html><html lang='en'><head><meta charset='utf-8'><title>Database Error</title><style type='text/css'>::selection{background-color: #E13300; color: white;}::-moz-selection{background-color: #E13300; color: white;}body{background-color: #fff;margin: 40px;font: 13px/20px normal Helvetica, Arial, sans-serif;color: #4F5155;}a{color: #003399;background-color: transparent;font-weight: normal;}h1{color: #444;background-color: transparent;border-bottom: 1px solid #D0D0D0;font-size: 19px;font-weight: normal;margin: 0 0 14px 0;padding: 14px 15px 10px 15px;}code{font-family: Consolas, Monaco, Courier New, Courier, monospace;font-size: 12px;background-color: #f9f9f9;border: 1px solid #D0D0D0;color: #002166;display: block;margin: 14px 0 14px 0;padding: 12px 10px 12px 10px;}#container{margin: 10px;border: 1px solid #D0D0D0;box-shadow: 0 0 8px #D0D0D0;}p{margin: 12px 15px 12px 15px;}</style></head><body><div id='container'><h1><br>A Database Error Occurred</h1><p>Error Number: 1054</p><p>Unknown column '6c' in 'where clause'</p><p>SELECT SUM(total) FROM crm3_quote_detail WHERE presence=1 AND id_quote=6c</p><p>Filename: C:/xampp/htdocs/application/crm3-ng8/api-v1/system/database/DB_driver.php</p><p>Line Number: 691</p></div></body></html>";
 
 }

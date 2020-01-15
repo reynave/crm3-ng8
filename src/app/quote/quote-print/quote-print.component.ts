@@ -63,7 +63,9 @@ export class QuotePrintComponent implements OnInit  {
     });
   }
 
-   
+  close(){
+    window.close()
+  }
   print(){
     window.print();
   }

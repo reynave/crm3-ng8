@@ -5,7 +5,8 @@
 <div class="container-fluid bg-light border py-1">
   <div class="row">
     <div class="col-12">
-      <small> You are here : <a [routerLink]="[ '/quote' ]">Quote</a> /  <a [routerLink]="[ '/quote',id ]">{{items.name}}</a></small>
+      <small> You are here : <a [routerLink]="[ '/quote' ]">Quote</a> / <a
+          [routerLink]="[ '/quote',id ]">{{items.name}}</a></small>
     </div>
   </div>
 </div>
@@ -16,7 +17,7 @@
 
     <div class="row">
       <!-- Left side-->
-      <div class="col-9 col-md-8" >
+      <div class="col-9 col-md-8">
 
         <!-- Menu & Information -->
         <div class="row py-3">
@@ -33,7 +34,8 @@
               <button type="button" class="btn btn-classic btn-sm  mr-1"> <i class="fas fa-paper-plane"></i>
                 Email Quote </button>
 
-              <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="print();" > <i class="fas fa-print"></i>
+              <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="print();"> <i
+                  class="fas fa-print"></i>
                 Prints </button>
 
               <button type="button" class="btn btn-classic btn-sm  mr-1"> <i class="far fa-file-pdf"></i>
@@ -80,7 +82,8 @@
                 <td>
                   <div class="text-primary" [innerHTML]="items.syncing ?  faC:faUC"></div>
                 </td>
-                <td><b class="text-primary">  <a [routerLink]="[ '/opportunity', items.id_opportunity ]"> {{items.opportunity}}</a>  </b></td>
+                <td><b class="text-primary"> <a [routerLink]="[ '/opportunity', items.id_opportunity ]">
+                      {{items.opportunity}}</a> </b></td>
                 <td> <b class="text-primary"> {{items.currency}} {{pricing.grand_total | number}} </b> </td>
                 <td><b class="text-primary"> New Customer </b></td>
               </tr>
@@ -105,6 +108,7 @@
           </div>
         </div>
 
+        <!-- Product line -->
         <div class="row my-2">
 
           <div class="col-12">
@@ -194,7 +198,7 @@
 
 
                       </tbody>
-                      <tfoot>
+                      <tfoot class="d-none">
 
                         <tr>
                           <td colspan="4" class="text-right">Total</td>
@@ -229,6 +233,28 @@
 
 
                       </tfoot>
+                    </table>
+
+
+                    <table class="table table-list table-bordered">
+                      <tbody>
+                        <tr>
+                          <td width="20%"> <strong> Total</strong></td>
+                          <td width="20%"> <strong> Discount 13 % </strong> </td>
+                          <td width="20%"><strong> Tax 9 % </strong></td>
+                          <td width="20%"><strong> Shipping and handling </strong> </td>
+                          <td width="20%"> <strong> Final Total</strong> </td>
+                        </tr>
+                        <tr>
+                          <td> {{items.currency}} {{pricing.total | number}}</td>
+                          <td>{{items.currency}} {{pricing.discount | number}} </td>
+                          <td>{{items.currency}} {{pricing.tax | number}} </td>
+                          <td>{{items.currency}} {{pricing.shipping | number}} </td>
+                          <td>{{items.currency}} {{pricing.grand_total | number}} </td>
+                        </tr>
+
+                      </tbody>
+
                     </table>
 
                   </div>
@@ -478,32 +504,49 @@
           </div>
         </div>
 
+        <!-- Attachment Title -->
         <div class="row my-2">
           <div class="col-6">
             <strong>Attachment</strong>
           </div>
-          <div class="col-6 text-right">
-            <button type="button" class="btn btn-light border btn-sm  mr-1"> <i class="fas fa-plus"></i>
-              Add Files </button>
+          <div class="col-4 text-right" [hidden]="isReadOnly">
+
+            <input class="form-control form-control-sm" type="file" (change)="onFileSelected($event)">
+
+          </div>
+          <div class="col-2" [hidden]="isReadOnly">
+            <button type="button" class="btn btn-classic btn-sm" (click)="onUpload();">Upload</button>
           </div>
 
         </div>
 
+        <!-- Attachments -->
         <div class="row">
           <div class="col-12">
-            <table class="table">
-              <thead class="thead-light border-top-yellowgreen">
+            <table class="table table-list table-bordered table-striped">
+              <thead class="thead-light border-top-brown">
                 <tr>
                   <th>Files</th>
+                  <th width="100">Size</th>
+                  <th width="50"></th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr *ngFor="let x of attachment">
                   <td>
-                    sdfasdfasdf
+                    <a href="{{x.url}}" target="_blank"> {{x.file_name}}</a>
+                  </td>
+                  <td>
+                    {{x.size }}
+                  </td>
+                  <td>
+                    <div [hidden]="isReadOnly">
+                      <a href="javascript:;" (click)="fn_attach_delete(x);"><i class="fas fa-trash-alt"></i></a>
+                    </div>
                   </td>
                 </tr>
               </tbody>
+
 
             </table>
           </div>
@@ -513,7 +556,7 @@
 
       <!-- right side-->
       <div class="col-3 col-md-4 border border-top-0">
- 
+
         <div class="row py-3">
           <div class="col-6">
             <strong>History Activities</strong>
@@ -523,12 +566,12 @@
               Activity </button>
           </div>
         </div>
- 
+
         <div>
           <div class="bg-light px-2 mb-2"> <strong> Latest activity</strong> </div>
 
           <div class="activity-log act-{{x.id_activity_type}}" *ngFor="let x of activity">
-            <div class="icon"  [innerHTML]="x.fas"></div>
+            <div class="icon" [innerHTML]="x.fas"></div>
             <div class="content">
               <small> {{x.input_date | date:'medium'}}</small>
               <div class="text" [innerHTML]="x.log"></div>
@@ -562,8 +605,6 @@
 
 </form>
 
-
-
 <ng-template #pricelist let-modal>
   <div class="modal-header">
     <strong class="modal-title" id="modal-basic-title">Price List </strong>
@@ -574,7 +615,6 @@
   <app-price-list-modal (uploaded)="requestEmit($event)"></app-price-list-modal>
 
 </ng-template>
-
 
 <ng-template #sorting let-modal>
   <div class="modal-header">
@@ -604,3 +644,21 @@
   </div>
 
 </ng-template>
+
+
+<div class="error-container">
+  <div class="container bg-white-transparent border rounded-sm shadow-lg ">
+    <div class="row ">
+      <div class="col-12 p-3 ">
+        <div class="error-log">
+          <span [innerHTML]="test"></span>
+        </div>
+        <div class="text-center">
+          <a href=""><small>  Send feedback to Support Now !</small></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

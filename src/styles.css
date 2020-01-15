@@ -476,3 +476,19 @@ fieldset table td{
 
 .act-1001{    border-left-color:  #d9e3f7 !important;}
 .act-1001 .icon{     background: #d9e3f7 !important; }
+
+.bg-white-transparent{
+    background: rgba(255, 255, 255, .96);
+}
+.error-log{
+    overflow-y: auto;
+    max-height: 400px;
+}
+.error-container{
+    display: none;
+    position: fixed;
+    width: 100%;
+    top: 100px; left: 0px;
+    height: 100%;
+    z-index: 99999999;
+}

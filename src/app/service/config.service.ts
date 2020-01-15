@@ -45,11 +45,12 @@ export class ConfigService {
   token() {
     return this.varToken;
   }
-   
-
+    
   id_user() {
-    return localStorage.getItem("crm3IdUser");
+    return this.varToken;
   }
+    
+ 
 
   errorToken(data) {
     if (data['error'] == 400) {
