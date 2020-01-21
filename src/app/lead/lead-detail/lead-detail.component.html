@@ -4,240 +4,394 @@
 
 <div class="container-fluid bg-light border-bottom py-1">
   <div class="row">
-    <div class="col-6">
-      <small> You are here : <a [routerLink]="[ '/lead' ]">Lead</a> / <a [routerLink]="[ '/lead/',items.id ]">
+    <div class="col-12">
+      <small> You are here : <a [routerLink]="[ '/lead' ]">Lead</a> /
+        <a [routerLink]="[ '/lead/',items.id ]">
           {{items.name}}</a> </small>
     </div>
   </div>
 </div>
 
-<div class="container-fluid" [hidden]="items.length < 1">
+<form (ngSubmit)="fn_update()" #mainForm="ngForm">
 
-  <div class="row container-header my-2">
+  <div class="container-fluid  bg-white">
+    <div class="row">
+      <!-- Left side-->
+      <div class="col-9 col-md-8">
 
-    <div class="col-3 ">
-      <h5>LEAD</h5>
-    </div>
+        <!-- Menu & Information -->
+        <div class="row py-3 ">
+          <!-- Header & button -->
+          <div class="col-3  haha2">
+            <div class="module-name">
+              <strong>QUOTE</strong>
+              <b class="text-primary">{{items.first_name}} {{items.last_name}}</b>
+            </div>
+          </div>
 
-    <div class="col-9 text-right">
-      <button type="button" class="btn btn-success  btn-sm  mr-1" (click)="open(convert)"> <i
-          class="fas fa-funnel-dollar"></i> Convert To Opportunity </button>
+          <div class="col-9 text-right haha2">
+            <div [hidden]="!isReadOnly">
+              <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="open(convert)"> <i
+                  class="fas fa-funnel-dollar"></i> Convert To Opportunity </button>
 
-      <button type="button" class="btn btn-outline-primary  btn-sm  mr-1" [routerLink]="[ '/lead/edit/',items.id ]"> <i
-          class="fas fa-edit"></i> Edit </button>
+              <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="isReadOnly=false"> <i
+                  class="fas fa-edit"></i>
+                Edit </button>
 
-      <button type="button" class="btn btn-danger btn-sm  mr-1" (click)="fn_delete();"> <i class="fas fa-trash-alt"></i>
-        Delete </button>
+              <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="fn_delete();"> <i
+                  class="fas fa-trash-alt"></i>
+                Delete </button>
 
-      <button type="button" class="btn btn-outline-secondary  btn-sm" [routerLink]="[ '/lead' ]" title="back"> <i
-          class="fas fa-times"></i> </button>
-    </div>
+              <button type="button" class="btn btn-classic btn-sm  mr-1" [routerLink]="[ '/lead' ]" title="back"> <i
+                  class="fas fa-times"></i> </button>
 
-  </div>
+            </div>
 
-  <div class="row my-3">
-    <div class="col-4">
-      <h5>Information</h5>
-    </div>
-    <div class="col-8 text-right">
-      <label>Lead Status : </label>
-      <label class="px-3 mx-2"> <span class="text-{{items.lead_status_color }}"> <i class="fas fa-square"></i> </span>
-        {{items.lead_status_name }}</label>
+            <div [hidden]="isReadOnly">
+              <button type="button" class="btn btn-classic btn-sm" (click)="isReadOnly=true" title="Done"><i
+                  class="fas fa-check"></i> Finish Edit </button>
+            </div>
 
-    </div>
-  </div>
+          </div>
 
+          <!-- Infromation -->
+          <div class="col-12 py-3 haha1">
+            <table class="table-p0">
+              <tr>
+                <td> <small> Company</small> </td>
+                <td> <small> Position </small></td>
+                <td> <small> Mobile</small> </td>
+                <td> <small> Email </small> </td>
+                <td> <small> Lead Status </small> </td>
+              </tr>
 
-  <div class="row mb-3">
+              <tr>
+                <td> <b class="text-primary"> {{items.company.name}} </b> </td>
+                <td> <b class="text-primary"> {{items.position}} </b> </td>
+                <td> <b class="text-primary"> {{items.mobile}} </b> </td>
+                <td> <b class="text-primary"> {{items.email}}</b> </td>
+                <td>
 
-    <div class="col-6">
-
-      <strong>Contact</strong>
-      <table class="table table-list">
-        <tbody>
-
-          <tr>
-            <td width="30%"><label>Name</label></td>
-            <td> {{items.name}} </td>
-          </tr>
-
-          <tr>
-            <td><label>Email</label></td>
-            <td> {{items.email}} </td>
-          </tr>
-
-          <tr>
-            <td><label>Phone</label></td>
-            <td> {{items.phone}} </td>
-          </tr>
-          <tr>
-            <td><label>Mobile</label></td>
-            <td>{{items.mobile}} </td>
-          </tr>
-          <tr>
-            <td><label>Lead source</label></td>
-            <td> {{items.lead_source}} </td>
-          </tr>
-
-          <tr>
-            <td><label>Lead owner </label></td>
-            <td>{{items.user}} </td>
-          </tr>
-
-          <tr>
-            <td><label>Lead Status </label></td>
-            <td>
-              <select class="form-control form-control-sm" [(ngModel)]="items.id_lead_status"
-                (change)="onChangeLeadStatus($event.target.value)">
-                <option [ngValue]="x.id" *ngFor="let x of lead_status">
-                  {{x.name}}
-                </option>
-              </select>
-            </td>
-          </tr>
-
-        </tbody>
-      </table>
-
-      <span class="d-none">
-        <strong>Input Information</strong>
-        <table class="table table-list">
-
-          <tbody>
-
-            <tr>
-              <td><label>Created Date</label></td>
-              <td> {{items.input_date | date:'d MMM y  hh:mm a'}}, <small> by {{items.input_by}}</small> </td>
-            </tr>
-            <tr [hidden]="items.update_by == false">
-              <td><label>Update Date</label></td>
-              <td> {{items.update_date | date:'d MMM y  hh:mm a'}}, <small> by {{items.update_by}} </small> </td>
-            </tr>
-            <tr>
-              <td><label>ID Lead</label></td>
-              <td><span class="text-monospace">{{items.id}}</span></td>
-            </tr>
-          </tbody>
+                  <b class="text-primary" [hidden]="!isReadOnly"><span class="text-{{items.lead_status.color }}"> <i
+                        class="fas fa-square"></i>
+                    </span>
+                    {{items.lead_status.name }} </b>
 
 
-        </table>
-      </span>
+                  <select class="form-control form-control-sm p-0 border" [(ngModel)]="items.id_lead_status" [hidden]="isReadOnly"
+                    (change)="onChangeLeadStatus($event.target.value)" [ngModelOptions]="{standalone: true}">
+                    <option [ngValue]="x.id" *ngFor="let x of lead_status">
+                      {{x.name}}
+                    </option>
+                  </select>
 
 
-    </div>
+                </td>
+              </tr>
+            </table>
+          </div>
 
-    <div class="col-6">
+        </div>
 
-      <strong>Company </strong>
-      <table class="table table-list">
-        <tbody>
-          <tr>
-            <td width="30%"><label>Company</label></td>
-            <td> {{items.company}}</td>
-          </tr>
-          <tr>
-            <td><label>Website</label></td>
-            <td><a href="">{{items.website}}</a></td>
-          </tr>
+        <div class="row py-2">
 
-          <tr>
-            <td><label>Address</label></td>
-            <td>{{items.address}}</td>
-          </tr>
+          <div class="col-12">
 
-          <tr>
-            <td><label>Industry</label></td>
-            <td> {{items.industry}} </td>
-          </tr>
+            <ngb-tabset type="pills">
 
-        </tbody>
+              <ngb-tab>
+                <ng-template ngbTabTitle>Related</ng-template>
+                <ng-template ngbTabContent>
+                  <div class="border-top py-2 my-2">
 
 
-      </table>
+                    <!-- Product -->
+                    <div class="row py-2">
+                      <div class="col-12 ">
+                        <div class="border py-1 px-2 border-top-brown rounded">
+
+                          <div class="row">
+                            <div class="col-6"><strong>Products ({{product.length}}) </strong></div>
+                            <div class="col-6 text-right"> <button class="btn btn-classic btn-sm" (click)="open(pricelist);"><i class="fas fa-plus"></i> New</button> </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-6 mb-2" *ngFor="let x of product; let i = index">
+
+                              <hr [hidden]=" i < 2" class="p-0 m-0 mb-2">
+                              <table class="table-items">
+                                <thead>
+                                  <tr>
+                                    <th colspan="2"> <a href="javascript:;">{{x.product}}</a></th>
+                                    <th width="50" class="text-right">
+                                      <a href="javascript:" (click)="fn_deleteProduct(x);"><i class="far fa-trash-alt"></i></a>
+                                    </th>
+                                  </tr>
+                                </thead>
+                                <tbody> 
+                                  <tr>
+                                    <td  width="100">Sales Price</td>
+                                    <td colspan="2">: {{x.currency}} {{x.price | number}}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+              
+                            </div>
+              
+
+                          </div>
 
 
-      <strong>Opportunity</strong>
-      <table class="table table-list">
-
-        <tbody>
-
-          <tr>
-            <td width="30%"><label>Subject</label></td>
-            <td> {{items.opportunity}} </td>
-          </tr>
-          <tr>
-            <td><label>Expected Revenue</label></td>
-            <td> {{items.currency }} {{items.amount| number:''}},- </td>
-          </tr>
-
-        </tbody>
+                        </div>
+                      </div>
+                    </div>
 
 
-      </table>
+                  </div>
+                </ng-template>
+              </ngb-tab>
+
+              <ngb-tab>
+                <ng-template ngbTabTitle>Detail</ng-template>
+                <ng-template ngbTabContent>
+                  <div class="border-top py-2 my-2">
+                   
+                    <div class="row">
+                      <div class="col-12 bg-light">
+                        <strong>Contact</strong>
+                      </div>
+                      <div class="col-6">
+                        <table class="table table-borderless">
+                          <tbody>
+
+                            <tr>
+                              <td width="30%"><label>First Name</label></td>
+                              <td>
+                                <input type="text" class="form-control form-modal" id="first_name" required
+                                  [(ngModel)]="lead.first_name" name="first_name" #first_name="ngModel"
+                                  [readonly]="isReadOnly">
+                                <div [hidden]="first_name.valid || first_name.pristine" class="alert alert-danger">
+                                  First name is required
+                                </div>
+
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td><label>Last Name</label></td>
+                              <td>
+                                <input type="text" class="form-control form-modal" id="last_name"
+                                  [(ngModel)]="lead.last_name" name="last_name" #last_name="ngModel"
+                                  [readonly]="isReadOnly">
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td><label>Email</label></td>
+                              <td> <input type="text" class="form-control form-modal" id="email"
+                                  [(ngModel)]="lead.email" name="email" [readonly]="isReadOnly"> </td>
+                            </tr>
+
+                            <tr>
+                              <td><label>Phone</label></td>
+                              <td> <input type="text" class="form-control form-modal" id="phone"
+                                  [(ngModel)]="lead.phone" name="phone" [readonly]="isReadOnly"> </td>
+                            </tr>
+                            <tr>
+                              <td><label>Mobile</label></td>
+                              <td> <input type="text" class="form-control form-modal" id="mobile"
+                                  [(ngModel)]="lead.mobile" name="mobile" [readonly]="isReadOnly"> </td>
+                            </tr>
+
+
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <div class="col-6">
+                        <table class="table table-borderless">
+                          <tbody>
+
+                            <tr>
+                              <td><label>Position</label></td>
+                              <td> <input type="text" class="form-control form-modal" id="position"
+                                  [(ngModel)]="lead.position" name="position" [readonly]="isReadOnly"> </td>
+                            </tr>
+
+                            <tr>
+                              <td width="30%"><label>Lead source</label></td>
+                              <td>
+                                <select class="form-control form-modal" id="lead_source"
+                                  [(ngModel)]="lead.id_lead_source" name="id_lead_source" [disabled]="isReadOnly">
+                                  <option *ngFor="let x of lead_source" value="{{x.id}}"> {{x.name}} </option>
+                                </select>
+
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td><label>Lead owner </label></td>
+                              <td>
+                                <select class="form-control form-modal" id="id_user" [(ngModel)]="lead.id_user"
+                                  name="id_user" [disabled]="isReadOnly">
+                                  <option *ngFor="let x of user" value="{{x.id}}"> {{x.name}} </option>
+                                </select>
+                              </td>
+                            </tr>
+
+
+                            <tr>
+                              <td><label>Opportunity</label></td>
+                              <td>
+                                <input type="text" class="form-control form-modal" id="opportunity"
+                                  [(ngModel)]="lead.opportunity" name="opportunity" [readonly]="isReadOnly">
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td><label>Expected ({{items.currency }})</label></td>
+                              <td> <input type="number" class="form-control form-modal" id="amount"
+                                  [(ngModel)]="lead.amount" name="amount" [readonly]="isReadOnly"> </td>
+                            </tr>
 
 
 
-    </div>
-  </div>
+                          </tbody>
+                        </table>
+                      </div>
 
-  <div class="py-2">
-    <strong>Product Interest </strong>
-  </div>
+                    </div>
 
-  <div class=" bg-light  border border-top-brown rounded p-1 mb-4">
-    <div class="scroll-x max-height mb-4">
+                    <div class="row">
 
-      <table class="table table-hover border bg-white border-top border-bottom pointer">
-        <thead class="thead-light">
-          <tr>
-            <th class="text-center"></th>
-            <th scope="col">Product Name</th>
-            <th scope="col">Price List</th>
-            <th scope="col">Catalog</th>
-            <th scope="col" colspan="2">Price</th>
-            <th scope="col">Created Date</th>
-            <th scope="col">Created By</th>
+                      <div class="col-12 bg-light">
+                        <strong>Company</strong>
+                      </div>
+
+                      <div class="col-6">
+                        <table class="table table-borderless">
+                          <tbody>
+                            <tr>
+                              <td width="30%"><label>Company</label></td>
+                              <td> <input type="text" class="form-control form-modal" id="company"
+                                  [(ngModel)]="lead.company" name="company" [readonly]="isReadOnly"> </td>
+                            </tr>
+                            <tr>
+                              <td><label>Website</label></td>
+                              <td><a href="">{{items.website}}</a></td>
+                            </tr>
+
+                            <tr>
+                              <td><label>Address</label></td>
+                              <td>{{items.address}}</td>
+                            </tr>
+
+                            <tr>
+                              <td><label>Industry</label></td>
+                              <td> {{items.industry}} </td>
+                            </tr>
+
+                          </tbody>
+                        </table> 
+                      </div>
+
+                      <div class="col-6">
+                        <table class="table table-borderless">
+                          <tbody>
+                            <tr>
+                              <td width="30%"><label>Address</label></td>
+                              <td> <textarea class="form-control form-modal" [(ngModel)]="lead.address_street" placeholder="Street"
+                                name="address_street" id="h21a" [readonly]="isReadOnly"> </textarea> </td>
+                            </tr>
+                        
+                            <tr>
+                              <td><label>City</label></td>
+                              <td> <input type="text" class="form-control form-modal" maxlength="250" [(ngModel)]="lead.address_city" placeholder="City"
+                                name="address_city" id="h21b" [readonly]="isReadOnly"> </td>
+                            </tr>
+
+                            <tr>
+                              <td><label>State</label></td>
+                              <td> <input type="text" class="form-control form-modal" maxlength="250" [(ngModel)]="lead.address_state" placeholder="State"  name="address_state" id="h21b" [readonly]="isReadOnly"> </td>
+                            </tr>
+
+                            <tr>
+                              <td><label>Postal Code</label></td>
+                              <td> <input type="text" class="form-control form-modal" maxlength="250" [(ngModel)]="lead.address_code" placeholder="State"  name="address_code" id="h21b" [readonly]="isReadOnly"> </td>
+                            </tr>
+
+                            <tr>
+                              <td><label>Country</label></td>
+                              <td> <input type="text" class="form-control form-modal" maxlength="250" [(ngModel)]="lead.address_country" placeholder="State"  name="address_country" id="h21b" [readonly]="isReadOnly"> </td>
+                            </tr>
 
 
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td width="50"><i class="far fa-trash-alt"></i> </td>
-            <td> Graco X2099 </td>
-            <td> Graco 2019 </td>
-            <td> Tools and Setting </td>
-            <td width="50"> IDR </td>
-            <td class="text-right"> 200.000.000,- </td>
+                          </tbody>
+                        </table> 
+                      </div>
 
-            <td> 20 Jun 2019 </td>
-            <td> Sabrina </td>
-          </tr>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngb-tab>
+
+            </ngb-tabset>
 
 
+          </div>
 
-        </tbody>
-        <tfoot>
-          <tr>
-            <td></td>
-            <td colspan="7"> <button type="button" class="btn btn-classic btn-sm"> <i class="fas fa-plus"></i> Add
-                Products</button> </td>
-          </tr>
-        </tfoot>
-      </table>
 
-    </div>
-  </div>
- 
+        </div>
 
-  <!-- <div class="col-4">
-      <div class="position-fixed">
-        <app-widget-activity></app-widget-activity>
+
       </div>
 
-    </div>-->
+      <!-- right side-->
+      <div class="col-3 col-md-4 border border-top-0">
+        <!--  <app-widget-activity></app-widget-activity>-->
 
-</div>
+        <div class="row py-3">
+          <div class="col-6">
+            <strong>History Activities</strong>
+          </div>
+          <div class="col-6 text-right">
+            <button type="button" class="btn btn-classic btn-sm btn-block  mr-1"> <i class="fab fa-rocketchat"></i>
+              Activity </button>
+          </div>
+        </div>
+
+        <div>
+          <div class="bg-light px-2 mb-2"> <strong> Latest activity</strong> </div>
+
+          <div class="activity-log act-{{x.id_activity_type}}" *ngFor="let x of activity">
+            <div class="icon" [innerHTML]="x.fas"></div>
+            <div class="content">
+              <small> {{x.input_date | date:'medium'}}</small>
+              <div class="text" [innerHTML]="x.log"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div [hidden]="isReadOnly"><br><br></div>
+
+  <div class="footer-menu bg-white shadow border-top" [hidden]="isReadOnly">
+    <div class="container">
+      <div class="row">
+        <div class="offset-1 col-10 text-center p-1">
+          <a class="btn btn-outline-secondary m-1" (click)="isReadOnly=true">Finish Edit</a>
+          <button type="submit" class="btn btn-primary m-1" [disabled]="!mainForm .form.valid">Save</button>
+        </div>
+        <div class="col-1">
+          <div class="py-3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
 
 <ng-template #convert let-modal>
   <div class="modal-header">
@@ -310,4 +464,16 @@
     <button type="button" class="btn btn-success" (click)="onConvert();">Convert</button>
 
   </div>
+</ng-template>
+
+
+<ng-template #pricelist let-modal>
+  <div class="modal-header">
+    <strong class="modal-title" id="modal-basic-title">Price List </strong>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <app-price-list-modal (uploaded)="requestEmit($event)"></app-price-list-modal>
+
 </ng-template>

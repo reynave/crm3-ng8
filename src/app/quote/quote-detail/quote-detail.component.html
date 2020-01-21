@@ -2,7 +2,7 @@
 
 <app-navigator></app-navigator>
 
-<div class="container-fluid bg-light border py-1">
+<div class="container-fluid bg-light border-bottom py-1">
   <div class="row">
     <div class="col-12">
       <small> You are here : <a [routerLink]="[ '/quote' ]">Quote</a> / <a
@@ -20,15 +20,15 @@
       <div class="col-9 col-md-8">
 
         <!-- Menu & Information -->
-        <div class="row py-3">
-
-          <div class="col-3">
+        <div class="row py-3 ">
+          <!-- Header & button -->
+          <div class="col-3 ">
             <div class="module-name">
               <strong>QUOTE</strong>
               <b class="text-primary">{{items.name}}</b>
             </div>
           </div>
-
+          
           <div class="col-9 text-right">
             <div [hidden]="!isReadOnly">
               <button type="button" class="btn btn-classic btn-sm  mr-1"> <i class="fas fa-paper-plane"></i>
@@ -62,7 +62,7 @@
             </div>
 
           </div>
-
+          <!-- Infromation -->
           <div class="col-12 mt-3">
             <table class="table-p0">
               <tr>
@@ -108,7 +108,7 @@
           </div>
         </div>
 
-        <!-- Product line -->
+        <!-- Product  line |  Detail  -->
         <div class="row my-2">
 
           <div class="col-12">

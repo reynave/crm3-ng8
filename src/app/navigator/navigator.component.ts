@@ -20,8 +20,7 @@ export class NavigatorComponent implements OnInit {
   nav : any = [];
   ngOnInit() { 
     this.activatedRoute.data.subscribe(
-      data => { 
-        console.log(data);
+      data => {  
         this.titleService.setTitle( data['title'] );
       }
     );

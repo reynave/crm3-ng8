@@ -20,23 +20,6 @@
     line-height: 110%;
 
   }
-  
-  input[type="text"]:read-only,   input[type="number"]:read-only,  select:read-only,  textarea:read-only {
-    background: #fff;
-    border:none;
-    border-bottom: 1px solid #ccc;
-}
-
-
-input[type="text"]:read-only:required,input[type="number"]:read-only:required, select:read-only:required, textarea:read-only:required {
-  border-right: none !important;
-}
-
-.form-description{
-  padding: 5px;
-  font-size: 12px;
-  background: none;
-}
 
 
 

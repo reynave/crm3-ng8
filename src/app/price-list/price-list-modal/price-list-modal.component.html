@@ -8,8 +8,7 @@
                     selected
                     price list will delete all existing products from this quote</p>
                 <div class="my-3 col-4 offset-4">
-                    <select class="form-control form-control-sm" [(ngModel)]="id_price_list">
-
+                    <select class="form-control form-control-sm border" [(ngModel)]="id_price_list"> 
                         <option *ngFor="let x of pricelist" value="{{x.id}}"> {{x.name}}</option>
                     </select>
                 </div>
@@ -22,13 +21,13 @@
     <div class="row no-gutters" [hidden]="step == 1">
 
         <div class="col-12 ">
-            <div class="p-3">
+            <div class="py-3">
                 <div class="text-center">
                     <a href="javascript:;" (click)="step=1"> <small> Back to Price List</small></a>
                 </div>
 
                 <small>Select catalog product</small>
-                <select class="form-control form-control-sm" [(ngModel)]="id_catalog" (change)="productlist();">
+                <select class="form-control form-control-sm border" [(ngModel)]="id_catalog" (change)="productlist();">
                     <option *ngFor="let x of catalog" value="{{x.id}}"> {{x.name}}</option>
                 </select>
                 <input type="text" class="form-control form-control-sm border my-1" placeholder="Search Products">
@@ -89,7 +88,7 @@
 
 
 <div class="modal-footer">
-    <div class="col-12 text-right" [hidden]="total < 1"> 
-        <a href="javascript:;" class="btn btn-primary btn-sm" (click)="save();">Next</a>
+    <div class="col-3 text-right" [hidden]="total < 1"> 
+        <a href="javascript:;" class="btn btn-primary btn-sm btn-block" (click)="save();">Next</a>
     </div>
 </div>

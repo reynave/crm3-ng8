@@ -142,6 +142,7 @@ export class Newlead {
         public address_city: string,
         public address_state: string,
         public address_code: string,
+        public address_country: string,
 
         public id_company: string,
         public id_lead_status: string,
@@ -206,9 +207,13 @@ export class UpdateLead {
         public address_city: string,
         public address_state: string,
         public address_code: string,
+        public address_country: string,
+        
         public opportunity: string, 
-        public id_company: string,
-        public id_lead_status: string,
+        public id_company: string, 
+        public position: string,
+        public amount: number,
+        
     ) { }
 
 }

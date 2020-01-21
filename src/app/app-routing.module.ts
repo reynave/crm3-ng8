@@ -31,10 +31,10 @@ const routes: Routes = [
   
   { path: "activity", component: ActivityComponent },
 
-  { path: 'lead', component: LeadComponent },
-  { path: 'lead/:id', component: LeadDetailComponent }, 
-  { path: 'lead/edit/:id', component: LeadEditComponent }, 
-  { path: 'lead/convert/:id', component: LeadConvertComponent }, 
+  { path: 'lead', component: LeadComponent,  data : {title : 'Lead'} },
+  { path: 'lead/:id', component: LeadDetailComponent,  data : {title : 'Lead Detail'} }, 
+  { path: 'lead/edit/:id', component: LeadEditComponent,  data : {title : 'Quote'} }, 
+  { path: 'lead/convert/:id', component: LeadConvertComponent , data : {title : 'Lead Convert'} }, 
   
   { path: "contact", component: ContactComponent },
   { path: "contact/:id", component: ContactDetailComponent },

@@ -44,7 +44,7 @@ export class LeadComponent implements OnInit {
 
   ngOnInit() {
     this.id_user = this.configService.id_user();
-    this.model = new Newlead(this.id_user, '1', '1', '0', '', '', '', '', '', '', '', '', '', '', '', '0','1');
+    this.model = new Newlead(this.id_user, '1', '1', '0', '', '', '', '', '', '', '', '','', '', '', '', '0','1');
     this.httpGet();
     this.httpSelected();
   }
@@ -102,7 +102,7 @@ export class LeadComponent implements OnInit {
           this.submit= false;
           if (value == 'next') {
             this.httpGet();
-            this.model = new Newlead(this.id_user, '1', '1', '0', '', '', '', '', '', '', '', '', '', '', '', '0','1');
+            this.model = new Newlead(this.id_user, '1', '1', '0', '', '', '', '', '', '', '', '','', '', '', '', '0','1');
           }
           else {
             this.router.navigate(['/lead/',data['result']['id_lead'] ]);

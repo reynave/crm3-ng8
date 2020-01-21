@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfigService } from './../../service/config.service';
 import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-import { LeadDetail, SelectUser, Opportunity } from './../lead';
+import { LeadDetail, SelectUser, Opportunity, UpdateLead } from './../lead';
 
 @Component({
   selector: 'app-lead-detail',
@@ -14,23 +14,30 @@ export class LeadDetailComponent implements OnInit {
   public label: any;
   public items: any = [];
   public loading = true;
-  public id:number;
+  public id: number;
   public closeResult: string;
   newContact: boolean = false;
-  modalTitle:string = "";
-  modalStatus:number;
-  objIndex:any;
-  searchText : string;  
-  modelOpportunity:any;
+  modalTitle: string = "";
+  modalStatus: number;
+  objIndex: any;
+  searchText: string;
+  modelOpportunity: any;
+  isReadOnly: boolean = true;
+  lead: any = [];
+  lead_status: any = [];
+
+  title: any = [];
+  lead_source: any = [];
+  industry: any = [];
+
   constructor(
     private http: HttpClient,
     private router: Router,
-    private activatedRoute:ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private modalService: NgbModal,
     config: NgbModalConfig,
     private configService: ConfigService
-  ) { 
-
+  ) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
@@ -41,49 +48,90 @@ export class LeadDetailComponent implements OnInit {
     this.httpSelectUser();
   }
 
-  lead_status:any = [];
+  product: any = [];
   httpGet() {
+    this.items = {
+      company: {
+        new: false,
+        id: "",
+        name: "",
+      },
+      lead_status: {
+        id: "",
+        name: "",
+        color: "",
+      }
+    }
+
     this.loading = true;
-    this.http.get<LeadDetail[]>(this.configService.base_url() + 'lead/detail/'+ this.id, {
+    this.http.get<LeadDetail[]>(this.configService.base_url() + 'lead/detail/' + this.id, {
       headers: this.configService.headers()
     }).subscribe(data => {
 
-    
-      this.items = data['result']['data'];
+      console.log(data);
+      this.items = data['result']['lead'];
+      this.title = data['result']['title'];
+      this.lead_source = data['result']['lead_source'];
+      this.industry = data['result']['industry'];
+      this.user = data['result']['user'];
       this.lead_status = data['result']['lead_status'];
+      this.product = data['result']['product'];
+
+      this.lead = new UpdateLead(
+        data['result']['lead']['id_user'],
+        data['result']['lead']['id_title'],
+        data['result']['lead']['id_lead_source'],
+        data['result']['lead']['id_industry'],
+        data['result']['lead']['first_name'],
+        data['result']['lead']['last_name'],
+        data['result']['lead']['email'],
+        data['result']['lead']['mobile'],
+        data['result']['lead']['phone'],
+        data['result']['lead']['company']['name'],
+        data['result']['lead']['website'],
+        data['result']['lead']['address_street'],
+        data['result']['lead']['address_city'],
+        data['result']['lead']['address_state'],
+        data['result']['lead']['address_code'],
+        data['result']['lead']['address_country'],
+        data['result']['lead']['opportunity'],
+        data['result']['lead']['id_company'],
+        data['result']['lead']['position'],
+        data['result']['lead']['amount'],
+
+      );
       // console.log(data);
-      this.modelOpportunity = new Opportunity(data['result']['data']['opportunity'],data['result']['data']['id_user']);
+      this.modelOpportunity = new Opportunity(data['result']['lead']['opportunity'], data['result']['lead']['id_user']);
       this.loading = false;
     });
   }
 
-  user:any = [];
-  httpSelectUser(){
+  user: any = [];
+  httpSelectUser() {
     this.http.get<SelectUser[]>(this.configService.base_url() + 'lead/httpSelectUser/', {
       headers: this.configService.headers()
     }).subscribe(data => {
-      this.user = data['result']['user']; 
+      this.user = data['result']['user'];
       // console.log(data);
     });
   }
 
-  onChangeLeadStatus(id){
- 
+  onChangeLeadStatus(id) {
+
     id = id.replace(/ +/g, "");
     var res = id.split(":");
-    // console.log(res[1]);
     this.http.post(this.configService.base_url() + 'lead/onChangeLeadStatus',
-    {
-      "id_lead": this.id,
-      "id_lead_status":res[1]
-    }, {
+      {
+        "id_lead": this.id,
+        "id_lead_status": res[1]
+      }, {
       headers: this.configService.headers()
     }).subscribe(
       data => {
-        // console.log(data);
-        this.items['lead_status_color'] = data['result']['data']['color'];
-        this.items['lead_status_name'] = data['result']['data']['name'];
-        
+        console.log(data);
+        this.items['lead_status']['color'] = data['result']['data']['color'];
+        this.items['lead_status']['name'] = data['result']['data']['name'];
+
       },
       error => {
         // console.log(error);
@@ -93,30 +141,30 @@ export class LeadDetailComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content,{size:"lg"}).result.then((result) => {
+    this.modalService.open(content, { size: "lg" }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
- 
+
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
-      return  `with: ${reason}`;
+      return `with: ${reason}`;
     }
   }
 
-  fn_delete(){
-    if(confirm('Delete this lead ?')){
-    
+  fn_delete() {
+    if (confirm('Delete this lead ?')) {
+
       this.http.post(this.configService.base_url() + 'lead/fn_deleteSolo',
-      {
-        "id_lead": this.id
-      }, {
+        {
+          "id_lead": this.id
+        }, {
         headers: this.configService.headers()
       }).subscribe(
         data => {
@@ -129,36 +177,84 @@ export class LeadDetailComponent implements OnInit {
           // console.log(error.error.text);
         }
       );
-    
+
     }
   }
 
+  fn_deleteProduct(x) {
+
+    var objIndex = this.product.findIndex((obj => obj.id == x.id ));
+    this.product.splice(objIndex, 1);
+
+    this.http.post(this.configService.base_url() + 'lead/fn_deleteProduct',
+      {
+        "id": x.id
+      }, {
+      headers: this.configService.headers()
+    }).subscribe(
+      data => {
+        console.log(data);
+      },
+      error => {
+         console.log(error);
+         console.log(error.error.text);
+      }
+    );
+  }
 
   get diagnostic() { return JSON.stringify(this.modelOpportunity); }
   loadingConvert: boolean = false;
   onConvert() {
     this.loading = true;
     this.loadingConvert = true;
-  
+
     this.http.post(this.configService.base_url() + 'lead/convert',
       {
         "id": this.id,
         "data": this.modelOpportunity
       }, {
-        headers: this.configService.headers()
-      }).subscribe(
-        data => {
-          // console.log(data);
-          this.loadingConvert = false; 
-          this.loading = false;
-          this.modalService.dismissAll('just closed');
-          this.router.navigate(['/lead/converted/',this.id ]);
-        },
-        error => {
-          // console.log(error);
-          // console.log(error.error.text);
-        }
-      );
+      headers: this.configService.headers()
+    }).subscribe(
+      data => {
+        // console.log(data);
+        this.loadingConvert = false;
+        this.loading = false;
+        this.modalService.dismissAll('just closed');
+        this.router.navigate(['/lead/converted/', this.id]);
+      },
+      error => {
+        // console.log(error);
+        // console.log(error.error.text);
+      }
+    );
+  }
+
+  fn_update() {
+    this.loading = true;
+    this.http.post(this.configService.base_url() + 'lead/update',
+      {
+        "id_lead": this.id,
+        "data": this.lead
+      }, {
+      headers: this.configService.headers()
+    }).subscribe(
+      data => {
+
+        console.log(data);
+        this.httpGet();
+      },
+      error => {
+        this.loading = false;
+        console.log(error);
+        console.log(error.error.text);
+      }
+    );
+
+  }
+
+  requestEmit(event) {
+    this.httpGet();
+    this.modalService.dismissAll();
   }
 
 }
