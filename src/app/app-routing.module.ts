@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LeadComponent } from './lead/lead.component';
-import { LeadDetailComponent } from './lead/lead-detail/lead-detail.component';
-import { LeadEditComponent } from './lead/lead-edit/lead-edit.component';
+import { LeadDetailComponent } from './lead/lead-detail/lead-detail.component'; 
 import { LeadConvertComponent } from './lead/lead-convert/lead-convert.component';
 import { ActivityComponent } from './activity/activity.component';
 import { ContactComponent } from './contact/contact.component';
@@ -32,8 +31,7 @@ const routes: Routes = [
   { path: "activity", component: ActivityComponent },
 
   { path: 'lead', component: LeadComponent,  data : {title : 'Lead'} },
-  { path: 'lead/:id', component: LeadDetailComponent,  data : {title : 'Lead Detail'} }, 
-  { path: 'lead/edit/:id', component: LeadEditComponent,  data : {title : 'Quote'} }, 
+  { path: 'lead/:id', component: LeadDetailComponent,  data : {title : 'Lead Detail'} },  
   { path: 'lead/convert/:id', component: LeadConvertComponent , data : {title : 'Lead Convert'} }, 
   
   { path: "contact", component: ContactComponent },

@@ -8,7 +8,7 @@ import { LeadDetail, SelectUser, Opportunity, UpdateLead } from './../lead';
 @Component({
   selector: 'app-lead-detail',
   templateUrl: './lead-detail.component.html',
-  styles: ['td {    vertical-align: text-top;    padding-bottom: 8px;}']
+  styleUrls: ['./lead-detail.component.css']
 })
 export class LeadDetailComponent implements OnInit {
   public label: any;
@@ -29,7 +29,8 @@ export class LeadDetailComponent implements OnInit {
   title: any = [];
   lead_source: any = [];
   industry: any = [];
-
+  showNewActivity :boolean=false;
+  activity:any=[];
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -257,4 +258,11 @@ export class LeadDetailComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
+  fn_newActivity(){
+    this.showNewActivity=true;
+  }
+
+  fn(){
+    
+  }
 }

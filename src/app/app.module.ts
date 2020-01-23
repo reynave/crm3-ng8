@@ -10,8 +10,7 @@ import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LeadComponent } from './lead/lead.component';
-import { LeadDetailComponent } from './lead/lead-detail/lead-detail.component';
-import { LeadEditComponent } from './lead/lead-edit/lead-edit.component';
+import { LeadDetailComponent } from './lead/lead-detail/lead-detail.component'; 
 import { LeadConvertComponent } from './lead/lead-convert/lead-convert.component';
 import { ActivityComponent } from './activity/activity.component';
 import { WidgetActivityComponent } from './activity/widget-activity/widget-activity.component';
@@ -44,8 +43,7 @@ import { QuotePrintComponent } from './quote/quote-print/quote-print.component';
   declarations: [
     AppComponent,
     LeadComponent,
-    LeadDetailComponent,
-    LeadEditComponent,
+    LeadDetailComponent, 
     LeadConvertComponent,
     ActivityComponent,
     WidgetActivityComponent,

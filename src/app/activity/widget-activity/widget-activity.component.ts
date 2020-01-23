@@ -3,7 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { ConfigService } from './../../service/config.service';
+import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Activity, GetSelected, WidgetActivty, widgetList } from './../activity';
+
+declare var $: any;
 
 @Component({
   selector: 'app-widget-activity',
@@ -11,193 +14,173 @@ import { Activity, GetSelected, WidgetActivty, widgetList } from './../activity'
   styleUrls: ['./widget-activity.component.css']
 })
 export class WidgetActivityComponent implements OnInit {
-  time = { hour: 13, minute: 30 };
-  meridian = true;
 
-  newtask: boolean = false;
   loading: boolean = false;
-  request: string;
+  module: string;
   id: string;
   items: any = [];
   date: any = {
     year: new Date().getFullYear(),
-    month: new Date().getMonth(),
+    month: new Date().getMonth() + 1,
     day: new Date().getDate()
   };
   activity: any = [];
   history: any = [];
-  id_activity_type: number = 1;
-  model: any = new WidgetActivty(this.id_activity_type, '', '', this.date, '', '', '', '', '', false, '', '', '', '');
-  id_user: string = "1";
+  id_activity_type: number = 100;
+  model: any = new WidgetActivty(this.id_activity_type, 0, "", 0, '', '', this.date, this.date, this.date, "00:00", "00:00");
+  user: any = [];
+  closeResult: any;
+  showNewActivity: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private configService: ConfigService
-  ) { }
+    private configService: ConfigService,
+    private modalService: NgbModal,
+    config: NgbModalConfig,
+  ) {
+
+    config.backdrop = 'static';
+    config.keyboard = false;
+  }
 
   ngOnInit() {
-    this.request = this.route.snapshot.url[0].path;
+    this.module = this.route.snapshot.url[0].path;
     this.id = this.route.snapshot.url[1].path;
-    console.log(this.date);
+
     this.httpGet();
     this.httpData();
-  }
 
-  id_activity_priority: string;
-  opportunity: any = [];
-
-  httpGet() {
-    this.loading = true;
-    this.http.get<GetSelected[]>(this.configService.base_url() + 'activity/getSelected/' + this.request + '/' + this.id, {
-      headers: this.configService.headers()
-    }).subscribe(data => {
-      console.log(data);
-      this.items = data['result'];
-      this.opportunity = data['result']['opportunity'];
-      this.id_activity_priority = this.id, data['result']['data']['id_activity_priority'];
-      this.model = new WidgetActivty(this.id_activity_type, '', this.id_user, this.date, this.request, this.id, data['result']['data']['id_activity_priority'], '0', '', false, '', '', '', '');
-      console.log(this.opportunity);
-
-      if(this.request == 'opportunity'){
-        this.model['id_opportunity'] = this.id;
+    /*$(window).scroll(function (event) {
+      var st = $(this).scrollTop();
+   
+      if(st > 335){
+         $('#activityTabs').addClass('position-ontop');
+      }else{
+        $('#activityTabs').removeClass('position-ontop');
       }
+    });*/
 
-    },
-      error => {
-        console.log(error);
-        console.log(error.error.text);
-      });
+
   }
+
+  activityLatest: Activity[] = [];
+  activityHistory: Activity[] = [];
 
   httpData() {
-    this.loading = true;
-    this.http.get<widgetList[]>(this.configService.base_url() + 'activity/widgetList/' + this.request + '/' + this.id, {
-      headers: this.configService.headers()
-    }).subscribe(data => {
-      console.log(data);
-      this.loading = false;
-      this.activity = data['result']['activity'];
-      this.history = data['result']['history'];
 
-    });
+    this.http.get(this.configService.base_url() + 'activity/httpData/' + this.module + '/' + this.id, {
+      headers: this.configService.headers()
+    }).subscribe(
+      data => {
+        this.activityLatest = data['result']['latest'];
+        this.activityHistory = data['result']['history'];
+        console.log(this.activityLatest);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
+
+  httpGet() {
+    this.http.get(this.configService.base_url() + 'activity/httpGet/' + this.module + '/' + this.id, {
+      headers: this.configService.headers()
+    }).subscribe(
+      data => {
+
+        this.items = data['result']['data']
+        this.model['id_user'] = data['result']['data']['id_user'];
+        this.model['id_person'] = this.id;
+        this.model['id_module'] = data['result']['data']['id_module'];
+
+        this.user = data['result']['user'];
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
 
   get diagnostic() { return JSON.stringify(this.model); }
 
-  onSubmit() {
-    this.newtask = false;
+  onInsert() {
+
     this.http.post(this.configService.base_url() + 'activity/insert',
       {
         "data": this.model,
         "id": this.id,
       }, {
-        headers: this.configService.headers()
-      }).subscribe(
-        data => {
-          this.httpData();
-          this.model['subject'] = "";
-          this.model['comment'] = "";
-          this.model['id_activity_priority'] = this.id_activity_priority;
+      headers: this.configService.headers()
+    }).subscribe(
+      data => {
+        console.log(data);
+        this.model['subject'] = null;
+        this.model['description'] = null;
 
-        },
-        error => {
-          console.log(error);
-          console.log(error.error.text);
+        // this.httpData();   
+        if (Array.isArray(data['result']['latest']) == false) {
+          this.activityLatest.unshift(data['result']['latest']);
         }
-      );
+
+        if (Array.isArray(data['result']['history']) == false) {
+          this.activityHistory.unshift(data['result']['history']);
+        }
+
+      },
+      error => {
+        console.log(error);
+        console.log(error.error.text);
+      }
+    );
   }
 
-  cancelNewTask() {
-    this.newtask = false;
-  }
-  fn_editActivity(x) {
-    var objIndex = this.activity.findIndex((obj => obj.id == x.id));
-    if (this.activity[objIndex]['edit'] == false) {
-      this.activity[objIndex]['edit'] = true;
-    } else {
-      this.activity[objIndex]['edit'] = false;
-    }
-  }
-  fn_closeActivity(x) {
-    var objIndex = this.activity.findIndex((obj => obj.id == x.id));
-    this.activity[objIndex]['edit'] = false;
-
-  }
-  fn_detailHistory(x) {
-    var objIndex = this.history.findIndex((obj => obj.id == x.id));
-    if (this.history[objIndex]['edit'] == false) {
-      this.history[objIndex]['edit'] = true;
-    } else {
-      this.history[objIndex]['edit'] = false;
-    }
+  tabEvent($event) {
+    this.model['id_activity_type'] = $event.nextId;
   }
 
 
+  fn_closed(x) {
+    var objIndex = this.activityLatest.findIndex((obj => obj.id == x.id));
+    this.activityLatest.splice(objIndex, 1);
 
-  public tabEvent($event) {
-    this.model.id_activity_type = $event.nextId;
-  }
-
-  onClosed(id) {
-    // delete 
-    var objIndex = this.activity.findIndex((obj => obj.id == id));
-    this.activity.splice(objIndex, 1);
-    this.http.post(this.configService.base_url() + 'activity/onClosed',
+    this.activityHistory.unshift(x); 
+    this.http.post(this.configService.base_url() + 'activity/fn_closed',
       {
-        "id": id
+        "id": x.id,
       }, {
-        headers: this.configService.headers()
-      }).subscribe(
-        data => {
-          this.httpData();
-        },
-        error => {
-          console.log(error);
-          console.log(error.error.text);
-        }
-      );
+      headers: this.configService.headers()
+    }).subscribe(
+      data => {
+        console.log(data);
+      },
+      error => {
+        console.log(error);
+        console.log(error.error.text);
+      }
+    );
+
   }
 
-  onComment(comment, id) {
+  fn_remove(x) {
+    var objIndex = this.activityLatest.findIndex((obj => obj.id == x.id));
+    this.activityLatest.splice(objIndex, 1);
 
-    this.http.post(this.configService.base_url() + 'activity/onComment',
+    this.http.post(this.configService.base_url() + 'activity/fn_remove',
       {
-        "id": id,
-        "comment": comment
+        "id": x.id,
       }, {
-        headers: this.configService.headers()
-      }).subscribe(
-        data => {
-        },
-        error => {
-          console.log(error);
-          console.log(error.error.text);
-        }
-      );
+      headers: this.configService.headers()
+    }).subscribe(
+      data => {
+        console.log(data);
+      },
+      error => {
+        console.log(error);
+        console.log(error.error.text);
+      }
+    );
   }
-
-
-  fn_deleteSolo(id) {
-    // delete 
-    var objIndex = this.activity.findIndex((obj => obj.id == id));
-    this.activity.splice(objIndex, 1);
-
-    this.http.post(this.configService.base_url() + 'activity/fn_deleteSolo',
-      {
-        "id": id
-      }, {
-        headers: this.configService.headers()
-      }).subscribe(
-        data => {
-        },
-        error => {
-          console.log(error);
-          console.log(error.error.text);
-        }
-      );
-
-  }
-
 }

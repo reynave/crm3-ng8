@@ -1,0 +1,13 @@
+
+  .inline-text { width:100%; text-align:center; border-bottom: 1px solid #ccc; line-height:0.1em; margin:10px 0 20px; } 
+  .inline-text span { background:#fff; padding:0 10px; }
+
+
+  .position-ontop{
+    position: fixed;
+    top: 41px;
+    left: 0px;
+    z-index: 999;
+    max-width:900px;
+    width: 100%;
+}
