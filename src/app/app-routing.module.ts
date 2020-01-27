@@ -5,8 +5,7 @@ import { LeadDetailComponent } from './lead/lead-detail/lead-detail.component';
 import { LeadConvertComponent } from './lead/lead-convert/lead-convert.component';
 import { ActivityComponent } from './activity/activity.component';
 import { ContactComponent } from './contact/contact.component';
-import { ContactDetailComponent } from './contact/contact-detail/contact-detail.component';
-import { ContactEditComponent } from './contact/contact-edit/contact-edit.component';
+import { ContactDetailComponent } from './contact/contact-detail/contact-detail.component'; 
 import { CompanyComponent } from './company/company.component';
 import { CompanyDetailComponent } from './company/company-detail/company-detail.component';
 import { CompanyEditComponent } from './company/company-edit/company-edit.component';
@@ -35,8 +34,7 @@ const routes: Routes = [
   { path: 'lead/convert/:id', component: LeadConvertComponent , data : {title : 'Lead Convert'} }, 
   
   { path: "contact", component: ContactComponent,  data : {title : 'Contact'} },
-  { path: "contact/:id", component: ContactDetailComponent,  data : {title : 'Contact'} },
-  { path: "contact/edit/:id", component: ContactEditComponent,  data : {title : 'Contact'} },
+  { path: "contact/:id", component: ContactDetailComponent,  data : {title : 'Contact'} }, 
 
   { path: "company", component: CompanyComponent},
   { path: "company/:id", component: CompanyDetailComponent },

@@ -17,8 +17,7 @@ import { WidgetActivityComponent } from './activity/widget-activity/widget-activ
 import { CompanyComponent } from './company/company.component';
 import { CompanyDetailComponent } from './company/company-detail/company-detail.component';
 import { CompanyEditComponent } from './company/company-edit/company-edit.component';
-import { ContactComponent } from './contact/contact.component';
-import { ContactEditComponent } from './contact/contact-edit/contact-edit.component';
+import { ContactComponent } from './contact/contact.component'; 
 import { ContactDetailComponent } from './contact/contact-detail/contact-detail.component';
 import { OpportunityComponent } from './opportunity/opportunity.component';
 import { OpportunityDetailComponent } from './opportunity/opportunity-detail/opportunity-detail.component';
@@ -50,8 +49,7 @@ import { QuotePrintComponent } from './quote/quote-print/quote-print.component';
     CompanyComponent,
     CompanyDetailComponent,
     CompanyEditComponent,
-    ContactComponent,
-    ContactEditComponent,
+    ContactComponent, 
     ContactDetailComponent,
     OpportunityComponent,
     OpportunityDetailComponent,
