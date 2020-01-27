@@ -1,227 +1,359 @@
-<ngx-loading [show]="loading"></ngx-loading> 
+<ngx-loading [show]="loading"></ngx-loading>
 
-<div class="container-fluid">
+<app-navigator></app-navigator>
 
-  <div class="row no-gutters">
-    <div class="col-8">
-
-      <div class="container border shadow-sm bg-white">
-
-        <div class="row ">
-          <div class="col-6">
-            <small> You are here : <a [routerLink]="[ '/contact' ]">Contact</a> / <a [routerLink]="[ '/contact/',id ]">
-                {{items.name}}</a> </small>
-          </div>
-        </div>
-
-        <div class="row container-header">
-
-          <div class="col-6 ">
-            <h5>CONTACT</h5>
-          </div>
-
-          <div class="col-6 text-right">
-
-
-            <button type="button" class="btn btn-classic btn-sm mr-1" [routerLink]="[ '/contact/edit/',id ]"> <i
-                class="fas fa-edit"></i> Edit </button>
-
-            <button type="button" class="btn btn-danger btn-sm  mr-1" (click)="fn_delete();"> <i
-                class="fas fa-trash-alt"></i>
-              Delete </button>
-            <button type="button" class="btn btn-outline-secondary btn-sm" [routerLink]="[ '/contact' ]" title="back">
-              <i class="fas fa-times"></i> </button>
-          </div>
-
-        </div>
-        <h5 class="my-3">Information</h5>
-        <div class="row mb-3">
-
-          <div class="col-6">
-            <strong>Contact</strong>
-            <table class="table table-list">
-              <tbody>
-
-                <tr>
-                  <td width="30%"><label>Name</label></td>
-                  <td> {{items.name}} </td>
-                </tr>
-
-                <tr>
-                  <td><label>Email</label></td>
-                  <td> {{items.email}} </td>
-                </tr>
-
-
-                <tr>
-                  <td><label>Mobile</label></td>
-                  <td> {{items.mobile}} </td>
-                </tr>
-                <tr>
-                  <td><label>Phone</label></td>
-                  <td> {{items.phone}}</td>
-                </tr>
-                <tr>
-                  <td><label>Lead source</label></td>
-                  <td> {{items.lead_source}} </td>
-                </tr>
-
-
-                <tr>
-                  <td><label>Company</label></td>
-                  <td> {{items.company}}</td>
-                </tr>
-
-
-                <tr>
-                  <td><label>Contact owner </label></td>
-                  <td> {{items.user}}</td>
-                </tr>
-              </tbody>
-            </table>
-
-
-
-          </div>
-
-          <div class="col-6">
-            <strong>Input Information</strong>
-            <table class="table table-list">
-
-              <tbody>
-                <tr>
-                  <td><label>Created Date</label></td>
-                  <td> {{items.input_date | date:'d MMM y  hh:mm a'}}, <small> by {{items.input_by}}</small> </td>
-                </tr>
-                <tr [hidden]="items.update_by == false">
-                  <td><label>Update Date</label></td>
-                  <td> {{items.update_date | date:'d MMM y  hh:mm a'}}, <small> by {{items.update_by}} </small> </td>
-                </tr>
-                <tr>
-                  <td><label>ID Companay</label></td>
-                  <td><span class="text-monospace">{{items.id}}</span></td>
-                </tr>
-              </tbody>
-
-
-            </table>
-
-
-
-
-          </div>
-        </div>
-
-
-        <div class="py-2">
-          <strong>Opportunity </strong>
-        </div>
-        <div class=" bg-light  border border-top-brown rounded p-1 mb-4">
-          <div class=" mb-4">
-
-            <table class="table table-hover border bg-white border-top border-bottom pointer">
-              <thead class="thead-light">
-                <tr>
-                  <th width="50">No</th>
-                  <th scope="col">Opportunity Name</th>
-                  <th scope="col">Stage</th>
-                  <th scope="col">Progress</th>
-                  <th scope="col" colspan="2" class="text-right">Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let x of opportunity; let i = index">
-                  <td> {{i +1}}</td>
-                  <td> <a [routerLink]="[ '/opportunity/',x.id ]"> {{x.name}} </a>
-                    <div>
-                      <small>Created : {{x.input_date | date}} {{x.input_by}}</small>
-                    </div>
-                  </td>
-                  <td> {{x.stage}} </td>
-                  <td> {{x.progress}}</td>
-                  <td width="50"> {{x.currency}} </td>
-                  <td class="text-right"> {{x.amount | number:''}} </td>
-
-                </tr>
-
-
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td></td>
-                  <td colspan="7">
-
-                    <button type="button" class="btn btn-sm btn-primary"
-                      [routerLink]="[ '/opportunity/new/',items.id_company ,items.id  ]"> <i class="fas fa-plus"></i> New
-                      Opportunity</button> </td>
-                </tr>
-              </tfoot>
-            </table>
-
-          </div>
-        </div>
-
-
-
-      </div>
-
-
-    </div>
-    <div class="col-4">
-      <div class="position-fixed">
-        <app-widget-activity></app-widget-activity>
-      </div>
-
+<div class="container-fluid bg-light border-bottom py-1">
+  <div class="row">
+    <div class="col-12">
+      <small> You are here : <a [routerLink]="[ '/contact' ]">Contact</a> / <a [routerLink]="[ '/contact/',id ]">
+          {{items.name}}</a> </small>
     </div>
   </div>
 
+</div>
+
+
+<div class="container-fluid  bg-white">
+
+
+  <!-- Menu & Information -->
+  <div class="row border-bottom ">
+    <!-- Header & button -->
+    <div class="col-3 bg-light py-2">
+      <div class="module-name">
+        <strong>Contact</strong>
+        <b class="text-primary">{{items.name}}</b>
+      </div>
+    </div>
+
+    <div class="col-9 bg-light text-right py-2">
+      <div [hidden]="!isReadOnly">
+        <button type="button" class="btn btn-classic btn-sm  mr-1"
+          (click)="isReadOnly=false; t.select('tab-selectbyid2')"> <i class="fas fa-edit"></i>
+          Edit </button>
+
+        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="fn_delete();"> <i
+            class="fas fa-trash-alt"></i>
+          Delete </button>
+        <button type="button" class="btn btn-classic btn-sm  mr-1" [routerLink]="[ '/contact' ]" title="back">
+          <i class="fas fa-times"></i> </button>
+
+      </div>
+
+      <div [hidden]="isReadOnly">
+        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="isReadOnly=true" title="Done"><i
+            class="fas fa-check"></i> Finish Edit </button>
+      </div>
+
+    </div>
+
+
+
+    <!-- Infromation -->
+    <div class="col-12 py-2">
+      <table class="table-p0">
+        <tr>
+          <td> <small> Company</small> </td>
+          <td> <small> Position </small></td>
+          <td> <small> Mobile</small> </td>
+          <td> <small> Email </small> </td>
+          <td> <small> Contact Owner </small> </td>
+        </tr>
+
+        <tr>
+          <td> <b class="text-primary"> {{items.company}} </b> </td>
+          <td> <b class="text-primary"> {{items.position}} </b> </td>
+          <td> <b class="text-primary"> {{items.mobile}} </b> </td>
+          <td> <b class="text-primary"> {{items.email}} </b> </td>
+          <td> <b class="text-primary"> {{items.user}} </b> </td>
+        </tr>
+      </table>
+
+    
+    </div>
+  </div>
+
+
+
+  <div class="row mt-3">
+    <!-- Left side-->
+    <div class="col-9 col-md-8">
+
+      <div class="row py-2">
+
+        <div class="col-12"> 
+          <ngb-tabset type="pills"  #t="ngbTabset">
+
+            <ngb-tab>
+              <ng-template ngbTabTitle>Activity</ng-template>
+              <ng-template ngbTabContent>
+                <app-widget-activity></app-widget-activity>
+              </ng-template>
+            </ngb-tab>
+
+            <ngb-tab id="tab-selectbyid2">
+              <ng-template ngbTabTitle>Detail</ng-template>
+              <ng-template ngbTabContent>
+                <form (ngSubmit)="fn_update()" #mainForm="ngForm">
+                  <div class="border-top py-2 my-2">
+
+                    <div class="row">
+                      <div class="col-12 bg-light">
+                        <strong>Contact</strong>
+                      </div>  
+
+                      <div class="col-6">
+                        <table class="table table-borderless">
+                          <tbody>
+
+                            <tr>
+                              <td width="30%"><label>First Name</label></td>
+                              <td>
+                                <div class="row no-gutters">
+                                  <div class="col-3">
+                                    <select class="form-control form-modal" id="h14" [(ngModel)]="model.id_title"
+                                      [disabled]="isReadOnly" name="id_title">
+                                      <option [ngValue]="x.id" *ngFor="let x of title">{{x.name}}</option>
+                                    </select>
+                                  </div>
+                                  <div class="col-9 ">
+                                    <input type="text" class="form-control form-modal ml-1" id="first_name" required
+                                      [(ngModel)]="model.first_name" name="first_name" #first_name="ngModel"
+                                      [readonly]="isReadOnly">
+                                    <div [hidden]="first_name.valid || first_name.pristine" class="alert alert-danger">
+                                      First name is required
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td><label>Last Name</label></td>
+                              <td>
+                                <input type="text" class="form-control form-modal" id="last_name"
+                                  [(ngModel)]="model.last_name" name="last_name" #last_name="ngModel"
+                                  [readonly]="isReadOnly">
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td><label>Email</label></td>
+                              <td> <input type="text" class="form-control form-modal" id="email"
+                                  [(ngModel)]="model.email" name="email" [readonly]="isReadOnly"> </td>
+                            </tr>
+
+                            <tr>
+                              <td><label>Mobile</label></td>
+                              <td> <input type="text" class="form-control form-modal" id="mobile"
+                                  [(ngModel)]="model.mobile" name="mobile" [readonly]="isReadOnly"> </td>
+                            </tr>
+
+                          
+
+                          </tbody>
+                        </table>
+                      </div>
+
+
+                      <div class="col-6">
+
+                        <table class="table table-borderless">
+                          <tbody>
+                            <tr>
+                              <td><label>Company</label></td>
+                              <td> <select class="form-control form-modal" id="id_company"
+                                  [(ngModel)]="model.id_company" name="id_company" [disabled]="isReadOnly">
+                                  <option *ngFor="let x of company" value="{{x.id}}"> {{x.name}} </option>
+                                </select>
+                              </td>
+                            </tr>
+
+
+                            <tr>
+                              <td><label>Position</label></td>
+                              <td> <input type="text" class="form-control form-modal" id="position"
+                                  [(ngModel)]="model.position" name="position" [readonly]="isReadOnly"> </td>
+                            </tr>
+
+                            <tr>
+                              <td width="30%"><label>Source</label></td>
+                              <td>
+                                <select class="form-control form-modal" id="lead_source"
+                                  [(ngModel)]="model.id_lead_source" name="id_lead_source" [disabled]="isReadOnly">
+                                  <option *ngFor="let x of lead_source" value="{{x.id}}"> {{x.name}} </option>
+                                </select>
+
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td><label>Lead owner </label></td>
+                              <td>
+                                <select class="form-control form-modal" id="id_user" [(ngModel)]="model.id_user"
+                                  name="id_user" [disabled]="isReadOnly">
+                                  <option *ngFor="let x of user" value="{{x.id}}"> {{x.name}} </option>
+                                </select>
+                              </td>
+                            </tr>
+
+                          </tbody>
+                        </table>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  <div class="footer-menu bg-white shadow border-top" [hidden]="isReadOnly">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-12 text-center p-1">
+                          <a class="btn btn-outline-secondary m-1" (click)="isReadOnly=true">Finish Edit</a>
+                          <button type="submit" class="btn btn-primary m-1"
+                            [disabled]="!mainForm.form.valid">Save</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </form>
+              </ng-template>
+            </ngb-tab>
+
+          </ngb-tabset>
+ 
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- right side-->
+    <div class="col-3 col-md-4 border-left">
+
+       <!-- Product -->
+       <div class="row py-2">
+        <div class="col-12 ">
+          <div class="border py-1 px-2 border-top-brown rounded">
+
+            <div class="row">
+              <div class="col-6"><strong>Opportunity   </strong></div>
+              <div class="col-6 text-right"> <button class="btn btn-classic btn-sm"  (click)="open(opportunity)"><i class="fas fa-plus"></i>
+                  New</button> </div>
+            </div>
+           
+           
+            <div class="row">
+              <div class="col-12 mb-2" *ngFor="let x of dataOpportunity"  >
+
+                <table class="table-items">
+                  <thead>
+                    <tr>
+                      <th colspan="2"> <a href="javascript:;" [routerLink]="[ '/opportunity', x.id ]">{{x.name}} </a></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td width="100">Amount</td>
+                      <td>: {{x.currency}} {{x.amount}}</td>
+                    </tr>
+                    <tr>
+                      <td>Status</td>
+                      <td>: {{x.stage}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <hr [hidden]=" i - 1 > 0" class="p-0 m-0 mt-2">
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+ 
+</div>
+
   <ng-template #opportunity let-modal>
+    
+     <form (ngSubmit)="fn_newOpportunity()" #opptForm="ngForm">
     <div class="modal-header">
       <strong class="modal-title" id="modal-basic-title">New Opportunity</strong>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
+   
     <div class="modal-body bg-light">
-
+     
       <div class="form-group row no-gutters">
         <label for="h21" class="col-sm-3 col-form-label"> Name </label>
         <div class="col-sm-8">
-          <input type="text" class="form-control border" readonly id="h21" value="Miss Kazama Takako">
+          <input type="text" class="form-control border" readonly  value="{{items.name}}">
         </div>
       </div>
 
       <div class="form-group row no-gutters">
         <label for="h21" class="col-sm-3 col-form-label"> Company </label>
         <div class="col-sm-8">
-          <input type="text" class="form-control border" readonly id="h21" value="PT Sugino Mando">
+          <input type="text" class="form-control border" readonly   value="{{items.company}}">
         </div>
       </div>
 
       <div class="form-group row no-gutters">
-        <label for="h21" class="col-sm-3 col-form-label"> Opportunity's Name </label>
+        <label for="h21" class="col-sm-3 col-form-label"> Opportunity Name </label>
         <div class="col-sm-8">
-          <input type="text" class="form-control border" maxlength="250" id="h21">
+          <input type="text" class="form-control border" name="name" required  [(ngModel)]="newOpportunity.name"  maxlength="250"   value="" >
         </div>
       </div>
 
       <div class="form-group row no-gutters">
-        <label for="h21" class="col-sm-3 col-form-label"> Start Date </label>
-        <div class="col-sm-2">
-          <input type="text" id="dateOfBirth" class="form-control border" placeholder="2019-07-01" readonly
-            (click)="dp.toggle()" name="dp" ngbDatepicker #dp="ngbDatepicker">
+        <label for="h21" class="col-sm-3 col-form-label"  id="h21"> Amount (IDR) </label>
+        <div class="col-sm-8"> 
+          <input type="number" class="form-control border" name="amount" [(ngModel)]="newOpportunity.amount"  maxlength="250" id="h21" >
+        </div>
+      </div>
 
+      
+      <div class="form-group row no-gutters">
+        <label for="h21" class="col-sm-3 col-form-label" id="s3"> Opportunity Stage </label>
+        <div class="col-sm-2">
+          <select class="form-control form-modal" id="id_stage" [(ngModel)]="newOpportunity.id_stage" name="id_stage">
+            <option *ngFor="let x of dataOpportunityStage" value="{{x.id}}"> {{x.name}} </option>
+          </select>
         </div>
 
       </div>
+ 
 
+      <div class="form-group row no-gutters">
+        <label for="h21" class="col-sm-3 col-form-label" id="s1"> Start Date </label>
+        <div class="col-sm-2">
+          <input type="text" id="s1" class="form-control border"   name="start_date" [(ngModel)]="newOpportunity.start_date" readonly
+            (click)="dp.toggle()" name="dp" ngbDatepicker #dp="ngbDatepicker"> 
+        </div>
 
+      </div>
+ 
     </div>
+{{ newOpportunity | json}}
     <div class="modal-footer">
 
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
-
-      <button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Save & Next</button>
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button> 
+      <button type="submit" class="btn btn-primary"  [disabled]="!opptForm.form.valid">Save & Next</button>
 
     </div>
+
+  </form>
   </ng-template>

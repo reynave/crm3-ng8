@@ -429,6 +429,7 @@ input[type="text"]:read-only:required,input[type="number"]:read-only:required, s
 .footer-menu{
     position: fixed;
     bottom: 0px;
+    left: 0px;
     width: 100%;
     z-index: 999;
 }

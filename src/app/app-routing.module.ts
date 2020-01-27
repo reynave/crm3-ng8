@@ -34,9 +34,9 @@ const routes: Routes = [
   { path: 'lead/:id', component: LeadDetailComponent,  data : {title : 'Lead Detail'} },  
   { path: 'lead/convert/:id', component: LeadConvertComponent , data : {title : 'Lead Convert'} }, 
   
-  { path: "contact", component: ContactComponent },
-  { path: "contact/:id", component: ContactDetailComponent },
-  { path: "contact/edit/:id", component: ContactEditComponent },
+  { path: "contact", component: ContactComponent,  data : {title : 'Contact'} },
+  { path: "contact/:id", component: ContactDetailComponent,  data : {title : 'Contact'} },
+  { path: "contact/edit/:id", component: ContactEditComponent,  data : {title : 'Contact'} },
 
   { path: "company", component: CompanyComponent},
   { path: "company/:id", component: CompanyDetailComponent },

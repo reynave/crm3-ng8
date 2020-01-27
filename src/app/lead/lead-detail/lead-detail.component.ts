@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfigService } from './../../service/config.service';
 import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-import { LeadDetail, SelectUser, Opportunity, UpdateLead } from './../lead';
+import { LeadDetail, SelectUser, Opportunity, UpdateLead, LeadConvert } from './../lead';
 
 @Component({
   selector: 'app-lead-detail',
@@ -21,16 +21,21 @@ export class LeadDetailComponent implements OnInit {
   modalStatus: number;
   objIndex: any;
   searchText: string;
-  modelOpportunity: any;
   isReadOnly: boolean = true;
   lead: any = [];
   lead_status: any = [];
-
+  customer_class : any = [];
   title: any = [];
   lead_source: any = [];
   industry: any = [];
   showNewActivity :boolean=false;
   activity:any=[];
+  opportunity_stage:any = [];
+  leadConvert:any = [];
+  company:any = []; 
+  user: any = [];
+  contacts:any=[];
+
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -45,8 +50,7 @@ export class LeadDetailComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params.id;
-    this.httpGet();
-    this.httpSelectUser();
+    this.httpGet(); 
   }
 
   product: any = [];
@@ -77,6 +81,10 @@ export class LeadDetailComponent implements OnInit {
       this.user = data['result']['user'];
       this.lead_status = data['result']['lead_status'];
       this.product = data['result']['product'];
+      this.customer_class = data['result']['customer_class'];
+      this.opportunity_stage =  data['result']['opportunity_stage'];
+      this.company =  data['result']['company'];
+
 
       this.lead = new UpdateLead(
         data['result']['lead']['id_user'],
@@ -88,35 +96,48 @@ export class LeadDetailComponent implements OnInit {
         data['result']['lead']['email'],
         data['result']['lead']['mobile'],
         data['result']['lead']['phone'],
-        data['result']['lead']['company']['name'],
+        data['result']['lead']['company'],
         data['result']['lead']['website'],
         data['result']['lead']['address_street'],
         data['result']['lead']['address_city'],
         data['result']['lead']['address_state'],
         data['result']['lead']['address_code'],
         data['result']['lead']['address_country'],
-        data['result']['lead']['opportunity'],
-        data['result']['lead']['id_company'],
+        data['result']['lead']['opportunity'], 
         data['result']['lead']['position'],
         data['result']['lead']['amount'],
 
       );
+
+      this.leadConvert = new LeadConvert(
+        true,
+        '',
+        true,
+        '',
+        data['result']['lead']['opportunity'],
+        data['result']['lead']['amount'],
+        data['result']['lead']['id_user'],
+        ''
+      );
+
       // console.log(data);
-      this.modelOpportunity = new Opportunity(data['result']['lead']['opportunity'], data['result']['lead']['id_user']);
       this.loading = false;
     });
   }
 
-  user: any = [];
-  httpSelectUser() {
-    this.http.get<SelectUser[]>(this.configService.base_url() + 'lead/httpSelectUser/', {
+  fn_selectContact(id){
+    console.log(id);
+    this.loading = true;
+    this.http.get(this.configService.base_url() + 'lead/selectContact/' + id, {
       headers: this.configService.headers()
-    }).subscribe(data => {
-      this.user = data['result']['user'];
-      // console.log(data);
+    }).subscribe(data => { 
+      
+      this.contacts = data['result']['contacts'];  
+      console.log(this.contacts);
+      this.loading = false;
     });
   }
-
+ 
   onChangeLeadStatus(id) {
 
     id = id.replace(/ +/g, "");
@@ -203,7 +224,6 @@ export class LeadDetailComponent implements OnInit {
     );
   }
 
-  get diagnostic() { return JSON.stringify(this.modelOpportunity); }
   loadingConvert: boolean = false;
   onConvert() {
     this.loading = true;
@@ -212,7 +232,6 @@ export class LeadDetailComponent implements OnInit {
     this.http.post(this.configService.base_url() + 'lead/convert',
       {
         "id": this.id,
-        "data": this.modelOpportunity
       }, {
       headers: this.configService.headers()
     }).subscribe(

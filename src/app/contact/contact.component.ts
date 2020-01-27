@@ -29,6 +29,7 @@ export class ContactComponent implements OnInit {
   modelContact:any;
   dbCompany: boolean = false;
   selectedCompany: any = [];
+  amount:string;
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -186,5 +187,7 @@ export class ContactComponent implements OnInit {
     }
     this.itemsSelected.splice(objectSelect, 1);
   }
+
+ 
 
 }

@@ -19,6 +19,7 @@
 
   <!-- Menu & Information -->
   <div class="row border-bottom ">
+    
     <!-- Header & button -->
     <div class="col-3 bg-light py-2">
       <div class="module-name">
@@ -32,8 +33,8 @@
         <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="open(convert)"> <i
             class="fas fa-funnel-dollar"></i> Convert To Opportunity </button>
 
-        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="isReadOnly=false"> <i
-            class="fas fa-edit"></i>
+        <button type="button" class="btn btn-classic btn-sm  mr-1"
+          (click)="isReadOnly=false; t.select('tab-selectbyid2')"> <i class="fas fa-edit"></i>
           Edit </button>
 
         <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="fn_delete();"> <i
@@ -64,7 +65,7 @@
         </tr>
 
         <tr>
-          <td> <b class="text-primary"> {{items.company.name}} </b> </td>
+          <td> <b class="text-primary"> {{items.company}} </b> </td>
           <td> <b class="text-primary"> {{items.position}} </b> </td>
           <td> <b class="text-primary"> {{items.mobile}} </b> </td>
           <td> <b class="text-primary"> {{items.email}}</b> </td>
@@ -100,16 +101,16 @@
 
         <div class="col-12">
 
-          <ngb-tabset type="pills" class="activityTabs">
+          <ngb-tabset type="pills" class="activityTabs" #t="ngbTabset">
 
             <ngb-tab>
               <ng-template ngbTabTitle>Activity</ng-template>
-              <ng-template ngbTabContent> 
-                  <app-widget-activity></app-widget-activity> 
+              <ng-template ngbTabContent>
+                <app-widget-activity></app-widget-activity>
               </ng-template>
             </ngb-tab>
 
-            <ngb-tab>
+            <ngb-tab id="tab-selectbyid2">
               <ng-template ngbTabTitle>Detail</ng-template>
               <ng-template ngbTabContent>
                 <form (ngSubmit)="fn_update()" #mainForm="ngForm">
@@ -152,11 +153,7 @@
                                   [(ngModel)]="lead.email" name="email" [readonly]="isReadOnly"> </td>
                             </tr>
 
-                            <tr>
-                              <td><label>Phone</label></td>
-                              <td> <input type="text" class="form-control form-modal" id="phone"
-                                  [(ngModel)]="lead.phone" name="phone" [readonly]="isReadOnly"> </td>
-                            </tr>
+
                             <tr>
                               <td><label>Mobile</label></td>
                               <td> <input type="text" class="form-control form-modal" id="mobile"
@@ -238,17 +235,32 @@
                             </tr>
                             <tr>
                               <td><label>Website</label></td>
-                              <td><a href="">{{items.website}}</a></td>
+                              <td><input type="text" class="form-control form-modal" id="website"
+                                  [(ngModel)]="lead.website" name="website" [readonly]="isReadOnly"></td>
                             </tr>
 
                             <tr>
-                              <td><label>Address</label></td>
-                              <td>{{items.address}}</td>
+                              <td><label>Phone</label></td>
+                              <td><input type="text" class="form-control form-modal" id="phone" [(ngModel)]="lead.phone"
+                                  name="phone" [readonly]="isReadOnly"></td>
                             </tr>
+
+                            <tr>
+                              <td><label>Fax</label></td>
+                              <td><input type="text" class="form-control form-modal" id="fax" [(ngModel)]="lead.fax"
+                                  name="fax" [readonly]="isReadOnly"></td>
+                            </tr>
+
 
                             <tr>
                               <td><label>Industry</label></td>
-                              <td> {{items.industry}} </td>
+                              <td>
+                                <select class="form-control form-modal" [disabled]="isReadOnly"
+                                  [(ngModel)]="lead.id_industry" [ngModelOptions]="{standalone: true}">
+                                  <option value="{{x.id}}" *ngFor="let x of industry"> {{x.name}} </option>
+                                </select>
+
+                              </td>
                             </tr>
 
                           </tbody>
@@ -304,14 +316,12 @@
                   <div class="footer-menu bg-white shadow border-top" [hidden]="isReadOnly">
                     <div class="container">
                       <div class="row">
-                        <div class="offset-1 col-10 text-center p-1">
+                        <div class="col-12 text-center p-1">
                           <a class="btn btn-outline-secondary m-1" (click)="isReadOnly=true">Finish Edit</a>
                           <button type="submit" class="btn btn-primary m-1"
                             [disabled]="!mainForm.form.valid">Save</button>
                         </div>
-                        <div class="col-1">
-                          <div class="py-3"></div>
-                        </div>
+
                       </div>
                     </div>
                   </div>
@@ -340,7 +350,7 @@
             <div><b>{{lead.opportunity}}</b> </div>
 
             <small> Amount</small>
-            <div><b> {{lead.amount}}</b> </div>
+            <div><b> {{lead.amount | number}}</b> </div>
 
           </div>
         </div>
@@ -389,8 +399,8 @@
         </div>
       </div>
 
- 
-     
+
+
     </div>
   </div>
 
@@ -406,50 +416,132 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
+  <div class="modal-body bg-light">
     <form (ngSubmit)="onConvert()" #myFormConvert="ngForm">
       <div class="row">
 
-        <div class="col-8">
-          <div class="form-group">
+        <div class="col-12 mb-3">
+          <div class="row">
+            <div class="col-2">
+              <strong> Company</strong>
+            </div>
+
+            <div class="col-10">
+              <div class="row">
+
+                <div class="col-6">
+                  <input type="radio" name="companyNew" value="1" id="a1" checked> <label for="a1" class="mx-1"> Create
+                    New</label>
+                </div>
+
+                <div class="col-6">
+                  <input type="radio" name="companyNew" value="0" id="a2"> <label for="a2" class="mx-1">Choose Exesting
+                  </label>
+                </div>
 
 
-            <table width="100%" class="mb-1">
-              <tr>
-                <td width="35%"><label> <span [hidden]="!items.id_company">Create New</span> Company </label></td>
-                <td> {{items.company}}</td>
-              </tr>
-              <tr>
-                <td><label>Create New Contact </label></td>
-                <td> {{items.name}} </td>
-              </tr>
+                <div class="col-6">
+                  <div class="border p-3 mt-2 bg-white">
+                    <label class="mb-2">Company Name</label>
+                    <input type="text" class="form-control mb-2" value="{{items.company}}" >
 
-              <tr>
-                <td> <label for="h61">Name of Business Opportunity</label> </td>
-                <td> <input type="text" class="form-control border" [(ngModel)]="modelOpportunity.opportunityName"
-                    name="opportunityName" id="h61">
-                  <small id="emailHelp" class="form-text text-muted mb-3">Please leave empty if you dont need
-                    opportunity now.</small>
+                    <label class="mb-2">Company Class</label>
+                    <select class="form-control mb-2" >
+                      <option value="{{x.id}}" *ngFor="let x of customer_class"> {{x.name}}</option>
+                    </select>
 
-                </td>
-              </tr>
+                  </div>
+                </div>
 
-              <tr [hidden]="!modelOpportunity.opportunityName">
-                <td><label>Assign to </label></td>
-                <td> <select class="form-control border mb-1" [(ngModel)]="modelOpportunity.id_user" name="id_user">
-                    <option [ngValue]="x.id" *ngFor="let x of user">{{x.name}}</option>
-                  </select> </td>
-              </tr>
+                <div class="col-6  border-left">
+                  <label class="mb-2"  for="a2">Search Company</label>
+                  <select class="form-control mb-2"  name="id_company" [(ngModel)]="leadConvert.id_company" (change)="fn_selectContact(leadConvert.id_company)">
+                    <option value="{{x.id}}" *ngFor="let x of company"> {{x.name}} </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        
+        <div class="col-12 mb-3">
+          <div class="row">
+            <div class="col-2">
+              <strong> Contact </strong>
+            </div>
+
+            <div class="col-10">
+              <div class="row">
+                <div class="col-6">
+                  <input type="radio" name="contactNew" value="1" id="b1" checked> <label for="b1" class="mx-1"> Create
+                    New</label>
+                </div>
+                <div class="col-6">
+                  <input type="radio" name="contactNew" value="0" id="b2"> <label for="b2" class="mx-1">Choose Exesting
+                  </label>
+                </div>
 
 
-            </table>
+                <div class="col-6 mt-2">
+                  <input type="text" class="form-control mb-2 border " readonly  value="{{items.first_name}} {{items.last_name}}">
+                </div>
+
+                <div class="col-6 mt-2">
+                
+                  <select class="form-control mb-2"  name="id_contact" [(ngModel)]="leadConvert.id_contact">
+                    <option value="{{x.id}}" *ngFor="let x of contacts"> {{x.name}} </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+
+
 
           </div>
         </div>
 
-        <div class="col-4">
-          <div class="text-center">
-            <img src="../../../assets/imgs/lead-convert.jpg" width="80%">
+
+        <div class="col-12 mb-2">
+          <div class="row">
+            <div class="col-2">
+              <strong> Opportunity </strong>
+            </div>
+
+            <div class="col-10">
+             <div class="row">
+               <div class="col-6">
+                <label class="mb-2">Opportunity Name</label> 
+                <input type="text" class="form-control mb-2" name="opportunity" [(ngModel)]="leadConvert.opportunity">
+               </div>
+
+               <div class="col-6">
+                <label class="mb-2">Amount</label> 
+                <input type="number" class="form-control mb-2" name="amount" [(ngModel)]="leadConvert.amount">
+               </div>
+             </div>
+            </div>
+
+           
+          </div>
+        </div>
+
+        <div class="col-12 mb-2">
+          <div class="row">
+            <div class="col-5 offset-2">
+              <label class="mb-2">Assigned To</label> 
+              <select class="form-control mb-2"  name="id_user" [(ngModel)]="leadConvert.id_user">
+                <option value="{{x.id}}" *ngFor="let x of user"> {{x.name}} </option>
+              </select>
+            </div>
+
+            <div class="col-5">
+              <label class="mb-2">Converted Status</label>
+              <select class="form-control mb-2" name="id_opportunity_stage" [(ngModel)]="leadConvert.id_opportunity_stage">
+                <option value="{{x.id}}" *ngFor="let x of opportunity_stage"> {{x.name}} </option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -457,11 +549,7 @@
 
     </form>
 
-    <div class="border p-1 bg-gray">
-      debuging only
-      <code>{{diagnostic}}</code>
-    </div>
-    <br>
+   
   </div>
 
   <div class="modal-footer">

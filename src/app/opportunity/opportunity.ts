@@ -200,10 +200,24 @@ export class OpportunityClosedLose {
         public id_user: string,
     ) { }
 }
+
 export class OpportunityClosedWin {
     constructor(
         public notes: string,
         public date: Date,
         public id_user: string,
     ) { }
+}
+
+
+export class NewOpportunity{
+    constructor(
+        public id_user: string,
+        public name: string,
+        public amount: string,
+        public id_contact: string,
+        public id_company: string, 
+        public start_date : any, 
+        public id_stage: string, 
+    ){}
 }

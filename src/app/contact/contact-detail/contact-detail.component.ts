@@ -4,7 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ConfigService } from './../../service/config.service';
 import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { CompanyDetail, Selected } from './../../company/company';  
-import { ContactEdit, Selectedcompany, UpdateContact } from './../contact';
+import {  UpdateContact  } from './../contact';
+import { NewOpportunity } from './../../opportunity/opportunity';
 
 @Component({
   selector: 'app-contact-detail',
@@ -20,24 +21,31 @@ export class ContactDetailComponent implements OnInit {
   public items: any = [];
   
   public loading = true;
-  public id: number;
+  public id: string;
   public closeResult: string;
   newContact: boolean = false;
   index: number;
   searchText: string;
   selectedCompany: any = [];
   model:any=[];
-  opportunity:any=[];
-
+  dataOpportunity:any=[];
+  dataOpportunityStage : any = [];
   loadingSelected: boolean = false;
   selected: any = [];
-
+  isReadOnly:boolean=true;
+  newOpportunity:any;
   constructor(
     private http: HttpClient,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute, 
+    private modalService: NgbModal,
+    config: NgbModalConfig,
     private configService: ConfigService
-  ) { }
+  ) {
+    
+    config.backdrop = 'static';
+    config.keyboard = false;
+  }
 
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params.id;
@@ -45,10 +53,10 @@ export class ContactDetailComponent implements OnInit {
     this.httpGet();
   }
 
-
+ 
   httpGet() {
     this.loading = true;
-    this.http.get<ContactEdit[]>(this.configService.base_url() + 'contact/edit/' + this.id, {
+    this.http.get(this.configService.base_url() + 'contact/detail/' + this.id, {
       headers: this.configService.headers()
     }).subscribe(data => {
       this.items = data['result']['data'];
@@ -56,7 +64,18 @@ export class ContactDetailComponent implements OnInit {
       this.lead_source = data['result']['lead_source'];
       this.title = data['result']['title'];
       this.user = data['result']['user'];
-     
+      this.dataOpportunity = data['result']['opportunity'];
+      this.dataOpportunityStage = data['result']['stage'];
+ 
+      this.newOpportunity = new NewOpportunity(
+        data['result']['data']['id_user'],
+        '',
+        '',
+        this.id,
+        data['result']['data']['id_company'], 
+        [],
+        "");
+
       this.model = new UpdateContact(
         data['result']['data']['id_company'],
         data['result']['data']['email'],
@@ -66,8 +85,11 @@ export class ContactDetailComponent implements OnInit {
         data['result']['data']['id_user'],
         data['result']['data']['last_name'],
         data['result']['data']['mobile'],
-        data['result']['data']['phone']
+        data['result']['data']['phone'],
+        data['result']['data']['position'],
+        
       );
+      console.log(this.model);
       console.log(data);
       this.loading = false;
     },error => {
@@ -75,14 +97,31 @@ export class ContactDetailComponent implements OnInit {
       console.log(error.error.text);
     });
   }
+ 
+  
+  open(content) {
+    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
 
-  get diagnostic() { return JSON.stringify(this.model); }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
 
 
-  submit: boolean = false;
-  onSubmit() {
+  fn_update() {
 
-    this.submit = true;
+    this.loading = true;
     console.log(this.model);
     this.http.post(this.configService.base_url() + 'contact/update',
       {
@@ -92,8 +131,9 @@ export class ContactDetailComponent implements OnInit {
         headers: this.configService.headers()
       }).subscribe(
         data => {
-          console.log(data);
-          this.submit = false;
+          console.log(data); 
+          this.httpGet();
+          this.loading = false;
         },
         error => {
           console.log(error);
@@ -102,8 +142,51 @@ export class ContactDetailComponent implements OnInit {
       );
   }
 
-  fn_delete(){
-    
+ 
+  fn_delete() {
+    if (confirm('Delete this Contact ?')) {
+
+      this.http.post(this.configService.base_url() + 'contact/fn_deleteSolo',
+        {
+          "id": this.id
+        }, {
+        headers: this.configService.headers()
+      }).subscribe(
+        data => {
+          console.log(data);
+          this.router.navigate(['/contact/']);
+
+        },
+        error => {
+          // console.log(error);
+          // console.log(error.error.text);
+        }
+      );
+
+    }
   }
 
+
+  fn_newOpportunity(){
+    this.loading = true;
+    console.log(this.model);
+    this.http.post(this.configService.base_url() + 'opportunity/fn_newOpportunity',
+      {
+        "id": this.id,
+        "data": this.newOpportunity
+      }, {
+        headers: this.configService.headers()
+      }).subscribe(
+        data => {
+          console.log(data);  
+          this.loading = false;
+        },
+        error => {
+          console.log(error);
+          console.log(error.error.text);
+        }
+      );
+  }
+
+  
 }

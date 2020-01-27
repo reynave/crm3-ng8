@@ -189,6 +189,24 @@ export class LeadEdit {
     }
 }
 
+export class LeadConvert{
+    constructor(
+        public newCompany: boolean,
+        public id_company: string,
+
+        public newContact: boolean,  
+        public id_contat: string,
+
+        public opportunity: string,
+        public amount: number,
+     
+        public id_user: string,
+        public id_opportunity_stage: string,
+
+        
+    ) { }
+}
+
 export class UpdateLead {
 
     constructor(
@@ -209,8 +227,7 @@ export class UpdateLead {
         public address_code: string,
         public address_country: string,
         
-        public opportunity: string, 
-        public id_company: string, 
+        public opportunity: string,  
         public position: string,
         public amount: number,
         

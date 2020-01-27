@@ -1,99 +1,103 @@
-<ngx-loading [show]="loading"></ngx-loading> 
+<ngx-loading [show]="loading"></ngx-loading>
 
-<div class="width-98">
+<app-navigator></app-navigator>
 
-  <div class="container-fluid border shadow-sm bg-white">
+<div class="container-fluid bg-light border-bottom py-1">
+  <div class="row">
+    <div class="col-12">
+      <small> You are here : <a [routerLink]="[ '/contact' ]">Contact</a> </small>
+    </div>
+  </div>
+</div>
 
-    <div class="row">
-      <div class="col-6">
-        <small> You are here : <a [routerLink]="[ '/contact' ]">Contact</a> </small>
+<div class="container-fluid border shadow-sm bg-white">
+
+  <div class="row py-3">
+    <div class="col-6 ">
+      <div class="module-name">
+        <h5>CONTACT</h5>
+      </div>
+    </div>
+    <div class="col-6 text-right">
+      <span [hidden]="!loadingSelected">Loading Attribute...</span>
+      <button type="button" class="btn btn-classic  btn-sm" (click)="open(newContact)"><i class="fas fa-plus"></i>
+        New Contact</button>
+    </div>
+  </div>
+
+
+  <div class=" bg-light  border border-top-brown rounded p-1 my-3">
+
+    <div class="row mb-3">
+      <div class="col-8">
+      
+
+        <span class="dropdown">
+          <button class="btn btn-classic btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-cog"></i>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" (click)="open(markUpdate)"> Mart to
+              Delete</a>
+          </div>
+        </span>
+
+        <label class="pl-2">Total Count : 30</label>
+      </div>
+
+      <div class="col-4 text-right">
+        <input type="text" class="form-control-sm form-radius" placeholder="Search">
       </div>
 
     </div>
-    <div class="row container-header">
 
-      <div class="col-6">
-        <h5>CONTACTS</h5>
-      </div>
-      <div class="col-6 text-right">
+    <div class="scroll-x scroll-style-2 max-height">
 
-      </div>
-    </div>
+      <table class="table table-hover border bg-white border-top border-bottom pointer">
+        <thead class="thead-light">
+          <tr>
+            <th colspan="2" class="text-center">ID</th>
 
-    <div class=" bg-light  border border-top-brown rounded p-1 my-3">
+            <th scope="col">Name</th>
+            <th scope="col">Company</th>
+            <th scope="col">Email</th>
+            <th scope="col"> Mobile</th>
+            <th scope="col">Phone </th>
 
-      <div class="row mb-3">
-        <div class="col-8">
-          <button type="button" class="btn btn-classic  btn-sm" (click)="open(newContact)"><i class="fas fa-plus"></i>
-            New Contact</button>
-
-          <span class="dropdown">
-            <button class="btn btn-classic btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-cog"></i>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" (click)="open(markUpdate)"> Mart to
-                Delete</a>
-            </div>
-          </span>
-
-          <label class="pl-2">Total Count : 30</label>
-        </div>
-
-        <div class="col-4 text-right">
-          <input type="text" class="form-control-sm form-radius" placeholder="Search">
-        </div>
-
-      </div>
-
-      <div class="scroll-x scroll-style-2 max-height">
-
-        <table class="table table-hover border bg-white border-top border-bottom pointer">
-          <thead class="thead-light">
-            <tr>
-              <th colspan="2" class="text-center">ID</th>
-
-              <th scope="col">Name</th>
-              <th scope="col">Company</th>
-              <th scope="col">Email</th>
-              <th scope="col"> Mobile</th>
-              <th scope="col">Phone </th>
-
-              <th scope="col">Contact Onwer</th>
+            <th scope="col">Contact Onwer</th>
 
 
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let x of items" (click)="fn_check(x);">
-              <td width="50"> <span class="text-primary ">
-                  <i class=" {{ x.check ? 'fas fa-check-square' : 'far fa-square' }}"></i> </span>
-              </td>
-              <td> <a [routerLink]="[ '/contact/',x.id]" class="text-monospace"> {{x.id}} </a> </td>
-              <td>{{x.name}}</td>
-              <td>{{x.company}}</td>
-              <td>{{x.email}}</td>
-              <td>{{x.mobile}}</td>
-              <td>{{x.phone}}</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of items" (click)="fn_check(x);">
+            <td width="50"> <span class="text-primary ">
+                <i class=" {{ x.check ? 'fas fa-check-square' : 'far fa-square' }}"></i> </span>
+            </td>
+            <td> <a [routerLink]="[ '/contact/',x.id]" class="text-monospace"> {{x.id}} </a> </td>
+            <td> <a [routerLink]="[ '/contact/',x.id]" > <b> {{x.name}} </b></a></td>
+            <td>{{x.company}}</td>
+            <td>{{x.email}}</td>
+            <td>{{x.mobile}}</td>
+            <td>{{x.phone}}</td>
 
-              <td>{{x.user}}</td>
+            <td>{{x.user}}</td>
 
-            </tr>
+          </tr>
 
 
 
-          </tbody>
-        </table>
-
-      </div>
-
+        </tbody>
+      </table>
 
     </div>
+
 
   </div>
 
 </div>
+
 
 <ng-template #newContact let-modal>
   <div class="modal-header">

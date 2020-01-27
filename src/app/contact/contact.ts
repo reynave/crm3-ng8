@@ -105,6 +105,23 @@ export class NewContact {
 
 }
 
+export class updateContact {
+
+    constructor(
+        public id_title: string,
+        public first_name: string,
+        public last_name: string,
+        public mobile: string,
+        public phone: string,
+
+        public id_lead_source: string,
+        public id_user: string,
+        public id_company: number,
+    ) { }
+
+}
+
+
 export class ContactEdit {
     error: number;
     result: {
@@ -154,6 +171,8 @@ export class ContactEdit {
     }
 }
 
+
+
 export class UpdateContact {
 
     constructor(
@@ -167,6 +186,8 @@ export class UpdateContact {
         public last_name: string,
         public mobile: string,
         public phone: string,
+        public position: string,
+        
     ) { }
 
 }
