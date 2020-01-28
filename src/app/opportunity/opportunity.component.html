@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class="col-6 text-right"> 
-        <button type="button" class="btn btn-classic btn-sm  mr-1" [routerLink]="[ '/opportunity/new/0/0' ]"> <i
+        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="open(opportunity)"> <i
             class="fas fa-plus"></i> New opportunity </button>
       </div>
     </div>
@@ -79,14 +79,14 @@
                   <i class=" {{ x.check ? 'fas fa-check-square' : 'far fa-square' }}"></i> </span>
               </td>
             
-              <td><a [routerLink]="[ '/opportunity/',x.id]"> {{x.name}}</a></td>
-              <td><b> {{x.company}}</b> </td>
+              <td><a [routerLink]="[ '/opportunity/',x.id]"><b> {{x.name}} </b> </a></td>
+              <td> {{x.company}}  </td>
               <td><strong> {{x.stage}}</strong></td>
-              <td class="text-right">{{x.progress}} %</td>
+              <td class="text-right">{{x.progress ? x.progress+' %' : ''}}</td>
               <td width="50">{{x.currency}}</td>
               <td class="text-right">{{x.amount | number:''}},-</td>
-              <td>{{x.input_date | date }}</td>
-              <td>{{x.input_by}}</td>
+              <td>{{x.start_date | date }}</td>
+              <td>{{x.user}}</td>
 
             </tr>
 
@@ -158,6 +158,10 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-classic btn-sm" (click)="modal.dismiss('Cross click')">Cancel</button> 
-
   </div>
+</ng-template>
+ 
+
+<ng-template #opportunity let-modal>
+  <app-opportunity-new (uploaded)="requestEmit($event)"></app-opportunity-new>
 </ng-template>

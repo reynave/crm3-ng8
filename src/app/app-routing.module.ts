@@ -7,8 +7,7 @@ import { ActivityComponent } from './activity/activity.component';
 import { ContactComponent } from './contact/contact.component';
 import { ContactDetailComponent } from './contact/contact-detail/contact-detail.component'; 
 import { CompanyComponent } from './company/company.component';
-import { CompanyDetailComponent } from './company/company-detail/company-detail.component';
-import { CompanyEditComponent } from './company/company-edit/company-edit.component';
+import { CompanyDetailComponent } from './company/company-detail/company-detail.component'; 
 import { OpportunityComponent } from './opportunity/opportunity.component';
 import { OpportunityDetailComponent } from './opportunity/opportunity-detail/opportunity-detail.component';
 import { OpportunityEditComponent } from './opportunity/opportunity-edit/opportunity-edit.component';
@@ -37,8 +36,7 @@ const routes: Routes = [
   { path: "contact/:id", component: ContactDetailComponent,  data : {title : 'Contact'} }, 
 
   { path: "company", component: CompanyComponent},
-  { path: "company/:id", component: CompanyDetailComponent },
-  { path: "company/edit/:id", component: CompanyEditComponent },
+  { path: "company/:id", component: CompanyDetailComponent }, 
 
 
   { path: "opportunity", component: OpportunityComponent },

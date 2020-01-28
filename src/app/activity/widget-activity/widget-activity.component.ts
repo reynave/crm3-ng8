@@ -76,10 +76,10 @@ export class WidgetActivityComponent implements OnInit {
       data => {
         this.activityLatest = data['result']['latest'];
         this.activityHistory = data['result']['history'];
-        console.log(this.activityLatest);
+    //    console.log(this.activityLatest);
       },
       error => {
-        console.log(error);
+     //   console.log(error);
       }
     );
   }

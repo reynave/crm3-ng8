@@ -160,17 +160,27 @@ export class CompanyEdit {
 export class UpdateCompany {
 
     constructor(
-        public address_city: string,
-        public address_code: string,
-        public address_state: string,
-        public address_street: string,
+        
+        public bill_country: string,  
+        public bill_city: string,
+        public bill_code: string,
+        public bill_state: string,
+        public bill_street1: string,  
+
+        public ship_country: string,  
+        public ship_city: string,
+        public ship_code: string,
+        public ship_state: string,
+        public ship_street1: string,
+
         public email: string,
-        public fax: string,
-        public id: string,
+        public fax: string, 
         public id_industry: string,
         public name: string,
         public phone: string,
         public website: string,
+        public id_user: string,
+        
     ) { }
 
 }

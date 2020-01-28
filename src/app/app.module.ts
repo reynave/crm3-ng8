@@ -15,8 +15,7 @@ import { LeadConvertComponent } from './lead/lead-convert/lead-convert.component
 import { ActivityComponent } from './activity/activity.component';
 import { WidgetActivityComponent } from './activity/widget-activity/widget-activity.component';
 import { CompanyComponent } from './company/company.component';
-import { CompanyDetailComponent } from './company/company-detail/company-detail.component';
-import { CompanyEditComponent } from './company/company-edit/company-edit.component';
+import { CompanyDetailComponent } from './company/company-detail/company-detail.component'; 
 import { ContactComponent } from './contact/contact.component'; 
 import { ContactDetailComponent } from './contact/contact-detail/contact-detail.component';
 import { OpportunityComponent } from './opportunity/opportunity.component';
@@ -37,6 +36,7 @@ import { QuoteDetailComponent } from './quote/quote-detail/quote-detail.componen
 import { NavigatorComponent } from './navigator/navigator.component';
 import { SortablejsModule } from 'ngx-sortablejs';
 import { QuotePrintComponent } from './quote/quote-print/quote-print.component';
+import { ContactNewComponent } from './contact/contact-new/contact-new.component';
 
 @NgModule({
   declarations: [
@@ -47,8 +47,7 @@ import { QuotePrintComponent } from './quote/quote-print/quote-print.component';
     ActivityComponent,
     WidgetActivityComponent,
     CompanyComponent,
-    CompanyDetailComponent,
-    CompanyEditComponent,
+    CompanyDetailComponent, 
     ContactComponent, 
     ContactDetailComponent,
     OpportunityComponent,
@@ -67,7 +66,8 @@ import { QuotePrintComponent } from './quote/quote-print/quote-print.component';
     DealDetailComponent,
     QuoteDetailComponent,
     NavigatorComponent,
-    QuotePrintComponent
+    QuotePrintComponent,
+    ContactNewComponent
   ],
   imports: [
     BrowserModule,

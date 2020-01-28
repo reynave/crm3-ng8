@@ -1,281 +1,494 @@
-<ngx-loading [show]="loading"></ngx-loading> 
+<ngx-loading [show]="loading"></ngx-loading>
+<app-navigator></app-navigator>
 
-<div class="container-fluid">
+<div class="container-fluid bg-light border-bottom py-1">
+  <div class="row">
+    <div class="col-12">
+      <small> You are here : <a [routerLink]="[ '/company' ]">Company</a> / <a [routerLink]="[ '/company/',id ]">
+          {{items.name}}</a> </small>
+    </div>
+  </div>
 
-  <div class="row no-gutters">
-    <div class="col-8">
-
-      <div class="container border shadow-sm bg-white">
-
-        <div class="row ">
-          <div class="col-6">
-            <small> You are here : <a [routerLink]="[ '/company' ]">Company</a> / <a [routerLink]="[ '/company/',id ]">
-                {{items.name}}</a> </small>
-          </div>
-        </div>
-
-        <div class="row container-header">
-
-          <div class="col-6 ">
-            <h5>COMPANY</h5>
-          </div>
-
-          <div class="col-6 text-right">
+</div>
 
 
-            <button type="button" class="btn btn-outline-primary  btn-sm  mr-1" [routerLink]="[ '/company/edit/',id ]">
-              <i class="fas fa-edit"></i> Edit </button>
+<div class="container-fluid  bg-white">
 
-            <button type="button" class="btn btn-danger btn-sm  mr-1" (click)="fn_delete();"> <i
-                class="fas fa-trash-alt"></i>
-              Delete </button>
+  <!-- Menu & Information -->
+  <div class="row border-bottom ">
+    <!-- Header & button -->
+    <div class="col-3 bg-light py-2">
+      <div class="module-name">
+        <strong>Company</strong>
+        <b class="text-primary">{{items.name}}</b>
+      </div>
+    </div>
 
-            <button type="button" class="btn btn-outline-secondary  btn-sm" [routerLink]="[ '/company' ]" title="back">
-              <i class="fas fa-times"></i> </button>
-          </div>
+    <div class="col-9 bg-light text-right py-2">
+      <div [hidden]="!isReadOnly">
+        <button type="button" class="btn btn-classic btn-sm  mr-1"
+          (click)="isReadOnly=false; t.select('tab-selectbyid2')">
+          <i class="fas fa-edit"></i> Edit </button>
 
-        </div>
-        <h5 class="my-3">Information</h5>
-        <div class="row mb-3">
+        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="fn_delete();"> <i
+            class="fas fa-trash-alt"></i>
+          Delete </button>
 
-          <div class="col-6">
-            <strong>Company </strong>
-            <table class="table table-list">
-              <tbody>
-                <tr>
-                  <td width="30%"><label>Company</label></td>
-                  <td> {{items.name}} </td>
-                </tr>
-                <tr>
-                  <td><label>Website</label></td>
-                  <td><a href="{{items.website}}" target="_blank"> {{items.website}} </a></td>
-                </tr>
+        <button type="button" class="btn btn-classic btn-sm  mr-1" [routerLink]="[ '/company' ]" title="back">
+          <i class="fas fa-times"></i> </button>
 
-                <tr>
-                  <td><label>Email</label></td>
-                  <td> {{items.email}}</td>
-                </tr>
+      </div>
 
-                <tr>
-                  <td><label>Phone</label></td>
-                  <td> {{items.phone}}</td>
-                </tr>
-
-                <tr>
-                  <td><label>Fax</label></td>
-                  <td> {{items.fax}}</td>
-                </tr>
-
-                <tr>
-                  <td><label>Industry</label></td>
-                  <td> {{items.industry}} </td>
-                </tr>
-                <tr>
-                  <td><label>Address</label></td>
-                  <td> {{items.address}}</td>
-                </tr>
-
-                <tr [hidden]="items.branches < 1">
-                  <td><label>Total Branches</label></td>
-                  <td> {{items.branches}}</td>
-                </tr>
-              </tbody>
-
-
-            </table>
-
-
-
-
-          </div>
-
-          <div class="col-6">
-            <strong>Input Information</strong>
-            <table class="table table-list">
-
-              <tbody>
-
-                <tr>
-                  <td><label>Created Date</label></td>
-                  <td> {{items.input_date | date:'d MMM y  hh:mm a'}}, <small> by {{items.input_by}}</small> </td>
-                </tr>
-                <tr [hidden]="items.update_by == false">
-                  <td><label>Update Date</label></td>
-                  <td> {{items.update_date | date:'d MMM y  hh:mm a'}}, <small> by {{items.update_by}} </small> </td>
-                </tr>
-                <tr>
-                  <td><label>ID Companay</label></td>
-                  <td><span class="text-monospace">{{items.id}}</span></td>
-                </tr>
-              </tbody>
-
-
-            </table>
-
-
-
-          </div>
-        </div>
-
-
-
-        <div class="py-2">
-          <strong>Opportunity </strong>
-        </div>
-        <div class=" bg-light  border border-top-brown rounded p-1 mb-4">
-          <div class=" mb-4">
-
-            <table class="table table-hover border bg-white border-top border-bottom pointer">
-              <thead class="thead-light">
-                <tr>
-                  <th width="50">No</th>
-                  <th scope="col">Opportunity Name</th>
-                  <th scope="col">Stage</th>
-                  <th scope="col">Progress</th>
-                  <th scope="col" colspan="2" class="text-right">Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let x of myOpportunity; let i = index">
-                  <td> {{i +1}}</td>
-                  <td> <a [routerLink]="[ '/opportunity/',x.id ]"> {{x.name}} </a>
-                    <div>
-                      <small>Created : {{x.input_date | date}} {{x.input_by}}</small>
-                    </div>
-                  </td>
-                  <td> {{x.stage}} </td>
-                  <td> {{x.progress}}</td>
-                  <td width="50"> {{x.currency}} </td>
-                  <td class="text-right"> {{x.amount | number:''}} </td>
-
-                </tr>
-
-
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td></td>
-                  <td colspan="7"> 
-                    
-                    <button type="button" class="btn btn-sm btn-primary" [routerLink]="[ '/opportunity/new/',items.id ,'0'  ]" > <i class="fas fa-plus"></i> New
-                      Opportunity</button> </td>
-                </tr>
-              </tfoot>
-            </table>
-
-          </div>
-        </div>
-
-
-        <div class="py-2">
-          <strong>Branches </strong>
-        </div>
-        <div class=" bg-light  border border-top-gray rounded p-1 mb-4">
-          <iframe height="300" width="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDU5LvSHY5Dz66sGw-eJ9LwzaGGSoEKJVs
-                &q=-6.2072013,106.9495600" allowfullscreen>
-          </iframe>
-          <div class="max-height mb-4">
-
-
-            <table class="table table-hover border bg-white border-top border-bottom pointer">
-              <thead class="thead-light">
-                <tr>
-                  <th width="50">No</th>
-                  <th scope="col">ID</th>
-                  <th scope="col">Branch Name</th>
-                  <th scope="col" width="300">Address</th>
-                  <th scope="col">Phone</th>
-
-                  <th scope="col">Email</th>
-                  <th scope="col">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let x of myBranch; let i = index">
-                  <td>{{ i + 1}}</td>
-                  <td> <a [routerLink]="[ '/branch/',x.id ]">{{x.id}}</a></td>
-                  <td> {{x.name}} </td>
-                  <td> {{x.address}} </td>
-                  <td> {{x.phone}}</td>
-                  <td> {{x.email}} </td>
-                  <td> {{x.status}} </td>
-                </tr>
-
-
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td></td>
-                  <td colspan="6"> <button type="button" class="btn btn-classic btn-sm" (click)="open(branch);"> <i
-                        class="fas fa-plus"></i> New Branch</button> </td>
-                </tr>
-              </tfoot>
-            </table>
-
-
-          </div>
-        </div>
-
-
-
-
-        <div class="py-2">
-          <strong>Contact </strong>
-        </div>
-        <div class=" bg-light  border border-top-blue rounded p-1 mb-4">
-          <div class="max-height mb-4">
-
-            <table class="table table-hover border bg-white border-top border-bottom pointer">
-              <thead class="thead-light">
-                <tr>
-                  <th width="50">No</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Phone</th>
-                  <th scope="col">Mobile</th>
-                  <th scope="col">Own By</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let x of myContact ; let i = index">
-                  <td>{{ i + 1}}</td>
-                  <td> <a [routerLink]="[ '/contact/1' ]">{{x.name}}</a></td>
-                  <td> {{x.email}}</td>
-                  <td> {{x.phone}} </td>
-
-                  <td> {{x.mobile}} </td>
-                  <td> {{x.user}} </td>
-                </tr>
-                <tr [hidden]="!myContact">
-                  <td colspan="6" class="text-center">No data</td>
-                </tr>
-
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td></td>
-                  <td colspan="5"> <button type="button" class="btn btn-classic btn-sm" (click)="open(contact)"> <i
-                        class="fas fa-plus"></i> New Contact</button> </td>
-                </tr>
-              </tfoot>
-            </table>
-
-          </div>
-        </div>
-
-
-        <br>
-
+      <div [hidden]="isReadOnly">
+        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="isReadOnly=true" title="Done"><i
+            class="fas fa-check"></i> Finish Edit </button>
       </div>
 
     </div>
-    <div class="col-4">
-      <div class="position-fixed">
-        <app-widget-activity></app-widget-activity>
-      </div>
+
+
+
+    <!-- Infromation -->
+    <div class="col-12 py-2">
+      <table class="table-p0">
+        <tr>
+          <td> <small> Website</small> </td>
+          <td> <small> Email </small></td>
+          <td> <small> Phone</small> </td>
+          <td> <small> Fax </small> </td>
+          <td> <small> Industry </small> </td>
+        </tr>
+
+        <tr>
+          <td> <a href="{{items.website}}" target="_blank"> <b class="text-primary">{{items.website}} </b> </a> </td>
+          <td> <b class="text-primary"> {{items.email}} </b> </td>
+          <td> <b class="text-primary"> {{items.phone}} </b> </td>
+          <td> <b class="text-primary"> {{items.fax}} </b> </td>
+          <td> <b class="text-primary"> {{items.industry}} </b> </td>
+        </tr>
+      </table>
+
 
     </div>
   </div>
+
+
+
+
+  <div class="row mt-3">
+    <!-- Left side-->
+    <div class="col-9 col-md-8">
+      <div class="py-2">
+
+        <ngb-tabset type="pills" #t="ngbTabset">
+
+          <ngb-tab>
+            <ng-template ngbTabTitle>Activity</ng-template>
+            <ng-template ngbTabContent>
+              <app-widget-activity></app-widget-activity>
+            </ng-template>
+          </ngb-tab>
+
+          <ngb-tab id="tab-selectbyid2">
+            <ng-template ngbTabTitle>Detail</ng-template>
+            <ng-template ngbTabContent>
+              <form (ngSubmit)="fn_update()" #mainForm="ngForm">
+                <div class="border-top py-2 my-2">
+
+                  <div class="row">
+                    <div class="col-12 bg-light my-2">
+                      <strong>Contact</strong>
+                    </div>
+
+                    <div class="col-6">
+                      <table class="table table-borderless">
+                        <tbody>
+
+                          <tr>
+                            <td width="30%"><label>Name</label></td>
+                            <td>
+                              <input type="text" class="form-control form-modal" id="name" required
+                                [(ngModel)]="modealCompany.name" name="name" #name="ngModel" [readonly]="isReadOnly">
+                              <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                                Company name is required
+                              </div>
+
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td><label>Email</label></td>
+                            <td> <input type="text" class="form-control form-modal" id="email"
+                                [(ngModel)]="modealCompany.email" name="email" [readonly]="isReadOnly"> </td>
+                          </tr>
+
+                          <tr>
+                            <td><label>Phone</label></td>
+                            <td> <input type="text" class="form-control form-modal" id="phone"
+                                [(ngModel)]="modealCompany.phone" name="phone" [readonly]="isReadOnly"> </td>
+                          </tr>
+
+                          <tr>
+                            <td><label>Fax</label></td>
+                            <td> <input type="text" class="form-control form-modal" id="fax"
+                                [(ngModel)]="modealCompany.fax" name="fax" [readonly]="isReadOnly"> </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div class="col-6">
+                      <table class="table table-borderless">
+                        <tbody>
+
+
+                          <tr>
+                            <td width="30%"><label>Industry</label></td>
+                            <td> <select class="form-control form-modal" id="id_industry"
+                                [(ngModel)]="modealCompany.id_industry" name="id_industry" [disabled]="isReadOnly">
+                                <option *ngFor="let x of industry" value="{{x.id}}"> {{x.name}} </option>
+                              </select>
+                            </td>
+                          </tr>
+
+
+
+                          <tr>
+                            <td><label>Company Owner </label></td>
+                            <td>
+                              <select class="form-control form-modal" id="id_user" [(ngModel)]="modealCompany.id_user"
+                                name="id_user" [disabled]="isReadOnly">
+                                <option *ngFor="let x of user" value="{{x.id}}"> {{x.name}} </option>
+                              </select>
+                            </td>
+                          </tr>
+
+
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div class="col-12 bg-light my-2">
+                      <strong>Address</strong>
+                    </div>
+
+
+                    <div class="col-6">
+
+                      <table class="table table-borderless">
+                        <tbody>
+                          <tr>
+                            <td width="50%"><label>Bill To Address</label></td>
+                            <td> </td>
+                          </tr>
+
+                          <tr>
+                            <td colspan="2">
+                              <textarea class="form-control form-modal" id="bill_street1"
+                                [(ngModel)]="modealCompany.bill_street1" name="bill_street1" [readonly]="isReadOnly"
+                                placeholder="Street"></textarea>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td> City </td>
+                            <td> State </td>
+                          </tr>
+
+
+                          <tr>
+                            <td> <input type="text" class="form-control form-modal" id="bill_city"
+                                [(ngModel)]="modealCompany.bill_city" name="bill_city" [readonly]="isReadOnly"
+                                placeholder="City"> </td>
+
+                            <td> <input type="text" class="form-control form-modal" id="bill_state"
+                                [(ngModel)]="modealCompany.bill_state" name="bill_state" [readonly]="isReadOnly"
+                                placeholder="State"> </td>
+                          </tr>
+
+
+                          <tr>
+                            <td> Code </td>
+                            <td> Country </td>
+                          </tr>
+
+                          <tr>
+                            <td> <input type="text" class="form-control form-modal" id="bill_code"
+                                [(ngModel)]="modealCompany.bill_code" name="bill_code" [readonly]="isReadOnly"
+                                placeholder="Code"> </td>
+
+                            <td> <input type="text" class="form-control form-modal" id="bill_country"
+                                [(ngModel)]="modealCompany.bill_country" name="bill_country" [readonly]="isReadOnly"
+                                placeholder="Country"> </td>
+                          </tr>
+
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div class="col-6">
+
+
+                      <table class="table table-borderless">
+                        <tbody>
+                          <tr>
+                            <td width="50%"><label>Ship To Address</label></td>
+                            <td> </td>
+                          </tr>
+
+                          <tr>
+                            <td colspan="2">
+                              <textarea class="form-control form-modal" id="ship_street1"
+                                [(ngModel)]="modealCompany.ship_street1" name="ship_street1" [readonly]="isReadOnly"
+                                placeholder="Street"></textarea>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td> City </td>
+                            <td> State </td>
+                          </tr>
+
+
+                          <tr>
+                            <td> <input type="text" class="form-control form-modal" id="ship_city"
+                                [(ngModel)]="modealCompany.ship_city" name="ship_city" [readonly]="isReadOnly"
+                                placeholder="City"> </td>
+
+                            <td> <input type="text" class="form-control form-modal" id="ship_state"
+                                [(ngModel)]="modealCompany.ship_state" name="ship_state" [readonly]="isReadOnly"
+                                placeholder="State"> </td>
+                          </tr>
+
+
+                          <tr>
+                            <td> Code </td>
+                            <td> Country </td>
+                          </tr>
+
+                          <tr>
+                            <td> <input type="text" class="form-control form-modal" id="ship_code"
+                                [(ngModel)]="modealCompany.ship_code" name="ship_code" [readonly]="isReadOnly"
+                                placeholder="Code"> </td>
+
+                            <td> <input type="text" class="form-control form-modal" id="ship_country"
+                                [(ngModel)]="modealCompany.ship_country" name="ship_country" [readonly]="isReadOnly"
+                                placeholder="Country"> </td>
+                          </tr>
+
+                        </tbody>
+                      </table>
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div class="footer-menu bg-white shadow border-top" [hidden]="isReadOnly">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-12 text-center p-1">
+                        <a class="btn btn-outline-secondary m-1" (click)="isReadOnly=true">Finish Edit</a>
+                        <button type="submit" class="btn btn-primary m-1"
+                          [disabled]="!mainForm.form.valid">Save</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </form>
+            </ng-template>
+          </ngb-tab>
+
+          <ngb-tab>
+            <ng-template ngbTabTitle>Branches</ng-template>
+            <ng-template ngbTabContent>
+              <div class="border-top py-2 my-2">
+
+                <div class="row">
+                  <div class="col-12 bg-light my-2">
+                    <strong>Branches</strong>
+                  </div>
+                </div>
+
+                <div class=" bg-light  border border-top-gray rounded p-1 my-3">
+                  <div class="max-height mb-4">
+
+
+                    <table class="table table-hover border bg-white border-top border-bottom pointer">
+                      <thead class="thead-light">
+                        <tr>
+                          <th width="50">No</th>
+                          <th scope="col">ID</th>
+                          <th scope="col">Branch Name</th>
+                          <th scope="col" width="300">Address</th>
+                          <th scope="col">Phone</th>
+
+                          <th scope="col">Email</th>
+                          <th scope="col">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let x of myBranch; let i = index">
+                          <td>{{ i + 1}}</td>
+                          <td> <a [routerLink]="[ '/branch/',x.id ]">{{x.id}}</a></td>
+                          <td> {{x.name}} </td>
+                          <td> {{x.address}} </td>
+                          <td> {{x.phone}}</td>
+                          <td> {{x.email}} </td>
+                          <td> {{x.status}} </td>
+                        </tr>
+
+
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <td></td>
+                          <td colspan="6"> <button type="button" class="btn btn-classic btn-sm" (click)="open(branch);">
+                              <i class="fas fa-plus"></i> New Branch</button> </td>
+                        </tr>
+                      </tfoot>
+                    </table>
+
+
+                  </div>
+                </div>
+
+
+              </div>
+            </ng-template>
+          </ngb-tab>
+
+
+          <ngb-tab>
+            <ng-template ngbTabTitle>Contact Rules</ng-template>
+            <ng-template ngbTabContent>
+              <div class="border-top py-2 my-2">
+                <div class="row">
+                  <div class="col-12 bg-light my-2">
+                    <strong>Branches</strong>
+                  </div>
+                </div>
+                <!-- Contact Roles -->
+                <div class="row py-2">
+                  <div class="col-12 ">
+                    <div class="border py-1 px-2 border-top-brown rounded">
+
+                      <div class="row">
+                        <div class="col-6"><strong>Contact Roles ({{myContact.length}}) </strong></div>
+                        <div class="col-6 text-right"> <button class="btn btn-classic btn-sm" (click)="open(contact);"><i
+                              class="fas fa-plus"></i>
+                            New</button> </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-6 mb-2" *ngFor="let x of myContact">
+
+                          <table class="table-items">
+                            <thead>
+                              <tr>
+                                <th> <a href="javascript:;" [routerLink]="[ '/contact/1' ]"> {{x.name}} </a></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>{{x.position}}</td>
+                              </tr>
+                              <tr>
+                                <td>M. {{x.mobile}}, P. {{x.phone}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                          <hr class="p-0 m-0 mt-2">
+                        </div>
+
+                      </div>
+
+
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+            </ng-template>
+          </ngb-tab>
+
+
+        </ngb-tabset>
+
+      </div>
+    </div>
+
+    <!-- right side-->
+    <div class="col-3 col-md-4 border-left">
+
+
+      <!-- Product -->
+      <div class="row py-2">
+        <div class="col-12 ">
+          <div class="border py-1 px-2 border-top-brown rounded">
+
+            <div class="row">
+              <div class="col-6"><strong>Opportunity ({{myOpportunity.length}}) </strong></div>
+              <div class="col-6 text-right"> <button class="btn btn-classic btn-sm" (click)="open(opportunity);"><i
+                    class="fas fa-plus"></i> New</button> </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12 mb-2" *ngFor="let x of myOpportunity; let i = index">
+
+                <hr [hidden]=" i < 1" class="p-0 m-0 mb-1">
+                <table class="table-items">
+                  <thead>
+                    <tr>
+                      <th colspan="2"> <a href="javascript:;" [routerLink]="[ '/opportunity/',x.id ]">{{x.name}}</a>
+                      </th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="2">By {{x.user}} </td>
+                    </tr>
+                    <tr>
+                      <td>Stage : <b>{{x.stage}} </b> </td>
+                      <td class="text-right"> <small>Created Date : {{x.input_date | date}}</small> </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div [hidden]="isReadOnly"><br><br></div>
 
 
 
@@ -500,53 +713,5 @@
 
 
   <ng-template #opportunity let-modal>
-    <div class="modal-header">
-      <strong class="modal-title" id="modal-basic-title">New Opportunity</strong>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body bg-light">
-
-      <div class="form-group row no-gutters">
-        <label for="h21" class="col-sm-3 col-form-label"> Name </label>
-        <div class="col-sm-8">
-          <select class="form-control border">
-            <option>Miss Kazaya</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-group row no-gutters">
-        <label for="h21" class="col-sm-3 col-form-label"> Company </label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control border" readonly id="h21" value="PT Sugino Mando">
-        </div>
-      </div>
-
-      <div class="form-group row no-gutters">
-        <label for="h21" class="col-sm-3 col-form-label"> Opportunity's Name </label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control border" maxlength="250" id="h21">
-        </div>
-      </div>
-
-      <div class="form-group row no-gutters">
-        <label for="h21" class="col-sm-3 col-form-label"> Start Date </label>
-        <div class="col-sm-2">
-          <input type="text" id="dateOfBirth" class="form-control border" placeholder="2019-07-01" readonly
-            (click)="dp.toggle()" name="dp" ngbDatepicker #dp="ngbDatepicker">
-
-        </div>
-
-      </div>
-
-
-    </div>
-    <div class="modal-footer">
-
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
-      <button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Save & Next</button>
-
-    </div>
+    <app-opportunity-new (uploaded)="requestEmit($event)"></app-opportunity-new>
   </ng-template>

@@ -39,10 +39,15 @@ export class OpportunityComponent implements OnInit {
     config.keyboard = false;
   }
 
-  ngOnInit() {
-
+  ngOnInit() { 
     this.httpGet();
   }
+
+  requestEmit(event) {
+    this.router.navigate(['opportunity',event]);
+    this.modalService.dismissAll();
+  }
+  
   total:number;
   httpGet() {
     this.loading = true;

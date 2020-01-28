@@ -53,7 +53,15 @@ export class ContactDetailComponent implements OnInit {
     this.httpGet();
   }
 
- 
+  requestEmit(event) {
+    if(event == 'fn_newOpportunity'){
+      this.httpGet();
+    }
+    this.modalService.dismissAll();
+  }
+
+
+
   httpGet() {
     this.loading = true;
     this.http.get(this.configService.base_url() + 'contact/detail/' + this.id, {

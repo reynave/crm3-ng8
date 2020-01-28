@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfigService } from './../../service/config.service';
 import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-import { CompanyDetail, Selected } from './../company';
+import { CompanyDetail, Selected, UpdateCompany } from './../company';
 import { NewContact } from './../../contact/contact';
 import { NewBranch } from './../../branch/branch';
 
@@ -22,10 +22,13 @@ export class CompanyDetailComponent implements OnInit {
   modalTitle:string = "";
   objIndex:any;
   searchText : string;  
-
+  isReadOnly:boolean=true;
   modelContact:any;
   modelBranch:any;
- 
+  modealCompany: any;
+  industry:any = [];
+  user:any = [];
+  
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -46,8 +49,18 @@ export class CompanyDetailComponent implements OnInit {
     this.httpSelected();
     this.httpGet();
   }
+
+  requestEmit(event) {
+    if(event == 'fn_newOpportunity'){
+      this.httpGet();
+    }
+    this.modalService.dismissAll();
+  }
+
+
   myBranch:any = [];
   myOpportunity:any = [];
+
   httpGet() {
     this.loading = true;
     this.http.get<CompanyDetail[]>(this.configService.base_url() + 'company/detail/'+ this.id, {
@@ -56,7 +69,30 @@ export class CompanyDetailComponent implements OnInit {
       this.items = data['result']['data'];
       this.myContact = data['result']['contact'];
       this.myOpportunity = data['result']['opportunity'];
-     
+      this.industry =  data['result']['industry'];
+      this.user =  data['result']['user'];
+      
+      console.log(data);
+      this.modealCompany = new UpdateCompany(
+        data['result']['data']['bill_country'],
+        data['result']['data']['bill_city'],
+        data['result']['data']['bill_code'],
+        data['result']['data']['bill_state'],
+        data['result']['data']['bill_street1'],
+        data['result']['data']['ship_country'],
+        data['result']['data']['ship_city'],
+        data['result']['data']['ship_code'],
+        data['result']['data']['ship_state'],
+        data['result']['data']['ship_street1'],
+        data['result']['data']['email'],
+        data['result']['data']['fax'], 
+        data['result']['data']['id_industry'],
+        data['result']['data']['name'],
+        data['result']['data']['phone'],
+        data['result']['data']['website'],
+        data['result']['data']['id_user'] 
+        
+      );
       this.myBranch = data['result']['branch'];
       
       this.loading = false;
@@ -120,8 +156,26 @@ export class CompanyDetailComponent implements OnInit {
   }
 
 
-  get diagnosticContact() { return JSON.stringify(this.modelContact); }
-  get diagnosticBranch() { return JSON.stringify(this.modelBranch); }
+  fn_update(){
+    this.loading = true; 
+    this.http.post(this.configService.base_url() + 'company/update',
+      {
+        "id": this.id,
+        "data": this.modealCompany
+      }, {
+        headers: this.configService.headers()
+      }).subscribe(
+        data => {
+          console.log(data); 
+          this.httpGet();
+          this.loading = false;
+        },
+        error => {
+          console.log(error);
+          console.log(error.error.text);
+        }
+      );
+  }
 
 
   submit: boolean = false;
