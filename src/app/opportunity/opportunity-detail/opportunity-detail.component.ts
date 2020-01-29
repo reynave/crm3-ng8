@@ -4,7 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ConfigService } from './../../service/config.service';
 import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { OpportunityDetail, OpportunityClosedLose, OpportunityClosedWin } from './../opportunity';
-import { Newquote } from './../../quote/quote';
+import { Newquote } from './../../quote/quote'; 
+import { OpportunityUpdate, UpdateOpportunity } from './../opportunity';
 
 @Component({
   selector: 'app-opportunity-detail',
@@ -28,7 +29,21 @@ export class OpportunityDetailComponent implements OnInit {
   modelContact: any;
   modelBranch: any;
   product: any = []
-
+  isReadOnly:boolean= true;
+  myBranch: any = [];
+  user: any = [];
+  width: string;
+  modelClosedWin: any;
+  modelClosedLose: any;
+  finish: boolean = false;
+  stageNotes: string;
+  quoteModel: any;
+  quotes: any; 
+  business:any=[];
+  model:any=[];
+  lead_source:any=[];
+  updateOpportunity:any;
+  contact:any=[];
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -45,24 +60,20 @@ export class OpportunityDetailComponent implements OnInit {
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params.id;
     this.items = {
-      closedDate: {
+      start_date: {
         year: 0,
         month: 0,
         day: 0,
-      }
+      }, 
     }
     this.httpGet();
   }
-  myBranch: any = [];
-  user: any = [];
-  width: string;
-  modelClosedWin: any;
-  modelClosedLose: any;
-  finish: boolean = false;
-  stageNotes: string;
-  quoteModel: any;
-  quotes: any;
-  isReadOnly: boolean = true;
+ 
+  requestEmit(event) {
+    this.httpGet();
+    this.modalService.dismissAll();
+  }
+
 
   httpGet() {
     this.loading = true;
@@ -76,17 +87,30 @@ export class OpportunityDetailComponent implements OnInit {
       this.width = data['result']['width'];
       this.id_stage = data['result']['data']['id_stage'];
       this.product = data['result']['product'];
-
+      this.business =  data['result']['business'];
       var objIndex = this.stage.findIndex((obj => obj.id == this.id_stage));
       this.stageNotes = this.stage[objIndex]['notes'];
 
-
+      this.contact = data['result']['contact'];
       this.user = data['result']['user'];
       this.loading = false;
       this.modelClosedWin = new OpportunityClosedWin('', this.currentDate, data['result']['data']['id_user']);
       this.modelClosedLose = new OpportunityClosedLose('', this.currentDate, data['result']['data']['id_user']);
 
       this.quoteModel = new Newquote(0, '', '', '', '', 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', true);
+      this.lead_source =  data['result']['lead_source'];
+      this.updateOpportunity = new UpdateOpportunity(
+        data['result']['data']['id_user'],
+        data['result']['data']['id_opportunity_business'],
+        data['result']['data']['id_lead_source'],
+        data['result']['data']['name'],
+        data['result']['data']['amount'],
+        data['result']['data']['closed_date'],
+        data['result']['data']['start_date']
+      );
+
+
+      this.model = new OpportunityUpdate(data['result']['data']['name'],data['result']['data']['id_lead_source'],data['result']['data']['id_user'],data['result']['data']['id_contact'] );
     }, error => {
       console.log(error);
       console.log(error.error.text);
@@ -259,11 +283,11 @@ export class OpportunityDetailComponent implements OnInit {
       headers: this.configService.headers()
     }).subscribe(
       data => {
-        if (data['error'] == 0) {
+        console.log(data);
           this.loading = false;
           this.router.navigate(['/quote/', data['result']['id']]);
           this.modalService.dismissAll();
-        }
+         
 
       },
       error => {
@@ -271,6 +295,26 @@ export class OpportunityDetailComponent implements OnInit {
         console.log(error.error.text);
       }
     );
+  }
+
+  fn_update() {
+ 
+    this.http.post(this.configService.base_url() + 'opportunity/update',
+      {
+        "id": this.id,
+        "data": this.updateOpportunity
+      }, {
+        headers: this.configService.headers()
+      }).subscribe(
+        data => {
+          console.log(data); 
+          this.httpGet();
+        },
+        error => {
+          console.log(error);
+          console.log(error.error.text);
+        }
+      );
   }
 
 }

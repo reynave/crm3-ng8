@@ -65,6 +65,15 @@ export class ContactComponent implements OnInit {
     });
   }
 
+  
+  requestEmit(event) {
+    if(event){
+      this.router.navigate(['contact',event]);
+    }
+    this.modalService.dismissAll();
+  }
+
+
   httpSelected() {
 
     this.http.get<Selectedcompany[]>(this.configService.base_url() + 'contact/selected', {

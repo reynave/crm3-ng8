@@ -221,3 +221,18 @@ export class NewOpportunity{
         public id_stage: string, 
     ){}
 }
+
+
+
+export class UpdateOpportunity{
+    constructor(
+        public id_user: string,
+        public id_opportunity_business: string, 
+        public id_lead_source: string,
+        public name: string,
+        public amount: number, 
+        public start_date : any,  
+        public closed_date : any,  
+        
+    ){}
+}

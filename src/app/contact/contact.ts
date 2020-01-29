@@ -100,7 +100,7 @@ export class NewContact {
 
         public id_lead_source: string,
         public id_user: string,
-        public id_company: number,
+        public id_company: string,
     ) { }
 
 }

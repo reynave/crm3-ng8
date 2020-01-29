@@ -44,7 +44,10 @@ export class OpportunityComponent implements OnInit {
   }
 
   requestEmit(event) {
-    this.router.navigate(['opportunity',event]);
+    if(event){
+      this.router.navigate(['opportunity',event]);
+    }
+   
     this.modalService.dismissAll();
   }
   

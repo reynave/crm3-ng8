@@ -117,6 +117,6 @@ export class OpportunityNewComponent implements OnInit {
   }
 
   close(){
-    this.uploaded.emit('close');
+    this.uploaded.emit();
   }
 }
