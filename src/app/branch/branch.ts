@@ -4,7 +4,7 @@ export class Branch {
 export class NewBranch {
 
     constructor(
-        public id_company:number,
+        public id_company:string,
         public branchName: string,
         public status: string,
         public phone: string,

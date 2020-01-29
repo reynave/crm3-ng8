@@ -1,4 +1,4 @@
-<ngx-loading [show]="loading"></ngx-loading> 
+<ngx-loading [show]="loading"></ngx-loading>
 <app-navigator></app-navigator>
 
 
@@ -10,97 +10,97 @@
   </div>
 </div>
 
- 
+
 
 <div class="container-fluid  bg-white">
 
-     
+
   <div class="row py-3">
 
-      <div class="col-6">
-        <div class="module-name">
-          <strong>OPPORTUNITY</strong> 
-        </div>
-      </div>
-      <div class="col-6 text-right"> 
-        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="open(opportunity)"> <i
-            class="fas fa-plus"></i> New opportunity </button>
+    <div class="col-6">
+      <div class="module-name">
+        <strong>OPPORTUNITY</strong>
       </div>
     </div>
+    <div class="col-6 text-right">
+      <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="open(opportunity)"> <i
+          class="fas fa-plus"></i> New opportunity </button>
+    </div>
+  </div>
 
-    <div class=" bg-light  border border-top-brown rounded p-1 my-3">
+  <div class=" bg-light  border border-top-brown rounded p-1 my-3">
 
-      <div class="row mb-3">
-        <div class="col-8">
+    <div class="row mb-3">
+      <div class="col-8">
 
-          <span class="dropdown">
-            <button class="btn btn-classic btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-cog"></i>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" (click)="open(markUpdate)"> Mart to delete</a>
+        <span class="dropdown">
+          <button class="btn btn-classic btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-cog"></i>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" (click)="open(markUpdate)"> Mart to delete</a>
 
-            </div>
-          </span>
+          </div>
+        </span>
 
-          <label class="pl-2">Total Count :{{total}} </label>
-        </div>
-
-        <div class="col-4 text-right">
-          <input type="text" class="form-control-sm form-radius" placeholder="Search">
-        </div>
-
+        <label class="pl-2">Total Count :{{total}} </label>
       </div>
 
-      <div class="scroll-x max-height">
-
-        <table class="table table-hover border bg-white border-top border-bottom pointer">
-          <thead class="thead-light">
-            <tr> 
-              <th>No</th>
-              <th></th>
-
-              <th scope="col">Opportunity Name</th>
-              <th scope="col">Company</th>
-              <th scope="col">Stage</th>
-              <th scope="col" class="text-right">Progress</th>
-              <th scope="col" class="text-right" colspan="2">Amount</th>
-
-              <th scope="col">Started Date</th>
-              <th scope="col">Account Manager</th>
-
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let x of items; let i = index" (click)="fn_check(x);">
-              <td width="50"> {{ i + 1}} </td>
-              <td width="50"> <span class="text-primary ">
-                  <i class=" {{ x.check ? 'fas fa-check-square' : 'far fa-square' }}"></i> </span>
-              </td>
-            
-              <td><a [routerLink]="[ '/opportunity/',x.id]"><b> {{x.name}} </b> </a></td>
-              <td> {{x.company}}  </td>
-              <td><strong> {{x.stage}}</strong></td>
-              <td class="text-right">{{x.progress ? x.progress+' %' : ''}}</td>
-              <td width="50">{{x.currency}}</td>
-              <td class="text-right">{{x.amount | number:''}},-</td>
-              <td>{{x.start_date | date }}</td>
-              <td>{{x.user}}</td>
-
-            </tr>
-
-          </tbody>
-
-        </table>
-
+      <div class="col-4 text-right">
+        <input type="text" class="form-control-sm form-radius" placeholder="Search">
       </div>
-
 
     </div>
+
+    <div class="scroll-x max-height">
+
+      <table class="table table-hover border bg-white border-top border-bottom pointer">
+        <thead class="thead-light">
+          <tr>
+            <th>No</th>
+            <th></th>
+
+            <th scope="col">Opportunity Name</th>
+            <th scope="col">Company</th>
+            <th scope="col">Stage</th>
+            <th scope="col" class="text-right">Progress</th>
+            <th scope="col" class="text-right" colspan="2">Amount</th>
+
+            <th scope="col">Started Date</th>
+            <th scope="col">Account Manager</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of items; let i = index" (click)="fn_check(x);">
+            <td width="50"> {{ i + 1}} </td>
+            <td width="50"> <span class="text-primary ">
+                <i class=" {{ x.check ? 'fas fa-check-square' : 'far fa-square' }}"></i> </span>
+            </td>
+
+            <td><a [routerLink]="[ '/opportunity/',x.id]"><b> {{x.name}} </b> </a></td>
+            <td> {{x.company}} </td>
+            <td><strong> {{x.stage}}</strong></td>
+            <td class="text-right">{{x.progress ? x.progress+' %' : ''}}</td>
+            <td width="50">{{x.currency}}</td>
+            <td class="text-right">{{x.amount | number:''}},-</td>
+            <td>{{x.start_date | date }}</td>
+            <td>{{x.user}}</td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
 
   </div>
- 
+
+</div>
+
 
 
 <ng-template #markUpdate let-modal>
@@ -113,18 +113,19 @@
   <div class="modal-body bg-white">
 
     <div [hidden]="!itemsSelected.length">
-        <div class="form-group row">
-            <div class="col-3">
-              <div class="text-danger">
-                Delete selected Opportunity ?
-              </div>
-            </div>
-            <div class="col-4">
-              <button type="button" class="btn btn-classic btn-sm mx-1" (click)="fn_delete();">Yes</button>
-
-              <button type="button" class="btn btn-classic btn-sm mx-1" (click)="modal.dismiss('Cross click')">Cancel</button>
-            </div>
+      <div class="form-group row">
+        <div class="col-3">
+          <div class="text-danger">
+            Delete selected Opportunity ?
           </div>
+        </div>
+        <div class="col-4">
+          <button type="button" class="btn btn-classic btn-sm mx-1" (click)="fn_delete();">Yes</button>
+
+          <button type="button" class="btn btn-classic btn-sm mx-1"
+            (click)="modal.dismiss('Cross click')">Cancel</button>
+        </div>
+      </div>
       <table class="table border table-hover  table-striped">
         <thead>
           <tr>
@@ -157,10 +158,10 @@
 
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-classic btn-sm" (click)="modal.dismiss('Cross click')">Cancel</button> 
+    <button type="button" class="btn btn-classic btn-sm" (click)="modal.dismiss('Cross click')">Cancel</button>
   </div>
 </ng-template>
- 
+
 
 <ng-template #opportunity let-modal>
   <app-opportunity-new (uploaded)="requestEmit($event)"></app-opportunity-new>

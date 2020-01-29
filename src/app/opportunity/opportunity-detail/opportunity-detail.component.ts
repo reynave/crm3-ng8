@@ -106,7 +106,9 @@ export class OpportunityDetailComponent implements OnInit {
         data['result']['data']['name'],
         data['result']['data']['amount'],
         data['result']['data']['closed_date'],
-        data['result']['data']['start_date']
+        data['result']['data']['start_date'],
+        data['result']['data']['id_contact'],
+        
       );
 
 

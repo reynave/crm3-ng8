@@ -233,6 +233,8 @@ export class UpdateOpportunity{
         public amount: number, 
         public start_date : any,  
         public closed_date : any,  
+        public id_contact : string,  
+        
         
     ){}
 }

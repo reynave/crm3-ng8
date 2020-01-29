@@ -56,7 +56,7 @@ export class ContactComponent implements OnInit {
     }).subscribe(data => {
       this.items = data['result']['data'];
       
-    this.modelContact = new NewContact('0', '', '', '', '', '0', this.id_user,0);
+    this.modelContact = new NewContact('0', '', '', '', '', '0', this.id_user,'0');
       console.log(data);
       this.loading = false;
     }, error => {
@@ -103,7 +103,7 @@ export class ContactComponent implements OnInit {
           this.submit = false;
           if (value == 'next') {
             this.httpGet();
-            this.modelContact = new NewContact('0', '', '', '', '', '0','',0);
+            this.modelContact = new NewContact('0', '', '', '', '', '0','','0');
           }
           else {
             this.router.navigate(['/contact/', data['result']['id']]);

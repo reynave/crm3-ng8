@@ -17,7 +17,7 @@ export class CompanyDetailComponent implements OnInit {
   public items: any = [];
   myContact:any = [];
   public loading = true;
-  public id:number;
+  public id:string;
   public closeResult: string;
   modalTitle:string = "";
   objIndex:any;

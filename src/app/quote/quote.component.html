@@ -1,30 +1,46 @@
 <ngx-loading [show]="loading"></ngx-loading> 
-
 <app-navigator></app-navigator>
-<div class="container border shadow-sm bg-white">
 
+<div class="container-fluid bg-light border py-1">
   <div class="row">
-    <div class="col-6">
+    <div class="col-12">
       <small> You are here : <a [routerLink]="[ '/quote' ]">Quote</a> </small>
     </div>
-
   </div>
-  <div class="row container-header">
+</div>
 
-    <div class="col-6">
-      <h5>QUOTE</h5>
-    </div>
+
+<div class="container-fluid  bg-white">
+
    
+  <div class="row py-3">
+
+    <div class="col-12">
+      <div class="module-name">
+        <strong>QUOTATITIONS</strong>
+      </div>
+    </div>
+     
   </div>
 
 
-  <div class="my-3">
-    
+  <div class=" bg-light  border border-top-brown rounded p-1 my-3">
+
     <div class="row mb-3">
       <div class="col-8">
 
-        
-        <label class="pl-2">Total Count : 20</label>
+        <span class="dropdown">
+          <button class="btn btn-classic btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-cog"></i>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" (click)="open(markUpdate)"> Mart to delete</a>
+
+          </div>
+        </span>
+
+        <label class="pl-2">Total Count :{{total}} </label>
       </div>
 
       <div class="col-4 text-right">
@@ -38,7 +54,6 @@
       <table class="table table-hover border bg-white border-top border-bottom pointer">
         <thead class="thead-light">
           <tr>
-          
             <th>No</th>
 
             <th scope="col">Quote No</th>
@@ -49,26 +64,21 @@
             <th scope="col">Expired</th>
             <th scope="col" class="text-right" colspan="2">Amount</th>
 
-            <th scope="col">Sales By</th>
-            <th scope="col">Created Date</th>
-            <th scope="col">Created By</th>
+            <th scope="col">Account Manager</th> 
 
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let x of items; let i = index" >
-          
+          <tr *ngFor="let x of items; let i = index" (click)="fn_check(x);">
             <td width="50"> {{ i + 1}} </td>
             <td><a [routerLink]="[ '/quote/1']"> {{x.quotes}}</a></td>
             <td>{{x.name}}</td>
             
             <td>{{x.company}}</td>
-            <td>{{x.expired}}</td>
+            <td>{{x.expired | date}}</td>
             <td width="50">IDR</td>
             <td class="text-right">{{x.amount | number:''}},-</td>
-            <td>{{x.sales}}</td>
-            <td>{{x.sales}}</td>
-            <td>{{x.expired}}</td>
+            <td>{{x.sales}}</td> 
 
           </tr>
 
@@ -78,9 +88,8 @@
 
     </div>
 
-  </div>
 
-  <br>
+  </div> 
 
 
 </div>

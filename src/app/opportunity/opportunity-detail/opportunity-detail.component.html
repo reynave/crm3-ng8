@@ -174,6 +174,13 @@
                     <div class="col-12 col-lg-6">
                       <table class="table table-borderless">
 
+                        <tr width="40%">
+                          <td>Contact</td>
+                          <td> <select class="form-control form-modal" [disabled]="isReadOnly"
+                              [(ngModel)]="updateOpportunity.id_contact" [ngModelOptions]="{standalone: true}">
+                              <option value="{{x.id}}" *ngFor="let x of contact">{{x.name}} </option>
+                            </select> </td>
+                        </tr>
 
                         <tr width="40%">
                           <td>Lead Source</td>
@@ -285,9 +292,7 @@
 
                       <div class="row">
                         <div class="col-6"><strong>Products ({{product.length}}) </strong></div>
-                        <div class="col-6 text-right"> <button class="btn btn-classic btn-sm"><i
-                              class="fas fa-plus"></i>
-                            New</button> </div>
+                        <div class="col-6 text-right"> <button class="btn btn-classic btn-sm" (click)="open(addPriceList);" ><i class="fas fa-plus"></i> New</button> </div>
                       </div>
 
                       <div class="row">
@@ -331,20 +336,20 @@
                       </div>
 
                       <div class="row">
-                        <div class="col-6 mb-2" *ngFor="let x of product">
+                        <div class="col-6 mb-2">
 
                           <table class="table-items">
                             <thead>
                               <tr>
-                                <th> <a href="">Mrs Kazama <i class="fas fa-check"></i></a></th>
+                                <th> <a href="">PT Sumer Daya Teknologi</a></th>
                               </tr>
                             </thead>
                             <tbody>
                               <tr>
-                                <td>Sales Manager Departement</td>
+                                <td>Strong : ....</td>
                               </tr>
                               <tr>
-                                <td>IT Support</td>
+                                <td>Weakess : ....</td>
                               </tr>
                             </tbody>
                           </table>
@@ -430,14 +435,14 @@
               <div class="col-6 text-right"> <button class="btn btn-classic btn-sm" (click)="open(addContact);"><i class="fas fa-plus"></i>
                   New</button> </div>
             </div> 
-
+   
             <div class="row">
               <div class="col-6 mb-2" *ngFor="let x of contact">
-
+                
                 <table class="table-items">
                   <thead>
                     <tr>
-                      <th> <a href="javascript:;"> {{x.name}} <i class="fas fa-check"></i></a></th>
+                      <th> <a href="javascript:;" > {{x.name}} <span [hidden]="!x.active"> <i class="fas fa-check"></i> </span></a></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -886,4 +891,14 @@
 
 <ng-template #addContact let-modal>
   <app-contact-new  (uploaded)="requestEmit($event)"></app-contact-new>
+</ng-template>
+
+<ng-template #addPriceList let-modal>
+  <div class="modal-header">
+    <strong class="modal-title" id="modal-basic-title">Price List </strong>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <app-price-list-modal (uploaded)="requestEmit($event)"></app-price-list-modal>
 </ng-template>
