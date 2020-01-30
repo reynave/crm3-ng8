@@ -37,6 +37,9 @@ import { NavigatorComponent } from './navigator/navigator.component';
 import { SortablejsModule } from 'ngx-sortablejs';
 import { QuotePrintComponent } from './quote/quote-print/quote-print.component';
 import { ContactNewComponent } from './contact/contact-new/contact-new.component';
+import { WarningComponent } from './warning/warning.component';
+import { AccessRightComponent } from './access-right/access-right.component';
+import { AccessRightDetailComponent } from './access-right/access-right-detail/access-right-detail.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +70,10 @@ import { ContactNewComponent } from './contact/contact-new/contact-new.component
     QuoteDetailComponent,
     NavigatorComponent,
     QuotePrintComponent,
-    ContactNewComponent
+    ContactNewComponent,
+    WarningComponent,
+    AccessRightComponent,
+    AccessRightDetailComponent
   ],
   imports: [
     BrowserModule,

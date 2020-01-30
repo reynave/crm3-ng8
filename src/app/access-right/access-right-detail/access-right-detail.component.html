@@ -1,0 +1,62 @@
+<ngx-loading [show]="loading"></ngx-loading>
+
+<app-navigator></app-navigator>
+
+<div class="container-fluid bg-light border-bottom py-1">
+    <div class="row">
+        <div class="col-12">
+            <small> You are here : <a [routerLink]="[ '/accessRight' ]">Access Right</a> /
+                <a [routerLink]="[ '/accessRight/',items.id ]">
+                    {{items.name}}</a> </small>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="container-fluid  bg-white">
+
+    <div class="row py-3">
+        <div class="col-6 ">
+            <div class="module-name">
+                <strong>ACCESS RULES</strong>
+                <b class="text-primary">{{items.name}}</b> 
+            </div>
+        </div>
+        <div class="col-6 text-right">
+            <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="update()"> <i class="fas fa-save"></i> Save </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class=" bg-light  border border-top-brown rounded p-1 my-2">
+                <table class="table table-hover border bg-white border-top border-bottom pointer">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="text-center" width="10">No</th>
+                            <th scope="col">Name</th>
+                            <th scope="col" class="text-center">Access</th>
+                            <th scope="col" class="text-center">Update</th>
+                            <th scope="col" class="text-center">Insert</th>
+                            <th scope="col" class="text-center">Delete</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let x of items.user_access_rules; let i = index">
+                            <td>{{i+1}}</td>
+                            <td>{{x.module.label}}</td>
+                            <td class="text-center"> <input type="checkbox" [(ngModel)]="x.module._access"> </td>
+                            <td class="text-center"> <input type="checkbox" [(ngModel)]="x.module._update"> </td>
+                            <td class="text-center"> <input type="checkbox" [(ngModel)]="x.module._insert"> </td>
+                            <td class="text-center"> <input type="checkbox" [(ngModel)]="x.module._delete"> </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>

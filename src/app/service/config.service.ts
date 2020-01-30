@@ -12,19 +12,29 @@ export class ConfigService {
 
   varKey: string = "mXTSxrEKSErYnZb33LyBus5RpVtGNfcgEBqxp5Unk5azj4ZgdWfhkfVDKJ3KSLFG7DtecSehXe7Q67NGFWGehU3ANexas3ZbrkfU";
   varToken: string;
-  varHeaders: any = [];
-
+  varHeaders: any = []; 
+  rules:any;
   constructor(
     private http: HttpClient,
   ) {
     if ( this.getCookie('cmr3ng8Token') === null) {
       this.varToken = '';
     } else {
-      this.varToken = this.getCookie('cmr3ng8Token');
-
+      this.varToken = this.getCookie('cmr3ng8Token'); 
     }
 
   }
+
+  access_rules(module){
+   this.rules =  JSON.parse(localStorage.getItem('crm3ng8Rules')); 
+   return this.rules['result']['access_rules'][module]['access'];
+  }
+
+  access_right(){
+    this.rules =  JSON.parse(localStorage.getItem('crm3ng8Rules')); 
+    return this.rules['result']['access_rules'];
+   }
+  
 
   base_url() {
     return api;

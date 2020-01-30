@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LeadComponent } from './lead/lead.component';
-import { LeadDetailComponent } from './lead/lead-detail/lead-detail.component'; 
+import { LeadDetailComponent } from './lead/lead-detail/lead-detail.component';
 import { LeadConvertComponent } from './lead/lead-convert/lead-convert.component';
 import { ActivityComponent } from './activity/activity.component';
 import { ContactComponent } from './contact/contact.component';
-import { ContactDetailComponent } from './contact/contact-detail/contact-detail.component'; 
+import { ContactDetailComponent } from './contact/contact-detail/contact-detail.component';
 import { CompanyComponent } from './company/company.component';
-import { CompanyDetailComponent } from './company/company-detail/company-detail.component'; 
+import { CompanyDetailComponent } from './company/company-detail/company-detail.component';
 import { OpportunityComponent } from './opportunity/opportunity.component';
 import { OpportunityDetailComponent } from './opportunity/opportunity-detail/opportunity-detail.component';
 import { OpportunityEditComponent } from './opportunity/opportunity-edit/opportunity-edit.component';
@@ -22,43 +22,53 @@ import { PriceListCatalogComponent } from './price-list/price-list-catalog/price
 import { PriceListProductComponent } from './price-list/price-list-product/price-list-product.component';
 import { PriceListModalComponent } from './price-list/price-list-modal/price-list-modal.component';
 import { QuotePrintComponent } from './quote/quote-print/quote-print.component';
-
+import { ActiveGuardGuard } from './guard/active-guard.guard';
+import { WarningComponent } from './warning/warning.component';
+import { AccessRightComponent } from './access-right/access-right.component';
+import { AccessRightDetailComponent } from './access-right/access-right-detail/access-right-detail.component';
 
 const routes: Routes = [
-  
-  { path: "activity", component: ActivityComponent },
 
-  { path: 'lead', component: LeadComponent,  data : {title : 'Lead'} },
-  { path: 'lead/:id', component: LeadDetailComponent,  data : {title : 'Lead Detail'} },  
-  { path: 'lead/convert/:id', component: LeadConvertComponent , data : {title : 'Lead Convert'} }, 
-  
-  { path: "contact", component: ContactComponent,  data : {title : 'Contact'} },
-  { path: "contact/:id", component: ContactDetailComponent,  data : {title : 'Contact'} }, 
-
-  { path: "company", component: CompanyComponent},
-  { path: "company/:id", component: CompanyDetailComponent }, 
+  { path: 'accessRight', component: AccessRightComponent, data: { title: 'Access Rigth' } },
+  { path: 'accessRight/:id', component: AccessRightDetailComponent, data: { title: 'Access Rigth' } },
+ 
 
 
-  { path: "opportunity", component: OpportunityComponent },
-  { path: "opportunity/:id", component: OpportunityDetailComponent },
-  { path: "opportunity/edit/:id", component: OpportunityEditComponent},
-  { path: "opportunity/new/:id_company/:id_contact", component: OpportunityNewComponent },
-  
+  { path: "activity", component: ActivityComponent, canActivate: [ActiveGuardGuard] },
 
-  { path: "deal", component: DealComponent },
-  { path: "deal/:id", component: DealDetailComponent },
+  { path: 'lead', component: LeadComponent, data: { title: 'Lead' }, canActivate: [ActiveGuardGuard] },
+  { path: 'lead/:id', component: LeadDetailComponent, data: { title: 'Lead Detail' }, canActivate: [ActiveGuardGuard] },
+  { path: 'lead/convert/:id', component: LeadConvertComponent, data: { title: 'Lead Convert' }, canActivate: [ActiveGuardGuard] },
 
-  { path: "lose", component: LoseComponent },
-  { path: "lose/:id", component: LoseComponent },
+  { path: "contact", component: ContactComponent, data: { title: 'Contact' }, canActivate: [ActiveGuardGuard] },
+  { path: "contact/:id", component: ContactDetailComponent, data: { title: 'Contact' }, canActivate: [ActiveGuardGuard] },
 
-  { path: "quote", component: QuoteComponent, data : {title : 'Quote'}},
-  { path: "quote/:id", component: QuoteDetailComponent, data : {title : 'Quote'} }, 
-  { path: "quote/print/:id", component: QuotePrintComponent, data : {title : 'Print Quote'}  }, 
+  { path: "company", component: CompanyComponent, canActivate: [ActiveGuardGuard] },
+  { path: "company/:id", component: CompanyDetailComponent, canActivate: [ActiveGuardGuard] },
 
-  { path: "priceList", component: PriceListComponent },
-  { path: "priceList/modal/:module", component: PriceListModalComponent },
-  { path: "priceList/:id", component: PriceListCatalogComponent },
-  { path: "priceList/product/:id", component: PriceListProductComponent },
+
+  { path: "opportunity", component: OpportunityComponent, canActivate: [ActiveGuardGuard] },
+  { path: "opportunity/:id", component: OpportunityDetailComponent, canActivate: [ActiveGuardGuard] },
+  { path: "opportunity/edit/:id", component: OpportunityEditComponent, canActivate: [ActiveGuardGuard] },
+  { path: "opportunity/new/:id_company/:id_contact", component: OpportunityNewComponent, canActivate: [ActiveGuardGuard] },
+
+
+  { path: "deal", component: DealComponent, canActivate: [ActiveGuardGuard] },
+  { path: "deal/:id", component: DealDetailComponent, canActivate: [ActiveGuardGuard] },
+
+  { path: "lose", component: LoseComponent, canActivate: [ActiveGuardGuard] },
+  { path: "lose/:id", component: LoseComponent, canActivate: [ActiveGuardGuard] },
+
+  { path: "quote", component: QuoteComponent, data: { title: 'Quote' }, canActivate: [ActiveGuardGuard] },
+  { path: "quote/:id", component: QuoteDetailComponent, data: { title: 'Quote' }, canActivate: [ActiveGuardGuard] },
+  { path: "quote/print/:id", component: QuotePrintComponent, data: { title: 'Print Quote' }, canActivate: [ActiveGuardGuard] },
+
+  { path: "priceList", component: PriceListComponent, canActivate: [ActiveGuardGuard] },
+  { path: "priceList/modal/:module", component: PriceListModalComponent, canActivate: [ActiveGuardGuard] },
+  { path: "priceList/:id", component: PriceListCatalogComponent, canActivate: [ActiveGuardGuard] },
+  { path: "priceList/product/:id", component: PriceListProductComponent, canActivate: [ActiveGuardGuard] },
+
+  { path: "warning/:path/:target", component: WarningComponent },
 
 ];
 

@@ -9,7 +9,7 @@ import { Title } from '@angular/platform-browser';
 })
 export class NavigatorComponent implements OnInit {
   current :string;
-  
+  rules:any;
   constructor(
     private router: Router,
     private titleService: Title,

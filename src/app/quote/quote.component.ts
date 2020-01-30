@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-
+import { HttpClient, HttpEventType } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { SortablejsOptions } from 'ngx-sortablejs';
+import { ConfigService } from './../service/config.service'; 
+ 
 @Component({
   selector: 'app-quote',
   templateUrl: './quote.component.html',
@@ -11,16 +13,33 @@ export class QuoteComponent implements OnInit {
   public label: any;
   public items: any;
   public loading = true;
+
   constructor(
     private http: HttpClient,
-    private router: Router, 
-  ) { }
+    private activatedRoute: ActivatedRoute, 
+    private configService: ConfigService
+  ) { 
+  }
 
   ngOnInit() {
 
-    this.http.get('https://s01.crm.co.id/api/demo/', { responseType: 'json' })
-      .subscribe(data => { this.items = data['quotes']; console.log(this.items); this.loading = false; });
+    this.httpGet();
+  }
 
+  httpGet() {
+    this.loading = true;
+    this.http.get(this.configService.base_url() + 'quote/', {
+      headers: this.configService.headers()
+    }).subscribe(data => {
+
+      this.loading = false;
+      this.items = data['result']['data']; 
+      console.log(data);
+
+    }, error => {
+      console.log(error);
+      console.log(error.error.text);
+    });
   }
 
 }

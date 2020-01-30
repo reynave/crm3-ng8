@@ -30,14 +30,14 @@
 
     <div class="col-9 bg-light text-right py-2">
       <div [hidden]="!isReadOnly">
-        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="open(convert)"> <i
+        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="open(convert)" [hidden]="!accessRules.opportunity.insert"  > <i
             class="fas fa-funnel-dollar"></i> Convert To Opportunity </button>
 
-        <button type="button" class="btn btn-classic btn-sm  mr-1"
+        <button type="button" class="btn btn-classic btn-sm  mr-1" [hidden]="!accessRules.lead.update"
           (click)="isReadOnly=false; t.select('tab-selectbyid2')"> <i class="fas fa-edit"></i>
           Edit </button>
 
-        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="fn_delete();"> <i
+        <button type="button" class="btn btn-classic btn-sm  mr-1" [hidden]="!accessRules.lead.delete"  (click)="fn_delete();"> <i
             class="fas fa-trash-alt"></i>
           Delete </button>
 

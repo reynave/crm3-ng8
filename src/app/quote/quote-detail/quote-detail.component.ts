@@ -28,7 +28,9 @@ export class QuoteDetailComponent implements OnInit {
   pricing: any = [];
   faC: string = '<i class="far fa-check-square"></i>';
   faUC: string = '<i class="far fa-square"></i>';
-
+  quote_status: any = [];
+  activity: any = [];
+  attachment : any = [];
 
 
   constructor(
@@ -56,9 +58,7 @@ export class QuoteDetailComponent implements OnInit {
     }
     this.httpGet();
   }
-  quote_status: any = [];
-  activity: any = [];
-  attachment : any = [];
+
   httpGet() {
     this.loading = true;
     this.http.get(this.configService.base_url() + 'quote/detail/' + this.id, {

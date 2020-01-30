@@ -1,0 +1,52 @@
+<ngx-loading [show]="loading"></ngx-loading>
+
+<app-navigator></app-navigator>
+
+<div class="container-fluid bg-light border-bottom py-1">
+    <div class="row">
+        <div class="col-12">
+            <small> You are here : <a [routerLink]="[ '/accessRight' ]">Access Right</a>  </small>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="container-fluid  bg-white">
+
+    <div class="row py-3">
+        <div class="col-6 ">
+            <div class="module-name">
+                <h5>ACCESS RULES</h5> 
+            </div>
+        </div>
+       
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class=" bg-light  border border-top-brown rounded p-1 my-2">
+                <table class="table table-hover border bg-white border-top border-bottom pointer">
+                    
+                    <thead class="thead-light">
+                        <tr>
+                            <th >No</th>
+                            <th scope="col">Name Rules</th>
+                            <th scope="col" width="40" class="text-center"></th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let x of items; let i = index">
+                            <td width="50">{{i+1}}</td>
+                            <td> <a [routerLink]="[ '/accessRight', x.id ]">{{x.name}}</a> </td>  
+                            <td class="text-center"> </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+ 

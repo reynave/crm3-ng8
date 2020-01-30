@@ -36,6 +36,7 @@ export class LeadDetailComponent implements OnInit {
   user: any = [];
   contacts:any=[];
 
+  accessRules : any = [];
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -50,6 +51,8 @@ export class LeadDetailComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params.id;
+    this.accessRules = this.configService.access_right();
+    console.log('accessRules',this.accessRules);
     this.httpGet(); 
   }
 
@@ -258,8 +261,7 @@ export class LeadDetailComponent implements OnInit {
       }, {
       headers: this.configService.headers()
     }).subscribe(
-      data => {
-
+      data => { 
         console.log(data);
         this.httpGet();
       },

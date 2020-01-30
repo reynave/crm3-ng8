@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Ver 3.0.1';
+  constructor(){
+    console.log(   this.title  );
+  } 
 }

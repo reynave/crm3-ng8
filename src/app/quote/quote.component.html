@@ -57,28 +57,24 @@
             <th>No</th>
 
             <th scope="col">Quote No</th>
-            <th scope="col">Name</th>
-
-            <th scope="col">Company</th>
-
+            <th scope="col">Name</th> 
+            <th scope="col">Company</th> 
             <th scope="col">Expired</th>
-            <th scope="col" class="text-right" colspan="2">Amount</th>
-
+            <th scope="col" class="text-right" colspan="2">Grand Total</th> 
             <th scope="col">Account Manager</th> 
 
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let x of items; let i = index" (click)="fn_check(x);">
+          <tr *ngFor="let x of items; let i = index">
             <td width="50"> {{ i + 1}} </td>
-            <td><a [routerLink]="[ '/quote/1']"> {{x.quotes}}</a></td>
-            <td>{{x.name}}</td>
-            
+            <td><a [routerLink]="[ '/quote/',x.id]"> {{x.quotes_number}}</a></td>
+            <td>{{x.name}}</td> 
             <td>{{x.company}}</td>
-            <td>{{x.expired | date}}</td>
-            <td width="50">IDR</td>
-            <td class="text-right">{{x.amount | number:''}},-</td>
-            <td>{{x.sales}}</td> 
+            <td>{{x.expired_date | date}}</td>
+            <td width="50">{{x.currency}}</td>
+            <td class="text-right">{{x.grand_total | number:''}},-</td>
+            <td>{{x.user}}</td> 
 
           </tr>
 
