@@ -52,6 +52,7 @@
     <div class="col-12 py-2">
       <table class="table-p0">
         <tr>
+          <td> <small> Company Class</small> </td>
           <td> <small> Website</small> </td>
           <td> <small> Email </small></td>
           <td> <small> Phone</small> </td>
@@ -60,6 +61,7 @@
         </tr>
 
         <tr>
+          <td> <b class="text-primary"> {{items.company_class}}</b> </td>
           <td> <a href="{{items.website}}" target="_blank"> <b class="text-primary">{{items.website}} </b> </a> </td>
           <td> <b class="text-primary"> {{items.email}} </b> </td>
           <td> <b class="text-primary"> {{items.phone}} </b> </td>
@@ -94,7 +96,6 @@
             <ng-template ngbTabContent>
               <form (ngSubmit)="fn_update()" #mainForm="ngForm">
                 <div class="border-top py-2 my-2">
-
                   <div class="row">
                     <div class="col-12 bg-light my-2">
                       <strong>Contact</strong>
@@ -147,6 +148,17 @@
                             <td> <select class="form-control form-modal" id="id_industry"
                                 [(ngModel)]="modealCompany.id_industry" name="id_industry" [disabled]="isReadOnly">
                                 <option *ngFor="let x of industry" value="{{x.id}}"> {{x.name}} </option>
+                              </select>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td><label>Company Class </label></td>
+                            <td>
+                              <select class="form-control form-modal" id="id_company_class"
+                                [(ngModel)]="modealCompany.id_company_class" name="id_company_class"
+                                [disabled]="isReadOnly">
+                                <option *ngFor="let x of company_class" value="{{x.id}}"> {{x.name}} </option>
                               </select>
                             </td>
                           </tr>
@@ -299,18 +311,12 @@
               </form>
             </ng-template>
           </ngb-tab>
-
+          <!-- 
           <ngb-tab>
             <ng-template ngbTabTitle>Branches</ng-template>
             <ng-template ngbTabContent>
               <div class="border-top py-2 my-2">
-
-                <div class="row">
-                  <div class="col-12 bg-light my-2">
-                    <strong>Branches</strong>
-                  </div>
-                </div>
-
+ 
                 <div class=" bg-light  border border-top-gray rounded p-1 my-3">
                   <div class="max-height mb-4">
 
@@ -358,17 +364,13 @@
               </div>
             </ng-template>
           </ngb-tab>
-
+-->
 
           <ngb-tab>
             <ng-template ngbTabTitle>Contact Rules</ng-template>
             <ng-template ngbTabContent>
               <div class="border-top py-2 my-2">
-                <div class="row">
-                  <div class="col-12 bg-light my-2">
-                    <strong>Branches</strong>
-                  </div>
-                </div>
+
                 <!-- Contact Roles -->
                 <div class="row py-2">
                   <div class="col-12 ">
@@ -376,8 +378,8 @@
 
                       <div class="row">
                         <div class="col-6"><strong>Contact Roles ({{myContact.length}}) </strong></div>
-                        <div class="col-6 text-right"> <button class="btn btn-classic btn-sm" (click)="open(contact);"><i
-                              class="fas fa-plus"></i>
+                        <div class="col-6 text-right"> <button class="btn btn-classic btn-sm"
+                            (click)="open(contact);"><i class="fas fa-plus"></i>
                             New</button> </div>
                       </div>
 
@@ -411,6 +413,52 @@
                 </div>
 
 
+              </div>
+            </ng-template>
+          </ngb-tab>
+
+          <ngb-tab>
+            <ng-template ngbTabTitle>Price List</ng-template>
+            <ng-template ngbTabContent>
+              <div class="border-top py-2 my-2">
+
+                <!-- Contact Roles -->
+                <div class="row py-2">
+                  <div class="col-12 ">
+                     
+                    <div class="scroll-x max-height border py-1 px-2 border-top-brown rounded bg-light"> 
+                      <table class="table table-hover border bg-white border-top border-bottom pointer">
+                        <thead class="thead-light">
+                          <tr>
+                            <th width="50">No</th>  
+                            <th scope="col">SKU</th>
+                            <th scope="col">Name</th> 
+                            <th scope="col">Product Type</th> 
+                            <th class="text-right" scope="col">Price</th>   
+                
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let x of priceList;let i = index;">
+                            <td> {{i+1}} </td> 
+                            <td> {{x.sku}} </td>
+                            <td>  {{x.name}} </td>
+                            <td>  {{x.product_type}}  </td>
+                            <td class="text-right">  {{x.currency}} {{x.price | number}} <span [hidden]="!x.customer_price">*</span></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                
+                
+                
+                    </div>
+
+
+
+
+
+                  </div>
+                </div>
               </div>
             </ng-template>
           </ngb-tab>
@@ -481,10 +529,7 @@
 
 
 
-
-
-
-
+ 
 
 
 
@@ -595,7 +640,7 @@
 
 
         </div>
-       
+
 
 
       </form>
@@ -692,7 +737,7 @@
 
 
         </div>
-       
+
 
       </form>
 

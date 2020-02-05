@@ -88,13 +88,21 @@ export class OpportunityDetailComponent implements OnInit {
       this.id_stage = data['result']['data']['id_stage'];
       this.product = data['result']['product'];
       this.business =  data['result']['business'];
-      var objIndex = this.stage.findIndex((obj => obj.id == this.id_stage));
-      this.stageNotes = this.stage[objIndex]['notes'];
+  //    var objIndex = this.stage.findIndex((obj => obj.id == this.id_stage));
+   //   console.log(' this.stageNotes ', this.stageNotes );
+ //     this.stageNotes = this.stage[objIndex]['notes'];
 
       this.contact = data['result']['contact'];
       this.user = data['result']['user'];
       this.loading = false;
-      this.modelClosedWin = new OpportunityClosedWin('', this.currentDate, data['result']['data']['id_user']);
+      this.modelClosedWin = new OpportunityClosedWin(
+        '',
+        this.items['closed_date'], 
+        this.items['id_user'],
+        "0",
+        "",
+        data['result']['data']['amount']
+        );
       this.modelClosedLose = new OpportunityClosedLose('', this.currentDate, data['result']['data']['id_user']);
 
       this.quoteModel = new Newquote(0, '', '', '', '', 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', true);
@@ -137,7 +145,7 @@ export class OpportunityDetailComponent implements OnInit {
       data => {
 
         if (i == 'win') {
-          this.router.navigate(['/win/', this.id]);
+          this.router.navigate(['/deal/', this.id]);
 
         } else if (i == 'lose') {
           this.router.navigate(['/lose/', this.id]);
@@ -152,9 +160,7 @@ export class OpportunityDetailComponent implements OnInit {
     );
 
   }
-
-
-
+  
   fn_editable() {
 
   }
@@ -189,6 +195,7 @@ export class OpportunityDetailComponent implements OnInit {
       headers: this.configService.headers()
     }).subscribe(
       data => {
+        console.log(data);
         this.showUpdateStage = false;
         this.httpGet();
       },
@@ -319,4 +326,11 @@ export class OpportunityDetailComponent implements OnInit {
       );
   }
 
+
+  fn_sales_order(){
+   
+    var  objIndex = this.quotes.findIndex((obj => obj.id == this.modelClosedWin.id_quote ));
+    console.log(this.quotes[objIndex]);
+    this.modelClosedWin['sales_order']= this.quotes[objIndex]['quotes_number'];
+  }
 }

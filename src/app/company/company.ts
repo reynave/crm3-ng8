@@ -180,7 +180,8 @@ export class UpdateCompany {
         public phone: string,
         public website: string,
         public id_user: string,
-        
+        public id_company_class: string,
+      
     ) { }
 
 }

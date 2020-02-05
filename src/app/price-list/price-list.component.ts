@@ -16,6 +16,9 @@ export class PriceListComponent implements OnInit {
   public loading = true;
   public model:any;
   public closeResult: string;
+  
+  objIndex:any=[];
+  public itemsSelected: any = [];
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -29,6 +32,7 @@ export class PriceListComponent implements OnInit {
   }
   ngOnInit() {
     this.model = new Newpricelist('',1,'','1');
+    this.itemsSelected = [];
     this.httpGet(); 
   }
 
@@ -79,22 +83,48 @@ export class PriceListComponent implements OnInit {
   }
 
 
-  modal_newpricelist(newpricelist) {
-    this.modalService.open(newpricelist, { size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+ 
+
+
+  open(content) {
+    this.modalService.open(content, { size: 'lg' });
+  }
+ 
+
+ 
+  fn_check(x) {
+    console.log(x);
+    this.objIndex = this.items.findIndex((obj => obj.id == x.id));
+    if (this.items[this.objIndex]['check'] == true) {
+      this.items[this.objIndex]['check'] = false;
+    } else {
+      this.items[this.objIndex]['check'] = true;
+    }
+    var object = {
+      'id': x.id,
+      'name': x.name, 
+    }
+    console.log(object);
+    var objectSelect = this.itemsSelected.findIndex((obj => obj.id == x.id));
+    if (objectSelect == -1) {
+      this.itemsSelected.push(object);
+    }else{
+      this.itemsSelected.splice(objectSelect, 1);
+    }
+    // console.log(this.itemsSelected);
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
+  fn_removeItemSelected(x) {
+    this.objIndex = this.items.findIndex((obj => obj.id == x.id));
+    var objectSelect = this.itemsSelected.findIndex((obj => obj.id == x.id));
+    if (this.items[this.objIndex]['check'] == false) {
+      this.items[this.objIndex]['check'] = true;
     } else {
-      return `with: ${reason}`;
+      this.items[this.objIndex]['check'] = false;
     }
+    this.itemsSelected.splice(objectSelect, 1);
   }
+
+   
 
 }

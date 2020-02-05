@@ -2,6 +2,23 @@ export class PriceList {
 }
 
 
+
+export class PriceListUpdate{
+
+    constructor( 
+        public name: string, 
+        public sku: string, 
+        public id_product_type: string, 
+        public price: string, 
+        public description: string, 
+    ) { }
+}
+
+
+
+
+
+
 export class Newpricelist{
 
     constructor( 

@@ -1,0 +1,193 @@
+<ngx-loading [show]="loading"></ngx-loading>
+
+<app-navigator></app-navigator>
+
+<div class="container-fluid bg-light border-bottom py-1">
+    <div class="row">
+        <div class="col-12">
+            <small> You are here : <a [routerLink]="[ '/priceList' ]">Price List</a> /
+                <a [routerLink]="[ '/priceList/',id ]"> namanya </a> </small>
+        </div>
+    </div>
+
+</div>
+
+<form (ngSubmit)="fn_update()" #mainForm="ngForm">
+<div class="container-fluid  bg-white">
+
+
+    <!-- Menu & Information -->
+    <div class="row border-bottom ">
+
+        <!-- Header & button -->
+        <div class="col-3 bg-light py-2">
+            <div class="module-name">
+                <strong>PRICE LIST</strong>
+                <b class="text-primary"> asdfasdf </b>
+            </div>
+        </div>
+
+        <div class="col-9 bg-light text-right py-2">
+            <div [hidden]="!isReadOnly">
+
+                <button type="button" class="btn btn-classic btn-sm  mr-1" [hidden]="!accessRules.priceList.update"
+                    (click)="isReadOnly=false"> <i class="fas fa-edit"></i>
+                    Edit </button>
+
+                <button type="button" class="btn btn-classic btn-sm  mr-1" [hidden]="!accessRules.priceList.delete"
+                    (click)="fn_delete();"> <i class="fas fa-trash-alt"></i>
+                    Delete </button>
+
+                <button type="button" class="btn btn-classic btn-sm  mr-1" [routerLink]="[ '/priceList' ]" title="back">
+                    <i class="fas fa-times"></i> </button>
+
+            </div>
+
+            <div [hidden]="isReadOnly">
+                <button type="button" class="btn btn-classic btn-sm" (click)="isReadOnly=true" title="Done"><i
+                        class="fas fa-check"></i> Finish Edit </button>
+            </div>
+
+        </div>
+
+        <!-- Infromation -->
+        <div class="col-12 py-2">
+        
+                <table class="table-p0">
+                    <tr>
+                        <td> <small> Sku</small> </td>
+                        <td> <small> Name </small></td>
+                        <td> <small> Price ( {{items.currency}} ) </small> </td>
+                        <td> <small> Qty </small> </td>
+                        <td> <small> Product Type </small> </td>
+
+                        <td> <small> Last Update </small> </td>
+                    </tr>
+
+                    <tr>
+
+                        <td width="150"> <b class="text-primary" [hidden]="!isReadOnly"> {{items.sku}} </b>
+                            <input type="text" class="form-control form-control-sm" [(ngModel)]="priceListUpdate.sku" name="sku"
+                                [hidden]="isReadOnly" [ngModelOptions]="{standalone: true}"  > 
+                        </td>
+
+                        <td> <b class="text-primary" [hidden]="!isReadOnly"> {{items.name}} </b>
+                            <input type="text" class="form-control form-control-sm" [(ngModel)]="priceListUpdate.name" name="name"
+                                [hidden]="isReadOnly" required [ngModelOptions]="{standalone: true}"  #name="ngModel">
+                                <div [hidden]="name.valid || name.pristine"
+                                class="alert alert-danger">
+                             Name is required
+                           </div>
+                        </td>
+
+
+                        <td width="150"> <b class="text-primary" [hidden]="!isReadOnly"> 
+                                {{items.price | number}} </b>
+                            <input type="number" class="form-control form-control-sm" style="width: 150px;"
+                                [(ngModel)]="priceListUpdate.price" name="price" [hidden]="isReadOnly" [ngModelOptions]="{standalone: true}">
+                        </td>
+
+                        <td width="80"> <b class="text-primary">{{items.qty | number}} </b>
+
+                        </td>
+
+                        <td> <b class="text-primary" [hidden]="!isReadOnly"> {{items.product_type}} </b>
+                            <select class="form-control form-control-sm" [(ngModel)]="priceListUpdate.id_product_type"
+                                [hidden]="isReadOnly" [ngModelOptions]="{standalone: true}">
+                                <option value="{{x.id}}" *ngFor="let x of product_type"> {{x.name}} </option>
+                            </select>
+                        </td>
+
+
+                        <td><b class="text-primary"> {{items.update_date | date}} </b></td>
+
+                    </tr>
+                </table>
+
+                <div class="footer-menu bg-white shadow border-top" [hidden]="isReadOnly">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12 text-center p-1">
+                                <a class="btn btn-outline-secondary m-1" (click)="isReadOnly=true">Finish Edit</a>
+                                <button type="submit" class="btn btn-primary m-1"
+                                    [disabled]="!mainForm.form.valid">Save</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+           
+        </div>
+
+    </div>
+
+    <div class="row mt-3">
+        <!-- Left side-->
+        <div class="col-12 col-md-7">
+            <label>Description</label>
+            <textarea class="form-control form-control-sm border" rows="18" [(ngModel)]="priceListUpdate.description" [ngModelOptions]="{standalone: true}"
+                [readonly]="isReadOnly"></textarea>
+
+
+        </div>
+
+        <!-- right side-->
+        <div class="col-12 col-md-5  ">
+            <div>
+                <strong> Warehouse Location Information </strong>
+            </div>
+            <div class="border bg-light p-1 pb-0 rounded-sm">
+ 
+                <table class="table table-hover border bg-white border-top border-bottom pointer">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>No</th>
+                            <th>Location</th>
+                            <th>Qty</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr *ngFor="let x of product_location; let i = index">
+                            <td>{{i+1}}</td>
+                            <td> 
+                                <input type="text" class="form-control form-modal" (change)="fn_updateLocation(x);"
+                                    id="location" name="location" required [(ngModel)]="x.location" [ngModelOptions]="{standalone: true}"
+                                    [readonly]="isReadOnly">
+                            </td>
+                            <td>
+                                <input type="number" class="form-control form-modal" style="width: 80px;"
+                                    (change)="fn_updateLocation(x);" id="location" name="qty" required [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="x.qty" [readonly]="isReadOnly">
+                            </td>
+                            <td>
+                                <span [hidden]="isReadOnly || !accessRules.product.delete">
+                                    <a href="javascript:;" (click)="fn_deleteProduct_location(x);"><i
+                                            class="far fa-trash-alt"></i></a>
+                                </span>
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                    <tfoot [hidden]="isReadOnly || !accessRules.product.insert">
+                        <tr>
+                            <td colspan="3" class="text-right">
+                                <button type="button" (click)="fn_addProduct_location();"
+                                    class="btn btn-classic btn-sm">Add Location</button>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</form>
+<div [hidden]="isReadOnly"><br><br></div>

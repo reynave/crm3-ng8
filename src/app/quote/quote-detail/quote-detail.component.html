@@ -11,6 +11,101 @@
   </div>
 </div>
 
+<div class="container-fluid">
+  <!-- Menu & Information -->
+  <div class="row  ">
+    <!-- Header & button -->
+    <div class="col-3 bg-light py-2">
+      <div class="module-name">
+        <strong>QUOTE</strong>
+        <b class="text-primary">{{items.name}}</b>
+      </div>
+    </div>
+    
+    <div class="col-9  bg-light py-2 text-right">
+      <div [hidden]="!isReadOnly">
+        <button type="button" class="btn btn-classic btn-sm  mr-1"> <i class="fas fa-paper-plane"></i>
+          Email Quote </button>
+
+        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="print();"> <i
+            class="fas fa-print"></i>
+          Prints </button>
+
+        <button type="button" class="btn btn-classic btn-sm  mr-1"> <i class="far fa-file-pdf"></i>
+          Create PDF </button>
+
+        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="isReadOnly=false"> <i
+            class="fas fa-edit"></i>
+          Edit </button>
+
+        <button type="button" [hidden]="items.syncing" class="btn btn-classic btn-sm  mr-1"
+          (click)="fn_sync(true)"> <i class="fas fa-sync"></i> Sync </button>
+
+        <button type="button" [hidden]="!items.syncing" class="btn btn-classic btn-sm  mr-1"
+          (click)="fn_sync(false)"> <i class="fas fa-sync"></i> Disable Sync </button>
+
+        <button type="button" class="btn btn-classic btn-sm" [routerLink]="[ '/quote' ]" title="back"> <i
+            class="fas fa-times"></i> </button>
+
+      </div>
+
+      <div [hidden]="isReadOnly">
+        <button type="button" class="btn btn-classic btn-sm" (click)="isReadOnly=true" title="Done"><i
+            class="fas fa-check"></i> Finish Edit </button>
+      </div>
+
+    </div>
+    <!-- Infromation -->
+    <div class="col-12 py-2">
+      <table class="table-p0">
+        <tr>
+          <td> <small> Quote No.</small> </td>
+          <td> <small> Expired Date </small> </td>
+          <td> <small> Syncing </small> </td>
+          <td> <small> Opportunity </small> </td>
+          <td> <small> Grand Total </small></td>
+          <td> <small> Type </small> </td>
+        </tr>
+
+        <tr>
+          <td> <b class="text-primary">{{items.quotes_number}} </b> </td>
+          <td> <b class="text-primary">
+              {{quoteModel.expirationDate.day}}/{{quoteModel.expirationDate.month}}/{{quoteModel.expirationDate.year}}
+            </b> </td>
+          <td>
+            <div class="text-primary" [innerHTML]="items.syncing ?  faC:faUC"></div>
+          </td>
+          <td><b class="text-primary"> <a [routerLink]="[ '/opportunity', items.id_opportunity ]">
+                {{items.opportunity}}</a> </b></td>
+          <td> <b class="text-primary"> {{items.currency}} {{pricing.grand_total | number}} </b> </td>
+          <td><b class="text-primary"> New Customer </b></td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- Step Bar -->
+  <div class="row py-2 bg-light border-top border-bottom">
+    <div class="col-12">
+
+      <div class="wrapper">
+        <div class="arrow-steps clearfix">
+          <div *ngFor="let x of quote_status" class="step {{x.id > items.id_quote_status ? '':'current'}}"
+            style="width: 24%;">
+            <a href="javascript:;" (click)="fn_update_status(x.id);"> {{x.name}}</a> </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+ 
+</div>
+
+
+
+
 <form (ngSubmit)="fn_updateQuote()" #quoteForm="ngForm">
 
   <div class="container-fluid  bg-white">
@@ -19,94 +114,7 @@
       <!-- Left side-->
       <div class="col-9 col-md-8">
 
-        <!-- Menu & Information -->
-        <div class="row py-3 ">
-          <!-- Header & button -->
-          <div class="col-3 ">
-            <div class="module-name">
-              <strong>QUOTE</strong>
-              <b class="text-primary">{{items.name}}</b>
-            </div>
-          </div>
-          
-          <div class="col-9 text-right">
-            <div [hidden]="!isReadOnly">
-              <button type="button" class="btn btn-classic btn-sm  mr-1"> <i class="fas fa-paper-plane"></i>
-                Email Quote </button>
-
-              <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="print();"> <i
-                  class="fas fa-print"></i>
-                Prints </button>
-
-              <button type="button" class="btn btn-classic btn-sm  mr-1"> <i class="far fa-file-pdf"></i>
-                Create PDF </button>
-
-              <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="isReadOnly=false"> <i
-                  class="fas fa-edit"></i>
-                Edit </button>
-
-              <button type="button" [hidden]="items.syncing" class="btn btn-classic btn-sm  mr-1"
-                (click)="fn_sync(true)"> <i class="fas fa-sync"></i> Sync </button>
-
-              <button type="button" [hidden]="!items.syncing" class="btn btn-classic btn-sm  mr-1"
-                (click)="fn_sync(false)"> <i class="fas fa-sync"></i> Disable Sync </button>
-
-              <button type="button" class="btn btn-classic btn-sm" [routerLink]="[ '/quote' ]" title="back"> <i
-                  class="fas fa-times"></i> </button>
-
-            </div>
-
-            <div [hidden]="isReadOnly">
-              <button type="button" class="btn btn-classic btn-sm" (click)="isReadOnly=true" title="Done"><i
-                  class="fas fa-check"></i> Finish Edit </button>
-            </div>
-
-          </div>
-          <!-- Infromation -->
-          <div class="col-12 mt-3">
-            <table class="table-p0">
-              <tr>
-                <td> <small> Quote No.</small> </td>
-                <td> <small> Expired Date </small> </td>
-                <td> <small> Syncing </small> </td>
-                <td> <small> Opportunity </small> </td>
-                <td> <small> Grand Total </small></td>
-                <td> <small> Type </small> </td>
-              </tr>
-
-              <tr>
-                <td> <b class="text-primary">{{items.quotes_number}} </b> </td>
-                <td> <b class="text-primary">
-                    {{quoteModel.expirationDate.day}}/{{quoteModel.expirationDate.month}}/{{quoteModel.expirationDate.year}}
-                  </b> </td>
-                <td>
-                  <div class="text-primary" [innerHTML]="items.syncing ?  faC:faUC"></div>
-                </td>
-                <td><b class="text-primary"> <a [routerLink]="[ '/opportunity', items.id_opportunity ]">
-                      {{items.opportunity}}</a> </b></td>
-                <td> <b class="text-primary"> {{items.currency}} {{pricing.grand_total | number}} </b> </td>
-                <td><b class="text-primary"> New Customer </b></td>
-              </tr>
-            </table>
-          </div>
-
-        </div>
-
-        <!-- Step Bar -->
-        <div class="row py-2 bg-light border-top border-bottom">
-          <div class="col-12">
-
-            <div class="wrapper">
-              <div class="arrow-steps clearfix">
-                <div *ngFor="let x of quote_status" class="step {{x.id > items.id_quote_status ? '':'current'}}"
-                  style="width: 24%;">
-                  <a href="javascript:;" (click)="fn_update_status(x.id);"> {{x.name}}</a> </div>
-              </div>
-
-            </div>
-
-          </div>
-        </div>
+      
 
         <!-- Product  line |  Detail  -->
         <div class="row my-2">
@@ -239,11 +247,11 @@
                     <table class="table table-list table-bordered">
                       <tbody>
                         <tr>
-                          <td width="20%"> <strong> Total</strong></td>
-                          <td width="20%"> <strong> Discount 13 % </strong> </td>
-                          <td width="20%"><strong> Tax 9 % </strong></td>
-                          <td width="20%"><strong> Shipping and handling </strong> </td>
-                          <td width="20%"> <strong> Final Total</strong> </td>
+                          <td width="20%"> <b> Total</b></td>
+                          <td width="20%"> <b> Discount 13 % </b> </td>
+                          <td width="20%"><b> Tax 9 % </b></td>
+                          <td width="20%"><b> Shipping and handling </b> </td>
+                          <td width="20%"> <b> Final Total</b> </td>
                         </tr>
                         <tr>
                           <td> {{items.currency}} {{pricing.total | number}}</td>

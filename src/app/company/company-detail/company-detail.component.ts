@@ -28,6 +28,7 @@ export class CompanyDetailComponent implements OnInit {
   modealCompany: any;
   industry:any = [];
   user:any = [];
+  company_class:any=[];
   
   constructor(
     private http: HttpClient,
@@ -60,7 +61,7 @@ export class CompanyDetailComponent implements OnInit {
 
   myBranch:any = [];
   myOpportunity:any = [];
-
+  priceList:any=[];
   httpGet() {
     this.loading = true;
     this.http.get<CompanyDetail[]>(this.configService.base_url() + 'company/detail/'+ this.id, {
@@ -71,8 +72,8 @@ export class CompanyDetailComponent implements OnInit {
       this.myOpportunity = data['result']['opportunity'];
       this.industry =  data['result']['industry'];
       this.user =  data['result']['user'];
-      
-      console.log(data);
+      this.company_class =  data['result']['company_class'];
+       
       this.modealCompany = new UpdateCompany(
         data['result']['data']['bill_country'],
         data['result']['data']['bill_city'],
@@ -90,11 +91,13 @@ export class CompanyDetailComponent implements OnInit {
         data['result']['data']['name'],
         data['result']['data']['phone'],
         data['result']['data']['website'],
-        data['result']['data']['id_user'] 
+        data['result']['data']['id_user'],
+        data['result']['data']['id_company_class'] 
         
       );
       this.myBranch = data['result']['branch'];
-      
+      this.priceList = data['result']['priceList'];
+    
       this.loading = false;
  
  

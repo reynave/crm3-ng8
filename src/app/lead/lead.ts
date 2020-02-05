@@ -230,7 +230,7 @@ export class UpdateLead {
         public opportunity: string,  
         public position: string,
         public amount: number,
-        
+        public id_company_class: string
     ) { }
 
 }

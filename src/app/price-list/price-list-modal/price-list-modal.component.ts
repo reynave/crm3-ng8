@@ -43,52 +43,20 @@ export class PriceListModalComponent implements OnInit {
 
   httpGet() {
     this.loading = true;
-    this.http.get(this.configService.base_url() + 'pricelist/', {
+    this.http.get(this.configService.base_url() + 'pricelist/modal/'+this.module+'/'+ this.id, {
       headers: this.configService.headers()
     }).subscribe(data => {
       console.log(data);
       this.loading = false;
+      this.items = data['result']['data'];
       this.pricelist = data['result']['data'];
     }, error => {
       console.log(error);
       console.log(error.error.text);
     });
   }
-
-  goStep2() {
-    console.log(this.id_price_list);
-    this.loading = true;
-    this.http.get(this.configService.base_url() + 'pricelist/catalog/' + this.id_price_list, {
-      headers: this.configService.headers()
-    }).subscribe(data => {
-      console.log(data);
-      this.step = 2;
-      this.loading = false;
-      this.catalog = data['result']['data'];
-    }, error => {
-      console.log(error);
-      console.log(error.error.text);
-    });
-
-  }
-
-  id_catalog: string;
-  loading_productlist: boolean = false;
-  productlist() {
-    console.log(this.id_catalog);
-    this.loading_productlist = true;
-    this.http.get(this.configService.base_url() + 'pricelist/productlist/' + this.id_catalog, {
-      headers: this.configService.headers()
-    }).subscribe(data => {
-      console.log(data);
-      this.step = 2;
-      this.loading_productlist = false;
-      this.items = data['result']['data'];
-    }, error => {
-      console.log(error);
-      console.log(error.error.text);
-    });
-  }
+ 
+  
 
   total: number = 0;
   addProduct: any = [];
@@ -96,8 +64,9 @@ export class PriceListModalComponent implements OnInit {
   addList(x) {
     var temp = {
       id: this.i++,
-      id_price_list: x.id,
-      product: x.product
+      id_product: x.id,
+      name: x.name,
+      price : x.price
     }
     this.addProduct.push(temp); // from top as bottom
     this.total = this.addProduct.length;

@@ -1,0 +1,78 @@
+<ngx-loading [show]="loading"></ngx-loading>
+
+<app-navigator></app-navigator>
+<div class="container-fluid bg-light border-bottom py-1">
+    <div class="row">
+        <div class="col-6">
+            <small> You are here : <a [routerLink]="[ '/CCPriceList' ]">Customer Class</a> / <a
+                    [routerLink]="[ '/CCPriceList' ]">Price List</a> </small>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid py-2">
+
+
+    <div class="row">
+        <div class="col-12 ">
+            <div class="text-left">
+                <p class="mb-0">Select a price list for this quote. You can add product only from a price list. Changing a
+                    selected price list will delete all existing products from this quote</p>
+            </div>
+        </div>
+        <div class="col-4 ">
+            <div>
+                <label>Compnay Class </label>
+            </div>
+            <select class="form-control form-control-sm border" [(ngModel)]="id_company_class" (change)="productlist(); ">
+                <option *ngFor="let x of company_class" value="{{x.id}}"> {{x.name}}</option>
+            </select>
+        </div> 
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="bg-light border">
+
+
+                <table class="table table-hover border bg-white border-top border-bottom mb-0">
+                    <thead class="thead-light">
+                        <tr>
+                            <th width="20">No</th>
+                            <th width="300">Product Name</th>
+                            <th>SKU</th>
+                            <th width="150" class="text-right">Origin Price</th> 
+                            <th width="150" class="text-right">Customer Price</th> 
+                            <th width="50"></th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="bodyarea">
+                    <table class="table table-hover border bg-white border-top border-bottom pointer">
+
+                        <tbody>
+                            <tr *ngFor="let x of pricelist; let i = index">
+                                <td width="20">{{i+1}}</td>
+                                <td  width="300">{{x.name}}</td>
+                                <td>{{x.sku}}</td>
+                                <td width="150" class="text-right"> {{x.currency}} {{x.price | number}}</td>
+                                <td width="150" class="text-center">
+                                    <input type="number" class="form-control form-control-sm text-right" (change)="update(x);" [(ngModel)]="x.customer_price"> 
+                                </td> 
+                                <td  width="50"> <a href="javascripti:;" (click)="erase(x); x.customer_price = '' "><i class="fas fa-eraser"></i></a> </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <div class="text-center py-5" [hidden]="!loading_productlist">
+                        <div class="spinner-border text-dark" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

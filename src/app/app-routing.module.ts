@@ -17,8 +17,7 @@ import { DealDetailComponent } from './deal/deal-detail/deal-detail.component';
 import { LoseComponent } from './lose/lose.component';
 import { QuoteComponent } from './quote/quote.component';
 import { QuoteDetailComponent } from './quote/quote-detail/quote-detail.component';
-import { PriceListComponent } from './price-list/price-list.component';
-import { PriceListCatalogComponent } from './price-list/price-list-catalog/price-list-catalog.component';
+import { PriceListComponent } from './price-list/price-list.component'; 
 import { PriceListProductComponent } from './price-list/price-list-product/price-list-product.component';
 import { PriceListModalComponent } from './price-list/price-list-modal/price-list-modal.component';
 import { QuotePrintComponent } from './quote/quote-print/quote-print.component';
@@ -26,6 +25,8 @@ import { ActiveGuardGuard } from './guard/active-guard.guard';
 import { WarningComponent } from './warning/warning.component';
 import { AccessRightComponent } from './access-right/access-right.component';
 import { AccessRightDetailComponent } from './access-right/access-right-detail/access-right-detail.component';
+import { ClassPriceListComponent } from './customer-class/class-price-list/class-price-list.component'; 
+import { PriceListDetailComponent } from './price-list/price-list-detail/price-list-detail.component';
 
 const routes: Routes = [
 
@@ -46,6 +47,9 @@ const routes: Routes = [
   { path: "company", component: CompanyComponent, canActivate: [ActiveGuardGuard] },
   { path: "company/:id", component: CompanyDetailComponent, canActivate: [ActiveGuardGuard] },
 
+  { path: "CCPriceList", component: ClassPriceListComponent, canActivate: [ActiveGuardGuard] },
+  { path: "CCPriceList/:id", component: ClassPriceListComponent, canActivate: [ActiveGuardGuard] },
+
 
   { path: "opportunity", component: OpportunityComponent, canActivate: [ActiveGuardGuard] },
   { path: "opportunity/:id", component: OpportunityDetailComponent, canActivate: [ActiveGuardGuard] },
@@ -63,9 +67,12 @@ const routes: Routes = [
   { path: "quote/:id", component: QuoteDetailComponent, data: { title: 'Quote' }, canActivate: [ActiveGuardGuard] },
   { path: "quote/print/:id", component: QuotePrintComponent, data: { title: 'Print Quote' }, canActivate: [ActiveGuardGuard] },
 
+
+
   { path: "priceList", component: PriceListComponent, canActivate: [ActiveGuardGuard] },
+  
   { path: "priceList/modal/:module", component: PriceListModalComponent, canActivate: [ActiveGuardGuard] },
-  { path: "priceList/:id", component: PriceListCatalogComponent, canActivate: [ActiveGuardGuard] },
+  { path: "priceList/:id", component: PriceListDetailComponent, canActivate: [ActiveGuardGuard] },
   { path: "priceList/product/:id", component: PriceListProductComponent, canActivate: [ActiveGuardGuard] },
 
   { path: "warning/:path/:target", component: WarningComponent },

@@ -36,6 +36,8 @@ export class LeadDetailComponent implements OnInit {
   user: any = [];
   contacts:any=[];
 
+  company_class:any=[];
+  product: any = [];
   accessRules : any = [];
   constructor(
     private http: HttpClient,
@@ -55,8 +57,6 @@ export class LeadDetailComponent implements OnInit {
     console.log('accessRules',this.accessRules);
     this.httpGet(); 
   }
-
-  product: any = [];
   httpGet() {
     this.items = {
       company: {
@@ -87,7 +87,8 @@ export class LeadDetailComponent implements OnInit {
       this.customer_class = data['result']['customer_class'];
       this.opportunity_stage =  data['result']['opportunity_stage'];
       this.company =  data['result']['company'];
-
+      this.company_class =  data['result']['company_class'];
+      
 
       this.lead = new UpdateLead(
         data['result']['lead']['id_user'],
@@ -109,6 +110,7 @@ export class LeadDetailComponent implements OnInit {
         data['result']['lead']['opportunity'], 
         data['result']['lead']['position'],
         data['result']['lead']['amount'],
+        data['result']['lead']['id_company_class'],
 
       );
 

@@ -58,6 +58,7 @@
       <table class="table-p0">
         <tr>
           <td> <small> Company</small> </td>
+          <td> <small> Company Class</small> </td>
           <td> <small> Position </small></td>
           <td> <small> Mobile</small> </td>
           <td> <small> Email </small> </td>
@@ -66,6 +67,7 @@
 
         <tr>
           <td> <b class="text-primary"> {{items.company}} </b> </td>
+          <td> <b class="text-primary"> {{items.company_class}} </b> </td>
           <td> <b class="text-primary"> {{items.position}} </b> </td>
           <td> <b class="text-primary"> {{items.mobile}} </b> </td>
           <td> <b class="text-primary"> {{items.email}}</b> </td>
@@ -234,6 +236,14 @@
                                   [(ngModel)]="lead.company" name="company" [readonly]="isReadOnly"> </td>
                             </tr>
                             <tr>
+                              <td><label>Company Class</label></td>
+                              <td> <select class="form-control form-modal" [disabled]="isReadOnly"
+                                [(ngModel)]="lead.id_company_class" [ngModelOptions]="{standalone: true}">
+                                <option value="{{x.id}}" *ngFor="let x of company_class"> {{x.name}} </option>
+                              </select></td>
+                            </tr>
+
+                            <tr>
                               <td><label>Website</label></td>
                               <td><input type="text" class="form-control form-modal" id="website"
                                   [(ngModel)]="lead.website" name="website" [readonly]="isReadOnly"></td>
@@ -369,9 +379,9 @@
             </div>
 
             <div class="row">
-              <div class="col-6 mb-2" *ngFor="let x of product; let i = index">
+              <div class="col-12 mb-2" *ngFor="let x of product; let i = index">
 
-                <hr [hidden]=" i < 2" class="p-0 m-0 mb-2">
+                <hr [hidden]=" i < 1" class="p-0 m-0 mb-2">
                 <table class="table-items">
                   <thead>
                     <tr>

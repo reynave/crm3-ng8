@@ -394,6 +394,10 @@ input[type="text"]:read-only{
     background:#f9f9f9;
 }
 
+input[type="number"]{
+    padding-right: 0px !important;
+}
+
   
 input[type="text"]:read-only,   input[type="number"]:read-only,  select:disabled,  textarea:read-only {
     background: #fff;

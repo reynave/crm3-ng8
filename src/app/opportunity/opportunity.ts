@@ -202,10 +202,13 @@ export class OpportunityClosedLose {
 }
 
 export class OpportunityClosedWin {
-    constructor(
+    constructor( 
         public notes: string,
-        public date: Date,
+        public date: any,
         public id_user: string,
+        public id_quote: string,
+        public sales_order:string,
+        public amount:number,
     ) { }
 }
 

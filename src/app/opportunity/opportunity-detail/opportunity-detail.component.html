@@ -19,7 +19,7 @@
 
     <div class="col-3 bg-light py-2">
       <div class="module-name">
-        <strong>OPPORTUNITY</strong>
+        <strong>OPPORTUNITY {{items.closed ? "("+items.stage+")" :""}}</strong>
         <b class="text-primary">{{items.name}}</b>
       </div>
     </div>
@@ -29,11 +29,11 @@
       <div [hidden]="!isReadOnly">
         <span [hidden]="!items.final_stage">
 
-          <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="open(win)"> <i
+          <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="openLg(win)"> <i
               class="fas fa-thumbs-up"></i>
             Closed Deal </button>
 
-          <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="open(lose)"> <i
+          <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="openLg(lose)"> <i
               class="fas fa-thumbs-down"></i> Closed Lose </button>
         </span>
 
@@ -66,7 +66,7 @@
         </tr>
 
         <tr>
-          <td> <b class="text-primary">{{items.company}} </b> </td>
+          <td> <b class="text-primary"> <a [routerLink]="[ '/company', items.id_company ]"> {{items.company}}</a> </b> </td>
           <td> <b class="text-primary">
               {{items.start_date.day}}/{{items.start_date.month}}/{{items.start_date.year}}</b> </td>
           <td> <b class="text-primary"> {{items.currency}} {{items.amount | number}} </b> </td>
@@ -103,8 +103,9 @@
   </div>
 </div>
 
-
-
+{{showUpdateStage}}
+<div><a href="javascript:;" (click)="updateStage();"><small>Update to
+      {{stageCurrent}} </small></a></div>
 
 <div class="container-fluid  bg-white">
 
@@ -292,7 +293,8 @@
 
                       <div class="row">
                         <div class="col-6"><strong>Products ({{product.length}}) </strong></div>
-                        <div class="col-6 text-right"> <button class="btn btn-classic btn-sm" (click)="open(addPriceList);" ><i class="fas fa-plus"></i> New</button> </div>
+                        <div class="col-6 text-right"> <button class="btn btn-classic btn-sm"
+                            (click)="open(addPriceList);"><i class="fas fa-plus"></i> New</button> </div>
                       </div>
 
                       <div class="row">
@@ -432,17 +434,19 @@
 
             <div class="row">
               <div class="col-6"><strong>Contact Roles ({{contact.length}}) </strong></div>
-              <div class="col-6 text-right"> <button class="btn btn-classic btn-sm" (click)="open(addContact);"><i class="fas fa-plus"></i>
+              <div class="col-6 text-right"> <button class="btn btn-classic btn-sm" (click)="open(addContact);"><i
+                    class="fas fa-plus"></i>
                   New</button> </div>
-            </div> 
-   
+            </div>
+
             <div class="row">
               <div class="col-6 mb-2" *ngFor="let x of contact">
-                
+
                 <table class="table-items">
                   <thead>
                     <tr>
-                      <th> <a href="javascript:;" > {{x.name}} <span [hidden]="!x.active"> <i class="fas fa-check"></i> </span></a></th>
+                      <th> <a href="javascript:;"> {{x.name}} <span [hidden]="!x.active"> <i class="fas fa-check"></i>
+                          </span></a></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -455,7 +459,7 @@
                     <tr [hidden]="!x.phone">
                       <td>P. {{x.phone}} </td>
                     </tr>
-                     
+
                   </tbody>
                 </table>
 
@@ -486,70 +490,104 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body bg-light">
+  <div class="modal-body bg-white">
 
     <form (ngSubmit)="onClosed('win')" #myFormWin="ngForm">
-      <div class="row">
-        <div class="col-12 mb-4">
-          <div class="display-2 text-center text-warning"><i class="fas fa-crown"></i></div>
-          <h4 class="text-center text-warning">Closed Win</h4>
-        </div>
-        <div class="col-12">
 
-          <div class="form-group row no-gutters">
-            <label for="h2" class="col-sm-3 col-form-label"> Closed Date</label>
-            <div class="col-sm-8">
-              <input type="text" class="form-control border" placeholder="{{modelClosedWin.date}}"
-                [(ngModel)]="modelClosedWin.date" name="date" ngbDatepicker #d="ngbDatepicker" readonly
-                (click)="d.toggle()">
-            </div>
+      <div class="container-fluid">
+    
+        <div class="row">
+    
+          <div class="col-12 mb-4">
+            <div class="display-2 text-center text-warning"><i class="fas fa-crown"></i></div>
+            <h5 class="text-center text-warning">Closed Win</h5>
           </div>
-
-
-
-          <div class="form-group row no-gutters">
-            <label for="h4" class="col-sm-3 col-form-label">Notes</label>
-            <div class="col-sm-8">
-              <textarea class="form-control border" required [(ngModel)]="modelClosedWin.notes" name="notes"
-                #notesWin="ngModel"></textarea>
-              <small [hidden]="notesWin.valid || notesWin.pristine" class="text-danger"> Notes is
-                required</small>
-            </div>
+    
+          <div class="col-12 bg-light">
+            <strong>Closed to Deal Information</strong>
           </div>
-
-
-          <div class="form-group row no-gutters">
-            <label for="h4" class="col-sm-3 col-form-label">Account Manager </label>
-            <div class="col-sm-8">
-              <select class="form-control border" [(ngModel)]="modelClosedWin.id_user" name="id_user">
-                <option [ngValue]="x.id" *ngFor="let x of user">{{x.name}}</option>
-
-              </select>
-            </div>
+          <div class="col-6">
+            <table class="table table-borderless">
+              <tr>
+                <td width="40%"><label>Closed Date </label></td>
+                <td>  <input type="text" class="form-control border" placeholder="{{modelClosedWin.date}}"
+                  [(ngModel)]="modelClosedWin.date" name="cd_date" ngbDatepicker #d="ngbDatepicker" readonly
+                  (click)="d.toggle()"> </td> 
+              </tr>
+    
+              <tr>
+                <td> <label> Account Manager </label> </td>
+                <td> 
+                  <select class="form-control form-modal"   [(ngModel)]="modelClosedWin.id_user" name="cd_id_user"
+                  [ngModelOptions]="{standalone: true}">
+                    <option value="{{x.id}}" *ngFor="let x of user">{{x.name}}</option>
+                  </select>
+                </td>
+              </tr>
+    
+              <tr>
+                <td><label>Select Quotation</label></td>
+                <td>  
+                <select class="form-control border" [(ngModel)]="modelClosedWin.id_quote" name="cd_id_quote"  required [ngModelOptions]="{standalone: true}" >
+                  <option value="{{x.id}}" *ngFor="let x of quotes">{{x.quotes_number}}  {{x.syncing ? "(Syncing)":""}}</option>
+                </select>
+              </tr>
+            </table>
           </div>
-
+    
+          <div class="col-6">
+            <table class="table table-borderless">
+              <tr>
+                <td> <label> Amount ({{items.currency}})</label> </td>
+                <td>
+                  <input type="number" class="form-control border" name="cd_amount" [(ngModel)]="modelClosedWin.amount" > 
+                 
+                </td>
+              </tr>
+              <tr>
+                <td> <label> Sales Order </label> </td>
+                <td>
+                  <input type="text" class="form-control border" name="cd_sales_order" [(ngModel)]="modelClosedWin.sales_order" > 
+                  <a href="javascript:;" (click)="fn_sales_order();" >
+                    <small>  Copy from Selected Sales Quotation</small></a>
+                </td>
+              </tr>
+    
+              <tr>
+                <td  width="30%"><label>Notes</label></td>
+                <td> </td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <textarea class="form-control border" name="cd_notes"  [(ngModel)]="modelClosedWin.notes"></textarea> 
+                </td>
+              </tr>
+            </table>
+          </div>
         </div>
-
-        <div class="col-12 text-center">
-          <span [hidden]="finish">
-            <button type="submit" class="btn btn-success m-1" (click)="onClosed('win');"
-              [disabled]="!myFormWin.form.valid"> <i class="fas fa-thumbs-down"></i> Closed Win</button>
-
-          </span>
-          <span [hidden]="!finish">
-
-            <button type="submit" class="btn btn-outline-dark m-1" (click)="modal.dismiss('Cross click')">
-              Close</button>
-          </span>
+    
+        {{modelClosedWin | json}}
+        <div class="row"> 
+          <div class="col-12 text-center">
+            <span [hidden]="finish">
+              <button type="submit" class="btn btn-classic m-1" (click)="onClosed('win');"
+                [disabled]="!myFormWin.form.valid"> Closed Win</button>
+    
+            </span>
+            <span [hidden]="!finish"> 
+              <button type="submit" class="btn btn-classic m-1" (click)="modal.dismiss('Cross click')">
+                Close</button>
+            </span>
+          </div>
+    
         </div>
-
       </div>
-
-    </form>
+    </form> 
+   
   </div>
 
 </ng-template>
-
+  
 <ng-template #lose let-modal>
   <div class="modal-header">
     <strong class="modal-title" id="modal-basic-title">Close Opportunity</strong>
@@ -671,9 +709,9 @@
               <tr>
                 <td width="40%">Quotes Name</td>
                 <td>
-                  <input type="text" class="form-control form-modal" id="name" required [(ngModel)]="quoteModel.name"
-                    name="name" #name="ngModel">
-                  <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                  <input type="text" class="form-control form-modal" id="q_name" required [(ngModel)]="quoteModel.name"
+                    name="q_name" #q_name="ngModel">
+                  <div [hidden]="q_name.valid || q_name.pristine" class="alert alert-danger">
                     Name is required
                   </div>
                 </td>
@@ -689,8 +727,8 @@
 
               <tr>
                 <td>Account Manager</td>
-                <td> <select class="form-control form-modal">
-                    <option value="1">Admin</option>
+                <td> <select class="form-control form-modal" [(ngModel)]="quoteModel.id_account" name="q_id_account">
+                    <option value="{{x.id}}" *ngFor="let x of user">{{x.name}}</option>
                   </select> </td>
               </tr>
             </table>
@@ -702,17 +740,17 @@
               <tr>
                 <td width="40%">Expiration Date</td>
                 <td> <input type="text" class="form-control form-modal" placeholder="yyyy-mm-dd" (click)="d.toggle()"
-                    readonly name="d" [(ngModel)]="quoteModel.expirationDate" ngbDatepicker #d="ngbDatepicker" required>
+                    readonly name="q_d" [(ngModel)]="quoteModel.expirationDate" ngbDatepicker #q_d="ngbDatepicker" required>
                 </td>
               </tr>
               <tr>
                 <td>Syncing</td>
-                <td><input type="checkbox" checked name="" [(ngModel)]="quoteModel.syncing" name="syncing"></td>
+                <td><input type="checkbox" checked   [(ngModel)]="quoteModel.syncing" name="q_syncing"></td>
               </tr>
               <tr>
                 <td>Status</td>
                 <td>
-                  <select class="form-control form-modal" [(ngModel)]="quoteModel.status" name="status">
+                  <select class="form-control form-modal" [(ngModel)]="quoteModel.status" name="q_status">
                     <option value="1">Draft</option>
                   </select>
 
@@ -721,8 +759,7 @@
               <tr>
                 <td>Description</td>
                 <td>
-                  <textarea class="form-control form-modal" [(ngModel)]="quoteModel.desciption"
-                    name="desciption"></textarea>
+                  <textarea class="form-control form-modal" [(ngModel)]="quoteModel.desciption"  name="q_desciption"></textarea>
 
                 </td>
               </tr>
@@ -740,8 +777,8 @@
             <table class="table table-borderless">
               <tr>
                 <td width="40%">Discount (%)</td>
-                <td> <input type="text" class="form-control form-modal" id="" style="width:40%"
-                    [(ngModel)]="quoteModel.discount" name="discount"> </td>
+                <td> <input type="text" class="form-control form-modal"   style="width:40%"
+                    [(ngModel)]="quoteModel.discount" name="q_discount"> </td>
               </tr>
             </table>
           </div>
@@ -749,13 +786,13 @@
             <table class="table table-borderless">
               <tr>
                 <td width="40%">Tax (%)</td>
-                <td><input type="text" class="form-control form-modal" id="" style="width:40%"
-                    [(ngModel)]="quoteModel.tax" name="tax"></td>
+                <td><input type="text" class="form-control form-modal"  style="width:40%"
+                    [(ngModel)]="quoteModel.tax" name="q_tax"></td>
               </tr>
               <tr>
                 <td>Shipping and Handing</td>
-                <td><input type="text" class="form-control form-modal" id="" [(ngModel)]="quoteModel.shipping"
-                    name="shipping"> </td>
+                <td><input type="text" class="form-control form-modal"   [(ngModel)]="quoteModel.shipping"
+                    name="q_shipping"> </td>
               </tr>
               <tr>
                 <td>Grand Total</td>
@@ -774,14 +811,14 @@
             <table class="table table-borderless">
               <tr>
                 <td width="40%">Contact Name</td>
-                <td><select class="form-control form-modal">
-                    <option (value)="items.id_contact">{{items.contact}}</option>
+                <td><select class="form-control form-modal" [(ngModel)]="quoteModel.id_contact" name="q_id_contact">
+                    <option value="{{x.id}}" *ngFor="let x of contact">{{x.contact}}</option>
                   </select></td>
               </tr>
               <tr>
                 <td>Email</td>
                 <td>
-                  <input type="text" class="form-control form-modal" id="" [(ngModel)]="quoteModel.email" name="email">
+                  <input type="text" class="form-control form-modal"   [(ngModel)]="quoteModel.email" name="q_email">
                 </td>
               </tr>
             </table>
@@ -790,12 +827,11 @@
             <table class="table table-borderless">
               <tr>
                 <td width="40%">Phone</td>
-                <td> <input type="text" class="form-control form-modal" id="" [(ngModel)]="quoteModel.phone"
-                    name="phone"></td>
+                <td> <input type="text" class="form-control form-modal"   [(ngModel)]="quoteModel.phone"  name="q_phone"></td>
               </tr>
               <tr>
                 <td>Fax</td>
-                <td> <input type="text" class="form-control form-modal" id="" [(ngModel)]="quoteModel.fax" name="fax">
+                <td> <input type="text" class="form-control form-modal" id="" [(ngModel)]="quoteModel.fax" name="q_fax">
                 </td>
               </tr>
             </table>
@@ -811,33 +847,33 @@
             <table class="table table-borderless">
               <tr>
                 <td width="40%">Bill To Name</td>
-                <td><input type="text" class="form-control form-modal" id="" name=""></td>
+                <td><input type="text" class="form-control form-modal"   name=""></td>
               </tr>
               <tr>
                 <td>Bill To Street 1</td>
-                <td><input type="text" class="form-control form-modal" id="" [(ngModel)]="quoteModel.bill_street1"
-                    name="bill_street1"></td>
+                <td><input type="text" class="form-control form-modal"   [(ngModel)]="quoteModel.bill_street1"
+                    name="q_bill_street1"></td>
               </tr>
               <tr>
                 <td>Bill To Street 2</td>
-                <td><input type="text" class="form-control form-modal" id="" [(ngModel)]="quoteModel.bill_street2"
-                    name="bill_street2"></td>
+                <td><input type="text" class="form-control form-modal"   [(ngModel)]="quoteModel.bill_street2"
+                    name="q_bill_street2"></td>
               </tr>
 
               <tr>
                 <td>Bill To City</td>
-                <td><input type="text" class="form-control form-modal" id="" [(ngModel)]="quoteModel.bill_city"
-                    name="bill_city"></td>
+                <td><input type="text" class="form-control form-modal" [(ngModel)]="quoteModel.bill_city"
+                    name="q_bill_city"></td>
               </tr>
               <tr>
                 <td>Bill To State /Province</td>
-                <td><input type="text" class="form-control form-modal" id="" [(ngModel)]="quoteModel.bill_state"
-                    name="bill_state"></td>
+                <td><input type="text" class="form-control form-modal"  [(ngModel)]="quoteModel.bill_state"
+                    name="q_bill_state"></td>
               </tr>
               <tr>
                 <td>Bill To Postal Code</td>
-                <td><input type="text" class="form-control form-modal" id="" [(ngModel)]="quoteModel.bill_code"
-                    name="bill_code"></td>
+                <td><input type="text" class="form-control form-modal"  [(ngModel)]="quoteModel.bill_code"
+                    name="q_bill_code"></td>
               </tr>
             </table>
           </div>
@@ -845,33 +881,33 @@
             <table class="table table-borderless">
               <tr>
                 <td width="40%">Ship To Name</td>
-                <td><input type="text" class="form-control form-modal" id="" name=""></td>
+                <td><input type="text" class="form-control form-modal"   name=""></td>
               </tr>
               <tr>
                 <td>Ship To Street 1</td>
-                <td><input type="text" class="form-control form-modal" id="" [(ngModel)]="quoteModel.ship_street1"
-                    name="ship_street1"></td>
+                <td><input type="text" class="form-control form-modal"   [(ngModel)]="quoteModel.ship_street1"
+                    name="q_ship_street1"></td>
               </tr>
               <tr>
                 <td>Ship To Street 2</td>
-                <td><input type="text" class="form-control form-modal" id="" [(ngModel)]="quoteModel.ship_street2"
-                    name="ship_street2"></td>
+                <td><input type="text" class="form-control form-modal"   [(ngModel)]="quoteModel.ship_street2"
+                    name="q_ship_street2"></td>
               </tr>
 
               <tr>
                 <td>Ship To City</td>
-                <td><input type="text" class="form-control form-modal" id="" [(ngModel)]="quoteModel.ship_city"
-                    name="ship_city"></td>
+                <td><input type="text" class="form-control form-modal"   [(ngModel)]="quoteModel.ship_city"
+                    name="q_ship_city"></td>
               </tr>
               <tr>
                 <td>Ship To State /Province</td>
-                <td><input type="text" class="form-control form-modal" id="" [(ngModel)]="quoteModel.ship_state"
-                    name="ship_state"></td>
+                <td><input type="text" class="form-control form-modal"   [(ngModel)]="quoteModel.ship_state"
+                    name="q_ship_state"></td>
               </tr>
               <tr>
                 <td>Ship To Postal Code</td>
-                <td><input type="text" class="form-control form-modal" id="" [(ngModel)]="quoteModel.ship_code"
-                    name="ship_code"></td>
+                <td><input type="text" class="form-control form-modal"   [(ngModel)]="quoteModel.ship_code"
+                    name="q_ship_code"></td>
               </tr>
             </table>
           </div>
@@ -888,9 +924,8 @@
   </form>
 </ng-template>
 
-
 <ng-template #addContact let-modal>
-  <app-contact-new  (uploaded)="requestEmit($event)"></app-contact-new>
+  <app-contact-new (uploaded)="requestEmit($event)"></app-contact-new>
 </ng-template>
 
 <ng-template #addPriceList let-modal>
