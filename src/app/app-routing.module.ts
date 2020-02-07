@@ -27,6 +27,9 @@ import { AccessRightComponent } from './access-right/access-right.component';
 import { AccessRightDetailComponent } from './access-right/access-right-detail/access-right-detail.component';
 import { ClassPriceListComponent } from './customer-class/class-price-list/class-price-list.component'; 
 import { PriceListDetailComponent } from './price-list/price-list-detail/price-list-detail.component';
+import { SalesOrderComponent } from './sales-order/sales-order.component';
+import { SalesOrderDetailComponent } from './sales-order/sales-order-detail/sales-order-detail.component';
+import { SalesOrderCreateComponent } from './sales-order/sales-order-create/sales-order-create.component';
 
 const routes: Routes = [
 
@@ -50,7 +53,6 @@ const routes: Routes = [
   { path: "CCPriceList", component: ClassPriceListComponent, canActivate: [ActiveGuardGuard] },
   { path: "CCPriceList/:id", component: ClassPriceListComponent, canActivate: [ActiveGuardGuard] },
 
-
   { path: "opportunity", component: OpportunityComponent, canActivate: [ActiveGuardGuard] },
   { path: "opportunity/:id", component: OpportunityDetailComponent, canActivate: [ActiveGuardGuard] },
   { path: "opportunity/edit/:id", component: OpportunityEditComponent, canActivate: [ActiveGuardGuard] },
@@ -68,9 +70,13 @@ const routes: Routes = [
   { path: "quote/print/:id", component: QuotePrintComponent, data: { title: 'Print Quote' }, canActivate: [ActiveGuardGuard] },
 
 
+  { path: "salesOrder", component: SalesOrderComponent, data: { title: 'Sales Order' }, canActivate: [ActiveGuardGuard] },
+  { path: "salesOrder/modal/create", component: SalesOrderCreateComponent, data: { title: 'Create Sales Order' }, canActivate: [ActiveGuardGuard] },
+
+  { path: "salesOrder/:id", component: SalesOrderDetailComponent, data: { title: 'Sales Order' }, canActivate: [ActiveGuardGuard] },
+
 
   { path: "priceList", component: PriceListComponent, canActivate: [ActiveGuardGuard] },
-  
   { path: "priceList/modal/:module", component: PriceListModalComponent, canActivate: [ActiveGuardGuard] },
   { path: "priceList/:id", component: PriceListDetailComponent, canActivate: [ActiveGuardGuard] },
   { path: "priceList/product/:id", component: PriceListProductComponent, canActivate: [ActiveGuardGuard] },

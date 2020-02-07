@@ -1,1 +1,460 @@
-<p>deal-detail works!</p>
+<ngx-loading [show]="loading"></ngx-loading>
+<app-navigator></app-navigator>
+
+
+<div class="container-fluid bg-light border py-1">
+    <div class="row">
+        <div class="col-12">
+            <small> You are here : <a [routerLink]="[ '/deal' ]">Deal</a> / <a
+                    [routerLink]="[ '/deal/',id ]">{{items.name}}</a> </small>
+        </div>
+    </div>
+</div>
+
+
+<!-- Menu & Information -->
+<div class="container-fluid">
+    <!-- Header  -->
+    <div class="row border-bottom ">
+
+        <div class="col-3 bg-light py-2">
+            <div class="module-name">
+                <strong>DEAL</strong>
+                <b class="text-primary">{{items.name}}</b>
+            </div>
+        </div>
+
+        <div class="col-9 bg-light text-right py-2">
+
+            <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="open(createSO)"><i class="fas fa-dollar-sign"></i> Create Sales Order </button>
+
+            <button type="button" class="btn btn-classic btn-sm  mr-1"> <i class="fas fa-edit"></i> Rollback To
+                Opportunity </button>
+
+            <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="fn_delete();"> <i
+                    class="fas fa-trash-alt"></i> Delete </button>
+
+            <button type="button" class="btn btn-classic btn-sm  mr-1" [routerLink]="[ '/deal' ]" title="back"> <i
+                    class="fas fa-times"></i> </button>
+
+
+
+
+
+        </div>
+
+        <div class="col-12 py-2">
+            <table class="table-p0">
+                <tr>
+                    <td> <small> Company</small> </td>
+                    <td> <small> Start Date </small> </td>
+                    <td> <small> Closed Date </small> </td>
+                    <td> <small> Timeline Project </small> </td>
+                    <td> <small> Amount </small> </td>
+                    <td> <small> Opportunity Owner </small></td>
+                </tr>
+
+                <tr>
+                    <td> <b class="text-primary"> <a [routerLink]="[ '/company', items.id_company ]">{{items.company}}</a> </b> </td>
+                    <td> <b class="text-primary"> {{items.start_date | date }} </b> </td>
+                    <td> <b class="text-primary"> {{items.closed_date |date  }}</b> </td>
+                    <td> <b class="text-primary"> {{items.timeline }} days</b> </td>
+                    
+                    <td> <b class="text-primary"> {{items.currency}} {{items.amount | number}} </b> </td>
+                    <td><b class="text-primary"> {{items.user}} </b></td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="container-fluid  bg-white">
+
+    <div class="row">
+        <div class="col-9 col-md-8">
+
+
+
+            <div class="py-2">
+                <ngb-tabset type="pills" #t="ngbTabset">
+
+                    <ngb-tab>
+                        <ng-template ngbTabTitle>Activity</ng-template>
+                        <ng-template ngbTabContent>
+                            <app-widget-activity></app-widget-activity>
+                        </ng-template>
+                    </ngb-tab>
+
+                    <ngb-tab>
+                        <ng-template ngbTabTitle>Detail</ng-template>
+                        <ng-template ngbTabContent>
+                            <div class="border-top py-2 my-2">
+                                <!-- detail -->
+                                <div class="row">
+                                    <div class="col-12 bg-light">
+                                        <strong>Information</strong>
+                                    </div>
+                                    <div class="col-12">
+                                        <table class="table table-borderless">
+                                            <tr>
+                                                <td width="200">Opportunity Name</td>
+                                                <td>
+                                                    <input type="text" class="form-control form-modal" id="name"
+                                                        required [(ngModel)]="items.name" name="name" #name="ngModel"
+                                                        [readonly]="isReadOnly">
+                                                    <div [hidden]="name.valid || name.pristine"
+                                                        class="alert alert-danger">
+                                                        Name is required
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Type</td>
+                                                <td> <select class="form-control form-modal" [disabled]="isReadOnly"
+                                                        [(ngModel)]="items.id_opportunity_business"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                        <option value="{{x.id}}" *ngFor="let x of business"> {{x.name}}
+                                                        </option>
+                                                    </select> </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Account Manager</td>
+                                                <td> <select class="form-control form-modal" [disabled]="isReadOnly"
+                                                        [(ngModel)]="items.id_user"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                        <option value="{{x.id}}" *ngFor="let x of user">{{x.name}}
+                                                        </option>
+                                                    </select> </td>
+                                            </tr>
+                                        </table>
+
+                                    </div>
+
+                                    <div class="col-12 bg-light">
+                                        <strong>Detail</strong>
+                                    </div>
+
+                                    <div class="col-12 col-lg-6">
+                                        <table class="table table-borderless">
+
+                                            <tr width="40%">
+                                                <td>Contact</td>
+                                                <td> <select class="form-control form-modal" [disabled]="isReadOnly"
+                                                        [(ngModel)]="items.id_contact"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                        <option value="{{x.id}}" *ngFor="let x of contact">{{x.name}}
+                                                        </option>
+                                                    </select> </td>
+                                            </tr>
+
+                                            <tr width="40%">
+                                                <td>Lead Source</td>
+                                                <td> <select class="form-control form-modal" [disabled]="isReadOnly"
+                                                        [(ngModel)]="items.id_lead_source"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                        <option value="{{x.id}}" *ngFor="let x of lead_source">
+                                                            {{x.name}} </option>
+                                                    </select> </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>Industry</td>
+                                                <td>
+                                                    <input type="text" class="form-control form-modal"
+                                                        value="{{items.industry}}" readonly>
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>Started Date</td>
+                                                <td>
+                                                    <span [hidden]="!isReadOnly">
+                                                        <input type="text" class="form-control form-modal w-75"
+                                                            value=" {{items.start_date.day}}/{{items.start_date.month}}/{{items.start_date.year}}"
+                                                            [readonly]="isReadOnly">
+                                                    </span>
+
+                                                    <span [hidden]="isReadOnly">
+                                                        <input type="text" class="form-control form-modal"
+                                                            placeholder="yyyy-mm-dd" (click)="d.toggle()" readonly
+                                                            name="d" [(ngModel)]="items.start_date" ngbDatepicker
+                                                            #d="ngbDatepicker" required>
+                                                    </span>
+                                                </td>
+                                            </tr>
+
+
+                                        </table>
+
+                                    </div>
+
+                                    <div class="col-12 col-lg-6">
+                                        <table class="table table-borderless">
+
+                                            <tr>
+                                                <td width="40%">Amount</td>
+                                                <td>
+                                                    {{items.currency}}
+
+                                                    <input type="number" class="form-control form-modal w-75"
+                                                        style="display: inline-block;" id="amount"
+                                                        [(ngModel)]="items.amount" name="amount"
+                                                        [readonly]="isReadOnly">
+
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Stage</td>
+                                                <td> {{items.stage}} </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Probability (%)</td>
+                                                <td> {{items.progress}} % </td>
+                                            </tr>
+                                            <tr>
+                                                <td><label>Created Date</label></td>
+                                                <td> {{items.input_date | date:'d MMM y  hh:mm a'}}, <br><small> by
+                                                        {{items.input_by}}</small>
+                                                </td>
+                                            </tr>
+                                            <tr [hidden]="items.update_by == false">
+                                                <td><label>Update Date</label></td>
+                                                <td> {{items.update_date | date:'d MMM y  hh:mm a'}}, <br><small> by
+                                                        {{items.update_by}}
+                                                    </small>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </div>
+
+                                </div>
+                                <!-- End detail-->
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+
+
+                    <ngb-tab>
+                        <ng-template ngbTabTitle>Related</ng-template>
+                        <ng-template ngbTabContent>
+                            <div class="border-top py-2 my-2">
+                                <!-- Product -->
+                                <div class="row py-2">
+                                    <div class="col-12 ">
+                                        <div class="border py-1 px-2 border-top-brown rounded">
+
+                                            <div class="row">
+                                                <div class="col-12"><strong>Products ({{product.length}}) </strong>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-6 mb-2" *ngFor="let x of product; let i = index">
+
+                                                    <table class="table-items">
+                                                        <thead>
+                                                            <tr>
+                                                                <th> <a href="">{{x.product.name}}</a></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                            <tr>
+
+                                                                <td> {{x.currency}} {{x.price | number}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                    <hr [hidden]=" i - 1 > 0" class="p-0 m-0 mt-2">
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Competitor -->
+                                <div class="row py-2">
+                                    <div class="col-12 ">
+                                        <div class="border py-1 px-2 border-top-brown rounded">
+
+                                            <div class="row">
+                                                <div class="col-12"><strong>Competitor </strong></div>
+
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-6 mb-2">
+
+                                                    <table class="table-items">
+                                                        <thead>
+                                                            <tr>
+                                                                <th> <a href="">PT Sumer Daya Teknologi</a></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Strong : ....</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Weakess : ....</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                    <hr class="p-0 m-0 mt-2">
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+
+
+                </ngb-tabset>
+
+            </div>
+
+
+        </div>
+
+        <div class="col-3 col-md-4 border border-top-0">
+
+            <!-- QUOTATION -->
+            <div class="row py-2">
+                <div class="col-12 ">
+                    <div class="border py-1 px-2 border-top-brown rounded">
+
+                        <div class="row">
+                            <div class="col-12"><strong>Information Order </strong></div> 
+                        </div>
+ 
+                        <div class="row mt-2">
+                            <div class="col-12 mb-1"><b>Quotation </b></div> 
+                            <div class="col-12 mb-1"> 
+                                <table class="table-items">
+                                    
+                                    <tbody> 
+                                        <tr>
+                                            <td>  <a [routerLink]="[ '/quote', items.quote.id ]"><b>{{items.quote.quote_number}}  </b> </a>  </td>
+                                        </tr>
+                                        <tr>
+                                            <td> Grand Total :   {{items.currency}} {{items.quote.grand_total | number}}</td>
+                                        </tr> 
+                                        <tr>
+                                            <td> Contact :  {{items.quote.contact}}  </td>
+                                        </tr>
+                                        <tr>
+                                            <td> Account Manager :   {{items.quote.user}} </td>
+                                        </tr>
+                                    </tbody>
+                                </table> 
+                            </div>
+
+                           <div class="col-12">
+                            <hr class="p-0 m-0 mt-1">
+                           </div> 
+                           <div class="col-12 mb-1"><b>Sales Order </b></div> 
+                            <div class="col-12 mb-1"> 
+                             
+                                <table class="table-items"> 
+                                    <tbody> 
+                                        <tr>
+                                            <td> <a href=""> <b> S001324</b></a> </td>
+                                        </tr>
+                                        <tr>
+                                            <td> Grand Total :  IDR 39.000.000,-</td>
+                                        </tr> 
+                                        <tr>
+                                            <td> Created date 20 Jan 2020 01:32 PM  </td>
+                                        </tr>
+                                        <tr>
+                                            <td> Account Manager : hahahah  </td>
+                                        </tr>
+                                       
+                                    </tbody>
+                                </table> 
+ 
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Contact Roles -->
+            <div class="row py-2">
+                <div class="col-12 ">
+                    <div class="border py-1 px-2 border-top-brown rounded">
+
+                        <div class="row">
+                            <div class="col-12"><strong>Contact Roles ({{contact.length}}) </strong></div>
+                           
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6 mb-2" *ngFor="let x of contact">
+
+                                <table class="table-items">
+                                    <thead>
+                                        <tr>
+                                            <th> <a href="javascript:;"> {{x.name}} <span [hidden]="!x.active"> <i
+                                                            class="fas fa-check"></i>
+                                                    </span></a></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{x.postion}} </td>
+                                        </tr>
+                                        <tr [hidden]="!x.mobile">
+                                            <td>M. {{x.mobile}} </td>
+                                        </tr>
+                                        <tr [hidden]="!x.phone">
+                                            <td>P. {{x.phone}} </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                                <hr class="p-0 m-0 mt-2">
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+<ng-template #createSO let-modal> 
+<app-sales-order-create (uploaded)="requestEmit($event)"></app-sales-order-create>
+</ng-template>
+

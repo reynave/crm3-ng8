@@ -43,7 +43,7 @@ export class ConfigService {
   headers() {
  
     return this.varHeaders = new HttpHeaders({
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json', 
       'Key': this.varKey,
       'Token': this.varToken,
     });

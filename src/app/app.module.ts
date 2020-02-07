@@ -43,6 +43,9 @@ import { AccessRightDetailComponent } from './access-right/access-right-detail/a
 import { CustomerClassComponent } from './customer-class/customer-class.component';
 import { ClassPriceListComponent } from './customer-class/class-price-list/class-price-list.component';
 import { PriceListDetailComponent } from './price-list/price-list-detail/price-list-detail.component';
+import { SalesOrderComponent } from './sales-order/sales-order.component';
+import { SalesOrderDetailComponent } from './sales-order/sales-order-detail/sales-order-detail.component';
+import { SalesOrderCreateComponent } from './sales-order/sales-order-create/sales-order-create.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +81,10 @@ import { PriceListDetailComponent } from './price-list/price-list-detail/price-l
     AccessRightDetailComponent,
     CustomerClassComponent,
     ClassPriceListComponent,
-    PriceListDetailComponent
+    PriceListDetailComponent,
+    SalesOrderComponent,
+    SalesOrderDetailComponent,
+    SalesOrderCreateComponent
   ],
   imports: [
     BrowserModule,

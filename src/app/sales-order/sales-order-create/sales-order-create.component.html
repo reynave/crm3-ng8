@@ -1,0 +1,247 @@
+<form (ngSubmit)="fn_submit()" #modalForm="ngForm">
+
+    <div class="modal-header">
+        <strong class="modal-title" id="modal-basic-title">New Sales Order </strong>
+        <button type="button" class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div> 
+    <div class="modal-body bg-white">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-12 bg-light">
+                    <strong>Sales Order Information</strong>
+                </div>
+                <div class="col-6">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td width="40%">Sales Order Name</td>
+                            <td>
+                                <input type="text" class="form-control form-modal" id="q_name" required
+                                    [(ngModel)]="model.name" name="q_name" #q_name="ngModel">
+                                <div [hidden]="q_name.valid || q_name.pristine" class="alert alert-danger">
+                                    Name is required
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Opportunity Name</td>
+                            <td> <select class="form-control form-modal" [(ngModel)]="model.id_opportunity"
+                                name="id_opportunity">
+                                <option value="{{x.id}}" *ngFor="let x of opportunity">{{x.name}}</option>
+                            </select> </td>
+                        </tr>
+                        <tr>
+                            <td>Company Name</td>
+                            <td><select class="form-control form-modal" [(ngModel)]="model.id_company"
+                                name="id_company">
+                                <option value="{{x.id}}" *ngFor="let x of company">{{x.name}}</option>
+                            </select> </td>
+                        </tr>
+
+                        <tr>
+                            <td>Account Manager</td>
+                            <td> <select class="form-control form-modal" [(ngModel)]="model.id_user"
+                                    name="id_user">
+                                    <option value="{{x.id}}" *ngFor="let x of user">{{x.name}}</option>
+                                </select> </td>
+                        </tr>
+                    </table>
+
+                </div>
+                <div class="col-6">
+
+                    <table class="table table-borderless">
+                          
+                        <tr>
+                            <td>Quotes Number Ref</td>
+                            <td>
+                                <select class="form-control form-modal" [(ngModel)]="model.id_quote" name="id_quote">
+                                    <option value="{{x.id}}" *ngFor="let x of quotes">{{x.quotes_number}}</option>
+                                </select>
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="40%">Expiration Date</td>
+                            <td> <input type="text" class="form-control form-modal border" placeholder="yyyy-mm-dd"
+                                    (click)="d.toggle()" readonly name="d" [(ngModel)]="model.expirationDate"
+                                    ngbDatepicker #d="ngbDatepicker">
+                            </td>
+                        </tr>
+                    
+                        <tr>
+                            <td>Description</td>
+                            <td>
+                                <textarea class="form-control form-modal" [(ngModel)]="model.desciption"
+                                    name="q_desciption"></textarea>
+
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-12 bg-light">
+                    <strong> Total</strong>
+                </div>
+                <div class="col-6">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td width="40%">Discount (%)</td>
+                            <td> <input type="text" class="form-control form-modal" style="width:40%"
+                                    [(ngModel)]="model.discount" name="q_discount"> </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-6">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td width="40%">Tax (%)</td>
+                            <td><input type="text" class="form-control form-modal" style="width:40%"
+                                    [(ngModel)]="model.tax" name="q_tax"></td>
+                        </tr>
+                        <tr>
+                            <td>Shipping and Handing</td>
+                            <td><input type="text" class="form-control form-modal" [(ngModel)]="model.shipping"
+                                    name="q_shipping"> </td>
+                        </tr>
+                        <tr>
+                            <td>Grand Total</td>
+                            <td> <b>IDR 0</b></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-12 bg-light">
+                    <strong> Prepared For</strong>
+                </div>
+                <div class="col-6">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td width="40%">Contact Name</td>
+                            <td><select class="form-control form-modal" [(ngModel)]="model.id_contact"
+                                    name="q_id_contact">
+                                    <option value="{{x.id}}" *ngFor="let x of contact">{{x.name}}</option>
+                                </select></td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>
+                                <input type="text" class="form-control form-modal" [(ngModel)]="model.email"
+                                    name="q_email">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-6">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td width="40%">Phone</td>
+                            <td> <input type="text" class="form-control form-modal" [(ngModel)]="model.phone"
+                                    name="q_phone"></td>
+                        </tr>
+                        <tr>
+                            <td>Fax</td>
+                            <td> <input type="text" class="form-control form-modal" id="" [(ngModel)]="model.fax"
+                                    name="q_fax">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-12 bg-light">
+                    <strong> Address Information</strong>
+                </div>
+                <div class="col-6">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td width="40%">Bill To Name</td>
+                            <td><input type="text" class="form-control form-modal" [(ngModel)]="model.bill_name"
+                                name="q_bill_name"></td>
+                        </tr>
+                        <tr>
+                            <td>Bill To Street 1</td>
+                            <td><input type="text" class="form-control form-modal" [(ngModel)]="model.bill_street1"
+                                    name="q_bill_street1"></td>
+                        </tr>
+                        <tr>
+                            <td>Bill To Street 2</td>
+                            <td><input type="text" class="form-control form-modal" [(ngModel)]="model.bill_street2"
+                                    name="q_bill_street2"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Bill To City</td>
+                            <td><input type="text" class="form-control form-modal" [(ngModel)]="model.bill_city"
+                                    name="q_bill_city"></td>
+                        </tr>
+                        <tr>
+                            <td>Bill To State /Province</td>
+                            <td><input type="text" class="form-control form-modal" [(ngModel)]="model.bill_state"
+                                    name="q_bill_state"></td>
+                        </tr>
+                        <tr>
+                            <td>Bill To Postal Code</td>
+                            <td><input type="text" class="form-control form-modal" [(ngModel)]="model.bill_code"
+                                    name="q_bill_code"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-6">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td width="40%">Ship To Name</td>
+                            <td><input type="text" class="form-control form-modal" [(ngModel)]="model.ship_name"
+                                name="q_ship_name"></td>
+                        </tr>
+                        <tr>
+                            <td>Ship To Street 1</td>
+                            <td><input type="text" class="form-control form-modal" [(ngModel)]="model.ship_street1"
+                                    name="q_ship_street1"></td>
+                        </tr>
+                        <tr>
+                            <td>Ship To Street 2</td>
+                            <td><input type="text" class="form-control form-modal" [(ngModel)]="model.ship_street2"
+                                    name="q_ship_street2"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Ship To City</td>
+                            <td><input type="text" class="form-control form-modal" [(ngModel)]="model.ship_city"
+                                    name="q_ship_city"></td>
+                        </tr>
+                        <tr>
+                            <td>Ship To State /Province</td>
+                            <td><input type="text" class="form-control form-modal" [(ngModel)]="model.ship_state"
+                                    name="q_ship_state"></td>
+                        </tr>
+                        <tr>
+                            <td>Ship To Postal Code</td>
+                            <td><input type="text" class="form-control form-modal" [(ngModel)]="model.ship_code"
+                                    name="q_ship_code"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-outline-dark" (click)="close()">Closed</button>
+
+        <button type="submit" class="btn btn-primary" [disabled]="!modalForm.form.valid">Submit</button>
+    </div>
+</form>
