@@ -1,0 +1,15 @@
+<div class="container">
+    <p>print Sales Order preview <a href="javascript:;" (click)="print();"><i class="fas fa-print"></i>  Print</a> 
+        <a href="javascript:;" (click)="close();"> Closed </a>
+    </p> 
+
+    <p [innerHTML]="test"></p>
+    <code>
+        {{items |json}}
+    </code>  
+    <hr>
+    <code>
+        {{quote_item |json}}
+    </code>  
+</div>
+ 

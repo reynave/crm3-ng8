@@ -46,6 +46,7 @@ import { PriceListDetailComponent } from './price-list/price-list-detail/price-l
 import { SalesOrderComponent } from './sales-order/sales-order.component';
 import { SalesOrderDetailComponent } from './sales-order/sales-order-detail/sales-order-detail.component';
 import { SalesOrderCreateComponent } from './sales-order/sales-order-create/sales-order-create.component';
+import { SalesOrderPrintComponent } from './sales-order/sales-order-print/sales-order-print.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { SalesOrderCreateComponent } from './sales-order/sales-order-create/sale
     PriceListDetailComponent,
     SalesOrderComponent,
     SalesOrderDetailComponent,
-    SalesOrderCreateComponent
+    SalesOrderCreateComponent,
+    SalesOrderPrintComponent
   ],
   imports: [
     BrowserModule,

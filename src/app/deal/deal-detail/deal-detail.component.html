@@ -26,7 +26,8 @@
 
         <div class="col-9 bg-light text-right py-2">
 
-            <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="open(createSO)"><i class="fas fa-dollar-sign"></i> Create Sales Order </button>
+            <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="open(createSO)"><i
+                    class="fas fa-dollar-sign"></i> Create Sales Order </button>
 
             <button type="button" class="btn btn-classic btn-sm  mr-1"> <i class="fas fa-edit"></i> Rollback To
                 Opportunity </button>
@@ -55,11 +56,12 @@
                 </tr>
 
                 <tr>
-                    <td> <b class="text-primary"> <a [routerLink]="[ '/company', items.id_company ]">{{items.company}}</a> </b> </td>
+                    <td> <b class="text-primary"> <a
+                                [routerLink]="[ '/company', items.id_company ]">{{items.company}}</a> </b> </td>
                     <td> <b class="text-primary"> {{items.start_date | date }} </b> </td>
                     <td> <b class="text-primary"> {{items.closed_date |date  }}</b> </td>
                     <td> <b class="text-primary"> {{items.timeline }} days</b> </td>
-                    
+
                     <td> <b class="text-primary"> {{items.currency}} {{items.amount | number}} </b> </td>
                     <td><b class="text-primary"> {{items.user}} </b></td>
                 </tr>
@@ -78,7 +80,7 @@
 
 
             <div class="py-2">
-                <ngb-tabset type="pills" #t="ngbTabset">
+                <ngb-tabset type="pills">
 
                     <ngb-tab>
                         <ng-template ngbTabTitle>Activity</ng-template>
@@ -345,56 +347,60 @@
                     <div class="border py-1 px-2 border-top-brown rounded">
 
                         <div class="row">
-                            <div class="col-12"><strong>Information Order </strong></div> 
+                            <div class="col-12"><strong>Information Order </strong></div>
                         </div>
- 
+
                         <div class="row mt-2">
-                            <div class="col-12 mb-1"><b>Quotation </b></div> 
-                            <div class="col-12 mb-1"> 
+                            <div class="col-12 mb-1"><b>Quotation </b></div>
+                            <div class="col-12 mb-1">
                                 <table class="table-items">
-                                    
-                                    <tbody> 
+
+                                    <tbody>
                                         <tr>
-                                            <td>  <a [routerLink]="[ '/quote', items.quote.id ]"><b>{{items.quote.quote_number}}  </b> </a>  </td>
+                                            <td> <a [routerLink]="[ '/quote', items.quote.id ]"><b>{{items.quote.quote_number}}
+                                                    </b> </a> </td>
                                         </tr>
                                         <tr>
-                                            <td> Grand Total :   {{items.currency}} {{items.quote.grand_total | number}}</td>
-                                        </tr> 
-                                        <tr>
-                                            <td> Contact :  {{items.quote.contact}}  </td>
+                                            <td> Grand Total : {{items.currency}} {{items.quote.grand_total | number}}
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td> Account Manager :   {{items.quote.user}} </td>
+                                            <td> Contact : {{items.quote.contact}} </td>
+                                        </tr>
+                                        <tr>
+                                            <td> Account Manager : {{items.quote.user}} </td>
                                         </tr>
                                     </tbody>
-                                </table> 
+                                </table>
                             </div>
 
-                           <div class="col-12">
-                            <hr class="p-0 m-0 mt-1">
-                           </div> 
-                           <div class="col-12 mb-1"><b>Sales Order </b></div> 
-                            <div class="col-12 mb-1"> 
-                             
-                                <table class="table-items"> 
-                                    <tbody> 
-                                        <tr>
-                                            <td> <a href=""> <b> S001324</b></a> </td>
-                                        </tr>
-                                        <tr>
-                                            <td> Grand Total :  IDR 39.000.000,-</td>
-                                        </tr> 
-                                        <tr>
-                                            <td> Created date 20 Jan 2020 01:32 PM  </td>
-                                        </tr>
-                                        <tr>
-                                            <td> Account Manager : hahahah  </td>
-                                        </tr>
-                                       
-                                    </tbody>
-                                </table> 
- 
+                            <div class="col-12">
+                                <hr class="p-0 m-0 mt-1">
                             </div>
+
+                            <div class="col-12 mb-1"><b>Sales Order </b></div>
+                            <div class="col-12 mb-1">
+                                <table class="table-items mb-2" *ngFor="let x of sales_order">
+                                    <tbody>
+                                        <tr>
+                                            <td> <a [routerLink]="[ '/salesOrder', x.id ]"> <b> {{x.so_number}}</b></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td> Grand Total : {{ x.currency }} {{x.grand_total | number}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td> Created date {{x.expired_date | date}} </td>
+                                        </tr>
+                                        <tr>
+                                            <td> Account Manager : {{x.user}} </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+
                         </div>
 
 
@@ -410,7 +416,7 @@
 
                         <div class="row">
                             <div class="col-12"><strong>Contact Roles ({{contact.length}}) </strong></div>
-                           
+
                         </div>
 
                         <div class="row">
@@ -454,7 +460,6 @@
     </div>
 </div>
 
-<ng-template #createSO let-modal> 
-<app-sales-order-create (uploaded)="requestEmit($event)"></app-sales-order-create>
+<ng-template #createSO let-modal>
+    <app-sales-order-create (uploaded)="requestEmit($event)"></app-sales-order-create>
 </ng-template>
-

@@ -407,7 +407,7 @@ input[type="text"]:read-only,   input[type="number"]:read-only,  select:disabled
 
 
 input[type="text"]:read-only:required,input[type="number"]:read-only:required, select:read-only:required, textarea:read-only:required {
-  border-right: none !important;
+  border-right: none;
 }
 
 .form-description{
@@ -416,7 +416,12 @@ input[type="text"]:read-only:required,input[type="number"]:read-only:required, s
   background: none;
 }
 
-
+.dropdown-item{
+    text-decoration: none;
+}
+.required{
+    border-right: 3px solid red !important;
+}
 .form-style label{
     font-size: 13px;
     color: #9C988D;

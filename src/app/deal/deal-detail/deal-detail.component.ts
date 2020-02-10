@@ -17,7 +17,7 @@ export class DealDetailComponent implements OnInit {
   public items: any = [];
   myContact: any = [];
   public loading = true;
-  public id: number;
+  public id: string;
   public closeResult: string;
   stage: any = [];
   objIndex: any;
@@ -32,17 +32,16 @@ export class DealDetailComponent implements OnInit {
   isReadOnly:boolean= true;
   myBranch: any = [];
   user: any = [];
-  width: string;
-  modelClosedWin: any;
-  modelClosedLose: any;
+  width: string;  
   finish: boolean = false;
   stageNotes: string;
-  quoteModel: any;
-  quotes: any; 
+  quoteModel: any = [];
+  quotes: any = []; 
   business:any=[];
   model:any=[];
   lead_source:any=[]; 
   contact:any=[];
+  sales_order :any=[];
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -59,11 +58,13 @@ export class DealDetailComponent implements OnInit {
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params.id;
     this.items = {
-      start_date: {
-        year: 0,
-        month: 0,
-        day: 0,
-      }, 
+      quote : {
+        quote_number:"",
+        grand_total : 0,
+        contact:"",
+        user:"",
+      },
+    
     }
     this.httpGet();
   }
@@ -93,16 +94,8 @@ export class DealDetailComponent implements OnInit {
       this.contact = data['result']['contact'];
       this.user = data['result']['user'];
       this.loading = false;
-      this.modelClosedWin = new OpportunityClosedWin(
-        '',
-        this.items['closed_date'], 
-        this.items['id_user'],
-        "0",
-        "",
-        data['result']['data']['amount']
-        );
-      this.modelClosedLose = new OpportunityClosedLose('', this.currentDate, data['result']['data']['id_user']);
-
+      
+      this.sales_order = data['result']['sales_order'];
       this.quoteModel = new Newquote(0, '', '', '', '', 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', true);
       this.lead_source =  data['result']['lead_source'];
       
@@ -115,39 +108,6 @@ export class DealDetailComponent implements OnInit {
     });
   }
 
-  onClosed(i) {
-    if (i == 'win') {
-      var data = this.modelClosedWin;
-
-    } else if (i == 'lose') {
-      var data = this.modelClosedLose;
-    }
-    this.http.post(this.configService.base_url() + 'opportunity/updateClosed',
-      {
-        "id": this.id,
-        "data": data,
-        "status": i
-      }, {
-      headers: this.configService.headers()
-    }).subscribe(
-      data => {
-
-        if (i == 'win') {
-          this.router.navigate(['/deal/', this.id]);
-
-        } else if (i == 'lose') {
-          this.router.navigate(['/lose/', this.id]);
-
-        }
-        this.finish = true;
-      },
-      error => {
-        console.log(error);
-        console.log(error.error.text);
-      }
-    );
-
-  }
   
   fn_editable() {
 
@@ -294,14 +254,7 @@ export class DealDetailComponent implements OnInit {
     );
   }
 
-    
-  fn_sales_order(){
-   
-    var  objIndex = this.quotes.findIndex((obj => obj.id == this.modelClosedWin.id_quote ));
-    console.log(this.quotes[objIndex]);
-    this.modelClosedWin['sales_order']= this.quotes[objIndex]['quotes_number'];
-  }
-
+     
 
   
 }

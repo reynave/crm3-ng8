@@ -1,1 +1,93 @@
-<p>sales-order works! 123</p>
+<ngx-loading [show]="loading"></ngx-loading> 
+<app-navigator></app-navigator>
+
+<div class="container-fluid bg-light border py-1">
+  <div class="row">
+    <div class="col-12">
+      <small> You are here : <a [routerLink]="[ '/salesOrder' ]">Sales Order</a> </small>
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid  bg-white">
+
+   
+  <div class="row mt-3">
+
+    <div class="col-4">
+      <div class="module-name">
+        <strong>SALES ORDER</strong>
+      </div>
+    </div>
+
+    <div class="col-8 text-right">
+      <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="open(createSO)"><i
+        class="fas fa-dollar-sign"></i> Create Sales Order </button> 
+    </div>
+     
+  </div>
+
+
+  <div class=" bg-light  border border-top-brown rounded p-1 my-3">
+
+    <div class="row mb-3">
+      <div class="col-8"> 
+        <label class="pl-2">Total Count  </label>
+      </div>
+
+      <div class="col-4 text-right">
+        <input type="text" class="form-control-sm form-radius" placeholder="Search">
+      </div>
+
+    </div>
+
+    <div class="scroll-x max-height">
+
+      <table class="table table-hover border bg-white border-top border-bottom pointer">
+        <thead class="thead-light">
+          <tr>
+            <th>No</th>
+
+            <th scope="col">Sales Order No</th>
+            <th scope="col">Name</th> 
+            <th scope="col">Company</th> 
+            <th scope="col" class="text-right" >Grand Total</th> 
+            <th scope="col">Status</th>
+            <th scope="col">Created Date</th>
+            <th scope="col">Account Manager</th> 
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of items; let i = index">
+            <td width="50"> {{ i + 1}} </td>
+            <td><a [routerLink]="[ '/salesOrder/',x.id]"> {{x.so_number}}</a></td>
+            <td>{{x.name}}</td> 
+            <td>{{x.company}}</td> 
+            <td class="text-right">{{x.currency}} {{x.grand_total | number:''}},-</td>
+        
+            
+            <td>  {{x.sales_order_status}} </td>
+            <td>{{x.input_date | date}}</td>
+            <td>{{x.user}}</td> 
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+  </div> 
+
+
+</div>
+
+
+
+<ng-template #createSO let-modal>
+  <app-sales-order-create (uploaded)="requestEmit($event)"></app-sales-order-create>
+</ng-template>

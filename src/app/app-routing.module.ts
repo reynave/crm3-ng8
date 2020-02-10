@@ -30,6 +30,7 @@ import { PriceListDetailComponent } from './price-list/price-list-detail/price-l
 import { SalesOrderComponent } from './sales-order/sales-order.component';
 import { SalesOrderDetailComponent } from './sales-order/sales-order-detail/sales-order-detail.component';
 import { SalesOrderCreateComponent } from './sales-order/sales-order-create/sales-order-create.component';
+import { SalesOrderPrintComponent } from './sales-order/sales-order-print/sales-order-print.component';
 
 const routes: Routes = [
 
@@ -72,8 +73,8 @@ const routes: Routes = [
 
   { path: "salesOrder", component: SalesOrderComponent, data: { title: 'Sales Order' }, canActivate: [ActiveGuardGuard] },
   { path: "salesOrder/modal/create", component: SalesOrderCreateComponent, data: { title: 'Create Sales Order' }, canActivate: [ActiveGuardGuard] },
-
   { path: "salesOrder/:id", component: SalesOrderDetailComponent, data: { title: 'Sales Order' }, canActivate: [ActiveGuardGuard] },
+  { path: "salesOrder/print/:id", component: SalesOrderPrintComponent, data: { title: 'Print Sales Order' }, canActivate: [ActiveGuardGuard] },
 
 
   { path: "priceList", component: PriceListComponent, canActivate: [ActiveGuardGuard] },
