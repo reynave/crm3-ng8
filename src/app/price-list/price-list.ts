@@ -24,6 +24,7 @@ export class Newpricelist{
     constructor( 
         public name: string,
         public id_currency: number,
+        public price: string,
         public description: string,
         public status: string, 
     ) { }

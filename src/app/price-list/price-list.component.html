@@ -17,6 +17,15 @@
       <div class="col-6">
         <h5>PRICE LIST</h5>
       </div>
+      <div class="col-6 text-right">
+
+        <button type="button" class="btn btn-classic  btn-sm mx-1" disabled><i class="fas fa-download"></i> 
+        Sync for ERP</button>
+
+        <button type="button" class="btn btn-classic  btn-sm" (click)="open(newpricelist)"><i
+          class="fas fa-plus"></i>
+        New Price List</button>
+      </div>
       
     </div>
   </div>
@@ -24,9 +33,7 @@
   <div class=" bg-light  border border-top-brown rounded p-1">
     <div class="row my-2 ">
       <div class="col-8">
-        <button type="button" class="btn btn-classic  btn-sm" (click)="open(newpricelist)"><i
-            class="fas fa-plus"></i>
-          New Price List</button>
+      
 
           <span class="dropdown">
             <button class="btn btn-classic btn-sm dropdown-toggle mx-1" type="button" id="dropdownMenuButton"
@@ -88,85 +95,7 @@
 
 <hr>
 
-
-<div class="container-fluid">
-
-  <div class="container-header">
-    <div class="row ">
-      <div class="col-6">
-        <h5>PRICE LIST (NOT USED)</h5>
-      </div>
-      <div class="col-6 text-right">
-        <a href=""><i class="fas fa-print"></i> Prints</a>
-      </div>
-    </div>
-  </div>
-
-  <div class=" bg-light  border border-top-brown rounded p-1">
-    <div class="row my-2 ">
-      <div class="col-8">
-        <button type="button" class="btn btn-classic  btn-sm" (click)="open(newpricelist)"><i
-            class="fas fa-plus"></i>
-          New Price List</button>
-
-          <span class="dropdown">
-            <button class="btn btn-classic btn-sm dropdown-toggle mx-1" type="button" id="dropdownMenuButton"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-cog"></i>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> 
-              <a class="dropdown-item" (click)="open(markUpdate)"> Mart to
-                Delete</a>
   
-            </div>
-          </span>
-      </div>
-
-      <div class="col-4 text-right">
-        <input type="text" class="form-control-sm form-radius" placeholder="Search">
-      </div>
-    </div>
-
-    <div class="scroll-x max-height"> 
-      <table class="table table-hover border bg-white border-top border-bottom pointer">
-        <thead class="thead-light">
-          <tr>
-            <th width="50">No</th> 
-            <th></th>
-            <th scope="col">SKU</th>
-            <th scope="col">Name</th>
-        
-            <th scope="col">Price</th>  
-            <th width="50"></th>
-
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let x of items;let i = index;">
-            <td> {{i+1}} </td>
-            <td width="50" (click)="fn_check(x);"> <span class="text-primary ">
-              <i class=" {{ x.check ? 'fas fa-check-square' : 'far fa-square' }}"></i> </span>
-            </td>
-            <td> {{x.sku}} </td>
-            <td> <a [routerLink]="[ '/priceList/',x.id]"> {{x.name}}</a> </td>
-            <td>  {{x.currency}} {{x.price | number}} </td>
-            <td> <i class="far fa-trash-alt"></i> </td>
-          </tr>
-        </tbody>
-      </table>
-
-
-
-    </div>
-
-
-  </div>
-
-
-</div>
-
-
-
 
 <ng-template #newpricelist let-modal>
   <div class="modal-header">
@@ -194,11 +123,11 @@
 
 
           <div class="form-group row no-gutters">
-            <label for="h1" class="col-3 col-form-label"> Sku</label>
+            <label for="ha" class="col-3 col-form-label"> Sku</label>
             <div class="col-sm-8"> 
-              <input type="text" class="form-control border" [(ngModel)]="model.name" name="name"
-                #name="ngModel" id="h1" required>
-              <small [hidden]="name.valid || name.pristine" class="text-danger"> Name is  required</small>
+              <input type="text" class="form-control border" [(ngModel)]="model.sku" name="sku"
+                #sku="ngModel" id="ha" required>
+              <small [hidden]="sku.valid || sku.pristine" class="text-danger"> Sku is  required</small>
             </div>
 
           </div>
@@ -207,12 +136,13 @@
             <label for="h2" class="col-sm-3 col-form-label"> Currency</label>
             <div class="col-sm-2">
               <select class="form-control border"  [(ngModel)]="model.id_currency" name="id_currency">
-                <option value=1>IDR (Rupiah)</option>
+                <option value="1">IDR (Rupiah)</option>
               </select>
             </div>
             <div class="col-sm-4">
-              <input type="text" class="form-control border mx-1" [(ngModel)]="model.name" name="name"
-                #name="ngModel" id="h1" required>
+              <input type="number" class="form-control border mx-1" [(ngModel)]="model.price" name="price" autocomplete="off"
+                #price="ngModel" id="price" required>
+                <small [hidden]="price.valid || price.pristine" class="text-danger"> Price is  required</small>
             </div>
           </div>
 
@@ -220,15 +150,12 @@
           <div class="form-group row no-gutters">
             <label for="h3" class="col-sm-3 col-form-label">Description</label>
             <div class="col-sm-8">
-              <textarea class="form-control border" id="h3" [(ngModel)]="model.description" name="description" ></textarea>
+              <textarea class="form-control border" id="h3" rows="6" [(ngModel)]="model.description" name="description" ></textarea>
             </div>
           </div>
 
         
-        </div>
-
-{{model |  json}}
-
+        </div> 
       </div>
 
 

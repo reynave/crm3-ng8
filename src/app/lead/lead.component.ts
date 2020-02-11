@@ -164,23 +164,9 @@ export class LeadComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    this.modalService.open(content, { size: 'lg' });
   }
- 
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
+  
 
   fn_check(x) {
     this.objIndex = this.items.findIndex((obj => obj.id == x.id));

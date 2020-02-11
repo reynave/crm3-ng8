@@ -31,7 +31,7 @@ export class PriceListComponent implements OnInit {
     config.keyboard = false;
   }
   ngOnInit() {
-    this.model = new Newpricelist('',1,'','1');
+    this.model = new Newpricelist('',1,'','','');
     this.itemsSelected = [];
     this.httpGet(); 
   }
@@ -62,10 +62,10 @@ export class PriceListComponent implements OnInit {
         headers: this.configService.headers()
       }).subscribe(
         data => {
-          // console.log(data);
+           console.log(value);
           this.submit= false;
           if (value == 'next') {
-            this.model = new Newpricelist('',1,'','1');
+            this.model = new Newpricelist('',1,'','1','');
             this.httpGet(); 
           }
           else {
@@ -81,17 +81,11 @@ export class PriceListComponent implements OnInit {
         }
       );
   }
-
-
  
-
-
   open(content) {
     this.modalService.open(content, { size: 'lg' });
   }
- 
-
- 
+  
   fn_check(x) {
     console.log(x);
     this.objIndex = this.items.findIndex((obj => obj.id == x.id));
@@ -124,7 +118,25 @@ export class PriceListComponent implements OnInit {
     }
     this.itemsSelected.splice(objectSelect, 1);
   }
-
-   
+ 
+  fn_delete() {
+  
+    this.http.post(this.configService.base_url() + 'product/fn_delete',
+    {
+      "data": this.itemsSelected
+    }, {
+      headers: this.configService.headers()
+    }).subscribe(
+      data => {
+        // console.log(data);
+        this.httpGet();
+        this.modalService.dismissAll();
+      },
+      error => {
+        // console.log(error);
+        // console.log(error.error.text);
+      }
+    ); 
+  }
 
 }

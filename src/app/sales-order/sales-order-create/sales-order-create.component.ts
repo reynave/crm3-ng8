@@ -44,6 +44,7 @@ export class SalesOrderCreateComponent implements OnInit {
   httpGet() {
     this.loading = true;
     // var url = this.configService.base_url() + 'create/opportunity/' + this.id;
+ 
     var url = this.configService.base_url() + 'sales_order/create/' + this.module + '/' + this.id;
     console.log(url);
     this.http.get(url, {
