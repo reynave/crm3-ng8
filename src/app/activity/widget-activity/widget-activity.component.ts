@@ -26,11 +26,19 @@ export class WidgetActivityComponent implements OnInit {
   };
   activity: any = [];
   history: any = [];
-  id_activity_type: number = 100;
-  model: any = new WidgetActivty(this.id_activity_type, 0, "", 0, '', '', this.date, this.date, this.date, "00:00", "00:00");
+  id_activity_type: string = "100";
+  model: any= [];
   user: any = [];
   closeResult: any;
   showNewActivity: boolean = false;
+  id_user:string = "";
+  
+  activityLatest: Activity[] = [];
+  activityHistory: Activity[] = [];
+
+  related:string = "Related to";
+  related_result:any = [];
+
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -50,7 +58,7 @@ export class WidgetActivityComponent implements OnInit {
     this.id = this.route.snapshot.url[1].path;
 
     this.httpGet();
-    this.httpData();
+    this.httpHistory();
 
     /*$(window).scroll(function (event) {
       var st = $(this).scrollTop();
@@ -65,15 +73,13 @@ export class WidgetActivityComponent implements OnInit {
 
   }
 
-  activityLatest: Activity[] = [];
-  activityHistory: Activity[] = [];
+  httpHistory() {
 
-  httpData() {
-
-    this.http.get(this.configService.base_url() + 'activity/httpData/' + this.module + '/' + this.id, {
+    this.http.get(this.configService.base_url() + 'activity/httpHistory/' + this.module + '/' + this.id, {
       headers: this.configService.headers()
     }).subscribe(
       data => {
+        console.log(data);
         this.activityLatest = data['result']['latest'];
         this.activityHistory = data['result']['history'];
     //    console.log(this.activityLatest);
@@ -89,23 +95,75 @@ export class WidgetActivityComponent implements OnInit {
       headers: this.configService.headers()
     }).subscribe(
       data => {
+        
+        this.items = data['result']['data'];
+        this.model = new WidgetActivty(this.id_activity_type, this.id_user, "", "0", '', '', this.date, this.date, this.date, "00:00", "00:00",'0','0');
 
-        this.items = data['result']['data']
         this.model['id_user'] = data['result']['data']['id_user'];
-        this.model['id_person'] = this.id;
+        this.model['id_person'] = data['result']['data']['person'][0]['id'];
         this.model['id_module'] = data['result']['data']['id_module'];
-
+        this.id_user = data['result']['id_user'];
         this.user = data['result']['user'];
-      },
+          },
       error => {
         console.log(error);
       }
     );
   }
 
+  fn_related(event){
+    if( event == 'contact'){
+      this.related = 'Contact';  
+      this.model['id_module_related'] = "300";
 
-  get diagnostic() { return JSON.stringify(this.model); }
+    }else  if( event == 'lead'){
+      this.related = 'Lead';     
+      this.model['id_module_related'] = "200";
 
+    }else  if( event == 'company'){
+      this.related = 'Company';     
+      this.model['id_module_related'] = "400";
+
+    }else  if( event == 'opportunity'){
+      this.related = 'Opportunity';
+      this.model['id_module_related'] = "500";
+
+    }else  if( event == 'quote'){
+      this.related = 'Quote';
+      this.model['id_module_related'] = "800";
+
+    }else  if( event == 'deal'){
+      this.related = 'Deal';
+      this.model['id_module_related'] = "520";
+
+    }else  if( event == 'sales_order'){
+      this.related = 'Sales Order';
+      this.model['id_module_related'] = "550";
+
+    }else  if( event == 'lost'){
+      this.related = 'Lost';
+      this.model['id_module_related'] = "510";
+
+    } 
+    this.model['id_module_related_target'] = "";
+
+
+    this.http.get(this.configService.base_url() +  event + '/index' , {
+      headers: this.configService.headers()
+    }).subscribe(
+      data => { 
+        this.related_result = data['result']['data'];
+        console.log(data); 
+      },
+      error => {
+        console.log(error);
+      }
+    );
+ 
+    console.log(event);
+  }
+
+  
   onInsert() {
 
     this.http.post(this.configService.base_url() + 'activity/insert',
@@ -120,7 +178,7 @@ export class WidgetActivityComponent implements OnInit {
         this.model['subject'] = null;
         this.model['description'] = null;
 
-        // this.httpData();   
+        // this.httpHistory();   
         if (Array.isArray(data['result']['latest']) == false) {
           this.activityLatest.unshift(data['result']['latest']);
         }
@@ -182,5 +240,23 @@ export class WidgetActivityComponent implements OnInit {
         console.log(error.error.text);
       }
     );
+  }
+
+
+  showHistory(i){
+    if(  this.activityHistory[i]['show'] == false ){
+      this.activityHistory[i]['show'] = true;
+    }else{
+      this.activityHistory[i]['show'] = false;
+    }
+   
+  }
+  showLatest(i){
+    if(  this.activityLatest[i]['show'] == false ){
+      this.activityLatest[i]['show'] = true;
+    }else{
+      this.activityLatest[i]['show'] = false;
+    }
+   
   }
 }

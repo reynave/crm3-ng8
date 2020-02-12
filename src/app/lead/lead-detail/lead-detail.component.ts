@@ -54,7 +54,7 @@ export class LeadDetailComponent implements OnInit {
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params.id;
     this.accessRules = this.configService.access_right();
-    console.log('accessRules',this.accessRules);
+    //console.log('accessRules',this.accessRules);
     this.httpGet(); 
   }
   httpGet() {
@@ -75,8 +75,7 @@ export class LeadDetailComponent implements OnInit {
     this.http.get<LeadDetail[]>(this.configService.base_url() + 'lead/detail/' + this.id, {
       headers: this.configService.headers()
     }).subscribe(data => {
-
-      console.log(data);
+ 
       this.items = data['result']['lead'];
       this.title = data['result']['title'];
       this.lead_source = data['result']['lead_source'];
@@ -124,21 +123,18 @@ export class LeadDetailComponent implements OnInit {
         data['result']['lead']['id_user'],
         ''
       );
-
-      // console.log(data);
+ 
       this.loading = false;
     });
   }
 
-  fn_selectContact(id){
-    console.log(id);
+  fn_selectContact(id){ 
     this.loading = true;
     this.http.get(this.configService.base_url() + 'lead/selectContact/' + id, {
       headers: this.configService.headers()
     }).subscribe(data => { 
       
-      this.contacts = data['result']['contacts'];  
-      console.log(this.contacts);
+      this.contacts = data['result']['contacts'];   
       this.loading = false;
     });
   }
@@ -154,8 +150,7 @@ export class LeadDetailComponent implements OnInit {
       }, {
       headers: this.configService.headers()
     }).subscribe(
-      data => {
-        console.log(data);
+      data => { 
         this.items['lead_status']['color'] = data['result']['data']['color'];
         this.items['lead_status']['name'] = data['result']['data']['name'];
 
@@ -194,8 +189,7 @@ export class LeadDetailComponent implements OnInit {
         }, {
         headers: this.configService.headers()
       }).subscribe(
-        data => {
-          // console.log(data);
+        data => { 
           this.router.navigate(['/lead/']);
 
         },
@@ -219,8 +213,7 @@ export class LeadDetailComponent implements OnInit {
       }, {
       headers: this.configService.headers()
     }).subscribe(
-      data => {
-        console.log(data);
+      data => { 
       },
       error => {
          console.log(error);
@@ -263,8 +256,7 @@ export class LeadDetailComponent implements OnInit {
       }, {
       headers: this.configService.headers()
     }).subscribe(
-      data => { 
-        console.log(data);
+      data => {  
         this.httpGet();
       },
       error => {

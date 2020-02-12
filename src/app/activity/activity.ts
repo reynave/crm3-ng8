@@ -97,10 +97,10 @@ export class GetSelected {
 
 export class WidgetActivty {
     constructor(
-        public id_activity_type: number,
-        public id_user: number,
+        public id_activity_type: string,
+        public id_user: string,
         public id_person: string,
-        public id_module: number,
+        public id_module: string,
         public subject: string,
         public description: string,
         public due_date: any,
@@ -108,6 +108,8 @@ export class WidgetActivty {
         public end_date: any,
         public start_time: string,
         public end_time: string,
+        public id_module_related:string,
+        public id_module_related_target:string,
 
     ) {
 

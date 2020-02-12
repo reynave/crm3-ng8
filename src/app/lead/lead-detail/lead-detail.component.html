@@ -13,7 +13,7 @@
 
 </div>
 
-
+<form (ngSubmit)="fn_update()" #mainForm="ngForm">
 <div class="container-fluid  bg-white">
 
 
@@ -79,7 +79,7 @@
               {{items.lead_status.name }} </b>
 
 
-            <select class="form-control form-control-sm p-0 border" [(ngModel)]="items.id_lead_status"
+            <select class="form-control form-control-sm p-1 border" [(ngModel)]="items.id_lead_status"
               [hidden]="isReadOnly" (change)="onChangeLeadStatus($event.target.value)"
               [ngModelOptions]="{standalone: true}">
               <option [ngValue]="x.id" *ngFor="let x of lead_status">
@@ -115,7 +115,7 @@
             <ngb-tab id="tab-selectbyid2">
               <ng-template ngbTabTitle>Detail</ng-template>
               <ng-template ngbTabContent>
-                <form (ngSubmit)="fn_update()" #mainForm="ngForm">
+               
 
                   <div class="border-top py-2 my-2">
 
@@ -199,20 +199,8 @@
                             </tr>
 
 
-                            <tr>
-                              <td><label>Opportunity</label></td>
-                              <td>
-                                <input type="text" class="form-control form-modal" id="opportunity"
-                                  [(ngModel)]="lead.opportunity" name="opportunity" [readonly]="isReadOnly">
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td><label>Expected ({{items.currency }})</label></td>
-                              <td> <input type="number" class="form-control form-modal" id="amount"
-                                  [(ngModel)]="lead.amount" name="amount" [readonly]="isReadOnly"> </td>
-                            </tr>
-
+                          
+                        
 
 
                           </tbody>
@@ -335,7 +323,7 @@
                       </div>
                     </div>
                   </div>
-                </form>
+              
               </ng-template>
             </ngb-tab>
 
@@ -357,10 +345,19 @@
         <div class="col-12">
           <div class="border bg-light p-2 rounded-sm">
             <small> Opportunity</small>
-            <div><b>{{lead.opportunity}}</b> </div>
 
-            <small> Amount</small>
-            <div><b> {{lead.amount | number}}</b> </div>
+            <div [hidden]="isReadOnly" ><input type="text" class="form-control form-modal" id="opportunity"
+              [(ngModel)]="lead.opportunity" name="opportunity" [readonly]="isReadOnly"> </div>
+            <div [hidden]="!isReadOnly"><b>{{lead.opportunity}}</b> </div>
+
+            <hr>
+            <small> Amount  ({{items.currency }})</small>
+            <div [hidden]="isReadOnly" >
+              
+              <input type="number" class="form-control form-modal" id="amount"
+              [(ngModel)]="lead.amount" name="amount" [readonly]="isReadOnly">
+               </div>
+            <div> <b [hidden]="!isReadOnly"> {{lead.amount | number}}</b> </div> 
 
           </div>
         </div>
@@ -415,7 +412,7 @@
   </div>
 
 </div>
-
+</form>
 <div [hidden]="isReadOnly"><br><br></div>
 
 

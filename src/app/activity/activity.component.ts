@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ConfigService } from './../service/config.service'; 
 import {NgbModal, ModalDismissReasons, NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -21,23 +22,37 @@ export class ActivityComponent implements OnInit {
   modalStatus:number;
   objIndex:any;
   searchText : string;
+
+  showActivity:boolean=false;
+
   constructor(
     private http: HttpClient,
-    private router : Router,
+    private router: Router,
     private modalService: NgbModal,
     config: NgbModalConfig,
-  ) { 
-
+    private configService: ConfigService
+  ) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
 
-  ngOnInit() {
-      
-    this.http.get('https://s01.crm.co.id/api/demo/', { responseType: 'json' })
-      .subscribe(data => { this.items = data['activity']; console.log(this.items); this.loading = false; });
-   
+  ngOnInit() { 
+      this.httpGet();
   }
+
+
+  httpGet() {
+    this.loading = true;
+    this.itemsSelected = [];
+    this.http.get(this.configService.base_url() + 'activity', {
+      headers: this.configService.headers()
+    }).subscribe(data => {
+      console.log(data); 
+      this.items = data['result']['data']; 
+      this.loading = false;
+    });
+  }
+
   fn_next(){
     this.router.navigate(['/lead/1']);
     this.modalService.dismissAll();
@@ -46,69 +61,45 @@ export class ActivityComponent implements OnInit {
   modal_updateStatus(content, title, status) {
     this.modalTitle = title;
     this.modalStatus =  status;
-    this.modalService.open(content, {size: 'lg'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    this.modalService.open(content, {size: 'lg'});
   }
 
   open(content, json) {
+    
     this.json = json;
-    console.log(this.json);
-    this.modalService.open(content, {size: 'lg'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    this.modalService.open(content, {size: 'lg'});
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return  `with: ${reason}`;
-    }
-  }
+  
 
-  fn_check(x){
-    console.log(x);
-
-    this.objIndex = this.items.findIndex((obj => obj.unique == x.unique ));
-
-    
-    if(    this.items[this.objIndex]['check'] == true){
+  
+  fn_check(x) {
+    this.objIndex = this.items.findIndex((obj => obj.id == x.id));
+    if (this.items[this.objIndex]['check'] == true) {
       this.items[this.objIndex]['check'] = false;
-    }else{
+    } else {
       this.items[this.objIndex]['check'] = true;
     }
-    var object = { 
-      'unique' : x.unique,
-      'name' : x.name,
-      'status'  : x.status,
+    var object = {
+      'id': x.id,
+      'name': x.name,
+      'company': x.company,
     }
-   
-    var objectSelect = this.itemsSelected.findIndex((obj => obj.unique == x.unique ));
-    console.log(objectSelect);
-    if(objectSelect == -1){
-
+    var objectSelect = this.itemsSelected.findIndex((obj => obj.id == x.id));
+    if (objectSelect == -1) {
       this.itemsSelected.push(object);
+    }else{
+      this.itemsSelected.splice(objectSelect, 1);
     }
-
-    console.log(this.objIndex, x.unique);
+    // console.log(this.itemsSelected);
   }
 
-  fn_removeItemSelected(x){
-    this.objIndex = this.items.findIndex((obj => obj.unique == x.unique ));
-    var objectSelect = this.itemsSelected.findIndex((obj => obj.unique == x.unique ));
-    
-    if(    this.items[this.objIndex]['check'] == false){
+  fn_removeItemSelected(x) {
+    this.objIndex = this.items.findIndex((obj => obj.id == x.id));
+    var objectSelect = this.itemsSelected.findIndex((obj => obj.id == x.id));
+    if (this.items[this.objIndex]['check'] == false) {
       this.items[this.objIndex]['check'] = true;
-    }else{
+    } else {
       this.items[this.objIndex]['check'] = false;
     }
     this.itemsSelected.splice(objectSelect, 1);

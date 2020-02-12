@@ -1,5 +1,5 @@
-<div id="activityTabs" >
-
+<div id="activityTabs" > 
+  
   <div class="border p-2 my-2 bg-light shadow-sm">
 
     <form (ngSubmit)="onInsert()" #callForm="ngForm">
@@ -31,7 +31,26 @@
 
                 <div class="col-6 py-1">
                   <label class="py-1"> Related To</label>
-                  <input type="text" class="form-control">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <button class="btn btn-light border dropdown-toggle" type="button" data-toggle="dropdown" 
+                        aria-haspopup="true" aria-expanded="false">{{related}}</button>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('lead');" >Lead</a>
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('contact');" >Contact</a>
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('company');">Company</a>
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('opportunity');">Opportunity</a>
+                        <div role="separator" class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('quote');">Quote</a>
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('deal');">Deal</a>
+                        
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('sales_order');">Sales Order</a>  
+                      </div>
+                    </div>
+                    <select class="form-control"  [(ngModel)]="model.id_module_related_target" [ngModelOptions]="{standalone: true}"  >
+                      <option value="{{x.id}}" *ngFor="let x of related_result" >{{x.name}}</option>
+                    </select>
+                  </div>
                 </div>
 
 
@@ -93,32 +112,30 @@
                 </div>
 
                 <div class="col-6 py-1">
-                  <label> Related To</label>
-
-
+                  <label class="py-1"> Related To</label>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                      <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">Related to</button>
+                      <button class="btn btn-light border dropdown-toggle" type="button" data-toggle="dropdown" 
+                        aria-haspopup="true" aria-expanded="false">{{related}}</button>
                       <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:;">Contact</a>
-                        <a class="dropdown-item" href="javascript:;">Company</a>
-                        <a class="dropdown-item" href="javascript:;">Opportunity</a>
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('lead');" >Lead</a>
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('contact');" >Contact</a>
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('company');">Company</a>
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('opportunity');">Opportunity</a>
                         <div role="separator" class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="javascript:;">Quote</a>
-                        <a class="dropdown-item" href="javascript:;">Deal</a>
-                        <a class="dropdown-item" href="javascript:;">Closed Lose</a>
-                        <a class="dropdown-item" href="javascript:;">Sales Order</a>
-
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('quote');">Quote</a>
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('deal');">Deal</a>
+                        
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('sales_order');">Sales Order</a>  
                       </div>
                     </div>
-                    <select class="form-control">
-                      <option>hahah</option>
+                    <select class="form-control"  [(ngModel)]="model.id_module_related_target" [ngModelOptions]="{standalone: true}"  >
+                      <option value="{{x.id}}" *ngFor="let x of related_result" >{{x.name}}</option>
                     </select>
                   </div>
-
-
                 </div>
+
+
                 <div class="col-12 py-1">
                   <label> Notes</label>
                   <textarea class="form-control" rows="4" [(ngModel)]="model.description" name="description"></textarea>
@@ -197,7 +214,26 @@
 
                 <div class="col-6 py-1">
                   <label class="py-1"> Related To</label>
-                  <input type="text" class="form-control">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <button class="btn btn-light border dropdown-toggle" type="button" data-toggle="dropdown" 
+                        aria-haspopup="true" aria-expanded="false">{{related}}</button>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('lead');" >Lead</a>
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('contact');" >Contact</a>
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('company');">Company</a>
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('opportunity');">Opportunity</a>
+                        <div role="separator" class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('quote');">Quote</a>
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('deal');">Deal</a>
+                        
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('sales_order');">Sales Order</a>  
+                      </div>
+                    </div>
+                    <select class="form-control"  [(ngModel)]="model.id_module_related_target" [ngModelOptions]="{standalone: true}"  >
+                      <option value="{{x.id}}" *ngFor="let x of related_result" >{{x.name}}</option>
+                    </select>
+                  </div>
                 </div>
 
 
@@ -281,7 +317,26 @@
 
                 <div class="col-6 py-1">
                   <label class="py-1"> Related To</label>
-                  <input type="text" class="form-control">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <button class="btn btn-light border dropdown-toggle" type="button" data-toggle="dropdown" 
+                        aria-haspopup="true" aria-expanded="false">{{related}}</button>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('lead');" >Lead</a>
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('contact');" >Contact</a>
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('company');">Company</a>
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('opportunity');">Opportunity</a>
+                        <div role="separator" class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('quote');">Quote</a>
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('deal');">Deal</a>
+                        
+                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('sales_order');">Sales Order</a>  
+                      </div>
+                    </div>
+                    <select class="form-control"  [(ngModel)]="model.id_module_related_target" [ngModelOptions]="{standalone: true}"  >
+                      <option value="{{x.id}}" *ngFor="let x of related_result" >{{x.name}}</option>
+                    </select>
+                  </div>
                 </div>
 
 
@@ -353,13 +408,19 @@
     <div class="icon" [innerHTML]="x.activity_type.fas"></div>
     <div class="content">
       <div class="row">
-        <div class="col-8">
-          <a href="javascript:;" (click)="x.description ? activityLatest[i].show = true : false"> <b
-              class="text-primary">{{x.subject}}</b> </a>
+        <div class="col-12 col-md-8">
+          <a href="javascript:;" (click)="x.description ? showLatest(i) : false;"> <b
+              class="text-primary">{{x.subject}}</b> </a> 
+              
+              <a class="ml-2 text-gray py-0" [hidden]="!x.description"  (click)="x.description ? showLatest(i) : false;"><i
+                class="fas fa-caret-down"></i></a> 
+              
+            <div class="lh-100">
+              <small [innerHTML]="x.related.object"></small> </div>
+             
         </div>
-        <div class="col-4 text-right">
-          <small> {{x.input_date | date:'medium'}}</small> <a class="ml-2 text-gray py-0" [hidden]="!x.description"><i
-              class="fas fa-caret-down"></i></a>
+        <div class="col-12  col-md-4 text-right">
+          <small> {{x.input_date | date:'medium'}}</small> 
         </div>
       </div>
       <small [innerHTML]="x.log"></small>
@@ -387,16 +448,24 @@
     <div class="icon" [innerHTML]="x.activity_type.fas"></div>
     <div class="content">
       <div class="row">
-        <div class="col-8">
-          <a href="javascript:;" (click)="x.description ? activityHistory[i].show = true : false"> <b
-              class="text-primary">{{x.subject}}</b> </a>
+        <div class="col-12 col-md-8">
+          <a href="javascript:;" (click)="x.description ? showHistory(i) : false;"> <b
+              class="text-primary">{{x.subject}}</b> </a> 
+              
+              <a class="ml-2 text-gray py-0" [hidden]="!x.description" (click)="x.description ? showHistory(i) : false;"><i
+                class="fas fa-caret-down"></i></a> 
+              
+            <div class="lh-100">
+              <small [innerHTML]="x.related.object"></small> </div>
+             
         </div>
-        <div class="col-4 text-right">
-          <small> {{x.input_date | date:'medium'}}</small> <a class="ml-2 text-gray py-0" [hidden]="!x.description"><i
-              class="fas fa-caret-down"></i></a>
+        <div class="col-12  col-md-4 text-right">
+          <small> {{x.input_date | date:'medium'}}</small> 
         </div>
       </div>
+
       <small [innerHTML]="x.log"></small>
+
       <div [hidden]="!x.show" class="p-2 border rounded">
         <div class="text" [innerHTML]="x.description" [hidden]="!x.description"
           style=" white-space: pre-line; font-size: 13px;"></div>

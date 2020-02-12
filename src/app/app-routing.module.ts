@@ -35,7 +35,8 @@ import { UserComponent } from './user/user.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
 
 const routes: Routes = [
-
+  { path: '', component: LeadComponent, data: { title: 'Lead' } },
+ 
   { path: 'accessRight', component: AccessRightComponent, data: { title: 'Access Rigth' } },
   { path: 'accessRight/:id', component: AccessRightDetailComponent, data: { title: 'Access Rigth' } },
  
