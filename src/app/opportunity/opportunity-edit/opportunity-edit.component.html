@@ -69,8 +69,8 @@
             <tr>
               <td><label>Lead Source</label></td>
               <td>
-                <select class="bg-light" [(ngModel)]="model.id_lead_source" name="id_lead_source">
-                  <option value="0"> - Select - </option>
+                <select class="bg-light" [(ngModel)]="model.id_lead_source" name="id_lead_source" required>
+             
                   <option [ngValue]="x.id" *ngFor="let x of lead_source">{{x.name}}</option>
                 </select>
               </td>

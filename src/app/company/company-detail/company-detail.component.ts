@@ -45,7 +45,7 @@ export class CompanyDetailComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params.id;
-    this.modelContact =  new NewContact('0','','','','','0',"1",this.id);
+    this.modelContact =  new NewContact('0','','','','','0',"1",this.id,'','');
     this.modelBranch = new NewBranch(this.id,'','1','','','','','','','');
     this.httpSelected();
     this.httpGet();
@@ -58,6 +58,8 @@ export class CompanyDetailComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
+  deal:any =[];
+  archived:any =[];
 
   myBranch:any = [];
   myOpportunity:any = [];
@@ -70,6 +72,9 @@ export class CompanyDetailComponent implements OnInit {
       this.items = data['result']['data'];
       this.myContact = data['result']['contact'];
       this.myOpportunity = data['result']['opportunity'];
+      this.deal = data['result']['deal'];
+      this.archived = data['result']['archived'];
+      
       this.industry =  data['result']['industry'];
       this.user =  data['result']['user'];
       this.company_class =  data['result']['company_class'];
@@ -194,7 +199,7 @@ export class CompanyDetailComponent implements OnInit {
         data => { 
           this.submit = false;
           this.httpGet();
-          this.modelContact =  new NewContact('0','','','','','0',"1",this.id);
+          this.modelContact =  new NewContact('0','','','','','0',"1",this.id,'','');
         },
         error => {
           console.log(error);

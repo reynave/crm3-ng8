@@ -107,10 +107,11 @@ export class WidgetActivty {
         public start_date: any,
         public end_date: any,
         public start_time: string,
-        public end_time: string,
-        public id_module_related:string,
-        public id_module_related_target:string,
-
+        public end_time: string, 
+         public id_company: string,
+         public id_opportunity: string,
+         public amount: number,
+       
     ) {
 
     }

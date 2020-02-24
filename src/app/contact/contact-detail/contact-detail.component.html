@@ -19,14 +19,14 @@
   <!-- Menu & Information -->
   <div class="row border-bottom ">
     <!-- Header & button -->
-    <div class="col-3 bg-light py-2">
+    <div class="col-6 bg-light py-2">
       <div class="module-name">
         <strong>Contact</strong>
         <b class="text-primary">{{items.name}}</b>
       </div>
     </div>
 
-    <div class="col-9 bg-light text-right py-2">
+    <div class="col-6 bg-light text-right py-2">
       <div [hidden]="!isReadOnly">
         <button type="button" class="btn btn-classic btn-sm  mr-1"
           (click)="isReadOnly=false; t.select('tab-selectbyid2')"> <i class="fas fa-edit"></i>
@@ -178,10 +178,16 @@
                             </tr>
 
                             <tr>
+                              <td><label>Department</label></td>
+                              <td> <input type="text" class="form-control form-modal" id="department"
+                                  [(ngModel)]="model.department" name="department" [readonly]="isReadOnly"> </td>
+                            </tr>
+
+                            <tr>
                               <td width="30%"><label>Source</label></td>
                               <td>
                                 <select class="form-control form-modal" id="lead_source"
-                                  [(ngModel)]="model.id_lead_source" name="id_lead_source" [disabled]="isReadOnly">
+                                  [(ngModel)]="model.id_lead_source" name="id_lead_source" [disabled]="isReadOnly" required>
                                   <option *ngFor="let x of lead_source" value="{{x.id}}"> {{x.name}} </option>
                                 </select>
 
@@ -189,7 +195,7 @@
                             </tr>
 
                             <tr>
-                              <td><label>Lead owner </label></td>
+                              <td><label>Account Manager </label></td>
                               <td>
                                 <select class="form-control form-modal" id="id_user" [(ngModel)]="model.id_user"
                                   name="id_user" [disabled]="isReadOnly">

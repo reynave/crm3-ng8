@@ -16,7 +16,7 @@ export class PriceListModalComponent implements OnInit {
   public catalog: any = [];
   public pricelist: any = [];
   public items: any = [];
-
+  loading_productlist:boolean=false;
   myContact: any = [];
   public loading = true;
   public id: number;

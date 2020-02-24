@@ -30,7 +30,7 @@ export class ContactNewComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params.id;
-    this.modelContact = new NewContact('', '', '', '', '', '', '', '');
+    this.modelContact = new NewContact('', '', '', '', '', '', '', '','','');
     this.httpGet();
   }
 
@@ -60,7 +60,7 @@ export class ContactNewComponent implements OnInit {
         '',
         '',
         data['result']['data']['id_user'],
-        data['result']['data']['id_company']);
+        '','','');
       console.log(data);
       this.loading = false;
     }, error => {

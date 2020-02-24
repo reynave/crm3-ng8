@@ -63,8 +63,7 @@ export class OpportunityEditComponent implements OnInit {
     });
   }
 
-  get diagnostic() { return JSON.stringify(this.model); }
-
+ 
 
   submit: boolean = false;
   onSubmit() {

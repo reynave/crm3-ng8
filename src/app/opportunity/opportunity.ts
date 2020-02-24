@@ -220,8 +220,9 @@ export class NewOpportunity{
         public amount: string,
         public id_contact: string,
         public id_company: string, 
-        public start_date : any, 
+        public expecting_closing_date : any, 
         public id_stage: string, 
+        public id_lead_source: string,  
     ){}
 }
 
@@ -237,7 +238,20 @@ export class UpdateOpportunity{
         public start_date : any,  
         public closed_date : any,  
         public id_contact : string,  
-        
-        
+        public expecting_closing_date : any,  
+        public budget : number,  
+       
+        //CUSTOME
+        public comparison_with_competitor : string,
+        public competitor : string,
+        public critical_point : string,
+        public our_proposal : string, 
+        public po : string,
+        public notes1 : string,
+        public notes2 : string,
+        public notes3 : string,
+        public id_quote : string,  
+       
+
     ){}
 }

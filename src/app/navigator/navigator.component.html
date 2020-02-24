@@ -6,14 +6,17 @@
   
     <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
       <ul class="navbar-nav mr-auto"> 
+
+        <li class="nav-item {{current == '' ? 'active' : false}} {{current == 'dashboard' ? 'active' : false}} ">
+          <a class="nav-link py-0" href="javascript:;" [routerLink]="[ '/dashboard']">Dashboard</a>
+        </li> 
+
+
         <li class="nav-item {{current == 'activity' ? 'active' : false}}">
           <a class="nav-link py-0" href="javascript:;" [routerLink]="[ '/activity']">Activities</a>
         </li>  
 
-        <li class="nav-item {{current == 'sales' ? 'active' : false}}">
-          <a class="nav-link py-0" href="javascript:;" [routerLink]="[ '/sales']">Canvasing</a>
-        </li> 
-
+   
         <li class="nav-item {{current == 'lead' ? 'active' : false}}">
           <a class="nav-link py-0" href="javascript:;" [routerLink]="[ '/lead']">Lead</a>
         </li> 
@@ -33,7 +36,7 @@
   
   
         <li class="nav-item {{current == 'priceList' ? 'active' : false}}">
-          <a class="nav-link py-0" href="javascript:;" [routerLink]="[ '/priceList']">Price List</a>
+          <a class="nav-link py-0" href="javascript:;" [routerLink]="[ '/priceList']">Product Price</a>
         </li> 
    
 

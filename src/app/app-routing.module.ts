@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LeadComponent } from './lead/lead.component';
-import { LeadDetailComponent } from './lead/lead-detail/lead-detail.component';
-import { LeadConvertComponent } from './lead/lead-convert/lead-convert.component';
+import { LeadDetailComponent } from './lead/lead-detail/lead-detail.component'; 
 import { ActivityComponent } from './activity/activity.component';
 import { ContactComponent } from './contact/contact.component';
 import { ContactDetailComponent } from './contact/contact-detail/contact-detail.component';
@@ -33,9 +32,15 @@ import { SalesOrderCreateComponent } from './sales-order/sales-order-create/sale
 import { SalesOrderPrintComponent } from './sales-order/sales-order-print/sales-order-print.component';
 import { UserComponent } from './user/user.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
+import { leadConvert } from './lead/lead';
+import { LeadConverdComponent } from './lead/lead-converd/lead-converd.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
-  { path: '', component: LeadComponent, data: { title: 'Lead' } },
+  { path: '', component: DashboardComponent, data: { title: 'Dashboard' } },
+
+
+  { path: 'dashboard', component: DashboardComponent, data: { title: 'Dashboard' } },
  
   { path: 'accessRight', component: AccessRightComponent, data: { title: 'Access Rigth' } },
   { path: 'accessRight/:id', component: AccessRightDetailComponent, data: { title: 'Access Rigth' } },
@@ -45,8 +50,8 @@ const routes: Routes = [
   { path: "activity", component: ActivityComponent, canActivate: [ActiveGuardGuard] },
 
   { path: 'lead', component: LeadComponent, data: { title: 'Lead' }, canActivate: [ActiveGuardGuard] },
-  { path: 'lead/:id', component: LeadDetailComponent, data: { title: 'Lead Detail' }, canActivate: [ActiveGuardGuard] },
-  { path: 'lead/convert/:id', component: LeadConvertComponent, data: { title: 'Lead Convert' }, canActivate: [ActiveGuardGuard] },
+  { path: 'lead/:id', component: LeadDetailComponent, data: { title: 'Lead Detail' }, canActivate: [ActiveGuardGuard] }, 
+  { path: 'lead/convert/:id', component: LeadConverdComponent, data: { title: 'Lead Converted' }, canActivate: [ActiveGuardGuard] },
 
   { path: "contact", component: ContactComponent, data: { title: 'Contact' }, canActivate: [ActiveGuardGuard] },
   { path: "contact/:id", component: ContactDetailComponent, data: { title: 'Contact' }, canActivate: [ActiveGuardGuard] },

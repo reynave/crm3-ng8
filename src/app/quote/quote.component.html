@@ -1,4 +1,4 @@
-<ngx-loading [show]="loading"></ngx-loading> 
+<ngx-loading [show]="loading"></ngx-loading>
 <app-navigator></app-navigator>
 
 <div class="container-fluid bg-light border py-1">
@@ -10,27 +10,27 @@
 </div>
 
 
-<div class="container-fluid  bg-white">
+<div class="container-fluid  bg-white pb-3">
 
-   
-  <div class="row py-3">
+  <div class="container-header">
+    <div class="row ">
 
-    <div class="col-12">
-      <div class="module-name">
-        <strong>QUOTATITIONS</strong>
+      <div class="col-12">
+        <div class="module-name">
+          <h5>QUOTATITIONS</h5>
+        </div>
       </div>
+
     </div>
-     
   </div>
 
-
-  <div class=" bg-light  border border-top-brown rounded p-1 my-3">
+  <div class=" bg-light  border border-top-brown rounded p-1">
 
     <div class="row mb-3">
       <div class="col-8">
- 
 
-        <label class="pl-2">Total Count  </label>
+
+        <label class="pl-2">Total Count </label>
       </div>
 
       <div class="col-4 text-right">
@@ -47,11 +47,11 @@
             <th>No</th>
 
             <th scope="col">Quote No</th>
-            <th scope="col">Name</th> 
-            <th scope="col">Company</th> 
+            <th scope="col">Name</th>
+            <th scope="col">Company</th>
             <th scope="col">Expired</th>
-            <th scope="col" class="text-right" colspan="2">Grand Total</th> 
-            <th scope="col">Account Manager</th> 
+            <th scope="col" class="text-right" colspan="2">Grand Total</th>
+            <th scope="col">Account Manager</th>
 
           </tr>
         </thead>
@@ -59,12 +59,12 @@
           <tr *ngFor="let x of items; let i = index">
             <td width="50"> {{ i + 1}} </td>
             <td><a [routerLink]="[ '/quote/',x.id]"> {{x.quotes_number}}</a></td>
-            <td>{{x.name}}</td> 
+            <td>{{x.name}}</td>
             <td>{{x.company}}</td>
             <td>{{x.expired_date | date}}</td>
             <td width="50">{{x.currency}}</td>
             <td class="text-right">{{x.grand_total | number:''}},-</td>
-            <td>{{x.user}}</td> 
+            <td>{{x.user}}</td>
 
           </tr>
 
@@ -75,7 +75,7 @@
     </div>
 
 
-  </div> 
+  </div>
 
 
 </div>

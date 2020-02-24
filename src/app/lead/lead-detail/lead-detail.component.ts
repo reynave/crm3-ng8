@@ -32,10 +32,12 @@ export class LeadDetailComponent implements OnInit {
   activity:any=[];
   opportunity_stage:any = [];
   leadConvert:any = [];
+  
+  loadingConvert: boolean = false;
   company:any = []; 
   user: any = [];
   contacts:any=[];
-
+  
   company_class:any=[];
   product: any = [];
   accessRules : any = [];
@@ -75,7 +77,7 @@ export class LeadDetailComponent implements OnInit {
     this.http.get<LeadDetail[]>(this.configService.base_url() + 'lead/detail/' + this.id, {
       headers: this.configService.headers()
     }).subscribe(data => {
- 
+      console.log(data);
       this.items = data['result']['lead'];
       this.title = data['result']['title'];
       this.lead_source = data['result']['lead_source'];
@@ -88,6 +90,8 @@ export class LeadDetailComponent implements OnInit {
       this.company =  data['result']['company'];
       this.company_class =  data['result']['company_class'];
       
+      
+
 
       this.lead = new UpdateLead(
         data['result']['lead']['id_user'],
@@ -114,14 +118,18 @@ export class LeadDetailComponent implements OnInit {
       );
 
       this.leadConvert = new LeadConvert(
-        true,
-        '',
-        true,
-        '',
+        "1",
+        data['result']['lead']['company'],
+        data['result']['lead']['id_company'], 
+        data['result']['lead']['id_company_class'],
+        data['result']['lead']['first_name'],
+        data['result']['lead']['last_name'],
+      
         data['result']['lead']['opportunity'],
         data['result']['lead']['amount'],
         data['result']['lead']['id_user'],
-        ''
+        "0",
+        
       );
  
       this.loading = false;
@@ -163,22 +171,10 @@ export class LeadDetailComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, { size: "lg" }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    this.modalService.open(content, { size: "lg" });
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
+ 
 
   fn_delete() {
     if (confirm('Delete this lead ?')) {
@@ -222,7 +218,6 @@ export class LeadDetailComponent implements OnInit {
     );
   }
 
-  loadingConvert: boolean = false;
   onConvert() {
     this.loading = true;
     this.loadingConvert = true;
@@ -230,6 +225,7 @@ export class LeadDetailComponent implements OnInit {
     this.http.post(this.configService.base_url() + 'lead/convert',
       {
         "id": this.id,
+        "data" : this.leadConvert
       }, {
       headers: this.configService.headers()
     }).subscribe(
@@ -241,8 +237,8 @@ export class LeadDetailComponent implements OnInit {
         this.router.navigate(['/lead/converted/', this.id]);
       },
       error => {
-        // console.log(error);
-        // console.log(error.error.text);
+         console.log(error);
+         console.log(error.error.text);
       }
     );
   }
@@ -277,7 +273,5 @@ export class LeadDetailComponent implements OnInit {
     this.showNewActivity=true;
   }
 
-  fn(){
-    
-  }
+  
 }

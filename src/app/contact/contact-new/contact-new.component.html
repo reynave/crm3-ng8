@@ -63,15 +63,33 @@
             </div>
 
             <div class="col-6">
+                <div class="form-group row no-gutters">
+                    <label for="hb2" class="col-sm-4 col-form-label">Position</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control border" id="hb2" [(ngModel)]="modelContact.position"
+                            name="position">
+                    </div>
+                </div>
+
+
+                <div class="form-group row no-gutters">
+                    <label for="ha1" class="col-sm-4 col-form-label">Department</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control border" id="ha1" [(ngModel)]="modelContact.department"
+                            name="department">
+                    </div>
+                </div>
 
 
                 <div class="form-group row no-gutters">
                     <label for="h4" class="col-sm-4 col-form-label">Lead source </label>
                     <div class="col-sm-8">
-                        <select class="form-control border" id="h14" [(ngModel)]="modelContact.id_lead_source"
-                            name="id_lead_source"> 
+                        <select class="form-control border"    #id_lead_source="ngModel" id="h14" [(ngModel)]="modelContact.id_lead_source"  name="id_lead_source" required  > 
                             <option [ngValue]="x.id" *ngFor="let x of lead_source">{{x.name}}</option>
                         </select>
+
+                        <small [hidden]="id_lead_source.valid || id_lead_source.pristine" class="text-danger"> Lead Source is
+                            required</small>
                     </div>
                 </div>
 

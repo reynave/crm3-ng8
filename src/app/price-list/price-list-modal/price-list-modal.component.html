@@ -28,6 +28,8 @@
                         <th>No</th>
                         <th>Sku</th>
                         <th>Product Name</th>
+                        <th>Type</th>
+                        <th>Qty</th>
                         <th class="text-right">Price</th>
                         <td width="10"></td>
                     </tr>
@@ -42,6 +44,8 @@
                             <td>{{i+1}}</td>
                             <td>{{x.sku}}</td>
                             <td>{{x.name}}</td>
+                            <td>{{x.product_type}}</td>
+                            <td>{{x.qty}}</td>
                             <td class="text-right"> {{x.currency}} {{x.price | number}} <span [hidden]="!x.customer_price">*</span> </td>
                         </tr>
 

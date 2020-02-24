@@ -5,54 +5,55 @@
 <div class="container-fluid bg-light border-bottom py-1">
     <div class="row">
         <div class="col-12">
-            <small> You are here : <a [routerLink]="[ '/priceList' ]">Price List</a> /
-                <a [routerLink]="[ '/priceList/',id ]"> namanya </a> </small>
+            <small> You are here : <a [routerLink]="[ '/priceList' ]">Product Price List </a> /
+                <a [routerLink]="[ '/priceList/',id ]"> {{items.name}} </a> </small>
         </div>
     </div>
 
 </div>
 
 <form (ngSubmit)="fn_update()" #mainForm="ngForm">
-<div class="container-fluid  bg-white">
+    <div class="container-fluid  bg-white">
 
 
-    <!-- Menu & Information -->
-    <div class="row border-bottom ">
+        <!-- Menu & Information -->
+        <div class="row border-bottom ">
 
-        <!-- Header & button -->
-        <div class="col-3 bg-light py-2">
-            <div class="module-name">
-                <strong>PRICE LIST</strong>
-                <b class="text-primary"> asdfasdf </b>
-            </div>
-        </div>
-
-        <div class="col-9 bg-light text-right py-2">
-            <div [hidden]="!isReadOnly">
-
-                <button type="button" class="btn btn-classic btn-sm  mr-1" [hidden]="!accessRules.priceList.update"
-                    (click)="isReadOnly=false"> <i class="fas fa-edit"></i>
-                    Edit </button>
-
-                <button type="button" class="btn btn-classic btn-sm  mr-1" [hidden]="!accessRules.priceList.delete"
-                    (click)="fn_delete();"> <i class="fas fa-trash-alt"></i>
-                    Delete </button>
-
-                <button type="button" class="btn btn-classic btn-sm  mr-1" [routerLink]="[ '/priceList' ]" title="back">
-                    <i class="fas fa-times"></i> </button>
-
+            <!-- Header & button -->
+            <div class="col-3 bg-light py-2">
+                <div class="module-name">
+                    <strong>PRODUCT PRICE LIST</strong>
+                    <b class="text-primary"> {{items.name}} </b>
+                </div>
             </div>
 
-            <div [hidden]="isReadOnly">
-                <button type="button" class="btn btn-classic btn-sm" (click)="isReadOnly=true" title="Done"><i
-                        class="fas fa-check"></i> Finish Edit </button>
+            <div class="col-9 bg-light text-right py-2">
+                <div [hidden]="!isReadOnly">
+
+                    <button type="button" class="btn btn-classic btn-sm  mr-1" [hidden]="!accessRules.priceList.update"
+                        (click)="isReadOnly=false"> <i class="fas fa-edit"></i>
+                        Edit </button>
+
+                    <button type="button" class="btn btn-classic btn-sm  mr-1" [hidden]="!accessRules.priceList.delete"
+                        (click)="fn_delete();"> <i class="fas fa-trash-alt"></i>
+                        Delete </button>
+
+                    <button type="button" class="btn btn-classic btn-sm  mr-1" [routerLink]="[ '/priceList' ]"
+                        title="back">
+                        <i class="fas fa-times"></i> </button>
+
+                </div>
+
+                <div [hidden]="isReadOnly">
+                    <button type="button" class="btn btn-classic btn-sm" (click)="isReadOnly=true" title="Done"><i
+                            class="fas fa-check"></i> Finish Edit </button>
+                </div>
+
             </div>
 
-        </div>
+            <!-- Infromation -->
+            <div class="col-12 py-2">
 
-        <!-- Infromation -->
-        <div class="col-12 py-2">
-        
                 <table class="table-p0">
                     <tr>
                         <td> <small> Sku</small> </td>
@@ -67,24 +68,25 @@
                     <tr>
 
                         <td width="150"> <b class="text-primary" [hidden]="!isReadOnly"> {{items.sku}} </b>
-                            <input type="text" class="form-control form-control-sm" [(ngModel)]="priceListUpdate.sku" name="sku"
-                                [hidden]="isReadOnly" [ngModelOptions]="{standalone: true}"  > 
+                            <input type="text" class="form-control form-control-sm" [(ngModel)]="priceListUpdate.sku"
+                                name="sku" [hidden]="isReadOnly" [ngModelOptions]="{standalone: true}">
                         </td>
 
                         <td> <b class="text-primary" [hidden]="!isReadOnly"> {{items.name}} </b>
-                            <input type="text" class="form-control form-control-sm" [(ngModel)]="priceListUpdate.name" name="name"
-                                [hidden]="isReadOnly" required [ngModelOptions]="{standalone: true}"  #name="ngModel">
-                                <div [hidden]="name.valid || name.pristine"
-                                class="alert alert-danger">
-                             Name is required
-                           </div>
+                            <input type="text" class="form-control form-control-sm" [(ngModel)]="priceListUpdate.name"
+                                name="name" [hidden]="isReadOnly" required [ngModelOptions]="{standalone: true}"
+                                #name="ngModel">
+                            <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                                Name is required
+                            </div>
                         </td>
 
 
-                        <td width="150"> <b class="text-primary" [hidden]="!isReadOnly"> 
+                        <td width="150"> <b class="text-primary" [hidden]="!isReadOnly">
                                 {{items.price | number}} </b>
                             <input type="number" class="form-control form-control-sm" style="width: 150px;"
-                                [(ngModel)]="priceListUpdate.price" name="price" [hidden]="isReadOnly" [ngModelOptions]="{standalone: true}">
+                                [(ngModel)]="priceListUpdate.price" name="price" [hidden]="isReadOnly"
+                                [ngModelOptions]="{standalone: true}">
                         </td>
 
                         <td width="80"> <b class="text-primary">{{items.qty | number}} </b>
@@ -117,77 +119,134 @@
                     </div>
                 </div>
 
-           
-        </div>
-
-    </div>
-
-    <div class="row mt-3">
-        <!-- Left side-->
-        <div class="col-12 col-md-7">
-            <label>Description</label>
-            <textarea class="form-control form-control-sm border" rows="18" [(ngModel)]="priceListUpdate.description" [ngModelOptions]="{standalone: true}"
-                [readonly]="isReadOnly"></textarea>
-
-
-        </div>
-
-        <!-- right side-->
-        <div class="col-12 col-md-5  ">
-            <div>
-                <strong> Warehouse Location Information </strong>
-            </div>
-            <div class="border bg-light p-1 pb-0 rounded-sm">
- 
-                <table class="table table-hover border bg-white border-top border-bottom pointer">
-                    <thead class="thead-light">
-                        <tr>
-                            <th>No</th>
-                            <th>Location</th>
-                            <th>Qty</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        <tr *ngFor="let x of product_location; let i = index">
-                            <td>{{i+1}}</td>
-                            <td> 
-                                <input type="text" class="form-control form-modal" (change)="fn_updateLocation(x);"
-                                    id="location" name="location" required [(ngModel)]="x.location" [ngModelOptions]="{standalone: true}"
-                                    [readonly]="isReadOnly">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control form-modal" style="width: 80px;"
-                                    (change)="fn_updateLocation(x);" id="location" name="qty" required [ngModelOptions]="{standalone: true}"
-                                    [(ngModel)]="x.qty" [readonly]="isReadOnly">
-                            </td>
-                            <td>
-                                <span [hidden]="isReadOnly || !accessRules.product.delete">
-                                    <a href="javascript:;" (click)="fn_deleteProduct_location(x);"><i
-                                            class="far fa-trash-alt"></i></a>
-                                </span>
-                            </td>
-                        </tr>
-
-                    </tbody>
-
-                    <tfoot [hidden]="isReadOnly || !accessRules.product.insert">
-                        <tr>
-                            <td colspan="3" class="text-right">
-                                <button type="button" (click)="fn_addProduct_location();"
-                                    class="btn btn-classic btn-sm">Add Location</button>
-                            </td>
-                            <td></td>
-                        </tr>
-                    </tfoot>
-                </table>
 
             </div>
 
         </div>
-    </div>
 
-</div>
+        <div class="row mt-3">
+            <!-- Left side-->
+            <div class="col-12 col-md-6">
+                <label>Description</label>
+                <textarea class="form-control form-control-sm border" rows="18"
+                    [(ngModel)]="priceListUpdate.description" [ngModelOptions]="{standalone: true}"
+                    [readonly]="isReadOnly"></textarea>
+
+
+            </div>
+
+            <!-- right side-->
+            <div class="col-12 col-md-6  ">
+                <div class=" my-2">
+                    <strong> Warehouse Location Information </strong>
+                </div>
+                <div class="border bg-light p-1 pb-0 rounded-sm mb-3">
+
+                    <table class="table table-hover border bg-white border-top border-bottom pointer">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>No</th>
+                                <th>Location Code</th>
+                                <th>Location</th>
+                                <th>Qty</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr *ngFor="let x of product_location; let i = index">
+                                <td>{{i+1}}</td>
+                                <td width="150">
+                                    <input type="text" class="form-control form-modal" (change)="fn_updateLocation(x);"
+                                        id="location_code" name="location_code" [(ngModel)]="x.location_code"
+                                        [ngModelOptions]="{standalone: true}" [readonly]="isReadOnly">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control form-modal" (change)="fn_updateLocation(x);"
+                                        id="location" name="location" required [(ngModel)]="x.location"
+                                        [ngModelOptions]="{standalone: true}" [readonly]="isReadOnly">
+                                </td>
+
+                                <td>
+                                    <input type="number" class="form-control form-modal" style="width: 80px;"
+                                        (change)="fn_updateLocation(x);" id="location" name="qty" required
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="x.qty"
+                                        [readonly]="isReadOnly">
+                                </td>
+                                <td>
+                                    <span [hidden]="isReadOnly || !accessRules.product.delete">
+                                        <a href="javascript:;" (click)="fn_deleteProduct_location(x);"><i
+                                                class="far fa-trash-alt"></i></a>
+                                    </span>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                        <tfoot [hidden]="isReadOnly || !accessRules.product.insert">
+                            <tr>
+                                <td colspan="3" class="text-right">
+                                    <button type="button" (click)="fn_addProduct_location();"
+                                        class="btn btn-classic btn-sm">Add Location</button>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+
+
+
+
+                <div class="row my-2">
+                    <div class="col-3">
+                        <strong>Attachment</strong>
+                    </div>
+                    <div class="col-6 text-right" [hidden]="isReadOnly">
+
+                        <input class="form-control form-control-sm" type="file" (change)="onFileSelected($event)">
+
+                    </div>
+                    <div class="col-2" [hidden]="isReadOnly">
+                        <button type="button" class="btn btn-classic btn-sm" (click)="onUpload();">Upload</button>
+                    </div>
+
+                </div>
+                <div class="border bg-light p-1 pb-0 rounded-sm">
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table table-list table-bordered table-striped">
+                                <thead class="thead-light border-top-brown">
+                                    <tr>
+                                        <th>Files</th>
+                                        <th width="100">Size</th>
+                                        <th width="50"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let x of attachment">
+                                        <td> <a href="{{x.url}}" target="_blank"> {{x.file_name}}</a> </td>
+                                        <td> {{x.size }} </td>
+                                        <td>
+                                            <div [hidden]="isReadOnly">
+                                                <a href="javascript:;" (click)="fn_attach_delete(x);"><i
+                                                        class="fas fa-trash-alt"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 </form>
 <div [hidden]="isReadOnly"><br><br></div>

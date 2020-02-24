@@ -104,7 +104,7 @@ export class UserComponent implements OnInit {
           this.submit = false;
           if (value == 'next') {
             this.httpGet();
-            this.modelContact = new NewContact('0', '', '', '', '', '0','','0');
+            this.modelContact = new NewContact('0', '', '', '', '', '0','','0','','');
           }
           else {
             this.router.navigate(['/contact/', data['result']['id']]);

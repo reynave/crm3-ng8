@@ -10,24 +10,24 @@
 </div>
 
 
-<div class="container-fluid border shadow-sm bg-white">
-
-  <div class="row py-3">
-    <div class="col-6 ">
-      <div class="module-name">
-        <h5>CONTACT</h5>
+<div class="container-fluid  bg-white pb-3">
+  <div class="container-header">
+    <div class="row">
+      <div class="col-6 ">
+        <div class="module-name">
+          <h5>COMPANY</h5>
+        </div>
       </div>
-    </div>
-    <div class="col-6 text-right">
-      <span [hidden]="!loadingSelected">Loading Attribute...</span>
-      <button type="button" class="btn btn-classic  btn-sm" (click)="open(newCompany)"><i class="fas fa-plus"></i>
-        New Company</button>
+      <div class="col-6 text-right">
+        <span [hidden]="!loadingSelected">Loading Attribute...</span>
+        <button type="button" class="btn btn-classic  btn-sm" (click)="open(newCompany)"><i class="fas fa-plus"></i>
+          New Company</button>
+      </div>
     </div>
   </div>
 
- 
 
-  <div class=" bg-light  border border-top-brown rounded p-1 my-3">
+  <div class=" bg-light  border border-top-brown rounded p-1">
 
     <div class="row mb-3">
       <div class="col-8">
@@ -60,7 +60,7 @@
         <thead class="thead-light">
           <tr>
             <th>No</th>
-            <th class="text-center"></th> 
+            <th class="text-center"></th>
             <th scope="col">Company</th>
             <th scope="col">Industry</th>
             <th scope="col">Website</th>
@@ -72,12 +72,12 @@
         </thead>
         <tbody>
           <tr *ngFor="let x of items; let i = index" (click)="fn_check(x);">
-            <td><a [routerLink]="[ '/company/',x.id]" > {{i+1}} </a></td>
+            <td><a [routerLink]="[ '/company/',x.id]"> {{i+1}} </a></td>
             <td width="50"> <span class="text-primary ">
                 <i class=" {{ x.check ? 'fas fa-check-square' : 'far fa-square' }}"></i> </span>
             </td>
-            
-            <td> <a [routerLink]="[ '/company/',x.id]"> <b> {{x.name}} </b>  </a></td>
+
+            <td> <a [routerLink]="[ '/company/',x.id]"> <b> {{x.name}} </b> </a></td>
             <td>{{x.website}}</td>
             <td>{{x.industry}}</td>
             <td>{{x.phone}}</td>

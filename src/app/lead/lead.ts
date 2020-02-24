@@ -191,11 +191,13 @@ export class LeadEdit {
 
 export class LeadConvert{
     constructor(
+        public isNewCompany: string,
         public newCompany: boolean,
-        public id_company: string,
+        public cl_id_company: string,
+        public cl_id_company_class: string,
 
-        public newContact: boolean,  
-        public id_contat: string,
+        public lc_first_name: string,   
+        public lc_last_name: string,   
 
         public opportunity: string,
         public amount: number,

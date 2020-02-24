@@ -10,8 +10,7 @@ import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LeadComponent } from './lead/lead.component';
-import { LeadDetailComponent } from './lead/lead-detail/lead-detail.component';
-import { LeadConvertComponent } from './lead/lead-convert/lead-convert.component';
+import { LeadDetailComponent } from './lead/lead-detail/lead-detail.component'; 
 import { ActivityComponent } from './activity/activity.component';
 import { WidgetActivityComponent } from './activity/widget-activity/widget-activity.component';
 import { CompanyComponent } from './company/company.component';
@@ -49,13 +48,14 @@ import { SalesOrderCreateComponent } from './sales-order/sales-order-create/sale
 import { SalesOrderPrintComponent } from './sales-order/sales-order-print/sales-order-print.component';
 import { UserComponent } from './user/user.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
+import { LeadConverdComponent } from './lead/lead-converd/lead-converd.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LeadComponent,
-    LeadDetailComponent,
-    LeadConvertComponent,
+    LeadDetailComponent, 
     ActivityComponent,
     WidgetActivityComponent,
     CompanyComponent,
@@ -90,7 +90,9 @@ import { UserDetailComponent } from './user/user-detail/user-detail.component';
     SalesOrderCreateComponent,
     SalesOrderPrintComponent,
     UserComponent,
-    UserDetailComponent
+    UserDetailComponent,
+    LeadConverdComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

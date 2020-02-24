@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfigService } from './../../service/config.service';
 import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { OpportunityDetail, OpportunityClosedLose, OpportunityClosedWin } from './../opportunity';
-import { Newquote } from './../../quote/quote'; 
+import { Newquote } from './../../quote/quote';
 import { OpportunityUpdate, UpdateOpportunity } from './../opportunity';
 
 @Component({
@@ -17,7 +17,7 @@ export class OpportunityDetailComponent implements OnInit {
   public items: any = [];
   myContact: any = [];
   public loading = true;
-  public id: number;
+  public id: string;
   public closeResult: string;
   stage: any = [];
   objIndex: any;
@@ -29,7 +29,7 @@ export class OpportunityDetailComponent implements OnInit {
   modelContact: any;
   modelBranch: any;
   product: any = []
-  isReadOnly:boolean= true;
+  isReadOnly: boolean = true;
   myBranch: any = [];
   user: any = [];
   width: string;
@@ -37,13 +37,13 @@ export class OpportunityDetailComponent implements OnInit {
   modelClosedLose: any;
   finish: boolean = false;
   stageNotes: string;
-  quoteModel: any;
-  quotes: any; 
-  business:any=[];
-  model:any=[];
-  lead_source:any=[];
-  updateOpportunity:any;
-  contact:any=[];
+  quoteModel: any = [];
+  quotes: any;
+  business: any = [];
+  model: any = [];
+  lead_source: any = [];
+  updateOpportunity: any = [];
+  contact: any = [];
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -58,17 +58,24 @@ export class OpportunityDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.id = this.activatedRoute.snapshot.params.id;
     this.items = {
+      name: "",
       start_date: {
         year: 0,
         month: 0,
         day: 0,
-      }, 
+      },
+      expecting_closing_date: {
+        year: 0,
+        month: 0,
+        day: 0,
+      }
     }
     this.httpGet();
   }
- 
+
   requestEmit(event) {
     this.httpGet();
     this.modalService.dismissAll();
@@ -77,36 +84,37 @@ export class OpportunityDetailComponent implements OnInit {
 
   httpGet() {
     this.loading = true;
-    this.http.get<OpportunityDetail>(this.configService.base_url() + 'opportunity/detail/' + this.id, {
+    this.http.get(this.configService.base_url() + 'opportunity/detail/' + this.id, {
       headers: this.configService.headers()
     }).subscribe(data => {
       console.log(data);
+      this.loading = false;
+      if(data['result']['data']['id_stage'] == 1000){
+        this.router.navigate(['deal/', this.id]);
+      }else if(data['result']['data']['id_stage']  == 3000){
+        this.router.navigate(['lose/', this.id]);
+      }
+
+
       this.items = data['result']['data'];
       this.stage = data['result']['stage'];
       this.quotes = data['result']['quotes'];
       this.width = data['result']['width'];
       this.id_stage = data['result']['data']['id_stage'];
       this.product = data['result']['product'];
-      this.business =  data['result']['business'];
-  //    var objIndex = this.stage.findIndex((obj => obj.id == this.id_stage));
-   //   console.log(' this.stageNotes ', this.stageNotes );
- //     this.stageNotes = this.stage[objIndex]['notes'];
+      this.business = data['result']['business'];
+     
 
       this.contact = data['result']['contact'];
       this.user = data['result']['user'];
-      this.loading = false;
-      this.modelClosedWin = new OpportunityClosedWin(
-        '',
-        this.items['closed_date'], 
-        this.items['id_user'],
-        "0",
-        "",
-        data['result']['data']['amount']
-        );
-      this.modelClosedLose = new OpportunityClosedLose('', this.currentDate, data['result']['data']['id_user']);
+    
+       
 
-      this.quoteModel = new Newquote(0, '', '', '', '', 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', true);
-      this.lead_source =  data['result']['lead_source'];
+      this.quoteModel = new Newquote(0, '', '', '1', '', 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', true);
+      this.lead_source = data['result']['lead_source'];
+      this.attachment = data['result']['attachment'];
+      this.attachmentPO = data['result']['attachmentPO'];
+
       this.updateOpportunity = new UpdateOpportunity(
         data['result']['data']['id_user'],
         data['result']['data']['id_opportunity_business'],
@@ -116,11 +124,22 @@ export class OpportunityDetailComponent implements OnInit {
         data['result']['data']['closed_date'],
         data['result']['data']['start_date'],
         data['result']['data']['id_contact'],
-        
+        data['result']['data']['expecting_closing_date'],
+        data['result']['data']['budget'],
+        data['result']['data']['comparison_with_competitor'],
+        data['result']['data']['competitor'],
+        data['result']['data']['critical_point'],
+        data['result']['data']['our_proposal'],
+        data['result']['data']['po'],
+        data['result']['data']['notes1'],
+        data['result']['data']['notes2'],
+        data['result']['data']['notes3'],
+        data['result']['data']['id_quote'],
+
       );
 
 
-      this.model = new OpportunityUpdate(data['result']['data']['name'],data['result']['data']['id_lead_source'],data['result']['data']['id_user'],data['result']['data']['id_contact'] );
+      this.model = new OpportunityUpdate(data['result']['data']['name'], data['result']['data']['id_lead_source'], data['result']['data']['id_user'], data['result']['data']['id_contact']);
     }, error => {
       console.log(error);
       console.log(error.error.text);
@@ -160,15 +179,65 @@ export class OpportunityDetailComponent implements OnInit {
     );
 
   }
-  
+
   fn_editable() {
 
   }
   showUpdateStage: boolean = false;
   stageCurrent: string;
+  updateStep(id, closed = 0) {
+    console.log(id);
+    console.log(closed); 
+    console.log(this.stage);
+    console.log(this.id_stage);
+  
+    if (closed < 999) {
+ 
+      var objIndex = this.stage.findIndex((obj => obj.id == id));
+      this.stage[objIndex]['current'] = false;
 
+      var id_next = this.stage[objIndex]['id_next'];
+      var objIndex2 = this.stage.findIndex((obj => obj.id == id_next));
+      this.stage[objIndex2]['current'] = "current";
+
+    }
+
+    this.loading = true;
+    this.http.post(this.configService.base_url() + 'opportunity/updateStep',
+      {
+        "id_opportunity": this.id,
+        "id_stage": this.id_stage,
+        "closed" : closed,
+        "data": this.updateOpportunity,
+      }, {
+      headers: this.configService.headers()
+    }).subscribe(
+      data => {
+        this.loading = false;
+        console.log(data);
+        if(closed == 1000){
+          this.router.navigate(['deal/', this.id]);
+        }else if(closed == 3000){
+          this.router.navigate(['lose/', this.id]);
+        }else{
+          
+      this.id_stage = id_next;
+      this.stage[objIndex]['done'] = "done";
+        }
+      
+
+      },
+      error => {
+        console.log(error);
+        console.log(error.error.text);
+      }
+    );
+
+
+  }
 
   nextStage(x) {
+    console.log(x);
     this.stageCurrent = x.name;
     this.id_stageNext = x.id;
     if (this.items["id_stage"] == x.id) {
@@ -183,81 +252,47 @@ export class OpportunityDetailComponent implements OnInit {
     this.stage.map(a => a.current = false);
     var objIndex = this.stage.findIndex((obj => obj.id == x.id));
     this.stage[objIndex]['current'] = "current";
-  }
 
 
-  updateStage() {
-    this.http.post(this.configService.base_url() + 'opportunity/updateStage',
-      {
-        "id": this.id,
-        "id_stage": this.id_stageNext
-      }, {
-      headers: this.configService.headers()
-    }).subscribe(
-      data => {
-        console.log(data);
-        this.showUpdateStage = false;
-        this.httpGet();
-      },
-      error => {
-        console.log(error);
-        console.log(error.error.text);
-      }
-    );
-  }
-
-  doneStage(x) {
-
-    var objIndex = this.stage.findIndex((obj => obj.id == x.id));
-
-
-    if (x.done === false) {
-      this.stage[objIndex]['done'] = "done";
-    } else {
-      this.stage[objIndex]['done'] = false;
-
-    }
-
-    this.http.post(this.configService.base_url() + 'opportunity/doneState',
-      {
-        "id_opportunity": this.id,
-        "id_stage": this.stage[objIndex]['id'],
-        "done": this.stage[objIndex]['done'],
-      }, {
-      headers: this.configService.headers()
-    }).subscribe(
-      data => {
-      },
-      error => {
-        console.log(error);
-        console.log(error.error.text);
-      }
-    );
 
 
   }
+
+
+
 
   open(content) {
-    this.modalService.open(content).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    this.modalService.open(content);
   }
 
   openLg(content) {
     this.modalService.open(content, { size: 'lg' });
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
+  fn_closed(id_stage) {
+
+    this.loading = true;
+    this.http.post(this.configService.base_url() + 'opportunity/fn_closed',
+      {
+        "id_opportunity": this.id,
+        "id_stage": id_stage,
+        "data": this.updateOpportunity,
+      }, {
+      headers: this.configService.headers()
+    }).subscribe(
+      data => {
+        this.loading = false;
+        console.log(data);
+        this.router.navigate(['deal/', this.id]);
+      },
+      error => {
+        console.log(error);
+        console.log(error.error.text);
+      }
+    );
+
   }
+
 
   fn_delete() {
     if (confirm('Delete this Opportunity ?')) {
@@ -293,10 +328,10 @@ export class OpportunityDetailComponent implements OnInit {
     }).subscribe(
       data => {
         console.log(data);
-          this.loading = false;
-          this.router.navigate(['/quote/', data['result']['id']]);
-          this.modalService.dismissAll();
-         
+        this.loading = false;
+        this.router.navigate(['/quote/', data['result']['id']]);
+        this.modalService.dismissAll();
+
 
       },
       error => {
@@ -307,30 +342,88 @@ export class OpportunityDetailComponent implements OnInit {
   }
 
   fn_update() {
- 
+
     this.http.post(this.configService.base_url() + 'opportunity/update',
       {
         "id": this.id,
         "data": this.updateOpportunity
       }, {
-        headers: this.configService.headers()
-      }).subscribe(
+      headers: this.configService.headers()
+    }).subscribe(
+      data => {
+        console.log(data);
+        this.httpGet();
+      },
+      error => {
+        console.log(error);
+        console.log(error.error.text);
+      }
+    );
+  }
+
+
+  fn_sales_order() {
+
+    var objIndex = this.quotes.findIndex((obj => obj.id == this.modelClosedWin.id_quote));
+    console.log(this.quotes[objIndex]);
+    this.modelClosedWin['sales_order'] = this.quotes[objIndex]['quotes_number'];
+  }
+  attachment: any = [];
+  attachmentPO: any = [];
+  selectedFile = null;
+  onFileSelected(event) {
+    this.selectedFile = event.target.files[0];
+  }
+  onUpload(target) {
+    const fd = new FormData();
+    fd.append('files', this.selectedFile, this.selectedFile.name);
+    fd.append('token', this.configService.token());
+
+    fd.append('module', target);
+    fd.append('id', this.id);
+
+    console.log(fd, this.configService.token());
+    this.http.post(this.configService.base_url() + 'upload/attachment', fd, {
+      //    reportProgress: true,
+      //  observe: 'events'
+    })
+      .subscribe(
+        /*  event => {
+            if(event.type === HttpEventType.UploadProgress){
+              console.log(event ); // handle event here
+            }else if( event.type === HttpEventType.Response ){
+              console.log(event ); // handle event here
+            }
+           
+          },*/
         data => {
-          console.log(data); 
+          // console.log(data); 
+          this.attachment = data['result']['attachment'];
           this.httpGet();
-        },
-        error => {
-          console.log(error);
-          console.log(error.error.text);
         }
+
       );
   }
+  fn_attach_delete(x) {
+    this.loading = true;
 
-
-  fn_sales_order(){
-   
-    var  objIndex = this.quotes.findIndex((obj => obj.id == this.modelClosedWin.id_quote ));
-    console.log(this.quotes[objIndex]);
-    this.modelClosedWin['sales_order']= this.quotes[objIndex]['quotes_number'];
+    this.http.post(this.configService.base_url() + 'pricelist/fn_attach_delete',
+      {
+        "id": x.id,
+      }, {
+      headers: this.configService.headers()
+    }).subscribe(
+      data => {
+        console.log(data);
+        this.loading = false;
+        var objIndex = this.attachment.findIndex((obj => obj.id == x.id));
+        this.attachment.splice(objIndex, 1);
+      },
+      error => {
+        console.log(error);
+        console.log(error.error.text);
+      }
+    );
   }
+
 }

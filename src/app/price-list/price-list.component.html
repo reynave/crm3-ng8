@@ -10,12 +10,12 @@
 </div>
 
 
-<div class="container-fluid">
+<div class="container-fluid  bg-white pb-3">
 
   <div class="container-header">
     <div class="row ">
       <div class="col-6">
-        <h5>PRICE LIST</h5>
+        <h5>PRODUCT PRICE LIST</h5>
       </div>
       <div class="col-6 text-right">
 
@@ -24,7 +24,7 @@
 
         <button type="button" class="btn btn-classic  btn-sm" (click)="open(newpricelist)"><i
           class="fas fa-plus"></i>
-        New Price List</button>
+        Add Product Price List</button>
       </div>
       
     </div>
@@ -99,7 +99,7 @@
 
 <ng-template #newpricelist let-modal>
   <div class="modal-header">
-    <strong class="modal-title" id="modal-basic-title">New Price List</strong>
+    <strong class="modal-title" id="modal-basic-title">Add Product Price List</strong>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>

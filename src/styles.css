@@ -186,7 +186,7 @@ input[type="number"]{
 
 
 input[type="number"], input[type="text"], input[type="email"], select, textarea{ 
-   /* border-radius: 0px !important;*/
+   border-radius: 0px !important;
 }
 
 input:required , select:required, textarea:required {
@@ -285,6 +285,7 @@ table ul{
     padding: 3px 3px;
     font-size: 13px;
     height: auto;
+    min-height: 31px;
 }
 .form-radius{
     display: inline;

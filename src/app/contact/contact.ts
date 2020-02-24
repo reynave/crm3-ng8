@@ -101,6 +101,9 @@ export class NewContact {
         public id_lead_source: string,
         public id_user: string,
         public id_company: string,
+
+        public position: string,
+        public department: string, 
     ) { }
 
 }
@@ -187,6 +190,7 @@ export class UpdateContact {
         public mobile: string,
         public phone: string,
         public position: string,
+        public department: string,
         
     ) { }
 

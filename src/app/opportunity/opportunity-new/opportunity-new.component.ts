@@ -30,13 +30,13 @@ export class OpportunityNewComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params.id; 
-    this.model = new NewOpportunity('','','','','',[],'');
+    this.model = new NewOpportunity('','','','','',[],'','');
     this.httpGet();
   }
   company:any=[];
   contact:any=[];
   user:any=[];
-  
+  lead_source: any = [];
   httpGet() {
     this.loading = true;
     var url = this.configService.base_url() + 'opportunity/widget_new_opportunity/' +this.module+'/'+ this.id;
@@ -48,6 +48,7 @@ export class OpportunityNewComponent implements OnInit {
       this.company = data['result']['company'];
       this.contact = data['result']['contact'];
       this.user = data['result']['user'];
+      this.lead_source =  data['result']['lead_source'];
       this.model = new NewOpportunity(
         data['result']['data']['id_user'],
         '',
@@ -55,7 +56,7 @@ export class OpportunityNewComponent implements OnInit {
         data['result']['data']['id_contact'],
         data['result']['data']['id_company'],
         [],
-        ''
+        '',''
       );
      
 

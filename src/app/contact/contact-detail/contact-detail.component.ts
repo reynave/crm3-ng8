@@ -82,7 +82,7 @@ export class ContactDetailComponent implements OnInit {
         this.id,
         data['result']['data']['id_company'], 
         [],
-        "");
+        "","");
 
       this.model = new UpdateContact(
         data['result']['data']['id_company'],
@@ -95,6 +95,7 @@ export class ContactDetailComponent implements OnInit {
         data['result']['data']['mobile'],
         data['result']['data']['phone'],
         data['result']['data']['position'],
+        data['result']['data']['department'],
         
       );
       console.log(this.model);

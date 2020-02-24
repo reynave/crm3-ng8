@@ -1,5 +1,5 @@
-<div id="activityTabs" > 
-  
+<div id="activityTabs" [hidden]="id == 'false'">
+
   <div class="border p-2 my-2 bg-light shadow-sm">
 
     <form (ngSubmit)="onInsert()" #callForm="ngForm">
@@ -9,6 +9,7 @@
         <ngb-tab title="Log a Call" id="100">
           <ng-template ngbTabContent>
             <div class="border border-top-0 px-3 bg-white pb-3">
+              
               <div class="row">
                 <div class="col-12 py-1">
                   <label class="py-1"> Subject</label>
@@ -16,6 +17,7 @@
                     (click)="showNewActivity=true;">
                 </div>
               </div>
+
               <div class="row" [hidden]="!showNewActivity">
                 <div class="col-12 py-1">
                   <label class="py-1"> Notes</label>
@@ -24,33 +26,10 @@
 
                 <div class="col-6 py-1">
                   <label class="py-1">Name</label>
-                  <select class="form-control" [(ngModel)]="model.id_person" [ngModelOptions]="{standalone: true}">
+                  <select class="form-control" [(ngModel)]="model.id_person" required
+                    [ngModelOptions]="{standalone: true}">
                     <option value="{{x.id}}" *ngFor="let x of items.person"> {{x.name}}</option>
                   </select>
-                </div>
-
-                <div class="col-6 py-1">
-                  <label class="py-1"> Related To</label>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <button class="btn btn-light border dropdown-toggle" type="button" data-toggle="dropdown" 
-                        aria-haspopup="true" aria-expanded="false">{{related}}</button>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('lead');" >Lead</a>
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('contact');" >Contact</a>
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('company');">Company</a>
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('opportunity');">Opportunity</a>
-                        <div role="separator" class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('quote');">Quote</a>
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('deal');">Deal</a>
-                        
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('sales_order');">Sales Order</a>  
-                      </div>
-                    </div>
-                    <select class="form-control"  [(ngModel)]="model.id_module_related_target" [ngModelOptions]="{standalone: true}"  >
-                      <option value="{{x.id}}" *ngFor="let x of related_result" >{{x.name}}</option>
-                    </select>
-                  </div>
                 </div>
 
 
@@ -76,8 +55,7 @@
 
           </ng-template>
         </ngb-tab>
-
-
+ 
         <!-- TASK -->
         <ngb-tab title="New Task" id="1">
           <ng-template ngbTabContent>
@@ -111,29 +89,7 @@
                   </select>
                 </div>
 
-                <div class="col-6 py-1">
-                  <label class="py-1"> Related To</label>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <button class="btn btn-light border dropdown-toggle" type="button" data-toggle="dropdown" 
-                        aria-haspopup="true" aria-expanded="false">{{related}}</button>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('lead');" >Lead</a>
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('contact');" >Contact</a>
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('company');">Company</a>
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('opportunity');">Opportunity</a>
-                        <div role="separator" class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('quote');">Quote</a>
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('deal');">Deal</a>
-                        
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('sales_order');">Sales Order</a>  
-                      </div>
-                    </div>
-                    <select class="form-control"  [(ngModel)]="model.id_module_related_target" [ngModelOptions]="{standalone: true}"  >
-                      <option value="{{x.id}}" *ngFor="let x of related_result" >{{x.name}}</option>
-                    </select>
-                  </div>
-                </div>
+
 
 
                 <div class="col-12 py-1">
@@ -153,8 +109,6 @@
           </ng-template>
         </ngb-tab>
 
-
-
         <!-- VISIT -->
         <ngb-tab title="Visit" id="200">
           <ng-template ngbTabContent>
@@ -172,6 +126,17 @@
                   <label class="py-1"> Description</label>
                   <textarea class="form-control" rows="4" [(ngModel)]="model.description" name="description"></textarea>
                 </div>
+
+                <div class="col-3 py-1 mt-1">
+                  <label class="py-1" id="j1"> Bugject Amount (IDR)</label>
+                </div>
+
+                <div class="col-9 py-1 mt-1">
+                  <input type="number" name="amount" class="form-control text-right" [(ngModel)]="model.amount" j1="h1"
+                    (click)="showNewActivity=true;">
+                </div>
+
+
 
                 <div class="col-6 py-1">
                   <label class="py-1">Check In Date and Time</label>
@@ -212,29 +177,7 @@
                   </select>
                 </div>
 
-                <div class="col-6 py-1">
-                  <label class="py-1"> Related To</label>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <button class="btn btn-light border dropdown-toggle" type="button" data-toggle="dropdown" 
-                        aria-haspopup="true" aria-expanded="false">{{related}}</button>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('lead');" >Lead</a>
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('contact');" >Contact</a>
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('company');">Company</a>
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('opportunity');">Opportunity</a>
-                        <div role="separator" class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('quote');">Quote</a>
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('deal');">Deal</a>
-                        
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('sales_order');">Sales Order</a>  
-                      </div>
-                    </div>
-                    <select class="form-control"  [(ngModel)]="model.id_module_related_target" [ngModelOptions]="{standalone: true}"  >
-                      <option value="{{x.id}}" *ngFor="let x of related_result" >{{x.name}}</option>
-                    </select>
-                  </div>
-                </div>
+
 
 
                 <div class="col-6 py-1">
@@ -257,7 +200,6 @@
           </ng-template>
         </ngb-tab>
 
-
         <!-- EVENT -->
         <ngb-tab title="New Event" id="300">
           <ng-template ngbTabContent>
@@ -275,6 +217,17 @@
                   <label class="py-1"> Description</label>
                   <textarea class="form-control" rows="4" [(ngModel)]="model.description" name="description"></textarea>
                 </div>
+
+
+                <div class="col-3 py-1 mt-1">
+                  <label class="py-1" id="j1"> Bugject Amount (IDR)</label>
+                </div>
+
+                <div class="col-9 py-1 mt-1">
+                  <input type="number" name="amount" class="form-control text-right" [(ngModel)]="model.amount" j1="h1"
+                    (click)="showNewActivity=true;">
+                </div>
+
 
                 <div class="col-6 py-1">
                   <label class="py-1"> Event Start Date and Time</label>
@@ -315,29 +268,7 @@
                   </select>
                 </div>
 
-                <div class="col-6 py-1">
-                  <label class="py-1"> Related To</label>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <button class="btn btn-light border dropdown-toggle" type="button" data-toggle="dropdown" 
-                        aria-haspopup="true" aria-expanded="false">{{related}}</button>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('lead');" >Lead</a>
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('contact');" >Contact</a>
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('company');">Company</a>
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('opportunity');">Opportunity</a>
-                        <div role="separator" class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('quote');">Quote</a>
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('deal');">Deal</a>
-                        
-                        <a class="dropdown-item" href="javascript:;" (click)="fn_related('sales_order');">Sales Order</a>  
-                      </div>
-                    </div>
-                    <select class="form-control"  [(ngModel)]="model.id_module_related_target" [ngModelOptions]="{standalone: true}"  >
-                      <option value="{{x.id}}" *ngFor="let x of related_result" >{{x.name}}</option>
-                    </select>
-                  </div>
-                </div>
+
 
 
                 <div class="col-6 py-1">
@@ -359,7 +290,6 @@
 
           </ng-template>
         </ngb-tab>
-
 
         <!-- NOTE -->
         <ngb-tab title="Note" id="400">
@@ -399,7 +329,7 @@
 
 <div class="my-4">
 
-  <h5 class="inline-text"><span class="text-success">Activity</span></h5>
+  <h5 class="inline-text" ><span class="text-warning">Activity</span></h5>
 
 
   <div class="bg-light px-2 mb-2"> <strong> Latest Activity</strong> </div>
@@ -410,67 +340,138 @@
       <div class="row">
         <div class="col-12 col-md-8">
           <a href="javascript:;" (click)="x.description ? showLatest(i) : false;"> <b
-              class="text-primary">{{x.subject}}</b> </a> 
-              
-              <a class="ml-2 text-gray py-0" [hidden]="!x.description"  (click)="x.description ? showLatest(i) : false;"><i
-                class="fas fa-caret-down"></i></a> 
-              
-            <div class="lh-100">
-              <small [innerHTML]="x.related.object"></small> </div>
-             
+              class="text-primary">{{x.subject}}</b> </a>
+          <a class="ml-2 text-gray py-0" [hidden]="!x.description" (click)="x.description ? showLatest(i) : false;"><i
+              class="fas fa-caret-down"></i></a>
         </div>
+
         <div class="col-12  col-md-4 text-right">
-          <small> {{x.input_date | date:'medium'}}</small> 
+          <small> {{x.input_date | date:'mediumDate'}}, {{x.input_date | date:'shortTime'}} </small>
         </div>
+
       </div>
-      <small [innerHTML]="x.log"></small>
+
+      <div><small>Assigned by <span class="text-primary"> {{x.user}}</span> for <span class="text-primary">
+            {{x.person.name}} </span> </small></div>
+
 
       <div style="line-height: 90%;">
-        <a href="javascript:;" (click)="fn_closed(x);"> <small>Closed {{x.activity_type.name}}</small> </a> <small class="mx-1"> &bull; </small>
-        <a href="javascript:;" (click)="fn_remove(x);"> <small>Remove {{x.activity_type.name}}</small> </a>
+        <a href="javascript:;" (click)="fn_closed(x);"> <small>Closed {{x.activity_type.name}}</small> </a>
+        <small class="mx-1"> &bull; </small>
+        <a href="javascript:;" (click)="fn_remove(x);"> <small class="text-danger">Remove
+            {{x.activity_type.name}}</small> </a>
+        <small class="mx-1"> &bull; </small>
+        <a href="javascript:;" (click)="showLatest(i);"> <small
+            class="text-success">Replay</small> </a>
 
       </div>
 
-      <div [hidden]="!x.show" class="p-2 mt-2 border rounded">
-        <div class="text" [innerHTML]="x.description" [hidden]="!x.description"
-          style=" white-space: pre-line; font-size: 13px;"></div>
 
-        <a href="javascript:;" (click)="activityLatest[i].show = false"><small>Hide</small></a>
+      <div [hidden]="x.activity_comment.length < 1">
+        <a href="javascript:;" (click)="x.description ? showLatest(i) : false;"> <small> <i class="far fa-comments"></i>
+            {{x.activity_comment.length}} comments</small></a>
       </div>
+
+      <div [hidden]="!x.show">
+        <div class="p-2 mt-2 border rounded">
+          <div class="text" [innerHTML]="x.description" [hidden]="!x.description"
+            style=" white-space: pre-line; font-size: 14px;"></div>
+          <small [innerHTML]="x.log"></small>
+        </div>
+
+        <div class=" mt-2 ml-3" *ngFor="let a of x.activity_comment">
+          <div class="p-2 border rounded">
+            <small [innerHTML]="a.comment"></small>
+          </div>
+          <small> {{a.input_date | date:'mediumDate'}}, {{a.input_date | date:'shortTime'}} </small>
+        </div>
+
+      </div>
+
+
+      <div [hidden]="!x.show" class="mt-3">
+        <div class="ml-3">
+          <textarea class="form-control p-1" rows="4" [(ngModel)]="x.comments"></textarea>
+        </div>
+        <div class="mt-1 text-right">
+          <a href="javascript:;" (click)="x.show = false" class="px-3 py-0 btn btn-sm btn-classic mx-1">Cancel</a> <a
+            href="javascript:;" class="px-3 py-0 btn btn-sm btn-primary"
+            (click)="fn_comments(x.comments,x.id,i,0); x.comments = ''">Post</a>
+        </div>
+      </div>
+
     </div>
   </div>
 
 
 
-  <div class="bg-light px-2 mb-2"> <strong> History Activity</strong> </div>
+  <div [hidden]="module == 'activity'" class="bg-light px-2 mb-2"> <strong> History Activity</strong> </div>
 
-  <div class="activity-log act-{{x.activity_type.id}}" *ngFor="let x of activityHistory; let i = index">
+  <div [hidden]="module == 'activity'" class="activity-log act-{{x.activity_type.id}}" *ngFor="let x of activityHistory; let i = index">
     <div class="icon" [innerHTML]="x.activity_type.fas"></div>
     <div class="content">
       <div class="row">
         <div class="col-12 col-md-8">
           <a href="javascript:;" (click)="x.description ? showHistory(i) : false;"> <b
-              class="text-primary">{{x.subject}}</b> </a> 
-              
-              <a class="ml-2 text-gray py-0" [hidden]="!x.description" (click)="x.description ? showHistory(i) : false;"><i
-                class="fas fa-caret-down"></i></a> 
-              
-            <div class="lh-100">
-              <small [innerHTML]="x.related.object"></small> </div>
-             
+              class="text-primary">{{x.subject}}</b> </a>
+
+          <a class="ml-2 text-gray py-0" [hidden]="!x.description" (click)="x.description ? showHistory(i) : false;"><i
+              class="fas fa-caret-down"></i></a>
         </div>
         <div class="col-12  col-md-4 text-right">
-          <small> {{x.input_date | date:'medium'}}</small> 
+          <small>{{x.input_date | date:'mediumDate'}}, {{x.input_date | date:'shortTime'}}</small>
         </div>
       </div>
 
-      <small [innerHTML]="x.log"></small>
+      <div><small>Assigned by <span class="text-primary"> {{x.user}}</span> for <span class="text-primary">
+            {{x.person.name}} </span> </small></div>
 
-      <div [hidden]="!x.show" class="p-2 border rounded">
-        <div class="text" [innerHTML]="x.description" [hidden]="!x.description"
-          style=" white-space: pre-line; font-size: 13px;"></div>
-        <a href="javascript:;" (click)="activityHistory[i].show = false"><small>Hide</small></a>
+      <div style="line-height: 90%;">
+        <a href="javascript:;" (click)="showHistory(i)"> <small
+            class="text-success">Replay</small> </a>
       </div>
+
+
+      <div [hidden]="x.activity_comment.length < 1">
+        <a href="javascript:;" (click)="x.description ? showHistory(i) : false;"> <small> <i class="far fa-comments"></i>
+            {{x.activity_comment.length}} comments</small></a>
+      </div>
+
+
+
+      <div [hidden]="!x.show">
+        <div class="p-2 mt-2 border rounded">
+          <div class="text" [innerHTML]="x.description" [hidden]="!x.description"
+            style=" white-space: pre-line; font-size: 14px;"></div>
+          <small [innerHTML]="x.log"></small>
+        </div>
+
+        <div class=" mt-2 ml-3" *ngFor="let a of x.activity_comment">
+          <div class="p-2 border rounded">
+            <small [innerHTML]="a.comment"></small>
+          </div>
+          <small> {{a.input_date | date:'mediumDate'}}, {{a.input_date | date:'shortTime'}} </small>
+        </div>
+
+      </div>
+
+
+      <div [hidden]="!x.show" class="mt-3">
+        <div class="ml-3">
+          <textarea class="form-control p-1" rows="4" [(ngModel)]="x.comments"></textarea>
+        </div>
+        <div class="mt-1 text-right">
+          <a href="javascript:;" (click)="x.show = false" class="px-3 py-0 btn btn-sm btn-classic mx-1">Cancel</a> <a
+            href="javascript:;" class="px-3 py-0 btn btn-sm btn-primary"
+            (click)="fn_comments(x.comments,x.id,i,1); x.comments = ''">Post</a>
+        </div>
+      </div>
+
+
+
+
+
+
     </div>
   </div>
 
