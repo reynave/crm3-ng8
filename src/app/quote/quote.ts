@@ -64,7 +64,7 @@ export class Editquote {
       public ship_code:string,
       public ship_country:string,
       public syncing:boolean,
-      
+      public id_contact:boolean,
     ) {  }
 }
 

@@ -26,14 +26,12 @@
 
         <div class="col-9 bg-light text-right py-2">
 
-            <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="open(createSO)"><i
-                    class="fas fa-dollar-sign"></i> Create Sales Order </button>
+            <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="open(createSO)"><b>SO</b> Create Sales Order </button>
 
-            <button type="button" class="btn btn-classic btn-sm  mr-1"> <i class="fas fa-edit"></i> Rollback To
+            <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="rollback();"   > <i class="fas fa-edit"></i> Rollback To
                 Opportunity </button>
 
-            <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="fn_delete();"> <i
-                    class="fas fa-trash-alt"></i> Delete </button>
+           
 
             <button type="button" class="btn btn-classic btn-sm  mr-1" [routerLink]="[ '/deal' ]" title="back"> <i
                     class="fas fa-times"></i> </button>

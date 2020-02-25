@@ -21,28 +21,37 @@
         <b class="text-primary">{{items.name}}</b>
       </div>
     </div>
-    
+
     <div class="col-9  bg-light py-2 text-right">
       <div [hidden]="!isReadOnly">
-        <button type="button" class="btn btn-classic btn-sm  mr-1"> <i class="fas fa-paper-plane"></i>
+        <span [hidden]="items.status.id <= 10">
+
+
+          <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="approved(400);"> <i class="fas fa-times"></i>
+            Reject </button>
+
+          <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="approved(500);"> <i class="fas fa-check"></i>
+            Approved By Customer</button>
+
+          <span class="mr-1"> | </span>
+        </span>
+        <button type="button" class="btn btn-classic btn-sm  mr-1" [hidden]="items.version < 1" (click)="send();"> <i
+            class="fas fa-paper-plane"></i>
           Email Quote </button>
 
-        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="print();"> <i
-            class="fas fa-print"></i>
-          Prints </button>
 
-        <button type="button" class="btn btn-classic btn-sm  mr-1"> <i class="far fa-file-pdf"></i>
-          Create PDF </button>
+        <button type="button" class="btn btn-classic btn-sm  mr-1" [hidden]="items.closed == 1" (click)="generate();"> <i class="far fa-file-pdf"></i>
+          Generate PDF & Process </button>
 
         <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="isReadOnly=false"> <i
             class="fas fa-edit"></i>
           Edit </button>
 
-        <button type="button" [hidden]="items.syncing" class="btn btn-classic btn-sm  mr-1"
-          (click)="fn_sync(true)"> <i class="fas fa-sync"></i> Sync </button>
+        <button type="button" [hidden]="items.syncing" class="btn btn-classic btn-sm  mr-1" [hidden]="items.closed == 1"  (click)="fn_sync(true)"> <i
+            class="fas fa-sync"></i> Sync </button>
 
-        <button type="button" [hidden]="!items.syncing" class="btn btn-classic btn-sm  mr-1"
-          (click)="fn_sync(false)"> <i class="fas fa-sync"></i> Disable Sync </button>
+        <button type="button" [hidden]="!items.syncing" class="btn btn-classic btn-sm  mr-1" [hidden]="items.closed == 1"  (click)="fn_sync(false)">
+          <i class="fas fa-sync"></i> Disable Sync </button>
 
         <button type="button" class="btn btn-classic btn-sm" [routerLink]="[ '/quote' ]" title="back"> <i
             class="fas fa-times"></i> </button>
@@ -60,15 +69,16 @@
       <table class="table-p0">
         <tr>
           <td> <small> Quote No.</small> </td>
+          <td> <small> version </small> </td>
           <td> <small> Expired Date </small> </td>
           <td> <small> Syncing </small> </td>
           <td> <small> Opportunity </small> </td>
-          <td> <small> Grand Total </small></td>
-          <td> <small> Type </small> </td>
+          <td> <small> Grand Total </small></td> 
         </tr>
 
         <tr>
           <td> <b class="text-primary">{{items.quotes_number}} </b> </td>
+          <td><b class="text-primary"> {{items.version}} </b></td>
           <td> <b class="text-primary">
               {{quoteModel.expirationDate.day}}/{{quoteModel.expirationDate.month}}/{{quoteModel.expirationDate.year}}
             </b> </td>
@@ -78,7 +88,7 @@
           <td><b class="text-primary"> <a [routerLink]="[ '/opportunity', items.id_opportunity ]">
                 {{items.opportunity}}</a> </b></td>
           <td> <b class="text-primary"> {{items.currency}} {{pricing.grand_total | number}} </b> </td>
-          <td><b class="text-primary"> New Customer </b></td>
+       
         </tr>
       </table>
     </div>
@@ -87,20 +97,23 @@
 
   <!-- Step Bar -->
   <div class="row py-2 bg-light border-top border-bottom">
-    <div class="col-12">
+    <div class="col-12"> 
+      <table class="table table-status">
+        <tr>
+          <td *ngFor="let x of quote_status "
+            [ngStyle]="{'width': quote_status.length ? (100 / quote_status.length) + '%' :'100%' }">
+            <div class="text-center p-2 border  " [ngClass]="{'bg-primary': x.id <= items.status.id, 'bg-danger': x.id == items.id_quote_status_final }">
+              <b>{{x.name}}</b></div>
+          </td>
+        </tr>
+      </table>
 
-      <div class="wrapper">
-        <div class="arrow-steps clearfix">
-          <div *ngFor="let x of quote_status" class="step {{x.id > items.id_quote_status ? '':'current'}}"
-            style="width: 24%;">
-            <a href="javascript:;" (click)="fn_update_status(x.id);"> {{x.name}}</a> </div>
-        </div>
-
+      <div>
+        <small> Notes : {{items.status.note}}</small>
       </div>
-
     </div>
   </div>
- 
+
 </div>
 
 
@@ -114,7 +127,7 @@
       <!-- Left side-->
       <div class="col-9 col-md-8">
 
-      
+
 
         <!-- Product  line |  Detail  -->
         <div class="row my-2">
@@ -305,10 +318,9 @@
 
                           <tr>
                             <td>Account Manager</td>
-                            <td> <select class="form-control form-modal" [disabled]="isReadOnly">
-                                <option value="1">Admin</option>
-                                <option value="1">Admin</option>
-                                <option value="1">Admin</option>
+                            <td> <select class="form-control form-modal" name="id_user" [(ngModel)]="quoteModel.id_user"
+                                [disabled]="isReadOnly">
+                                <option value="{{x.id}}" *ngFor="let x of user">{{x.name}}</option>
                               </select> </td>
                           </tr>
                         </table>
@@ -382,7 +394,6 @@
                       </div>
                     </div>
 
-
                     <div class="row">
                       <div class="col-12 bg-light">
                         <strong> Prepared For</strong>
@@ -391,9 +402,12 @@
                         <table class="table table-borderless">
                           <tr>
                             <td width="40%">Contact Name</td>
-                            <td><select class="form-control form-modal" [disabled]="isReadOnly">
-                                <option></option>
-                              </select></td>
+                            <td><select class="form-control form-modal" [(ngModel)]="quoteModel.id_contact"
+                                name="q_id_contact" [disabled]="isReadOnly">
+                                <option value="{{x.id}}" *ngFor="let x of contact">{{x.name}}</option>
+                              </select>
+
+                            </td>
                           </tr>
                           <tr>
                             <td>Email</td>
@@ -566,23 +580,22 @@
       <div class="col-3 col-md-4 border border-top-0">
 
         <div class="row py-3">
-          <div class="col-6">
-            <strong>History Activities</strong>
+          <div class="col-12">
+            <strong>Version of Quote</strong>
           </div>
-          <div class="col-6 text-right">
-            <button type="button" class="btn btn-classic btn-sm btn-block  mr-1"> <i class="fab fa-rocketchat"></i>
-              Activity </button>
-          </div>
+
         </div>
 
         <div>
-          <div class="bg-light px-2 mb-2"> <strong> Latest activity</strong> </div>
 
-          <div class="activity-log act-{{x.id_activity_type}}" *ngFor="let x of activity">
-            <div class="icon" [innerHTML]="x.fas"></div>
-            <div class="content">
-              <small> {{x.input_date | date:'medium'}}</small>
-              <div class="text" [innerHTML]="x.log"></div>
+          <div *ngFor="let x of fileOutput">
+            <div class="border-bottom p-1">
+              <a href="{{x.full_path}}" target="_blank"><i class="far fa-file-pdf"></i> <b> {{x.file_name}} ver
+                  {{x.version}} </b> </a>
+              <div>
+                <small>Created date {{x.input_date | date:'medium'}}</small>
+              </div>
+
             </div>
           </div>
         </div>
@@ -662,7 +675,7 @@
           <span [innerHTML]="test"></span>
         </div>
         <div class="text-center">
-          <a href=""><small>  Send feedback to Support Now !</small></a>
+          <a href=""><small> Send feedback to Support Now !</small></a>
         </div>
       </div>
     </div>

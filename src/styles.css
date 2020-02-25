@@ -566,3 +566,21 @@ input[type="text"]:read-only:required,input[type="number"]:read-only:required, s
     color: red;
     font-weight: bold;
 }
+.table-status{
+    padding: 0px;
+    margin: 0px;
+}
+
+.table-status tr td{
+    border-top: none;
+    padding: 1px; 
+    background: #fff;
+}
+
+.table-status .bg-danger{
+    color: #fff;
+}
+
+.table-status .bg-primary{
+    color: #fff;
+}

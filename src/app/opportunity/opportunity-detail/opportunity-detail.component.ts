@@ -89,11 +89,16 @@ export class OpportunityDetailComponent implements OnInit {
     }).subscribe(data => {
       console.log(data);
       this.loading = false;
-      if(data['result']['data']['id_stage'] == 1000){
-        this.router.navigate(['deal/', this.id]);
-      }else if(data['result']['data']['id_stage']  == 3000){
-        this.router.navigate(['lose/', this.id]);
+
+      if( data['result']['data']['closed'] == true){
+        if(data['result']['data']['id_stage'] == 1000){
+          this.router.navigate(['deal/', this.id]);
+        }else if(data['result']['data']['id_stage']  == 3000){
+          this.router.navigate(['lose/', this.id]);
+        }
       }
+
+     
 
 
       this.items = data['result']['data'];

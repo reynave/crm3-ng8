@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ConfigService } from './../../service/config.service';
 import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { OpportunityDetail, OpportunityClosedLose, OpportunityClosedWin } from './../../opportunity/opportunity';
-import { Newquote } from './../../quote/quote'; 
+import { Newquote } from './../../quote/quote';
 import { OpportunityUpdate } from './../../opportunity/opportunity';
 
 @Component({
@@ -29,19 +29,19 @@ export class DealDetailComponent implements OnInit {
   modelContact: any;
   modelBranch: any;
   product: any = []
-  isReadOnly:boolean= true;
+  isReadOnly: boolean = true;
   myBranch: any = [];
   user: any = [];
-  width: string;  
+  width: string;
   finish: boolean = false;
   stageNotes: string;
   quoteModel: any = [];
-  quotes: any = []; 
-  business:any=[];
-  model:any=[];
-  lead_source:any=[]; 
-  contact:any=[];
-  sales_order :any=[];
+  quotes: any = [];
+  business: any = [];
+  model: any = [];
+  lead_source: any = [];
+  contact: any = [];
+  sales_order: any = [];
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -58,18 +58,18 @@ export class DealDetailComponent implements OnInit {
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params.id;
     this.items = {
-      quote : {
-        quote_number:"",
-        grand_total : 0,
-        contact:"",
-        user:"",
+      quote: {
+        quote_number: "",
+        grand_total: 0,
+        contact: "",
+        user: "",
       },
-    
+
     }
     this.httpGet();
   }
- 
-  requestEmit(event) { 
+
+  requestEmit(event) {
     this.modalService.dismissAll();
   }
 
@@ -80,38 +80,67 @@ export class DealDetailComponent implements OnInit {
       headers: this.configService.headers()
     }).subscribe(data => {
       console.log(data);
+
+      if( data['result']['data']['closed'] == false){ 
+          this.router.navigate(['opportunity/', this.id]);  
+      }
+
+
       this.items = data['result']['data'];
       this.stage = data['result']['stage'];
       this.quotes = data['result']['quotes'];
       this.width = data['result']['width'];
       this.id_stage = data['result']['data']['id_stage'];
       this.product = data['result']['product'];
-      this.business =  data['result']['business'];
-  //    var objIndex = this.stage.findIndex((obj => obj.id == this.id_stage));
-   //   console.log(' this.stageNotes ', this.stageNotes );
- //     this.stageNotes = this.stage[objIndex]['notes'];
+      this.business = data['result']['business'];
+      //    var objIndex = this.stage.findIndex((obj => obj.id == this.id_stage));
+      //   console.log(' this.stageNotes ', this.stageNotes );
+      //     this.stageNotes = this.stage[objIndex]['notes'];
 
       this.contact = data['result']['contact'];
       this.user = data['result']['user'];
       this.loading = false;
-      
+
       this.sales_order = data['result']['sales_order'];
       this.quoteModel = new Newquote(0, '', '', '', '', 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', true);
-      this.lead_source =  data['result']['lead_source'];
-      
+      this.lead_source = data['result']['lead_source'];
 
 
-      this.model = new OpportunityUpdate(data['result']['data']['name'],data['result']['data']['id_lead_source'],data['result']['data']['id_user'],data['result']['data']['id_contact'] );
+
+      this.model = new OpportunityUpdate(data['result']['data']['name'], data['result']['data']['id_lead_source'], data['result']['data']['id_user'], data['result']['data']['id_contact']);
     }, error => {
       console.log(error);
       console.log(error.error.text);
     });
   }
 
-  
-  fn_editable() {
 
+  rollback() {
+    if (confirm("Are you sure want to rollback ?")) {
+
+      this.loading = true;
+      this.http.post(this.configService.base_url() + 'deal/rollback',
+        {
+          "id": this.id, 
+        }, {
+        headers: this.configService.headers()
+      }).subscribe(
+        data => {
+          this.loading = false;
+          console.log(data); 
+          this.router.navigate(['opportunity/', this.id]); 
+
+        },
+        error => {
+          console.log(error);
+          console.log(error.error.text);
+        }
+      );
+
+    }
   }
+
+
   showUpdateStage: boolean = false;
   stageCurrent: string;
 
@@ -241,10 +270,10 @@ export class DealDetailComponent implements OnInit {
     }).subscribe(
       data => {
         console.log(data);
-          this.loading = false;
-          this.router.navigate(['/quote/', data['result']['id']]);
-          this.modalService.dismissAll();
-         
+        this.loading = false;
+        this.router.navigate(['/quote/', data['result']['id']]);
+        this.modalService.dismissAll();
+
 
       },
       error => {
@@ -254,7 +283,7 @@ export class DealDetailComponent implements OnInit {
     );
   }
 
-     
 
-  
+
+
 }

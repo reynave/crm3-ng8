@@ -89,7 +89,7 @@
 
         <div class="row">
           <div class="col-12">
- 
+
             <div class="arrow-steps clearfix mb-3">
 
               <div *ngFor="let x of stage" (click)="nextStage(x);"
@@ -232,22 +232,24 @@
                 <div class="col-sm-6">
 
 
-                    <div class="row">
-                       
-                      <div class="col-11 text-right">
-                        <input class="form-control form-control-sm" type="file" (change)="onFileSelected($event)">
-                      </div>
-                      <div class="col-1">
-                        <button type="button" class="btn btn-classic btn-sm" (click)="onUpload('opportunity');">Upload</button>
-                      </div>
+                  <div class="row">
 
-                      <div class="col-6 my-1" *ngFor="let x of attachment">
-                        <div class="border bg-white p-1 rounded"> 
-                          <a href="{{x.url}}" target="_blank"><small>  {{x.file_name}} </small>  </a>  &nbsp; <a href="javascript:;" (click)="fn_attach_delete(x);"><i  class="fas fa-trash-alt"></i></a>
-                        </div> 
-                      </div>
-  
+                    <div class="col-11 text-right">
+                      <input class="form-control form-control-sm" type="file" (change)="onFileSelected($event)">
                     </div>
+                    <div class="col-1">
+                      <button type="button" class="btn btn-classic btn-sm"
+                        (click)="onUpload('opportunity');">Upload</button>
+                    </div>
+
+                    <div class="col-6 my-1" *ngFor="let x of attachment">
+                      <div class="border bg-white p-1 rounded">
+                        <a href="{{x.url}}" target="_blank"><small> {{x.file_name}} </small> </a> &nbsp; <a
+                          href="javascript:;" (click)="fn_attach_delete(x);"><i class="fas fa-trash-alt"></i></a>
+                      </div>
+                    </div>
+
+                  </div>
 
 
                 </div>
@@ -273,29 +275,30 @@
 
             <div [hidden]="id_stage != '104'">
 
-            
+
 
               <div class="form-group row ">
                 <label for="b302" class="col-sm-3 col-form-label">Attachment Purchased Order</label>
                 <div class="col-sm-6">
 
 
-                    <div class="row">
-                     
-                      <div class="col-11 text-right">
-                        <input class="form-control form-control-sm" type="file" (change)="onFileSelected($event)">
-                      </div>
-                      <div class="col-1">
-                        <button type="button" class="btn btn-classic btn-sm" (click)="onUpload('po');">Upload</button>
-                      </div>
+                  <div class="row">
 
-                      <div class="col-6 my-1" *ngFor="let x of attachmentPO">
-                        <div class="border bg-white p-1 rounded"> 
-                          <a href="{{x.url}}" target="_blank"><small>  {{x.file_name}} </small>  </a>  &nbsp; <a href="javascript:;" (click)="fn_attach_delete(x);"><i  class="fas fa-trash-alt"></i></a>
-                        </div> 
-                      </div>
-  
+                    <div class="col-11 text-right">
+                      <input class="form-control form-control-sm" type="file" (change)="onFileSelected($event)">
                     </div>
+                    <div class="col-1">
+                      <button type="button" class="btn btn-classic btn-sm" (click)="onUpload('po');">Upload</button>
+                    </div>
+
+                    <div class="col-6 my-1" *ngFor="let x of attachmentPO">
+                      <div class="border bg-white p-1 rounded">
+                        <a href="{{x.url}}" target="_blank"><small> {{x.file_name}} </small> </a> &nbsp; <a
+                          href="javascript:;" (click)="fn_attach_delete(x);"><i class="fas fa-trash-alt"></i></a>
+                      </div>
+                    </div>
+
+                  </div>
 
 
                 </div>
@@ -320,13 +323,13 @@
 
                   <button type="button" class="btn btn-success btn-lg  mr-1" (click)="updateStep('104','1000')"> <i
                       class="fas fa-thumbs-up"></i>
-                      <b> Closed Deal</b>  </button>
+                    <b> Closed Deal</b> </button>
 
                 </div>
               </div>
-  
 
-            </div> 
+
+            </div>
           </div>
 
 
@@ -344,7 +347,7 @@
 
 </div>
 
- 
+
 
 <div class="container-fluid  bg-white border-top">
 
@@ -494,7 +497,7 @@
 
                         <tr>
                           <td>Probability (%)</td>
-                          <td> {{items.weight}} % </td>
+                          <td> {{items.progress}} % </td>
                         </tr>
                         <tr>
                           <td><label>Created Date</label></td>
@@ -629,7 +632,8 @@
 
                     </div>
                     <div class="col-1">
-                      <button type="button" class="btn btn-classic btn-sm" (click)="onUpload('opportunity');">Upload</button>
+                      <button type="button" class="btn btn-classic btn-sm"
+                        (click)="onUpload('opportunity');">Upload</button>
                     </div>
 
                     <div class="col-12">
@@ -697,10 +701,12 @@
                 <table class="table-items">
                   <thead>
                     <tr>
-                      <th> <a href="">{{x.quotes_number}} <span [hidden]="!x.syncing"> <i class="fas fa-sync-alt"></i>
-                          </span> </a>   
-                          <span [hidden]="updateOpportunity.id_quote == x.id"><i class="fas fa-check"></i></span>
-                           </th>
+                      <th> <a [routerLink]="[ '/quote', x.id ]"> {{x.quotes_number}} <span [hidden]="!x.syncing"> <i
+                              class="fas fa-sync-alt"></i>
+                          </span> </a>
+
+                        <span class="px-2" [hidden]="updateOpportunity.id_quote != x.id"><i class="fas fa-check"></i></span>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -775,7 +781,7 @@
 
 
 <div [hidden]="isReadOnly"><br><br></div>
- 
+
 
 <ng-template #addProduct let-modal>
   <div class="modal-header">
@@ -885,40 +891,6 @@
           </div>
         </div>
 
-        <!-- 
-        <div class="row ">
-          <div class="col-12 bg-light">
-            <strong> Total</strong>
-          </div>
-          <div class="col-6">
-            <table class="table table-borderless">
-              <tr>
-                <td width="40%">Discount (%)</td>
-                <td> <input type="text" class="form-control form-modal"   style="width:40%"
-                    [(ngModel)]="quoteModel.discount" name="q_discount"> </td>
-              </tr>
-            </table>
-          </div>
-          <div class="col-6">
-            <table class="table table-borderless">
-              <tr>
-                <td width="40%">Tax (%)</td>
-                <td><input type="text" class="form-control form-modal"  style="width:40%"
-                    [(ngModel)]="quoteModel.tax" name="q_tax"></td>
-              </tr>
-              <tr>
-                <td>Shipping and Handing</td>
-                <td><input type="text" class="form-control form-modal"   [(ngModel)]="quoteModel.shipping"
-                    name="q_shipping"> </td>
-              </tr>
-              <tr>
-                <td>Grand Total</td>
-                <td> <b>IDR 0</b></td>
-              </tr>
-            </table>
-          </div>
-        </div>
--->
 
         <div class="row">
           <div class="col-12 bg-light">
@@ -927,9 +899,9 @@
           <div class="col-6">
             <table class="table table-borderless">
               <tr>
-                <td width="40%">Contact Name</td>
+                <td width="40%">Contact Name</td> 
                 <td><select class="form-control form-modal" [(ngModel)]="quoteModel.id_contact" name="q_id_contact">
-                    <option value="{{x.id}}" *ngFor="let x of contact">{{x.contact}}</option>
+                    <option value="{{x.id}}" *ngFor="let x of contact">{{x.name}}</option>
                   </select></td>
               </tr>
               <tr>

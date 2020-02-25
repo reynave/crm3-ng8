@@ -84,7 +84,7 @@
             <td><a [routerLink]="[ '/opportunity/',x.id]"><b> {{x.name}} </b> </a></td>
             <td> {{x.company}} </td>
             <td><strong> {{x.stage}}</strong></td>
-            <td class="text-right">{{x.weight ? x.weight+' %' : ''}}</td>
+            <td class="text-right">{{x.progress}}%</td>
             <td width="50">{{x.currency}}</td>
             <td class="text-right">{{x.amount | number:''}},-</td>
             <td>{{x.expecting_closing_date | date }}</td>
