@@ -10,41 +10,149 @@
 </div>
 
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-2 border"> 
-      New Lead Today 
-      
+<div class="container-fluid mt-3">
+  <div class="row no-gutters">
+    <div class="col-2  mb-3">
+      <div class="bg-white  border border-top-black rounded p-2  m-1">
+        <div> New leads today</div>
+        <div>Total Lead this month</div>
+        <div>Total Lead this quarter</div>
+        <div>Total Lead this year</div> 
+      </div>
+
     </div>
-    <div class="col-4 border"> 
-      Funnel 
+    <div class="col-4   mb-3">
+      <div class="bg-light  border border-top-red rounded p-2  m-1">
+        <div class="p-1"> <strong> Funnel</strong></div>
+
+        <div id="funnel"></div>
+      </div>
+
     </div>
-    <div class="col-3 border"> 
-      Leads per distribution per quarter
-      <canvas class="leadPerDistribution" id="leadPerDistribution" width="300" height="300"></canvas> 
-    </div>
- 
-    <div class="col-3 border"> 
-      Leads per industry per quarter 
-      <canvas class="leadPerIndustry" id="leadPerIndustry" width="300" height="300"></canvas> 
+    <div class="col-3   mb-3">
+      <div class="bg-light  border border-top-yellowgreen rounded p-2  m-1">
+
+        <div class="p-1"> <strong> Leads per distribution per quarter</strong></div>
+        <canvas class="leadPerDistribution" id="leadPerDistribution" width="300" height="300"></canvas>
+      </div>
     </div>
 
- 
+    <div class="col-3   mb-3">
+      <div class="bg-light  border border-top-gray rounded p-2  m-1">
 
-    <div class="col-4 border">
-      Top 5 Recent Wins
+        <div class="p-1"> <strong>Leads per industry per quarter</strong></div>
+        <canvas class="leadPerIndustry" id="leadPerIndustry" width="300" height="300"></canvas>
+      </div>
     </div>
 
-    <div class="col-4 border">
-      Top 10 Recent Quotation on Process
+
+
+    <div class="col-6   mb-3">
+      <div class="bg-light  border border-top-blue rounded p-2  m-1">
+
+        <div class="p-1"> <strong> Top 5 Recent Wins</strong></div>
+
+        <table class="table table-hover border bg-white border-top border-bottom pointer">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>SO</th>
+              <th>Customer</th>
+              <th>Amount</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>2</td>
+              <td>3</td>
+              <td>4</td>
+              <td>5</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <div class="col-4 border">
-      Must Event Next Month
+    <div class="col-6 mb-3">
+      <div class="bg-light  border border-top-yellow rounded p-2  m-1">
+
+        <div class="p-1"> <strong> Top 10 Recent Quotation on Process</strong></div>
+        <table class="table table-hover border bg-white border-top border-bottom pointer">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Quote</th>
+              <th>Customer</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>2</td>
+              <td>3</td>
+              <td>4</td>
+              <td>5</td>
+              <td>6</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <div class="col-4 border">
-      Must Visit Next Month
+    <div class="col-6   mb-3">
+      <div class="bg-light  border border-top-green rounded p-2  m-1">
+        <div class="p-1"> <strong>Must Event Next Month</strong></div>
+        <table class="table table-hover border bg-white border-top border-bottom pointer">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Event</th>
+              <th>Customer</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>2</td>
+              <td>3</td>
+              <td>4</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <div class="col-6  mb-3">
+      <div class="bg-light  border border-top-brown rounded p-2  m-1">
+        <div class="p-1"> <strong>Must Visit Next Month</strong></div>
+        <table class="table table-hover border bg-white border-top border-bottom pointer">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Event</th>
+              <th>Customer</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>2</td>
+              <td>3</td>
+              <td>4</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
     </div>
 
   </div>

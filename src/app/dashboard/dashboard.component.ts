@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 declare var $;
 declare var Chart;
+declare var D3Funnel;
 
 @Component({
   selector: 'app-dashboard',
@@ -9,19 +10,21 @@ declare var Chart;
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  datasetsLeadPerDistribution: any = [];
+  datasetsLeadPerIndustry: any = [];
+  dataFunnel:any = [];
 
   constructor() { }
-  datasetsLeadPerDistribution: any =[];
-  datasetsLeadPerIndustry: any =[];
+
   ngOnInit() {
     this.leadPerIndustry();
     this.leadPerDistribution();
-  
+    this.funnel();
   }
 
 
-  leadPerIndustry(){
-    this.datasetsLeadPerIndustry  = [{
+  leadPerIndustry() {
+    this.datasetsLeadPerIndustry = [{
       label: '# of Votes',
       data: [12, 19, 3, 5, 2, 3],
       backgroundColor: [
@@ -32,12 +35,12 @@ export class DashboardComponent implements OnInit {
         'rgb(153, 102, 255)',
         'rgb(255, 159, 64)'
       ],
-      
+
       borderWidth: 1
     }];
 
     var ctx = document.getElementById('leadPerIndustry');
-    new Chart( ctx, {
+    new Chart(ctx, {
       type: 'pie',
       data: {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -47,8 +50,8 @@ export class DashboardComponent implements OnInit {
   }
 
   leadPerDistribution() {
- 
-    this.datasetsLeadPerDistribution  = [{
+
+    this.datasetsLeadPerDistribution = [{
       label: '# of Votes',
       data: [12, 19, 3, 5, 2, 3],
       backgroundColor: [
@@ -59,12 +62,12 @@ export class DashboardComponent implements OnInit {
         'rgb(153, 102, 255)',
         'rgb(255, 159, 64)'
       ],
-      
+
       borderWidth: 1
     }];
 
     var ctx = document.getElementById('leadPerDistribution');
-    new Chart( ctx, {
+    new Chart(ctx, {
       type: 'pie',
       data: {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -72,6 +75,33 @@ export class DashboardComponent implements OnInit {
       },
     });
 
+  }
+
+  funnel() {
+
+    this.dataFunnel = [
+      { label: 'Inquiries', value: 5000 },
+      { label: 'Applicants', value: 2500 },
+      { label: 'Admits', value: 500 },
+      { label: 'Deposits', value: 200 },
+    ];
+    const options = {
+      block: {
+        dynamicHeight: true,
+        minHeight: 15,
+        highlight: true,
+        barOverlay: true,
+      },
+      chart: {
+        bottomPinch: true,
+        curve: {
+          enabled: true,
+        }
+      }
+    };
+
+    const chart = new D3Funnel('#funnel');
+    chart.draw(this.dataFunnel, options);
   }
 
 }
