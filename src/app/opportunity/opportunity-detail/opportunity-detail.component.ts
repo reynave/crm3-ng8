@@ -115,7 +115,37 @@ export class OpportunityDetailComponent implements OnInit {
     
        
 
-      this.quoteModel = new Newquote(0, '', '', '1', '', 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', true);
+      this.quoteModel = new Newquote(
+        data['result']['data']['name'],
+        [], 
+        "",
+        data['result']['data']['id_user'],
+        data['result']['data']['id_contact'],
+      
+
+        data['result']['information']['email'],
+        data['result']['information']['phone'],
+        data['result']['information']['fax'],
+
+        data['result']['information']['bill_name'], 
+        data['result']['information']['bill_street1'], 
+        data['result']['information']['bill_city'],
+        data['result']['information']['bill_state'],
+        data['result']['information']['bill_code'],
+        data['result']['information']['bill_country'],
+
+        data['result']['information']['ship_name'], 
+        data['result']['information']['ship_street1'], 
+        data['result']['information']['ship_city'],
+        data['result']['information']['ship_state'],
+        data['result']['information']['ship_code'],
+        data['result']['information']['ship_country'],
+        
+        false
+      );
+
+
+
       this.lead_source = data['result']['lead_source'];
       this.attachment = data['result']['attachment'];
       this.attachmentPO = data['result']['attachmentPO'];

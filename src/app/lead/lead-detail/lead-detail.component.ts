@@ -114,6 +114,7 @@ export class LeadDetailComponent implements OnInit {
         data['result']['lead']['position'],
         data['result']['lead']['amount'],
         data['result']['lead']['id_company_class'],
+        data['result']['lead']['department'],
 
       );
 

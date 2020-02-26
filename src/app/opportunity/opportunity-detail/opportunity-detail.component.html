@@ -705,7 +705,8 @@
                               class="fas fa-sync-alt"></i>
                           </span> </a>
 
-                        <span class="px-2" [hidden]="updateOpportunity.id_quote != x.id"><i class="fas fa-check"></i></span>
+                        <span class="px-2" [hidden]="updateOpportunity.id_quote != x.id"><i
+                            class="fas fa-check"></i></span>
                       </th>
                     </tr>
                   </thead>
@@ -848,7 +849,7 @@
 
               <tr>
                 <td>Account Manager</td>
-                <td> <select class="form-control form-modal" [(ngModel)]="quoteModel.id_account" name="q_id_account">
+                <td> <select class="form-control form-modal" [(ngModel)]="quoteModel.id_user" name="q_id_user">
                     <option value="{{x.id}}" *ngFor="let x of user">{{x.name}}</option>
                   </select> </td>
               </tr>
@@ -872,7 +873,7 @@
               <tr>
                 <td>Status</td>
                 <td>
-                  <select class="form-control form-modal" [(ngModel)]="quoteModel.status" name="q_status">
+                  <select class="form-control form-modal">
                     <option value="1">Draft</option>
                   </select>
 
@@ -891,7 +892,6 @@
           </div>
         </div>
 
-
         <div class="row">
           <div class="col-12 bg-light">
             <strong> Prepared For</strong>
@@ -899,7 +899,7 @@
           <div class="col-6">
             <table class="table table-borderless">
               <tr>
-                <td width="40%">Contact Name</td> 
+                <td width="40%">Contact Name</td>
                 <td><select class="form-control form-modal" [(ngModel)]="quoteModel.id_contact" name="q_id_contact">
                     <option value="{{x.id}}" *ngFor="let x of contact">{{x.name}}</option>
                   </select></td>
@@ -937,17 +937,14 @@
             <table class="table table-borderless">
               <tr>
                 <td width="40%">Bill To Name</td>
-                <td><input type="text" class="form-control form-modal" name=""></td>
+                <td><input type="text" class="form-control form-modal" [(ngModel)]="quoteModel.bill_name"
+                    name="q_bill_name"></td>
               </tr>
               <tr>
-                <td>Bill To Street 1</td>
-                <td><input type="text" class="form-control form-modal" [(ngModel)]="quoteModel.bill_street1"
-                    name="q_bill_street1"></td>
-              </tr>
-              <tr>
-                <td>Bill To Street 2</td>
-                <td><input type="text" class="form-control form-modal" [(ngModel)]="quoteModel.bill_street2"
-                    name="q_bill_street2"></td>
+                <td>Bill To Street</td>
+                <td> <textarea class="form-control form-modal" [(ngModel)]="quoteModel.bill_street1"
+                    name="q_bill_street1"> </textarea>
+                </td>
               </tr>
 
               <tr>
@@ -971,17 +968,15 @@
             <table class="table table-borderless">
               <tr>
                 <td width="40%">Ship To Name</td>
-                <td><input type="text" class="form-control form-modal" name=""></td>
+                <td><input type="text" class="form-control form-modal" [(ngModel)]="quoteModel.ship_name"
+                    name="q_ship_name"></td>
               </tr>
               <tr>
-                <td>Ship To Street 1</td>
-                <td><input type="text" class="form-control form-modal" [(ngModel)]="quoteModel.ship_street1"
-                    name="q_ship_street1"></td>
-              </tr>
-              <tr>
-                <td>Ship To Street 2</td>
-                <td><input type="text" class="form-control form-modal" [(ngModel)]="quoteModel.ship_street2"
-                    name="q_ship_street2"></td>
+                <td>Ship To Street</td>
+                <td>
+                  <textarea class="form-control form-modal" [(ngModel)]="quoteModel.ship_street1"
+                    name="q_ship_street1"> </textarea>
+                </td>
               </tr>
 
               <tr>

@@ -27,17 +27,7 @@
 
         <button type="button" class="btn btn-classic btn-sm  mr-1" [hidden]="items.editable"    (click)="uploadERP();"> <i class="fas fa-upload"></i>
           Upload to ERP </button>
-
-        <button type="button" class="btn btn-classic btn-sm  mr-1" [hidden]="items.editable"   > <i class="fas fa-paper-plane"></i>
-          Email Sales Order </button>
-
-        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="print();"> <i
-            class="fas fa-print"></i>
-          Prints </button>
-
-        <button type="button" class="btn btn-classic btn-sm  mr-1"> <i class="far fa-file-pdf"></i>
-          Create PDF </button>
-
+ 
         <button type="button" class="btn btn-classic btn-sm  mr-1" [hidden]="!items.editable"  (click)="isReadOnly=false"> <i
             class="fas fa-edit"></i>
           Edit </button>
@@ -62,8 +52,7 @@
           <td> <small> Company </small> </td>
           <td> <small> Order Date </small> </td>
           
-          <td> <small> Grand Total </small></td>
-          <td> <small> Type </small> </td>
+          <td> <small> Grand Total </small></td> 
           <td [hidden]="!isReadOnly"> <small> Status </small> </td>
           
         </tr>
@@ -77,7 +66,7 @@
             </b> </td>
          
           <td> <b class="text-primary"> {{items.currency}} {{pricing.grand_total | number}} </b> </td>
-          <td><b class="text-primary"> New Customer </b></td>
+         
           <td [hidden]="!isReadOnly">
               
             <div class="dropdown" >
@@ -107,10 +96,8 @@
 
     <div class="row">
       <!-- Left side-->
-      <div class="col-9 col-md-8">
-
-      
-
+      <div class="col-12 col-md-12">
+ 
         <!-- Product  line |  Detail  -->
         <div class="row my-2">
 
@@ -554,28 +541,7 @@
 
       <!-- right side-->
       <div class="col-3 col-md-4 border border-top-0">
-
-        <div class="row py-3">
-          <div class="col-6">
-            <strong>History Activities</strong>
-          </div>
-          <div class="col-6 text-right">
-            <button type="button" class="btn btn-classic btn-sm btn-block  mr-1"> <i class="fab fa-rocketchat"></i>
-              Activity </button>
-          </div>
-        </div>
-
-        <div>
-          <div class="bg-light px-2 mb-2"> <strong> Latest activity</strong> </div>
-
-          <div class="activity-log act-{{x.id_activity_type}}" *ngFor="let x of activity">
-            <div class="icon" [innerHTML]="x.fas"></div>
-            <div class="content">
-              <small> {{x.input_date | date:'medium'}}</small>
-              <div class="text" [innerHTML]="x.log"></div>
-            </div>
-          </div>
-        </div>
+          <!-- SEMENTARA KOSONG-->
 
       </div>
       <!-- end right side-->

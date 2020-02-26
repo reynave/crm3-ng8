@@ -179,6 +179,11 @@
                             </tr>
 
                             <tr>
+                              <td><label>Department</label></td>
+                              <td> <input type="text" class="form-control form-modal" id="department"
+                                  [(ngModel)]="lead.department" name="department" [readonly]="isReadOnly"> </td>
+                            </tr>
+                            <tr>
                               <td width="30%"><label>Lead source</label></td>
                               <td>
                                 <select class="form-control form-modal" id="lead_source"
@@ -552,14 +557,7 @@
                 <option value="{{x.id}}" *ngFor="let x of user"> {{x.name}} </option>
               </select>
             </div>
-
-            <div class="col-5">
-              <label class="mb-2">Converted Status</label>
-              <select class="form-control mb-2" name="id_opportunity_stage"
-                [(ngModel)]="leadConvert.id_opportunity_stage">
-                <option value="{{x.id}}" *ngFor="let x of opportunity_stage"> {{x.name}} </option>
-              </select>
-            </div>
+ 
           </div>
         </div>
 

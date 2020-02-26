@@ -6,7 +6,7 @@
     <div class="row">
       <div class="col-12">
         <small> You are here : <a [routerLink]="[ '/lead' ]">Lead</a> /
-          <a [routerLink]="[ '/convert/',id ]"> Converted </a> /  <a [routerLink]="[ '/convert/',id ]"> {{items.lead.name}} </a>  </small>
+          <a [routerLink]="[ '/convert/',id ]"> Converted </a> /  <a [routerLink]="[ '/convert/',id ]"> {{items.contact.name}} </a>  </small>
       </div>
     </div>
   
@@ -24,11 +24,11 @@
         </div>
 
         <div class="col-4">
-            Company  : <a [routerLink]="[ '/contact', items.company.id ]"> {{items.company.name}}</a> 
+            Company  : <a [routerLink]="[ '/company', items.company.id ]"> {{items.company.name}}</a> 
         </div>
 
         <div class="col-4">
-            Opportunity  : <a [routerLink]="[ '/contact', items.opportunity.id ]"> {{items.opportunity.name}}</a> 
+            Opportunity  : <a [routerLink]="[ '/opportunity', items.opportunity.id ]"> {{items.opportunity.name}}</a> 
         </div>
     </div>
 </div>

@@ -51,7 +51,7 @@ const routes: Routes = [
 
   { path: 'lead', component: LeadComponent, data: { title: 'Lead' }, canActivate: [ActiveGuardGuard] },
   { path: 'lead/:id', component: LeadDetailComponent, data: { title: 'Lead Detail' }, canActivate: [ActiveGuardGuard] }, 
-  { path: 'lead/convert/:id', component: LeadConverdComponent, data: { title: 'Lead Converted' }, canActivate: [ActiveGuardGuard] },
+  { path: 'lead/converted/:id', component: LeadConverdComponent, data: { title: 'Lead Converted' }, canActivate: [ActiveGuardGuard] },
 
   { path: "contact", component: ContactComponent, data: { title: 'Contact' }, canActivate: [ActiveGuardGuard] },
   { path: "contact/:id", component: ContactDetailComponent, data: { title: 'Contact' }, canActivate: [ActiveGuardGuard] },
