@@ -23,9 +23,7 @@ export class NavigatorComponent implements OnInit {
       data => {  
         this.titleService.setTitle( data['title'] );
       }
-    );
-
-
+    ); 
     
     this.nav = this.activatedRoute.snapshot.routeConfig.path.split("/")
     this.current = this.nav[0];

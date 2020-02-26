@@ -34,14 +34,9 @@
            
 
             <button type="button" class="btn btn-classic btn-sm  mr-1" [routerLink]="[ '/deal' ]" title="back"> <i
-                    class="fas fa-times"></i> </button>
-
-
-
-
-
-        </div>
-
+                    class="fas fa-times"></i> </button> 
+        </div> 
+        
         <div class="col-12 py-2">
             <table class="table-p0">
                 <tr>
@@ -56,8 +51,8 @@
                 <tr>
                     <td> <b class="text-primary"> <a
                                 [routerLink]="[ '/company', items.id_company ]">{{items.company}}</a> </b> </td>
-                    <td> <b class="text-primary"> {{items.start_date | date }} </b> </td>
-                    <td> <b class="text-primary"> {{items.closed_date |date  }}</b> </td>
+                    <td> <b class="text-primary"> {{items.start_date  }} </b> </td>
+                    <td> <b class="text-primary"> {{items.closed_date  }}</b> </td>
                     <td> <b class="text-primary"> {{items.timeline }} days</b> </td>
 
                     <td> <b class="text-primary"> {{items.currency}} {{items.amount | number}} </b> </td>
@@ -342,8 +337,8 @@
                         <div class="row">
                             <div class="col-12"><strong>Information Order </strong></div>
                         </div>
-
-                        <div class="row mt-2">
+                      
+                        <div class="row mt-2" [hidden]="items.quote.id == '0'">
                             <div class="col-12 mb-1"><b>Quotation </b></div>
                             <div class="col-12 mb-1">
                                 <table class="table-items">

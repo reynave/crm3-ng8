@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ConfigService } from './../../service/config.service';
 import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { OpportunityDetail, OpportunityClosedLose, OpportunityClosedWin } from './../../opportunity/opportunity';
-import { Newquote } from './../../quote/quote';
+ 
 import { OpportunityUpdate } from './../../opportunity/opportunity';
 
 @Component({
@@ -58,12 +58,30 @@ export class DealDetailComponent implements OnInit {
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params.id;
     this.items = {
-      quote: {
-        quote_number: "",
-        grand_total: 0,
-        contact: "",
-        user: "",
+      name: "",
+      start_date: {
+        year: 0,
+        month: 0,
+        day: 0,
       },
+      closed_date: {
+        year: 0,
+        month: 0,
+        day: 0,
+      },
+      expecting_closing_date: {
+        year: 0,
+        month: 0,
+        day: 0,
+      },
+      quote:{
+        id: "0",
+        quote_number: null,
+        name: null,
+        grand_total: null,
+        contact: "  ",
+        user: false,
+      }
 
     }
     this.httpGet();
@@ -102,7 +120,7 @@ export class DealDetailComponent implements OnInit {
       this.loading = false;
 
       this.sales_order = data['result']['sales_order'];
-      this.quoteModel = new Newquote(0, '', '', '', '', 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', true);
+      
       this.lead_source = data['result']['lead_source'];
 
 
@@ -215,26 +233,13 @@ export class DealDetailComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    this.modalService.open(content, { size: 'lg' });
   }
 
   openLg(content) {
     this.modalService.open(content, { size: 'lg' });
   }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
+ 
 
   fn_delete() {
     if (confirm('Delete this Opportunity ?')) {
