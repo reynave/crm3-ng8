@@ -8,6 +8,9 @@ import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 import { AppRoutingModule } from './app-routing.module';
+import { CurrencyMaskModule } from "ng2-currency-mask";
+import { CurrencyMaskConfig, CURRENCY_MASK_CONFIG } from "ng2-currency-mask/src/currency-mask.config";
+
 import { AppComponent } from './app.component';
 import { LeadComponent } from './lead/lead.component';
 import { LeadDetailComponent } from './lead/lead-detail/lead-detail.component'; 
@@ -50,6 +53,19 @@ import { UserComponent } from './user/user.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { LeadConverdComponent } from './lead/lead-converd/lead-converd.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+
+
+export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
+  align: "right",
+  allowNegative: false,
+  decimal: ",",
+  precision: 0,
+  prefix: "Rp ",
+  suffix: "",
+  thousands: "."
+};
+
+
 
 @NgModule({
   declarations: [
@@ -109,9 +125,15 @@ import { DashboardComponent } from './dashboard/dashboard.component';
       primaryColour: '#ffffff',
       secondaryColour: '#ffffff',
       tertiaryColour: '#ffffff'
-    })
+    }),
+    CurrencyMaskModule
   ],
-  providers: [],
+  providers: [
+    { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig }
+  ],
   bootstrap: [AppComponent]
 })
+
+
+
 export class AppModule { }

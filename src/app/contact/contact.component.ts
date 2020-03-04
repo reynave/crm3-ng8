@@ -89,40 +89,8 @@ export class ContactComponent implements OnInit {
 
   submit: boolean = false;
 
-  onSubmit(value = "") {
-
-    this.submit = true;
-    this.http.post(this.configService.base_url() + 'contact/insert',
-      {
-        "data": this.modelContact 
-      }, {
-        headers: this.configService.headers()
-      }).subscribe(
-        data => {
-          console.log(data);
-          this.submit = false;
-          if (value == 'next') {
-            this.httpGet();
-            this.modelContact = new NewContact('0', '', '', '', '', '0','','0','','');
-          }
-          else {
-            this.router.navigate(['/contact/', data['result']['id']]);
-            this.modalService.dismissAll();
-
-          }
-
-
-        },
-        error => {
-          console.log(error);
-          console.log(error.error.text);
-        }
-      );
-  }
-
-  get diagnostic() { return JSON.stringify(this.modelContact); }
-
-
+ 
+  
   fn_delete() {
 
     this.http.post(this.configService.base_url() + 'contact/fn_delete',
@@ -147,23 +115,10 @@ export class ContactComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    this.modalService.open(content, { size: 'lg' });
   }
 
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
+ 
 
   fn_check(x) {
     this.objIndex = this.items.findIndex((obj => obj.id == x.id));

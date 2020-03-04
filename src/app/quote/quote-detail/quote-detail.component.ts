@@ -65,9 +65,9 @@ export class QuoteDetailComponent implements OnInit {
     this.httpGet();
   }
   contact: any = [];
-  user: any = [];
-  fileOutput:any=[];
-  
+  user: any = []; profile: any = [];
+  fileOutput: any = [];
+
   httpGet() {
     this.loading = true;
     this.http.get(this.configService.base_url() + 'quote/detail/' + this.id, {
@@ -78,6 +78,7 @@ export class QuoteDetailComponent implements OnInit {
       this.quote_item = data['result']['quote_item'];
       this.pricing = data['result']['pricing'];
       this.loading = false;
+      this.profile = data['result']['profile'];
       this.contact = data['result']['contact'];
       this.quote_status = data['result']['quote_status'];
       this.total = data['result']['total'];
@@ -212,7 +213,13 @@ export class QuoteDetailComponent implements OnInit {
     this.modalService.open(content, { size: 'lg' });
   }
 
-
+  fn_max_discount(){
+    if (this.quoteModel['discount'] > this.profile['max_discount']) {
+      alert("Your maximum discount is " + this.profile['max_discount'] + " %"); 
+      this.httpGet();
+    }  
+ 
+  }
   fn_removeQuoteitem(x) {
     this.loading = true;
     var objIndex = this.quote_item.findIndex((obj => obj.id == x.id));
@@ -241,25 +248,32 @@ export class QuoteDetailComponent implements OnInit {
   }
 
   fn_updateQuoteitem(x) {
-    this.loading = true;
-    this.http.post(this.configService.base_url() + 'quote/fn_updateQuoteitem',
-      {
-        "id": this.id,
-        "data": x
-      }, {
-      headers: this.configService.headers()
-    }).subscribe(
-      data => {
-        console.log(data);
-        this.loading = false;
-        this.quote_item = data['result']['quote_item'];
-        this.pricing = data['result']['pricing'];
-      },
-      error => {
-        console.log(error);
-        console.log(error.error.text);
-      }
-    );
+  
+    if (x.discount > this.profile['max_discount']) {
+      alert("Your maximum discount is " + this.profile['max_discount'] + " %");
+      
+      this.httpGet();
+    } else { 
+      this.loading = true;
+      this.http.post(this.configService.base_url() + 'quote/fn_updateQuoteitem',
+        {
+          "id": this.id,
+          "data": x
+        }, {
+        headers: this.configService.headers()
+      }).subscribe(
+        data => {
+          console.log(data);
+          this.loading = false;
+          this.quote_item = data['result']['quote_item'];
+          this.pricing = data['result']['pricing'];
+        },
+        error => {
+          console.log(error);
+          console.log(error.error.text);
+        }
+      );
+    }
   }
 
   fn_update_status(id_quote_status) {
@@ -288,7 +302,7 @@ export class QuoteDetailComponent implements OnInit {
   }
 
 
-  selectedFile = null;
+  selectedFile = null; uploadLoading: boolean = false;
   onFileSelected(event) {
     this.selectedFile = event.target.files[0];
   }
@@ -297,22 +311,13 @@ export class QuoteDetailComponent implements OnInit {
     fd.append('files', this.selectedFile, this.selectedFile.name);
     fd.append('token', this.configService.token());
     fd.append('id_module', this.id);
-
+    this.uploadLoading = true;
     console.log(fd, this.configService.token());
-    this.http.post(this.configService.base_url() + 'upload/quotes_attachment', fd, {
-      reportProgress: true,
-      observe: 'events'
-    })
+    this.http.post(this.configService.base_url() + 'upload/quotes_attachment', fd)
       .subscribe(
-        event => {
-          if (event.type === HttpEventType.UploadProgress) {
-            console.log(event); // handle event here
-          } else if (event.type === HttpEventType.Response) {
-            console.log(event); // handle event here
-          }
 
-        },
         data => {
+          this.uploadLoading = false;
           console.log(data);
           this.attachment = data['result']['attachment'];
 
@@ -354,16 +359,16 @@ export class QuoteDetailComponent implements OnInit {
 
   }
 
-  approved(id_quote_status){
+  approved(id_quote_status) {
     this.loading = true;
     this.http.post(this.configService.base_url() + 'quote/approved',
       {
-        "id": this.id, 
-        "id_quote_status" : id_quote_status, 
+        "id": this.id,
+        "id_quote_status": id_quote_status,
       }, {
       headers: this.configService.headers()
     }).subscribe(
-      data => { 
+      data => {
         this.httpGet();
       },
       error => {
@@ -374,13 +379,13 @@ export class QuoteDetailComponent implements OnInit {
   }
 
 
-  generate() { 
-    
+  generate() {
+
     this.http.get(this.configService.base_url() + 'output/quote/' + this.id, {
       headers: this.configService.headers()
-    }).subscribe(data => { 
-      this.httpGet();  
-      var url = data['url']; 
+    }).subscribe(data => {
+      this.httpGet();
+      var url = data['url'];
       window.open(url, '_blank').focus();
     }, error => {
       console.log(error);
@@ -390,15 +395,15 @@ export class QuoteDetailComponent implements OnInit {
   }
 
 
-  send(){
+  send() {
     this.loading = true;
     this.http.post(this.configService.base_url() + 'quote/send',
       {
-        "id": this.id, 
+        "id": this.id,
       }, {
       headers: this.configService.headers()
     }).subscribe(
-      data => { 
+      data => {
         this.httpGet();
       },
       error => {
@@ -409,6 +414,9 @@ export class QuoteDetailComponent implements OnInit {
 
   }
 
-  test: string = "<!DOCTYPE html><html lang='en'><head><meta charset='utf-8'><title>Database Error</title><style type='text/css'>::selection{background-color: #E13300; color: white;}::-moz-selection{background-color: #E13300; color: white;}body{background-color: #fff;margin: 40px;font: 13px/20px normal Helvetica, Arial, sans-serif;color: #4F5155;}a{color: #003399;background-color: transparent;font-weight: normal;}h1{color: #444;background-color: transparent;border-bottom: 1px solid #D0D0D0;font-size: 19px;font-weight: normal;margin: 0 0 14px 0;padding: 14px 15px 10px 15px;}code{font-family: Consolas, Monaco, Courier New, Courier, monospace;font-size: 12px;background-color: #f9f9f9;border: 1px solid #D0D0D0;color: #002166;display: block;margin: 14px 0 14px 0;padding: 12px 10px 12px 10px;}#container{margin: 10px;border: 1px solid #D0D0D0;box-shadow: 0 0 8px #D0D0D0;}p{margin: 12px 15px 12px 15px;}</style></head><body><div id='container'><h1><br>A Database Error Occurred</h1><p>Error Number: 1054</p><p>Unknown column '6c' in 'where clause'</p><p>SELECT SUM(total) FROM crm3_quote_detail WHERE presence=1 AND id_quote=6c</p><p>Filename: C:/xampp/htdocs/application/crm3-ng8/api-v1/system/database/DB_driver.php</p><p>Line Number: 691</p></div></body></html>";
+
+
+
+  test: string = "";
 
 }

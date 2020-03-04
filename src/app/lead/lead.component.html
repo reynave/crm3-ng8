@@ -172,36 +172,9 @@
           </div>
 
 
-          <div class="form-group row no-gutters">
-            <label for="h4" class="col-sm-4 col-form-label">Phone</label>
-            <div class="col-sm-8">
-              <input type="text" class="form-control border" [(ngModel)]="model.phone" name="phone" id="h4">
-            </div>
-          </div>
-
-
         </div>
 
         <div class="col-6">
-
-
-          <div class="form-group row no-gutters">
-            <label for="h5" class="col-sm-4 col-form-label">Lead Source </label>
-            <div class="col-sm-8">
-              <select class="form-control border" [(ngModel)]="model.id_lead_source" name="id_lead_source" id="h5">
-                <option [ngValue]="x.id" *ngFor="let x of selected.lead_source">{{x.name}}</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group row no-gutters">
-            <label for="h6" class="col-sm-4 col-form-label"> Lead owner </label>
-            <div class="col-sm-8">
-              <select class="form-control border" [(ngModel)]="model.id_user" name="id_user" id="h6">
-                <option [ngValue]="x.id" *ngFor="let x of selected.id_user">{{x.name}}</option>
-              </select>
-            </div>
-          </div>
-
           <div class="form-group row no-gutters">
             <label for="h5" class="col-sm-4 col-form-label">Lead Status </label>
             <div class="col-sm-8">
@@ -213,6 +186,42 @@
           </div>
 
 
+          <div class="form-group row no-gutters">
+            <label for="h5a" class="col-sm-4 col-form-label">Position </label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control border" [(ngModel)]="model.position" name="position" id="h5a">
+            </div>
+          </div>
+
+
+          <div class="form-group row no-gutters">
+            <label for="h5b" class="col-sm-4 col-form-label">Department </label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control border" [(ngModel)]="model.department" name="department" id="h5b">
+            </div>
+          </div>
+
+
+          <div class="form-group row no-gutters">
+            <label for="h5" class="col-sm-4 col-form-label">Lead Source </label>
+            <div class="col-sm-8">
+              <select class="form-control border" [(ngModel)]="model.id_lead_source" name="id_lead_source" id="h5">
+                <option [ngValue]="x.id" *ngFor="let x of selected.lead_source">{{x.name}}</option>
+              </select>
+            </div>
+          </div>
+
+
+          <div class="form-group row no-gutters">
+            <label for="h6" class="col-sm-4 col-form-label"> Lead owner </label>
+            <div class="col-sm-8">
+              <select class="form-control border" [(ngModel)]="model.id_user" name="id_user" id="h6">
+                <option [ngValue]="x.id" *ngFor="let x of selected.id_user">{{x.name}}</option>
+              </select>
+            </div>
+          </div>
+
+  
         </div>
 
       </div>
@@ -255,13 +264,13 @@
               </div>
             </div>
           </span>
-          <div class="form-group row no-gutters">
-            <label for="h14" class="col-sm-4 col-form-label">Industry</label>
-            <div class="col-sm-8">
-              <select class="form-control border" id="h14" [(ngModel)]="model.id_industry" name="id_industry">
-                <option value="0"> - Select - </option>
-                <option [ngValue]="x.id" *ngFor="let x of selected.industry">{{x.name}}</option>
 
+          <div class="form-group row no-gutters">
+            <label for="h14" class="col-sm-4 col-form-label">Company Class</label>
+            <div class="col-sm-8">
+              <select class="form-control form-modal" [(ngModel)]="model.id_company_class"
+                [ngModelOptions]="{standalone: true}">
+                <option value="{{x.id}}" *ngFor="let x of selected.company_class"> {{x.name}} </option>
               </select>
             </div>
           </div>
@@ -274,13 +283,38 @@
           </div>
 
 
+          <div class="form-group row no-gutters">
+            <label for="h4" class="col-sm-4 col-form-label">Phone</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control border" [(ngModel)]="model.phone" name="phone" id="h4">
+            </div>
+          </div>
 
+
+          <div class="form-group row no-gutters">
+            <label for="h4" class="col-sm-4 col-form-label">Fax</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control border" [(ngModel)]="model.fax" name="fax" id="h4">
+            </div>
+          </div>
+ 
+          <div class="form-group row no-gutters">
+            <label for="h14" class="col-sm-4 col-form-label">Industry</label>
+            <div class="col-sm-8">
+              <select class="form-control border" id="h14" [(ngModel)]="model.id_industry" name="id_industry">
+                <option value="0"> - Select - </option>
+                <option [ngValue]="x.id" *ngFor="let x of selected.industry">{{x.name}}</option>
+
+              </select>
+            </div>
+          </div>
+
+
+         
 
         </div>
 
-        <div class="col-6">
-
-
+        <div class="col-6"> 
 
           <div class="form-group row no-gutters">
             <label for="h21" class="col-sm-4 col-form-label">Address</label>
@@ -290,6 +324,7 @@
             </div>
 
             <div class="col-sm-8 offset-4 mb-1">
+              
               <input type="text" class="form-control border" maxlength="250" [(ngModel)]="model.address_city"
                 placeholder="City" name="address_city" id="h21b">
             </div>
@@ -305,7 +340,7 @@
             </div>
 
             <div class="col-sm-8 offset-4 mb-1">
-              <input type="text" class="form-control border" maxlength="6" [(ngModel)]="model.address_country"
+              <input type="text" class="form-control border" maxlength="250" [(ngModel)]="model.address_country"
                 placeholder="Country" name="address_country" id="h21e">
             </div>
           </div>

@@ -35,7 +35,7 @@
 
 
                 <div class="col-6 py-1">
-                  <label class="py-1">Assigned By</label>
+                  <label class="py-1">Assigned To</label>
                   <select class="form-control" [(ngModel)]="model.id_user" [ngModelOptions]="{standalone: true}">
                     <option value="{{x.id}}" *ngFor="let x of user"> {{x.name}}</option>
                   </select>
@@ -76,7 +76,7 @@
                     (click)="due_date.toggle()">
                 </div>
                 <div class="col-6 py-1">
-                  <label class="py-1">Assigned By</label>
+                  <label class="py-1">Assigned To</label>
                   <select class="form-control" [(ngModel)]="model.id_user" [ngModelOptions]="{standalone: true}">
                     <option value="{{x.id}}" *ngFor="let x of user"> {{x.name}}</option>
                   </select>
@@ -132,7 +132,7 @@
                 </div>
 
                 <div class="col-9 py-1 mt-1">
-                  <input type="number" name="amount" class="form-control text-right" [(ngModel)]="model.amount" j1="h1"
+                  <input type="text" name="amount" class="form-control text-right w-25" [(ngModel)]="model.amount" j1="h1" currencyMask 
                     (click)="showNewActivity=true;">
                 </div>
 
@@ -181,7 +181,7 @@
 
 
                 <div class="col-6 py-1">
-                  <label class="py-1">Assigned By</label>
+                  <label class="py-1">Assigned To</label>
                   <select class="form-control" [(ngModel)]="model.id_user" [ngModelOptions]="{standalone: true}">
                     <option value="{{x.id}}" *ngFor="let x of user"> {{x.name}}</option>
                   </select>
@@ -224,7 +224,7 @@
                 </div>
 
                 <div class="col-9 py-1 mt-1">
-                  <input type="number" name="amount" class="form-control text-right" [(ngModel)]="model.amount" j1="h1"
+                  <input type="text" name="amount" class="form-control text-right w-25" [(ngModel)]="model.amount" j1="h1" currencyMask 
                     (click)="showNewActivity=true;">
                 </div>
 
@@ -272,7 +272,7 @@
 
 
                 <div class="col-6 py-1">
-                  <label class="py-1">Assigned By</label>
+                  <label class="py-1">Assigned To</label>
                   <select class="form-control" [(ngModel)]="model.id_user" [ngModelOptions]="{standalone: true}">
                     <option value="{{x.id}}" *ngFor="let x of user"> {{x.name}}</option>
                   </select>
@@ -351,7 +351,7 @@
 
       </div>
 
-      <div><small>Assigned by <span class="text-primary"> {{x.user}}</span> for <span class="text-primary">
+      <div><small>Assigned To <span class="text-primary"> {{x.user}}</span> for <span class="text-primary">
             {{x.person.name}} </span> </small></div>
 
 
@@ -423,7 +423,7 @@
         </div>
       </div>
 
-      <div><small>Assigned by <span class="text-primary"> {{x.user}}</span> for <span class="text-primary">
+      <div><small>Assigned To <span class="text-primary"> {{x.user}}</span> for <span class="text-primary">
             {{x.person.name}} </span> </small></div>
 
       <div style="line-height: 90%;">

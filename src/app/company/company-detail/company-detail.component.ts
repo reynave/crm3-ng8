@@ -52,7 +52,12 @@ export class CompanyDetailComponent implements OnInit {
   }
 
   requestEmit(event) {
+    console.log('requestEmit cd : ',event);
+    
     if(event == 'fn_newOpportunity'){
+      this.httpGet();
+    }
+    else if(event=='contact'){
       this.httpGet();
     }
     this.modalService.dismissAll();

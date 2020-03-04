@@ -37,17 +37,17 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.httpGet();
-   
-
-
   }
+  
 
   httpGet() {
     this.loading = true;
     this.http.get(this.configService.base_url() + 'dashboard', {
       headers: this.configService.headers()
     }).subscribe(data => {
-      console.log(data);
+      if(data['error'] == 400){
+        window.location.href= this.configService.login();
+      }
       this.lead = data['result']['lead'];
 
       this.event = data['result']['event'];

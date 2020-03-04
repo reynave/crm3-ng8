@@ -77,6 +77,17 @@
                                         </td>
                                     </tr>
 
+
+                                    <tr>
+                                        <td>Target Amount per Year </td>
+                                        <td>
+                                            <input type="text" class="form-control form-modal"  currencyMask 
+                                                [(ngModel)]="model.target_amount_year" id="target_amount_year" name="target_amount_year"
+                                                required>
+
+                                        </td>
+                                    </tr>
+
                                 </table>
 
                             </div>
@@ -110,21 +121,26 @@
                                     </tr>
 
                                     <tr width="40%">
-                                        <td>Status</td>
+                                        <td>Status  </td>
                                         <td>
                                             <select class="form-control form-modal" [(ngModel)]="model.status"
                                                 id="status" name="id_user_access" required>
-                                                <option value="false">False</option>
-                                                <option value="true">True</option>
+                                                <option value="0">False</option>
+                                                <option value="1">True</option>
                                             </select>
 
                                         </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td> Password </td>
+                                        <td>  <input type="password" class="form-control" [(ngModel)]="model.pass"
+                                            id="pass" name="pass" > </td>
                                     </tr>
                                 </table>
 
                             </div>
                         </div>
-
  
                 </div>
 

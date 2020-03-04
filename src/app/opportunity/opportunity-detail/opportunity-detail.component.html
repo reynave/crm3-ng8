@@ -29,11 +29,11 @@
       <div [hidden]="!isReadOnly">
         <span [hidden]="!items.final_stage">
 
-          <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="openLg(win)"> <i
+          <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="openLg('win')"> <i
               class="fas fa-thumbs-up"></i>
             Closed Deal </button>
 
-          <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="openLg(lose)"> <i
+          <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="openLg('lose')"> <i
               class="fas fa-thumbs-down"></i> Closed Lose </button>
         </span>
 
@@ -103,23 +103,23 @@
 
 
           <div class="col-12">
-
-
+ 
             <div [hidden]="id_stage != '100'">
-
+              
               <div class="form-group row">
                 <label for="c01" class="col-sm-3 col-12 col-form-label"> Expecting Closing Date </label>
                 <div class="col-sm-3">
-                  <input type="text" class="form-control form-modal border" placeholder="yyyy-mm-dd"
-                    (click)="dd.toggle()" readonly name="dd" id="c01"
+                  <input type="text" class="form-control form-modal border" placeholder="yyyy-mm-dd" 
+                    (click)="dd.toggle()" readonly name="dd" id="c01"  
                     [(ngModel)]="updateOpportunity.expecting_closing_date" ngbDatepicker #dd="ngbDatepicker">
+                    <a href="javascript:;" (click)="updateQuiz();"> <small>Update</small> </a>
                 </div>
               </div>
 
               <div class="form-group row">
-                <label for="c02" class="col-sm-3 col-12 col-form-label"> Opportunity budget </label>
+                <label for="c02" class="col-sm-3 col-12 col-form-label"> Opportunity Budget (IDR) </label>
                 <div class="col-sm-6">
-                  <input type="number" class="form-control form-modal border" name="budget"
+                  <input type="text" class="form-control form-modal border w-50" name="budget" currencyMask (change)="updateQuiz();"  
                     [(ngModel)]="updateOpportunity.budget" id="c02">
                 </div>
               </div>
@@ -129,7 +129,7 @@
                   ({{product.length}})</label>
                 <div class="col-sm-9">
                   <span *ngFor="let x of product; let i = index" class="btn btn-classic mr-1 mb-1">
-                    {{x.product.name}} <a href="javascript:;" class="text-danger"> <i class="far fa-trash-alt"></i> </a>
+                    {{x.product.name}} <a href="javascript:;" (click)="fn_delete_prorduct(x);" class="text-danger"> <i class="far fa-trash-alt"></i> </a>
                   </span>
                   <div>
                     <button class="btn btn-classic btn-sm" (click)="open(addPriceList);"><i class="fas fa-plus"></i>
@@ -141,7 +141,7 @@
               <div class="form-group row">
                 <label for="c091" class="col-sm-3 col-12 col-form-label">Competitor</label>
                 <div class="col-sm-8">
-                  <input type="text" class="form-control form-modal border" name="competitor"
+                  <input type="text" class="form-control form-modal border" name="competitor"  (change)="updateQuiz();"
                     [(ngModel)]="updateOpportunity.competitor" id="c091">
                 </div>
               </div>
@@ -149,7 +149,7 @@
               <div class="form-group row">
                 <label for="c02123" class="col-sm-3 col-12 col-form-label"> Contact Person</label>
                 <div class="col-sm-6">
-                  <select id="c02123" class="form-control form-modal" [(ngModel)]="updateOpportunity.id_contact"
+                  <select id="c02123" class="form-control form-modal" [(ngModel)]="updateOpportunity.id_contact"  (change)="updateQuiz();"
                     [ngModelOptions]="{standalone: true}">
                     <option value="{{x.id}}" *ngFor="let x of contact">{{x.name}} </option>
                   </select>
@@ -158,8 +158,15 @@
 
               <div class="row">
                 <div class="offset-3 col-6">
-                  <button type="button" (click)="updateStep('100','0')" class="btn btn-primary"> Done and Next Step
+
+                  <button type="button" (click)="updateQuiz();" class="btn btn-outline-primary mr-2"> Save Only
                   </button>
+
+
+                  <button type="button" (click)="updateStep(100,0)" class="btn btn-primary"> Done and Next Step
+                  </button>
+
+                  {{loadingUpdateQuiz}}
                   {{updateOpportunity.done}}
                 </div>
               </div>
@@ -170,7 +177,7 @@
               <div class="form-group row ">
                 <label for="b101" class="col-sm-3 col-form-label">Comparison with competitor </label>
                 <div class="col-sm-6">
-                  <input type="text" class="form-control border" name="comparison_with_competitor"
+                  <input type="text" class="form-control border" name="comparison_with_competitor"  (change)="updateQuiz();"
                     [(ngModel)]="updateOpportunity.comparison_with_competitor" id="b101">
                 </div>
               </div>
@@ -180,7 +187,7 @@
               <div class="form-group row ">
                 <label for="b102" class="col-sm-3 col-form-label">Critical point </label>
                 <div class="col-sm-6">
-                  <input type="text" class="form-control border" name="critical_point"
+                  <input type="text" class="form-control border" name="critical_point"  (change)="updateQuiz();"
                     [(ngModel)]="updateOpportunity.critical_point" id="b102">
                 </div>
               </div>
@@ -188,7 +195,7 @@
               <div class="form-group row ">
                 <label for="b103" class="col-sm-3 col-form-label">Our proposal </label>
                 <div class="col-sm-6">
-                  <textarea class="form-control border" name="our_proposal" [(ngModel)]="updateOpportunity.our_proposal"
+                  <textarea class="form-control border" name="our_proposal" [(ngModel)]="updateOpportunity.our_proposal"  (change)="updateQuiz();"
                     id="b103"></textarea>
                 </div>
               </div>
@@ -197,7 +204,7 @@
               <div class="form-group row ">
                 <label for="b104" class="col-sm-3 col-form-label">Other </label>
                 <div class="col-sm-6">
-                  <textarea class="form-control border" name="notes1" [(ngModel)]="updateOpportunity.notes1"
+                  <textarea class="form-control border" name="notes1" [(ngModel)]="updateOpportunity.notes1"  (change)="updateQuiz();"
                     id="b104"></textarea>
                 </div>
               </div>
@@ -205,8 +212,14 @@
 
               <div class="row">
                 <div class="offset-3 col-6">
-                  <button type="button" (click)="updateStep('101','0')" class="btn btn-primary"> Done and Next Step
+                  <button type="button" (click)="updateQuiz();" class="btn btn-outline-primary mr-2"> Save Only
                   </button>
+
+                  <button type="button" (click)="updateStep(101,0)" class="btn btn-primary"> Done and Next Step
+                  </button>
+
+                  
+                  {{loadingUpdateQuiz}}
                 </div>
               </div>
 
@@ -217,7 +230,7 @@
               <div class="form-group row ">
                 <label for="b301" class="col-sm-3 col-form-label">Quotation</label>
                 <div class="col-sm-6">
-                  <select id="b301" class="form-control border" [(ngModel)]="updateOpportunity.id_quote"
+                  <select id="b301" class="form-control border" [(ngModel)]="updateOpportunity.id_quote"  (change)="updateQuiz();"
                     name="c_id_quote" required [ngModelOptions]="{standalone: true}">
                     <option value="{{x.id}}" *ngFor="let x of quotes">{{x.quotes_number}} ver {{x.version}} - {{x.name}}
                       {{x.syncing ? "(Syncing)":""}}
@@ -258,7 +271,7 @@
               <div class="form-group row ">
                 <label for="b304" class="col-sm-3 col-form-label">Notes </label>
                 <div class="col-sm-6">
-                  <textarea class="form-control border" name="notes2" [(ngModel)]="updateOpportunity.notes2"
+                  <textarea class="form-control border" name="notes2" [(ngModel)]="updateOpportunity.notes2"  (change)="updateQuiz();"
                     id="b304"></textarea>
                 </div>
               </div>
@@ -266,8 +279,12 @@
 
               <div class="row">
                 <div class="offset-3 col-6">
-                  <button type="button" (click)="updateStep('103','0')" class="btn btn-primary"> Done and Next Step
+                  <button type="button" (click)="updateQuiz();" class="btn btn-outline-primary mr-2"> Save Only
                   </button>
+
+                  <button type="button" (click)="updateStep(103,0)" class="btn btn-primary"> Done and Next Step
+                  </button>
+                  {{loadingUpdateQuiz}}
                 </div>
               </div>
 
@@ -307,7 +324,7 @@
               <div class="form-group row ">
                 <label for="d104" class="col-sm-3 col-form-label">Notes </label>
                 <div class="col-sm-6">
-                  <textarea class="form-control border" name="notes3" [(ngModel)]="updateOpportunity.notes3"
+                  <textarea class="form-control border" name="notes3" [(ngModel)]="updateOpportunity.notes3"  (change)="updateQuiz();"
                     id="d104"></textarea>
                 </div>
               </div>
@@ -316,15 +333,18 @@
               <div class="form-group row ">
                 <label for="d104" class="col-sm-3 col-form-label"> Final Decision</label>
                 <div class="col-sm-6">
+                  <button type="button" (click)="updateQuiz();" class="btn btn-outline-primary mr-2"> Save Only
+                  </button>
 
 
-                  <button type="button" class="btn btn-danger  btn-lg mr-1" (click)="updateStep('104','3000')"> <i
+                  <button type="button" class="btn btn-danger  btn-lg mr-1" (click)="updateStep(104,3000)"> <i
                       class="fas fa-thumbs-down"></i> <b> Closed Lose </b> </button>
 
-                  <button type="button" class="btn btn-success btn-lg  mr-1" (click)="updateStep('104','1000')"> <i
+                  <button type="button" class="btn btn-success btn-lg  mr-1" (click)="updateStep(104,1000)"> <i
                       class="fas fa-thumbs-up"></i>
                     <b> Closed Deal</b> </button>
 
+                    {{loadingUpdateQuiz}}
                 </div>
               </div>
 
@@ -458,7 +478,7 @@
 
                             <span [hidden]="!isReadOnly">
                               <input type="text" class="form-control form-modal w-75"
-                                value=" {{updateOpportunity.expecting_closing_date.day}}/{{updateOpportunity.expecting_closing_date.month}}/{{updateOpportunity.expecting_closing_date.year}}"
+                                value=" {{updateOpportunity.expecting_closing_date.day}}/{{updateOpportunity.expecting_closing_date.month}}/{{updateOpportunity.expecting_closing_date.year}}" 
                                 [readonly]="isReadOnly">
                             </span>
 
@@ -523,7 +543,7 @@
                     <div class="row">
                       <div class="col-12 text-center p-1">
                         <a class="btn btn-outline-secondary m-1" (click)="isReadOnly=true">Finish Edit</a>
-                        <button type="submit" class="btn btn-primary m-1"
+                        <button type="submit" class="btn btn-primary m-1" (click)="isReadOnly=true" 
                           [disabled]="!mainForm.form.valid">Save</button>
                       </div>
                     </div>
@@ -578,47 +598,7 @@
                     </div>
                   </div>
                 </div>
-
-                <!-- Competitor -->
-                <div class="row py-2">
-                  <div class="col-12 ">
-                    <div class="border py-1 px-2 border-top-brown rounded">
-
-                      <div class="row">
-                        <div class="col-6"><strong>Competitor </strong></div>
-                        <div class="col-6 text-right"> <button class="btn btn-classic btn-sm"><i
-                              class="fas fa-plus"></i>
-                            New</button> </div>
-                      </div>
-
-                      <div class="row">
-                        <div class="col-6 mb-2">
-
-                          <table class="table-items">
-                            <thead>
-                              <tr>
-                                <th> <a href="">PT Sumer Daya Teknologi</a></th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>Strong : ....</td>
-                              </tr>
-                              <tr>
-                                <td>Weakess : ....</td>
-                              </tr>
-                            </tbody>
-                          </table>
-
-                          <hr class="p-0 m-0 mt-2">
-                        </div>
-
-                      </div>
-
-
-                    </div>
-                  </div>
-                </div>
+ 
 
 
                 <div class="border bg-light p-1 my-2 rounded-sm">
@@ -752,13 +732,15 @@
                 <table class="table-items">
                   <thead>
                     <tr>
-                      <th> <a href="javascript:;"> {{x.name}} <span [hidden]="!x.active"> <i class="fas fa-check"></i>
-                          </span></a></th>
+                      <th> 
+                        <a [routerLink]="[ '/contact', x.id ]">{{x.name}} <span [hidden]="!x.active"> <i class="fas fa-check"></i>
+                          </span></a>
+                        </th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td>{{x.postion}}, {{x.department}} </td>
+                      <td>{{x.position}}, {{x.department}} </td>
                     </tr>
 
                   </tbody>
@@ -795,7 +777,7 @@
     <table>
       <thead>
         <tr>
-          <th>asdfasdf</th>
+          <th> </th>
         </tr>
       </thead>
       <tbody>
@@ -821,7 +803,7 @@
     </div>
     <div class="modal-body bg-white">
       <div class="container-fluid">
-
+       <code>{{ quoteModel | json}} </code> 
         <div class="row">
           <div class="col-12 bg-light">
             <strong>Quotes Information</strong>
@@ -882,8 +864,8 @@
               <tr>
                 <td>Description</td>
                 <td>
-                  <textarea class="form-control form-modal" [(ngModel)]="quoteModel.desciption"
-                    name="q_desciption"></textarea>
+                  <textarea class="form-control form-modal" [(ngModel)]="quoteModel.description"
+                    name="q_description"></textarea>
 
                 </td>
               </tr>
@@ -900,7 +882,7 @@
             <table class="table table-borderless">
               <tr>
                 <td width="40%">Contact Name</td>
-                <td><select class="form-control form-modal" [(ngModel)]="quoteModel.id_contact" name="q_id_contact">
+                <td><select class="form-control form-modal" [(ngModel)]="quoteModel.id_contact" name="q_id_contact" (change)="lookingContact($event)">
                     <option value="{{x.id}}" *ngFor="let x of contact">{{x.name}}</option>
                   </select></td>
               </tr>

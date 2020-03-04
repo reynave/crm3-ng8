@@ -5,7 +5,7 @@ export class Newquote {
     constructor( 
         public name: string,
         public expirationDate: any, 
-        public desciption:string,   
+        public description:string,   
         public id_user : string, 
         public id_contact : string, 
         
@@ -36,12 +36,12 @@ export class Editquote {
   constructor( 
       public name: string,
       public expirationDate: any,
-      public id_quote_status: number,
+      public id_quote_status: string,
       public description:string,
       public discount : string,
       public tax: string,
-      public shipping : number, 
-      public id_user : number, 
+      public shipping : string, 
+      public id_user : string, 
       
       public email:string,
       public phone:string,

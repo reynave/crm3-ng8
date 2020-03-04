@@ -31,6 +31,9 @@ export class EditUser {
         
         public email:string,
         public status:boolean, 
+        public pass:string, 
+        public target_amount_year:string, 
+        
     ){}
 
 }

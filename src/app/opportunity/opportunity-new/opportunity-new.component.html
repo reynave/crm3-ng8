@@ -47,8 +47,8 @@
         <div class="form-group row no-gutters">
             <label for="h21" class="col-sm-3 col-form-label" id="h21">  Amount Estimation (IDR) </label>
             <div class="col-sm-8">
-                <input type="number" class="form-control border" name="amount"   [(ngModel)]="model.amount"
-                    maxlength="250" id="h21">
+                <input type="text" class="form-control border w-50" name="amount"   [(ngModel)]="model.amount"
+                    maxlength="250" id="h21" currencyMask >
             </div>
         </div>
 

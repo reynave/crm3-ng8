@@ -19,7 +19,7 @@ export class ContactNewComponent implements OnInit {
   public closeResult: string;
   modelContact: any;
   module: string = this.activatedRoute.snapshot.url[0].path;
-
+  saveLabel : string = "Save";
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -31,6 +31,9 @@ export class ContactNewComponent implements OnInit {
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params.id;
     this.modelContact = new NewContact('', '', '', '', '', '', '', '','','');
+    if(this.module == 'contact'){
+      this.saveLabel = "Save & Go Detail";
+    }
     this.httpGet();
   }
 
@@ -60,7 +63,7 @@ export class ContactNewComponent implements OnInit {
         '',
         '',
         data['result']['data']['id_user'],
-        '','','');
+        data['result']['data']['id_company'],'','');
       console.log(data);
       this.loading = false;
     }, error => {
@@ -80,10 +83,10 @@ export class ContactNewComponent implements OnInit {
       data => {
         console.log(data);
         this.loading = false;
-        if (this.module == 'contact') { 
-          this.uploaded.emit( data['result']['id']);
+        if (this.module == 'company') {  
+          this.uploaded.emit('contact');
         } else {
-          this.uploaded.emit();
+          this.uploaded.emit( data['result']['id']);
         }
 
       },
@@ -95,6 +98,7 @@ export class ContactNewComponent implements OnInit {
   }
 
   close(){
+   
     this.uploaded.emit();
   }
 }

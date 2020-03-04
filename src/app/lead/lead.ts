@@ -146,6 +146,12 @@ export class Newlead {
 
         public id_company: string,
         public id_lead_status: string,
+        public id_company_class: string,
+        
+        public position: string,
+        public department: string,
+        public fax: string, 
+        
     ) { }
 
 }
@@ -203,7 +209,7 @@ export class LeadConvert{
         public amount: number,
      
         public id_user: string,
-        public id_opportunity_stage: string,
+        public expecting_closing_date: any,
 
         
     ) { }
@@ -233,7 +239,8 @@ export class UpdateLead {
         public position: string,
         public amount: number,
         public id_company_class: string,
-        public department: string
+        public department: string,
+        public fax: string
 
         
     ) { }

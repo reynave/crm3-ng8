@@ -5,7 +5,7 @@
 <div class="container-fluid bg-light border-bottom py-1">
     <div class="row">
         <div class="col-12">
-            <small> You are here : <a [routerLink]="[ '/priceList' ]">Product Price List </a> /
+            <small> You are here : <a [routerLink]="[ '/priceList' ]">Product Price </a> /
                 <a [routerLink]="[ '/priceList/',id ]"> {{items.name}} </a> </small>
         </div>
     </div>
@@ -22,7 +22,7 @@
             <!-- Header & button -->
             <div class="col-3 bg-light py-2">
                 <div class="module-name">
-                    <strong>PRODUCT PRICE LIST</strong>
+                    <strong>PRODUCT PRICE</strong>
                     <b class="text-primary"> {{items.name}} </b>
                 </div>
             </div>
@@ -84,7 +84,7 @@
 
                         <td width="150"> <b class="text-primary" [hidden]="!isReadOnly">
                                 {{items.price | number}} </b>
-                            <input type="number" class="form-control form-control-sm" style="width: 150px;"
+                            <input type="text" class="form-control form-control-sm" style="width: 150px;" currencyMask 
                                 [(ngModel)]="priceListUpdate.price" name="price" [hidden]="isReadOnly"
                                 [ngModelOptions]="{standalone: true}">
                         </td>
@@ -111,7 +111,7 @@
                         <div class="row">
                             <div class="col-12 text-center p-1">
                                 <a class="btn btn-outline-secondary m-1" (click)="isReadOnly=true">Finish Edit</a>
-                                <button type="submit" class="btn btn-primary m-1"
+                                <button type="submit" class="btn btn-primary m-1" (click)="isReadOnly=true"
                                     [disabled]="!mainForm.form.valid">Save</button>
                             </div>
 

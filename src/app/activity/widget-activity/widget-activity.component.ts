@@ -53,7 +53,7 @@ export class WidgetActivityComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log( this.route.snapshot);
+    // console.log( this.route.snapshot);
     this.module = this.route.snapshot.url[0].path;
     this.id = "false";
     if( this.route.snapshot.url[1] ){
@@ -77,19 +77,19 @@ export class WidgetActivityComponent implements OnInit {
         this.activityHistory = data['result']['history'];
       },
       error => {
-        console.log(error);
+        // console.log(error);
       }
     );
   }
 
   httpGet() {
     var link = this.configService.base_url() + 'activity/httpGet/' + this.module + '/' + this.id;
-    console.log('link',link, this.module );
+    // console.log('link',link, this.module );
     this.http.get(link, {
       headers: this.configService.headers()
     }).subscribe(
       data => {
-        console.log(data);
+        // console.log(data);
         this.items = data['result']['data'];
         this.model = new WidgetActivty(this.id_activity_type, this.id_user, "", "0", '', '', this.date, this.date, this.date, "00:00", "00:00", data['result']['data']['id_company'], data['result']['data']['id_opporunty'], 0);
 
@@ -100,7 +100,7 @@ export class WidgetActivityComponent implements OnInit {
         this.user = data['result']['user'];
       },
       error => {
-        console.log(error);
+        // console.log(error);
       }
     );
   }
@@ -133,8 +133,8 @@ export class WidgetActivityComponent implements OnInit {
 
       },
       error => {
-        console.log(error);
-        console.log(error.error.text);
+        // console.log(error);
+        // console.log(error.error.text);
       }
     );
   }
@@ -144,7 +144,7 @@ export class WidgetActivityComponent implements OnInit {
   }
 
   fn_comments(comments, id, index,closed) {
-    console.log(comments, id, index);
+    // console.log(comments, id, index);
     
     this.http.post(this.configService.base_url() + 'activity/fn_comments',
       {
@@ -154,19 +154,19 @@ export class WidgetActivityComponent implements OnInit {
       headers: this.configService.headers()
     }).subscribe(
       data => { 
-        console.log(data);
+        // console.log(data);
         if(closed == 0){
-          console.log(closed);
+          // console.log(closed);
           this.activityLatest[index]['activity_comment'].push(data['result']['data']);
         } else if(closed == 1){
-          console.log(closed);
+          // console.log(closed);
           this.activityHistory[index]['activity_comment'].push(data['result']['data']);
         }
       //  this.activityHistory.unshift(data['result']['data']);
       },
       error => {
-        console.log(error);
-        console.log(error.error.text);
+        // console.log(error);
+        // console.log(error.error.text);
       }
     );
 
@@ -188,8 +188,8 @@ export class WidgetActivityComponent implements OnInit {
         this.activityHistory.unshift(data['result']['data']);
       },
       error => {
-        console.log(error);
-        console.log(error.error.text);
+        // console.log(error);
+        // console.log(error.error.text);
       }
     );
 
@@ -209,8 +209,8 @@ export class WidgetActivityComponent implements OnInit {
 
       },
       error => {
-        console.log(error);
-        console.log(error.error.text);
+        // console.log(error);
+        // console.log(error.error.text);
       }
     );
   }

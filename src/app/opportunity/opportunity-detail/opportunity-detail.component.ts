@@ -90,15 +90,15 @@ export class OpportunityDetailComponent implements OnInit {
       console.log(data);
       this.loading = false;
 
-      if( data['result']['data']['closed'] == true){
-        if(data['result']['data']['id_stage'] == 1000){
+      if (data['result']['data']['closed'] == true) {
+        if (data['result']['data']['id_stage'] == 1000) {
           this.router.navigate(['deal/', this.id]);
-        }else if(data['result']['data']['id_stage']  == 3000){
+        } else if (data['result']['data']['id_stage'] == 3000) {
           this.router.navigate(['lose/', this.id]);
         }
       }
 
-     
+
 
 
       this.items = data['result']['data'];
@@ -108,39 +108,39 @@ export class OpportunityDetailComponent implements OnInit {
       this.id_stage = data['result']['data']['id_stage'];
       this.product = data['result']['product'];
       this.business = data['result']['business'];
-     
+
 
       this.contact = data['result']['contact'];
       this.user = data['result']['user'];
-    
-       
+
+
 
       this.quoteModel = new Newquote(
         data['result']['data']['name'],
-        [], 
+        [],
         "",
         data['result']['data']['id_user'],
         data['result']['data']['id_contact'],
-      
 
-        data['result']['information']['email'],
-        data['result']['information']['phone'],
+
+        data['result']['data']['contact']['email'],
+        data['result']['data']['contact']['phone'],
         data['result']['information']['fax'],
 
-        data['result']['information']['bill_name'], 
-        data['result']['information']['bill_street1'], 
+        data['result']['information']['bill_name'],
+        data['result']['information']['bill_street1'],
         data['result']['information']['bill_city'],
         data['result']['information']['bill_state'],
         data['result']['information']['bill_code'],
         data['result']['information']['bill_country'],
 
-        data['result']['information']['ship_name'], 
-        data['result']['information']['ship_street1'], 
+        data['result']['information']['ship_name'],
+        data['result']['information']['ship_street1'],
         data['result']['information']['ship_city'],
         data['result']['information']['ship_state'],
         data['result']['information']['ship_code'],
         data['result']['information']['ship_country'],
-        
+
         false
       );
 
@@ -215,6 +215,18 @@ export class OpportunityDetailComponent implements OnInit {
 
   }
 
+
+  lookingContact(e){
+    console.log(e.target.value);
+    console.log(this.contact);
+
+    var objIndex = this.contact.findIndex((obj => obj.id == e.target.value ));
+    this.quoteModel['phone'] = this.contact[objIndex]['phone'];
+    this.quoteModel['email']= this.contact[objIndex]['email'];
+    
+
+  }
+
   fn_editable() {
 
   }
@@ -222,12 +234,12 @@ export class OpportunityDetailComponent implements OnInit {
   stageCurrent: string;
   updateStep(id, closed = 0) {
     console.log(id);
-    console.log(closed); 
+    console.log(closed);
     console.log(this.stage);
     console.log(this.id_stage);
-  
+
     if (closed < 999) {
- 
+
       var objIndex = this.stage.findIndex((obj => obj.id == id));
       this.stage[objIndex]['current'] = false;
 
@@ -242,7 +254,7 @@ export class OpportunityDetailComponent implements OnInit {
       {
         "id_opportunity": this.id,
         "id_stage": this.id_stage,
-        "closed" : closed,
+        "closed": closed,
         "data": this.updateOpportunity,
       }, {
       headers: this.configService.headers()
@@ -250,16 +262,16 @@ export class OpportunityDetailComponent implements OnInit {
       data => {
         this.loading = false;
         console.log(data);
-        if(closed == 1000){
+        if (closed == 1000) {
           this.router.navigate(['deal/', this.id]);
-        }else if(closed == 3000){
+        } else if (closed == 3000) {
           this.router.navigate(['lose/', this.id]);
-        }else{
-          
-      this.id_stage = id_next;
-      this.stage[objIndex]['done'] = "done";
+        } else {
+
+          this.id_stage = id_next;
+          this.stage[objIndex]['done'] = "done";
         }
-      
+
 
       },
       error => {
@@ -294,7 +306,28 @@ export class OpportunityDetailComponent implements OnInit {
   }
 
 
+  fn_delete_prorduct(data) {
 
+    var objIndex = this.product.findIndex((obj => obj.id == data.id));
+    this.product.splice(objIndex, 1);
+
+    
+    this.http.post(this.configService.base_url() + 'opportunity/fn_delete_prorduct',
+      {
+        "id_opportunity": this.id, 
+        "data": data,
+      }, {
+      headers: this.configService.headers()
+    }).subscribe(
+      data => { 
+        console.log(data); 
+      },
+      error => {
+        console.log(error);
+        console.log(error.error.text);
+      }
+    );
+  }
 
   open(content) {
     this.modalService.open(content);
@@ -368,6 +401,27 @@ export class OpportunityDetailComponent implements OnInit {
         this.modalService.dismissAll();
 
 
+      },
+      error => {
+        console.log(error);
+        console.log(error.error.text);
+      }
+    );
+  }
+
+  loadingUpdateQuiz:string="";
+  updateQuiz() {
+    this.loadingUpdateQuiz="Saving...";
+    this.http.post(this.configService.base_url() + 'opportunity/update',
+      {
+        "id": this.id,
+        "data": this.updateOpportunity
+      }, {
+      headers: this.configService.headers()
+    }).subscribe(
+      data => {
+        this.loadingUpdateQuiz="";
+        console.log(data);
       },
       error => {
         console.log(error);

@@ -12,38 +12,47 @@ export class ConfigService {
 
   varKey: string = "mXTSxrEKSErYnZb33LyBus5RpVtGNfcgEBqxp5Unk5azj4ZgdWfhkfVDKJ3KSLFG7DtecSehXe7Q67NGFWGehU3ANexas3ZbrkfU";
   varToken: string;
-  varHeaders: any = []; 
-  rules:any;
+  varHeaders: any = [];
+  rules: any;
+  varData : any = [];
   constructor(
     private http: HttpClient,
   ) {
-    if ( this.getCookie('cmr3ng8Token') === null) {
-      this.varToken = '';
-    } else {
-      this.varToken = this.getCookie('cmr3ng8Token'); 
+
+    if(  this.getCookie('cmr3ng8Token') == null || this.getCookie('cmr3ng8Access') == null){
+      window.location.href = this.login();
+    }else{
+      this.varToken = this.getCookie('cmr3ng8Token');
+      this.varData = JSON.parse(atob(this.getCookie('cmr3ng8Access')));
     }
 
+ 
   }
 
-  access_rules(module){
-   this.rules =  JSON.parse(localStorage.getItem('crm3ng8Rules')); 
-   return this.rules['result']['access_rules'][module]['access'];
+  // UNTUK NAVIGATOR & ACTIVE GUARD
+  access_rules(module) { 
+ 
+    return this.varData['result']['access_rules'][module]['access'];
   }
 
-  access_right(){
-    this.rules =  JSON.parse(localStorage.getItem('crm3ng8Rules')); 
-    return this.rules['result']['access_rules'];
-   }
-  
+  username(){ 
+    return this.varData['name'];
+  }
+
+  // UNTUK ACTION BUTTON
+  access_right() { 
+    return this.varData['result']['access_rules'];
+  }
+
 
   base_url() {
     return api;
   }
 
   headers() {
- 
+
     return this.varHeaders = new HttpHeaders({
-      'Content-Type': 'application/json', 
+      'Content-Type': 'application/json',
       'Key': this.varKey,
       'Token': this.varToken,
     });
@@ -55,16 +64,20 @@ export class ConfigService {
   token() {
     return this.varToken;
   }
-    
+
   id_user() {
     return this.varToken;
   }
-    
- 
+
+
+  login() {
+    return login;
+  }
+
 
   errorToken(data) {
     if (data['error'] == 400) {
-    //  window.location.href = "login";
+      //  window.location.href = "login";
     }
 
   }
@@ -74,7 +87,7 @@ export class ConfigService {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
     var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
+    for (var i = 0; i < ca.length; i++) {
       var c = ca[i];
       while (c.charAt(0) == ' ') {
         c = c.substring(1);

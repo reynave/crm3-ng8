@@ -115,7 +115,7 @@ export class LeadDetailComponent implements OnInit {
         data['result']['lead']['amount'],
         data['result']['lead']['id_company_class'],
         data['result']['lead']['department'],
-
+        data['result']['lead']['fax'],
       );
 
       this.leadConvert = new LeadConvert(
@@ -129,7 +129,7 @@ export class LeadDetailComponent implements OnInit {
         data['result']['lead']['opportunity'],
         data['result']['lead']['amount'],
         data['result']['lead']['id_user'],
-        "0",
+        [],
         
       );
  

@@ -37,7 +37,7 @@
         </span>
         <button type="button" class="btn btn-classic btn-sm  mr-1" [hidden]="items.version < 1" (click)="send();"> <i
             class="fas fa-paper-plane"></i>
-          Email Quote </button>
+          Process Quote </button>
 
 
         <button type="button" class="btn btn-classic btn-sm  mr-1" [hidden]="items.closed == 1" (click)="generate();"> <i class="far fa-file-pdf"></i>
@@ -261,8 +261,8 @@
                       <tbody>
                         <tr>
                           <td width="20%"> <b> Total</b></td>
-                          <td width="20%"> <b> Discount 13 % </b> </td>
-                          <td width="20%"><b> Tax 9 % </b></td>
+                          <td width="20%"> <b> Discount {{items.discount}} % </b> </td>
+                          <td width="20%"><b> Tax {{items.tax}} % </b></td>
                           <td width="20%"><b> Shipping and handling </b> </td>
                           <td width="20%"> <b> Final Total</b> </td>
                         </tr>
@@ -368,7 +368,7 @@
                         <table class="table table-borderless">
                           <tr>
                             <td width="40%">Discount (%)</td>
-                            <td> <input type="text" class="form-control form-modal" id="" style="width:40%"
+                            <td> <input type="text" class="form-control form-modal" id="" style="width:40%" (change)="fn_max_discount();"
                                 maxlength="4" [(ngModel)]="quoteModel.discount" name="discount" [readonly]="isReadOnly">
                             </td>
                           </tr>
@@ -382,9 +382,12 @@
                                 [(ngModel)]="quoteModel.tax" name="tax" [readonly]="isReadOnly"></td>
                           </tr>
                           <tr>
-                            <td>Shipping and Handing</td>
-                            <td><input type="number" class="form-control form-modal text-right"
-                                [(ngModel)]="quoteModel.shipping" name="shipping" [readonly]="isReadOnly"> </td>
+                            <td>Shipping and Handing (IDR)</td>
+                            <td> 
+                                <input type="text" class="form-control form-modal " currencyMask   [readonly]="isReadOnly"
+                                [(ngModel)]="quoteModel.shipping" name="shipping" > 
+ 
+                              </td>
                           </tr>
                           <tr>
                             <td>Grand Total</td>
@@ -447,16 +450,11 @@
                                 [(ngModel)]="quoteModel.bill_name" name="bill_name" [readonly]="isReadOnly"></td>
                           </tr>
                           <tr>
-                            <td>Bill To Street 1</td>
-                            <td><input type="text" class="form-control form-modal" id=""
-                                [(ngModel)]="quoteModel.bill_street1" name="bill_street1" [readonly]="isReadOnly"></td>
+                            <td>Bill To Street</td>
+                            <td><textarea type="text" class="form-control form-modal" id=""
+                                [(ngModel)]="quoteModel.bill_street1" name="bill_street1" [readonly]="isReadOnly"> </textarea> </td>
                           </tr>
-                          <tr>
-                            <td>Bill To Street 2</td>
-                            <td><input type="text" class="form-control form-modal" id=""
-                                [(ngModel)]="quoteModel.bill_street2" name="bill_street2" [readonly]="isReadOnly"></td>
-                          </tr>
-
+                         
                           <tr>
                             <td>Bill To City</td>
                             <td><input type="text" class="form-control form-modal" id=""
@@ -483,14 +481,10 @@
                           </tr>
                           <tr>
                             <td>Ship To Street 1</td>
-                            <td><input type="text" class="form-control form-modal" id=""
-                                [(ngModel)]="quoteModel.ship_street1" name="ship_street1" [readonly]="isReadOnly"></td>
+                            <td><textarea type="text" class="form-control form-modal" id=""
+                                [(ngModel)]="quoteModel.ship_street1" name="ship_street1" [readonly]="isReadOnly"> </textarea> </td>
                           </tr>
-                          <tr>
-                            <td>Ship To Street 2</td>
-                            <td><input type="text" class="form-control form-modal" id=""
-                                [(ngModel)]="quoteModel.ship_street2" name="ship_street2" [readonly]="isReadOnly"></td>
-                          </tr>
+                          
 
                           <tr>
                             <td>Ship To City</td>
@@ -529,7 +523,11 @@
         <!-- Attachment Title -->
         <div class="row my-2">
           <div class="col-6">
-            <strong>Attachment</strong>
+            <strong>Attachment</strong> 
+
+            <span [hidden]="!uploadLoading">Uploading...</span>
+
+            
           </div>
           <div class="col-4 text-right" [hidden]="isReadOnly">
 
@@ -572,6 +570,7 @@
 
             </table>
           </div>
+          
         </div>
 
       </div>
@@ -614,8 +613,8 @@
     <div class="container">
       <div class="row">
         <div class="offset-1 col-10 text-center p-1">
-          <a class="btn btn-outline-secondary m-1" (click)="isReadOnly=true">Close</a>
-          <button type="submit" class="btn btn-primary m-1" [disabled]="!quoteForm.form.valid">Save</button>
+          <a class="btn btn-outline-secondary m-1" (click)="isReadOnly=true">Finish update</a>
+          <button type="submit" class="btn btn-primary m-1" [disabled]="!quoteForm.form.valid" (click)="isReadOnly=true">Save</button>
         </div>
         <div class="col-1">
           <div class="py-3"></div>

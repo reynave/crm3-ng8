@@ -30,7 +30,7 @@
 
     <div class="row mb-3">
       <div class="col-8">
-      
+
 
         <span class="dropdown">
           <button class="btn btn-classic btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -38,8 +38,7 @@
             <i class="fas fa-cog"></i>
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" (click)="open(markUpdate)"> Mart to
-              Delete</a>
+            <a class="dropdown-item" (click)="open(markUpdate)"> Mart to Delete</a>
           </div>
         </span>
 
@@ -57,15 +56,15 @@
       <table class="table table-hover border bg-white border-top border-bottom pointer">
         <thead class="thead-light">
           <tr>
-            
+
             <th class="text-center">No</th>
             <th></th>
 
-            <th scope="col">Name</th>
+            <th scope="col">Name / Email</th>
             <th scope="col">user_access</th>
             <th scope="col">user_group</th>
-            <th scope="col">Email</th>
-            <th scope="col">Max discount </th>
+            <th scope="col" class="text-right"> Target Amount Per Year </th>
+            <th scope="col"  class="text-right">Max discount </th>
             <th scope="col">Created Date</th>
             <th scope="col">Status</th>
 
@@ -74,18 +73,20 @@
         </thead>
         <tbody>
           <tr *ngFor="let x of items; let i = index" (click)="fn_check(x);">
-            <td> <a [routerLink]="[ '/user/',x.id]" > {{i+1}} </a> </td>
+            <td> <a [routerLink]="[ '/user/',x.id]"> {{i+1}} </a> </td>
             <td width="50"> <span class="text-primary ">
                 <i class=" {{ x.check ? 'fas fa-check-square' : 'far fa-square' }}"></i> </span>
             </td>
-           
-            <td> <a [routerLink]="[ '/user/',x.id]" > <b> {{x.name}} </b></a></td> 
+
+            <td> <a [routerLink]="[ '/user/',x.id]"> <b> {{x.name}} </b></a>
+              <div>{{x.email}}</div>
+            </td>
             <td>{{x.user_access.name}}</td>
             <td>{{x.user_group.name}}</td>
-            <td>{{x.name}}</td> 
-            <td>{{x.max_discount}} %</td>
+            <td class="text-right"> {{x.currency}} {{x.target_amount_year | number}}</td>
+            <td class="text-right">{{x.max_discount}} %</td>
             <td>{{x.input_date | date}}</td>
-            
+
             <td><strong> {{x.status}} </strong> </td>
 
           </tr>
@@ -102,7 +103,7 @@
 
 </div>
 
- 
+
 
 <ng-template #markUpdate let-modal>
   <div class="modal-header">

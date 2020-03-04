@@ -252,7 +252,8 @@
                             <tr>
                               <td><label>Fax</label></td>
                               <td><input type="text" class="form-control form-modal" id="fax" [(ngModel)]="lead.fax"
-                                  name="fax" [readonly]="isReadOnly"></td>
+                                  name="fax" [readonly]="isReadOnly"> 
+                                </td>
                             </tr>
 
 
@@ -322,7 +323,7 @@
                       <div class="row">
                         <div class="col-12 text-center p-1">
                           <a class="btn btn-outline-secondary m-1" (click)="isReadOnly=true">Finish Edit</a>
-                          <button type="submit" class="btn btn-primary m-1"
+                          <button type="submit" class="btn btn-primary m-1" (click)="isReadOnly=true"
                             [disabled]="!mainForm.form.valid">Save</button>
                         </div>
 
@@ -357,10 +358,10 @@
               <div [hidden]="!isReadOnly"><b>{{lead.opportunity}}</b> </div>
 
               <hr>
-              <small> Amount ({{items.currency }})</small>
+              <small> Opportunity Amount ({{items.currency }})</small>
               <div [hidden]="isReadOnly">
 
-                <input type="number" class="form-control form-modal" id="amount" [(ngModel)]="lead.amount" name="amount"
+                <input type="text" class="form-control form-modal" currencyMask id="amount" [(ngModel)]="lead.amount" name="amount"
                   [readonly]="isReadOnly">
               </div>
               <div> <b [hidden]="!isReadOnly"> {{lead.amount | number}}</b> </div>
@@ -558,6 +559,14 @@
               </select>
             </div>
  
+            <div class="col-5 mt-2">
+              <label class="mb-2">Expecting Closing Date</label>
+          
+
+              <input type="text" class="form-control mb-2 border " readonly placeholder="YYYY-MM-DD" name="expecting_closing_date"
+              [(ngModel)]="leadConvert.expecting_closing_date" ngbDatepicker #expecting_closing_date="ngbDatepicker"
+              (click)="expecting_closing_date.toggle()">
+            </div>
           </div>
         </div>
 

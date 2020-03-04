@@ -52,8 +52,11 @@ export class UserDetailComponent implements OnInit {
         data['result']['data']['max_discount'],
         
         data['result']['data']['email'],
-        false
+        data['result']['data']['status'],
+        "",
+        data['result']['data']['target_amount_year'],
       );
+      
       this.user_access = data['result']['user_access'];
       this.user_group = data['result']['user_group'];
       
@@ -74,7 +77,9 @@ export class UserDetailComponent implements OnInit {
       headers: this.configService.headers()
     }).subscribe(
       data => {
+      
         console.log(data);
+        this.httpGet(); 
         this.loading = false;  
       },
       error => {
