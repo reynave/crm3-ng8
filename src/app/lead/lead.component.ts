@@ -55,7 +55,7 @@ export class LeadComponent implements OnInit {
     this.http.get<Lead[]>(this.configService.base_url() + 'lead', {
       headers: this.configService.headers()
     }).subscribe(data => {
-      console.log(data);
+     //  console.log(data);
       this.model['id_user'] = data['result']['id_user'];
       this.configService.errorToken(data);  
       this.items = data['result']['data']; 
@@ -71,7 +71,7 @@ export class LeadComponent implements OnInit {
       this.configService.errorToken(data); 
       this.loadingSelected = false;
       this.selected = data['result'];
-       console.log(this.selected);
+      // console.log(this.selected);
     });
   }
 

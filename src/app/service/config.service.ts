@@ -24,6 +24,7 @@ export class ConfigService {
     }else{
       this.varToken = this.getCookie('cmr3ng8Token');
       this.varData = JSON.parse(atob(this.getCookie('cmr3ng8Access')));
+      console.log(this.varData);
     }
 
  
@@ -31,7 +32,7 @@ export class ConfigService {
 
   // UNTUK NAVIGATOR & ACTIVE GUARD
   access_rules(module) { 
- 
+   
     return this.varData['result']['access_rules'][module]['access'];
   }
 

@@ -12,8 +12,11 @@
 
 <div class="container-fluid mt-3">
   <div class="row no-gutters">
-    <div class="col-12 text-center">
-      <h4> Data Per Quarter (3 Month)</h4>
+    <div class="col-12 text-center mb-4">
+      <h4> Data Per Quarter (3 Month)</h4> 
+      <div>
+        <b>Account Manager : </b> <span *ngFor="let x of user"> {{x.name}}. </span>
+      </div>
     </div>
     <div class="col-2  mb-3">
       <div class="bg-white  border border-top-black rounded p-2  m-1 text-center">

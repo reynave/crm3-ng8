@@ -54,11 +54,11 @@ export class CompanyComponent implements OnInit {
       headers: this.configService.headers()
     }).subscribe(data => {
       this.items = data['result']['data'];
-      console.log(data);
+     //  console.log(data);
       this.loading = false;
     }, error => {
-      console.log(error);
-      console.log(error.error.text);
+       console.log(error);
+       console.log(error.error.text);
     });
   }
 
@@ -69,7 +69,7 @@ export class CompanyComponent implements OnInit {
     }).subscribe(data => {
       this.loadingSelected = false;
       this.selected = data['result'];
-      console.log(this.selected);
+     //  console.log(this.selected);
     });
   }
   
@@ -87,7 +87,7 @@ export class CompanyComponent implements OnInit {
         headers: this.configService.headers()
       }).subscribe(
         data => {
-          console.log(data);
+         //  console.log(data);
           this.submit= false;
           if (value == 'next') {
             this.httpGet();
@@ -120,7 +120,7 @@ export class CompanyComponent implements OnInit {
       headers: this.configService.headers()
     }).subscribe(
       data => {
-        console.log(data);
+       //  console.log(data);
         this.httpGet();
         this.modalService.dismissAll();
       },
@@ -170,7 +170,7 @@ export class CompanyComponent implements OnInit {
     }else{
       this.itemsSelected.splice(objectSelect, 1);
     }
-    console.log(this.itemsSelected);
+   //  console.log(this.itemsSelected);
   }
 
   fn_removeItemSelected(x) {

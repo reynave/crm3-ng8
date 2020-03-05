@@ -16,7 +16,7 @@ export class ActiveGuardGuard implements CanActivate {
     if (this.configService.token()) {  
       console.log(   this.configService.access_rules(route.url[0].path)  );  
       
-    //  console.warn("YOUR ARE LOGGIN");
+      console.warn("route.url[0].path : "+route.url[0].path);
 
       if(  this.configService.access_rules(route.url[0].path) ){
         console.warn("ENABLE");

@@ -13,7 +13,7 @@ export class SalesOrderNew {
         public name: string,
         public expirationDate: any,
         public status: string,
-        public desciption:string,
+        public description:string,
         public discount : number,
         public tax: number,
         public shipping : number, 

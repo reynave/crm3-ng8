@@ -47,10 +47,10 @@
             class="fas fa-edit"></i>
           Edit </button>
 
-        <button type="button" [hidden]="items.syncing" class="btn btn-classic btn-sm  mr-1" [hidden]="items.closed == 1"  (click)="fn_sync(true)"> <i
+        <button type="button" [hidden]="items.syncing || items.closed == 1 " class="btn btn-classic btn-sm  mr-1" (click)="fn_sync(true)"> <i
             class="fas fa-sync"></i> Sync </button>
 
-        <button type="button" [hidden]="!items.syncing" class="btn btn-classic btn-sm  mr-1" [hidden]="items.closed == 1"  (click)="fn_sync(false)">
+        <button type="button" [hidden]="!items.syncing || items.closed == 1" class="btn btn-classic btn-sm  mr-1"    (click)="fn_sync(false)">
           <i class="fas fa-sync"></i> Disable Sync </button>
 
         <button type="button" class="btn btn-classic btn-sm" [routerLink]="[ '/quote' ]" title="back"> <i

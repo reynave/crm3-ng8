@@ -75,16 +75,15 @@
                         <tr>
                             <td>Description</td>
                             <td>
-                                <textarea class="form-control form-modal" [(ngModel)]="model.desciption"
-                                    name="q_desciption"></textarea>
+                                <textarea class="form-control form-modal" [(ngModel)]="model.description"
+                                    name="q_description"></textarea>
 
                             </td>
                         </tr>
                     </table>
 
                 </div>
-            </div>
-
+            </div> 
  
             <div class="row">
                 <div class="col-12 bg-light">
@@ -138,16 +137,11 @@
                                 name="q_bill_name"></td>
                         </tr>
                         <tr>
-                            <td>Bill To Street 1</td>
-                            <td><input type="text" class="form-control form-modal" [(ngModel)]="model.bill_street1"
-                                    name="q_bill_street1"></td>
+                            <td>Bill To Street</td>
+                            <td><textarea  class="form-control form-modal" [(ngModel)]="model.bill_street1"
+                                    name="q_bill_street1"> </textarea> </td>
                         </tr>
-                        <tr>
-                            <td>Bill To Street 2</td>
-                            <td><input type="text" class="form-control form-modal" [(ngModel)]="model.bill_street2"
-                                    name="q_bill_street2"></td>
-                        </tr>
-
+                      
                         <tr>
                             <td>Bill To City</td>
                             <td><input type="text" class="form-control form-modal" [(ngModel)]="model.bill_city"
@@ -163,6 +157,11 @@
                             <td><input type="text" class="form-control form-modal" [(ngModel)]="model.bill_code"
                                     name="q_bill_code"></td>
                         </tr>
+                        <tr>
+                            <td>Bill To Country</td>
+                            <td><input type="text" class="form-control form-modal" [(ngModel)]="model.country"
+                                    name="q_bill_code"></td>
+                        </tr>
                     </table>
                 </div>
                 <div class="col-6">
@@ -173,15 +172,11 @@
                                 name="q_ship_name"></td>
                         </tr>
                         <tr>
-                            <td>Ship To Street 1</td>
-                            <td><input type="text" class="form-control form-modal" [(ngModel)]="model.ship_street1"
-                                    name="q_ship_street1"></td>
+                            <td>Ship To Street</td>
+                            <td><textarea   class="form-control form-modal" [(ngModel)]="model.ship_street1"
+                                    name="q_ship_street1"></textarea></td>
                         </tr>
-                        <tr>
-                            <td>Ship To Street 2</td>
-                            <td><input type="text" class="form-control form-modal" [(ngModel)]="model.ship_street2"
-                                    name="q_ship_street2"></td>
-                        </tr>
+                      
 
                         <tr>
                             <td>Ship To City</td>
@@ -196,6 +191,12 @@
                         <tr>
                             <td>Ship To Postal Code</td>
                             <td><input type="text" class="form-control form-modal" [(ngModel)]="model.ship_code"
+                                    name="q_ship_code"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Ship To Country</td>
+                            <td><input type="text" class="form-control form-modal" [(ngModel)]="model.country"
                                     name="q_ship_code"></td>
                         </tr>
                     </table>

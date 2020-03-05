@@ -42,7 +42,7 @@ export class PriceListComponent implements OnInit {
     this.http.get(this.configService.base_url() + 'pricelist/index/', {
       headers: this.configService.headers()
     }).subscribe(data => {
-      console.log(data);
+     //  console.log(data);
       this.configService.errorToken(data);  
       this.items = data['result']['data']; 
       this.loading = false;
@@ -62,7 +62,7 @@ export class PriceListComponent implements OnInit {
         headers: this.configService.headers()
       }).subscribe(
         data => {
-           console.log(value);
+          //  console.log(value);
           this.submit= false;
           if (value == 'next') {
             this.model = new Newpricelist('',1,'','1','');
@@ -87,7 +87,7 @@ export class PriceListComponent implements OnInit {
   }
   
   fn_check(x) {
-    console.log(x);
+   //  console.log(x);
     this.objIndex = this.items.findIndex((obj => obj.id == x.id));
     if (this.items[this.objIndex]['check'] == true) {
       this.items[this.objIndex]['check'] = false;
@@ -98,7 +98,7 @@ export class PriceListComponent implements OnInit {
       'id': x.id,
       'name': x.name, 
     }
-    console.log(object);
+   //  console.log(object);
     var objectSelect = this.itemsSelected.findIndex((obj => obj.id == x.id));
     if (objectSelect == -1) {
       this.itemsSelected.push(object);

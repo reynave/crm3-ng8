@@ -42,6 +42,8 @@ export class DealDetailComponent implements OnInit {
   lead_source: any = [];
   contact: any = [];
   sales_order: any = [];
+  attachment:any = [];
+  attachmentPO : any = [];
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -59,21 +61,9 @@ export class DealDetailComponent implements OnInit {
     this.id = this.activatedRoute.snapshot.params.id;
     this.items = {
       name: "",
-      start_date: {
-        year: 0,
-        month: 0,
-        day: 0,
-      },
-      closed_date: {
-        year: 0,
-        month: 0,
-        day: 0,
-      },
-      expecting_closing_date: {
-        year: 0,
-        month: 0,
-        day: 0,
-      },
+      start_date: "",
+      closed_date: "",
+      expecting_closing_date: "" ,
       quote:{
         id: "0",
         quote_number: null,
@@ -122,10 +112,10 @@ export class DealDetailComponent implements OnInit {
       this.sales_order = data['result']['sales_order'];
       
       this.lead_source = data['result']['lead_source'];
+ 
+      this.attachment = data['result']['attachment'];
+      this.attachmentPO = data['result']['attachmentPO'];
 
-
-
-      this.model = new OpportunityUpdate(data['result']['data']['name'], data['result']['data']['id_lead_source'], data['result']['data']['id_user'], data['result']['data']['id_contact']);
     }, error => {
       console.log(error);
       console.log(error.error.text);

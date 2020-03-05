@@ -38,16 +38,15 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, data: { title: 'Dashboard' } },
-
-
+ 
   { path: 'dashboard', component: DashboardComponent, data: { title: 'Dashboard' } },
  
-  { path: 'accessRight', component: AccessRightComponent, data: { title: 'Access Rigth' } },
-  { path: 'accessRight/:id', component: AccessRightDetailComponent, data: { title: 'Access Rigth' } },
+  { path: 'accessRight', component: AccessRightComponent, data: { title: 'Access Rigth' }, canActivate: [ActiveGuardGuard] },
+  { path: 'accessRight/:id', component: AccessRightDetailComponent, data: { title: 'Access Rigth' }, canActivate: [ActiveGuardGuard] },
  
 
 
-  { path: "activity", component: ActivityComponent, canActivate: [ActiveGuardGuard] },
+  { path: "activity", component: ActivityComponent,  data: { title: 'Activity' }, canActivate: [ActiveGuardGuard] },
 
   { path: 'lead', component: LeadComponent, data: { title: 'Lead' }, canActivate: [ActiveGuardGuard] },
   { path: 'lead/:id', component: LeadDetailComponent, data: { title: 'Lead Detail' }, canActivate: [ActiveGuardGuard] }, 

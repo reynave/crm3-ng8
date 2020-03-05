@@ -504,29 +504,34 @@
                           <td>
                             {{items.currency}}
 
-                            <input type="number" class="form-control form-modal w-75" style="display: inline-block;"
-                              id="amount" [(ngModel)]="updateOpportunity.amount" name="amount" [readonly]="isReadOnly">
+                            <input type="text" class="form-control form-modal w-75" style="display: inline-block;" currencyMask
+                              id="amount" [(ngModel)]="updateOpportunity.amount" name="amount" [readonly]="isReadOnly" >
 
                           </td>
                         </tr>
 
                         <tr>
                           <td>Stage</td>
-                          <td> {{items.stage}} </td>
+                          <td>  <input type="text" readonly  class="form-control form-modal" value="{{items.stage}}" > </td>
                         </tr>
 
                         <tr>
                           <td>Probability (%)</td>
-                          <td> {{items.progress}} % </td>
+                          <td>  <input type="text" readonly  class="form-control form-modal" value="{{items.progress}} % " > </td>
                         </tr>
                         <tr>
                           <td><label>Created Date</label></td>
-                          <td> {{items.input_date | date:'d MMM y  hh:mm a'}}, <br><small> by {{items.input_by}}</small>
+                          <td>
+                            <input type="text" readonly  class="form-control form-modal" value="{{items.input_date | date:'d MMM y  hh:mm a'}}" > 
+                            <small> by {{items.input_by}}</small>
                           </td>
                         </tr>
                         <tr [hidden]="items.update_by == false">
                           <td><label>Update Date</label></td>
-                          <td> {{items.update_date | date:'d MMM y  hh:mm a'}}, <br><small> by {{items.update_by}}
+                          <td> 
+                            <input type="text" readonly  class="form-control form-modal" value="{{items.update_date | date:'d MMM y  hh:mm a'}}" > 
+                            
+                            <small> by {{items.update_by}}
                             </small>
                           </td>
                         </tr>
@@ -803,7 +808,7 @@
     </div>
     <div class="modal-body bg-white">
       <div class="container-fluid">
-       <code>{{ quoteModel | json}} </code> 
+       
         <div class="row">
           <div class="col-12 bg-light">
             <strong>Quotes Information</strong>

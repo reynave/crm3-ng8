@@ -40,7 +40,7 @@ export class AccessRightComponent implements OnInit {
     this.http.get(this.configService.base_url() + 'access_right/', {
       headers: this.configService.headers()
     }).subscribe(data => {
-      console.log(data);
+     //  console.log(data);
       this.items = data['result']['user_access'];
       this.loading = false;
     });
@@ -58,14 +58,14 @@ export class AccessRightComponent implements OnInit {
       headers: this.configService.headers()
     }).subscribe(
       data => {
-        console.log(data);
+       //  console.log(data);
         this.model = new NewAccessRight('');
         this.router.navigate(['/accessRight/', data['result']['id']]);
         this.modalService.dismissAll(); 
       }, 
       error => {
-        console.log(error);
-        console.log(error.error.text);
+       //  console.log(error);
+       //  console.log(error.error.text);
       }
     );
 

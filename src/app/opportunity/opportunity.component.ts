@@ -60,7 +60,7 @@ export class OpportunityComponent implements OnInit {
     }).subscribe(data => {
       this.items = data['result']['data'];
       this.total = data['result']['total'];
-      console.log(data);
+     //  console.log(data);
       this.loading = false;
     }, error => {
       console.log(error);
@@ -78,7 +78,7 @@ export class OpportunityComponent implements OnInit {
       headers: this.configService.headers()
     }).subscribe(
       data => {
-        console.log(data);
+       //  console.log(data);
         this.httpGet();
         this.modalService.dismissAll();
       },
@@ -131,7 +131,7 @@ export class OpportunityComponent implements OnInit {
     }else{
       this.itemsSelected.splice(objectSelect, 1);
     }
-    console.log(this.itemsSelected);
+   //  console.log(this.itemsSelected);
   }
 
   fn_removeItemSelected(x) {

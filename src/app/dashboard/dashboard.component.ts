@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit {
   datasetsLeadPerIndustry: any = [];
   event: any = [];
   visit: any = [];
-  recentwins: any = [];
+  recentwins: any = []; user:any = [];
   recentQuotation: any = [];
   lead: any = {
     today: "0",
@@ -49,7 +49,7 @@ export class DashboardComponent implements OnInit {
         window.location.href= this.configService.login();
       }
       this.lead = data['result']['lead'];
-
+      this.user = data['result']['user'];
       this.event = data['result']['event'];
       this.visit = data['result']['visit'];
       this.recentwins = data['result']['recentwins'];

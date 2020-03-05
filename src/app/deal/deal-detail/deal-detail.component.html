@@ -26,17 +26,16 @@
 
         <div class="col-9 bg-light text-right py-2">
 
-            <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="open(createSO)"><b>SO</b> Create Sales Order </button>
+            <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="open(createSO)"><b>SO</b> Create Sales
+                Order </button>
 
-            <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="rollback();"   > <i class="fas fa-edit"></i> Rollback To
-                Opportunity </button>
-
-           
-
+            <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="rollback();"> <i
+                    class="fas fa-edit"></i> Rollback To  Opportunity </button>
+ 
             <button type="button" class="btn btn-classic btn-sm  mr-1" [routerLink]="[ '/deal' ]" title="back"> <i
-                    class="fas fa-times"></i> </button> 
-        </div> 
-        
+                    class="fas fa-times"></i> </button>
+        </div>
+
         <div class="col-12 py-2">
             <table class="table-p0">
                 <tr>
@@ -45,18 +44,17 @@
                     <td> <small> Closed Date </small> </td>
                     <td> <small> Timeline Project </small> </td>
                     <td> <small> Amount </small> </td>
-                    <td> <small> Opportunity Owner </small></td>
+                  
                 </tr>
 
                 <tr>
-                    <td> <b class="text-primary"> <a
-                                [routerLink]="[ '/company', items.id_company ]">{{items.company}}</a> </b> </td>
+                    <td> <b class="text-primary"> <a  [routerLink]="[ '/company', items.id_company ]">{{items.company}}</a> </b> </td>
                     <td> <b class="text-primary"> {{items.start_date  }} </b> </td>
                     <td> <b class="text-primary"> {{items.closed_date  }}</b> </td>
                     <td> <b class="text-primary"> {{items.timeline }} days</b> </td>
 
                     <td> <b class="text-primary"> {{items.currency}} {{items.amount | number}} </b> </td>
-                    <td><b class="text-primary"> {{items.user}} </b></td>
+                 
                 </tr>
             </table>
         </div>
@@ -75,7 +73,7 @@
             <div class="py-2">
                 <ngb-tabset type="pills">
 
-                    
+
 
                     <ngb-tab>
                         <ng-template ngbTabTitle>Detail</ng-template>
@@ -90,35 +88,16 @@
                                         <table class="table table-borderless">
                                             <tr>
                                                 <td width="200">Opportunity Name</td>
-                                                <td>
-                                                    <input type="text" class="form-control form-modal" id="name"
-                                                        required [(ngModel)]="items.name" name="name" #name="ngModel"
-                                                        [readonly]="isReadOnly">
-                                                    <div [hidden]="name.valid || name.pristine"
-                                                        class="alert alert-danger">
-                                                        Name is required
-                                                    </div>
+                                                <td> 
+                                                    <input type="text" class="form-control form-modal"   value="{{items.name}}" readonly> 
                                                 </td>
                                             </tr>
 
-                                            <tr>
-                                                <td>Type</td>
-                                                <td> <select class="form-control form-modal" [disabled]="isReadOnly"
-                                                        [(ngModel)]="items.id_opportunity_business"
-                                                        [ngModelOptions]="{standalone: true}">
-                                                        <option value="{{x.id}}" *ngFor="let x of business"> {{x.name}}
-                                                        </option>
-                                                    </select> </td>
-                                            </tr>
+
 
                                             <tr>
                                                 <td>Account Manager</td>
-                                                <td> <select class="form-control form-modal" [disabled]="isReadOnly"
-                                                        [(ngModel)]="items.id_user"
-                                                        [ngModelOptions]="{standalone: true}">
-                                                        <option value="{{x.id}}" *ngFor="let x of user">{{x.name}}
-                                                        </option>
-                                                    </select> </td>
+                                                <td>  <input type="text" class="form-control form-modal"   value="{{items.user}}" readonly>  </td>
                                             </tr>
                                         </table>
 
@@ -133,30 +112,19 @@
 
                                             <tr width="40%">
                                                 <td>Contact</td>
-                                                <td> <select class="form-control form-modal" [disabled]="isReadOnly"
-                                                        [(ngModel)]="items.id_contact"
-                                                        [ngModelOptions]="{standalone: true}">
-                                                        <option value="{{x.id}}" *ngFor="let x of contact">{{x.name}}
-                                                        </option>
-                                                    </select> </td>
+                                                <td>  <input type="text" class="form-control form-modal"   value="{{items.contact}}" readonly> </td>
                                             </tr>
 
                                             <tr width="40%">
                                                 <td>Lead Source</td>
-                                                <td> <select class="form-control form-modal" [disabled]="isReadOnly"
-                                                        [(ngModel)]="items.id_lead_source"
-                                                        [ngModelOptions]="{standalone: true}">
-                                                        <option value="{{x.id}}" *ngFor="let x of lead_source">
-                                                            {{x.name}} </option>
-                                                    </select> </td>
+                                                <td>  <input type="text" class="form-control form-modal"   value="{{items.lead_source}}" readonly> </td>
                                             </tr>
 
 
                                             <tr>
                                                 <td>Industry</td>
                                                 <td>
-                                                    <input type="text" class="form-control form-modal"
-                                                        value="{{items.industry}}" readonly>
+                                                    <input type="text" class="form-control form-modal"   value="{{items.industry}}" readonly>
                                                 </td>
                                             </tr>
 
@@ -164,21 +132,16 @@
                                             <tr>
                                                 <td>Started Date</td>
                                                 <td>
-                                                    <span [hidden]="!isReadOnly">
-                                                        <input type="text" class="form-control form-modal w-75"
-                                                            value=" {{items.start_date.day}}/{{items.start_date.month}}/{{items.start_date.year}}"
-                                                            [readonly]="isReadOnly">
-                                                    </span>
-
-                                                    <span [hidden]="isReadOnly">
-                                                        <input type="text" class="form-control form-modal"
-                                                            placeholder="yyyy-mm-dd" (click)="d.toggle()" readonly
-                                                            name="d" [(ngModel)]="items.start_date" ngbDatepicker
-                                                            #d="ngbDatepicker" required>
-                                                    </span>
+                                                    <input type="text" class="form-control form-modal"   value="{{items.start_date | date:'d MMM y  hh:mm a'}}" readonly> 
                                                 </td>
                                             </tr>
 
+                                            <tr>
+                                                <td>Expecting Closing Date</td>
+                                                <td>
+                                                    <input type="text" class="form-control form-modal"   value="{{items.expecting_closing_date | date:'d MMM y  hh:mm a'}}" readonly> 
+                                                </td>
+                                            </tr>
 
                                         </table>
 
@@ -190,38 +153,123 @@
                                             <tr>
                                                 <td width="40%">Amount</td>
                                                 <td>
-                                                    {{items.currency}}
+                                                   
 
-                                                    <input type="number" class="form-control form-modal w-75"
-                                                        style="display: inline-block;" id="amount"
-                                                        [(ngModel)]="items.amount" name="amount"
-                                                        [readonly]="isReadOnly">
+                                                    <input type="text" class="form-control form-modal"   value="{{items.currency}} {{items.amount |number}}" [readonly]="isReadOnly">
 
                                                 </td>
                                             </tr>
 
                                             <tr>
                                                 <td>Stage</td>
-                                                <td> {{items.stage}} </td>
+                                                <td> <input type="text" class="form-control form-modal"
+                                                        value="{{items.stage}}" [readonly]="isReadOnly"> </td>
                                             </tr>
 
                                             <tr>
                                                 <td>Probability (%)</td>
-                                                <td> {{items.progress}} % </td>
+                                                <td> <input type="text" class="form-control form-modal"
+                                                        value="{{items.progress}} %" [readonly]="isReadOnly"> </td>
                                             </tr>
                                             <tr>
                                                 <td><label>Created Date</label></td>
-                                                <td> {{items.input_date | date:'d MMM y  hh:mm a'}}, <br><small> by
-                                                        {{items.input_by}}</small>
+                                                <td>
+                                                    <input type="text" class="form-control form-modal"
+                                                        value=" {{items.input_date | date:'d MMM y  hh:mm a'}}"
+                                                        [readonly]="isReadOnly">
+                                                    <small> by {{items.input_by}}</small>
                                                 </td>
                                             </tr>
-                                            <tr [hidden]="items.update_by == false">
+                                            <tr>
                                                 <td><label>Update Date</label></td>
-                                                <td> {{items.update_date | date:'d MMM y  hh:mm a'}}, <br><small> by
-                                                        {{items.update_by}}
-                                                    </small>
+                                                <td> <input type="text" class="form-control form-modal"
+                                                        value=" {{items.update_date | date:'d MMM y  hh:mm a'}}"
+                                                        [readonly]="isReadOnly">
+                                                    <small> by {{items.update_by}} </small>
                                                 </td>
                                             </tr>
+                                        </table>
+
+                                    </div>
+
+
+                                    <div class="col-12 bg-light">
+                                        <strong>More Information</strong>
+                                    </div>
+
+                                    <div class="col-12 col-lg-12">
+                                        <table class="table table-borderless">
+
+                                            <tr>
+                                                <td width="30%">Opportunity Budget (IDR)</td>
+                                                <td>  <input type="text" class="form-control form-modal"  value="Rp {{items.budget | number}}" [readonly]="isReadOnly">  </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Competitor</td>
+                                                <td> <input type="text" class="form-control form-modal"  value="{{items.competitor}}" [readonly]="isReadOnly"> </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Contact Person</td>
+                                                <td> <input type="text" class="form-control form-modal"  value="{{items.contact}}" [readonly]="isReadOnly"> </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Comparison with competitor</td>
+                                                <td> <input type="text" class="form-control form-modal"  value="{{items.comparison_with_competitor}}" [readonly]="isReadOnly"> </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Critical point</td>
+                                                <td> <input type="text" class="form-control form-modal"  value="{{items.critical_point}}" [readonly]="isReadOnly"> </td>
+                                            </tr>
+ 
+
+                                            <tr>
+                                                <td>Our proposal</td>
+                                                <td> <textarea  class="form-control form-modal"  [readonly]="isReadOnly">{{items.our_proposal}}</textarea>  </td>
+                                            </tr>
+ 
+
+                                            <tr>
+                                                <td>Other of Analysis</td>
+                                                <td><textarea  class="form-control form-modal" [readonly]="isReadOnly">{{items.notes1}}</textarea> </td>
+                                            </tr>
+ 
+                                            <tr>
+                                                <td>Attachment of Proposal</td>
+                                                <td>
+                                                    <div class="border-bottom pb-2">
+                                                        <a href="{{x.url}}" target="_blank" class="border px-2 bg-light mr-1" *ngFor="let x of attachment" >   {{x.file_name}} </a>
+
+                                                    </div>
+                                                 
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Notes of Proposal</td>
+                                                <td> <textarea  class="form-control form-modal" [readonly]="isReadOnly">{{items.notes2}}</textarea> </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>Notes of Negotation</td>
+                                                <td> <textarea  class="form-control form-modal" [readonly]="isReadOnly">{{items.notes3}}</textarea> </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Attachment Purchased Order</td>
+                                                <td>
+                                                    <div class="border-bottom pb-2">
+                                                        <a href="{{x.url}}" target="_blank" class="border px-2 bg-light mr-1" *ngFor="let x of attachmentPO" >   {{x.file_name}} </a>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+
                                         </table>
 
                                     </div>
@@ -274,47 +322,7 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Competitor -->
-                                <div class="row py-2">
-                                    <div class="col-12 ">
-                                        <div class="border py-1 px-2 border-top-brown rounded">
-
-                                            <div class="row">
-                                                <div class="col-12"><strong>Competitor </strong></div>
-
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-6 mb-2">
-
-                                                    <table class="table-items">
-                                                        <thead>
-                                                            <tr>
-                                                                <th> <a href="">PT Sumer Daya Teknologi</a></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>Strong : ....</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Weakess : ....</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-
-                                                    <hr class="p-0 m-0 mt-2">
-                                                </div>
-
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-                                </div>
-
-
+  
                             </div>
                         </ng-template>
                     </ngb-tab>
@@ -337,7 +345,7 @@
                         <div class="row">
                             <div class="col-12"><strong>Information Order </strong></div>
                         </div>
-                      
+
                         <div class="row mt-2" [hidden]="items.quote.id == '0'">
                             <div class="col-12 mb-1"><b>Quotation </b></div>
                             <div class="col-12 mb-1">
@@ -366,7 +374,7 @@
                                 <hr class="p-0 m-0 mt-1">
                             </div>
 
-                            <div class="col-12 mb-1"><b>Sales Order </b></div>
+                            <div class="col-12 mb-1" [hidden]="!sales_order.lenght"><b>Sales Order </b></div>
                             <div class="col-12 mb-1">
                                 <table class="table-items mb-2" *ngFor="let x of sales_order">
                                     <tbody>
@@ -381,7 +389,7 @@
                                             <td> Created date {{x.expired_date | date}} </td>
                                         </tr>
                                         <tr>
-                                            <td> Account Manager : {{x.user}} </td>
+                                            <td> Account Manager : {{x.user}}</td>
                                         </tr>
 
                                     </tbody>
@@ -412,25 +420,20 @@
 
                                 <table class="table-items">
                                     <thead>
-                                        <tr>
-                                            <th> <a href="javascript:;"> {{x.name}} <span [hidden]="!x.active"> <i
-                                                            class="fas fa-check"></i>
-                                                    </span></a></th>
-                                        </tr>
+                                      <tr>
+                                        <th> 
+                                          <a [routerLink]="[ '/contact', x.id ]">{{x.name}} <span [hidden]="!x.active"> <i class="fas fa-check"></i>
+                                            </span></a>
+                                          </th>
+                                      </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>{{x.postion}} </td>
-                                        </tr>
-                                        <tr [hidden]="!x.mobile">
-                                            <td>M. {{x.mobile}} </td>
-                                        </tr>
-                                        <tr [hidden]="!x.phone">
-                                            <td>P. {{x.phone}} </td>
-                                        </tr>
-
+                                      <tr>
+                                        <td>{{x.position}}, {{x.department}} </td>
+                                      </tr>
+                  
                                     </tbody>
-                                </table>
+                                  </table>
 
                                 <hr class="p-0 m-0 mt-2">
                             </div>

@@ -26,11 +26,11 @@
 
     <div class="col-9 bg-light text-right py-2">
       <div [hidden]="!isReadOnly">
-        <button type="button" class="btn btn-classic btn-sm  mr-1"
+        <button type="button" class="btn btn-classic btn-sm  mr-1" [hidden]="!allow_access_data"
           (click)="isReadOnly=false; t.select('tab-selectbyid2')">
           <i class="fas fa-edit"></i> Edit </button>
 
-        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="fn_delete();"> <i
+        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="fn_delete();"  [hidden]="!allow_access_data"> <i
             class="fas fa-trash-alt"></i>
           Delete </button>
 

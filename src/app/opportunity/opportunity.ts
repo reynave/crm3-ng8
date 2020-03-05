@@ -234,12 +234,12 @@ export class UpdateOpportunity{
         public id_opportunity_business: string, 
         public id_lead_source: string,
         public name: string,
-        public amount: number, 
+        public amount: string, 
         public start_date : any,  
         public closed_date : any,  
         public id_contact : string,  
         public expecting_closing_date : any,  
-        public budget : number,  
+        public budget : string,  
        
         //CUSTOME
         public comparison_with_competitor : string,

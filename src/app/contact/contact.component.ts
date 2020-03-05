@@ -57,11 +57,11 @@ export class ContactComponent implements OnInit {
       this.items = data['result']['data'];
       
     this.modelContact = new NewContact('0', '', '', '', '', '0', this.id_user,'0','','');
-      console.log(data);
+     //  console.log(data);
       this.loading = false;
     }, error => {
-      console.log(error);
-      console.log(error.error.text);
+     //  console.log(error);
+     //  console.log(error.error.text);
     });
   }
 
@@ -81,7 +81,7 @@ export class ContactComponent implements OnInit {
     }).subscribe(data => {
       this.loadingSelected = false;
       this.selected = data['result'];
-      console.log(this.selected);
+     //  console.log(this.selected);
     });
   }
 
@@ -100,13 +100,13 @@ export class ContactComponent implements OnInit {
         headers: this.configService.headers()
       }).subscribe(
         data => {
-          console.log(data);
+         //  console.log(data);
           this.httpGet();
           this.modalService.dismissAll();
         },
         error => {
-          console.log(error);
-          console.log(error.error.text);
+         //  console.log(error);
+         //  console.log(error.error.text);
         }
       );
 
@@ -138,7 +138,7 @@ export class ContactComponent implements OnInit {
     }else{
       this.itemsSelected.splice(objectSelect, 1);
     }
-    console.log(this.itemsSelected);
+   //  console.log(this.itemsSelected);
   }
 
   fn_removeItemSelected(x) {

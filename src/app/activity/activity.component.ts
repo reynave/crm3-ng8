@@ -37,7 +37,7 @@ export class ActivityComponent implements OnInit {
   }
 
   ngOnInit() { 
-      this.httpGet();
+    this.loading = false;
   }
 
 

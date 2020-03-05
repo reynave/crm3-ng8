@@ -65,7 +65,7 @@ export class CompanyDetailComponent implements OnInit {
 
   deal:any =[];
   archived:any =[];
-
+  allow_access_data:boolean = false;
   myBranch:any = [];
   myOpportunity:any = [];
   priceList:any=[];
@@ -74,6 +74,8 @@ export class CompanyDetailComponent implements OnInit {
     this.http.get<CompanyDetail[]>(this.configService.base_url() + 'company/detail/'+ this.id, {
       headers: this.configService.headers()
     }).subscribe(data => {
+      console.log(data);
+      this.allow_access_data = data['result']['allow_access_data'];
       this.items = data['result']['data'];
       this.myContact = data['result']['contact'];
       this.myOpportunity = data['result']['opportunity'];
