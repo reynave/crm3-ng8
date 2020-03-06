@@ -35,6 +35,9 @@ import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { leadConvert } from './lead/lead';
 import { LeadConverdComponent } from './lead/lead-converd/lead-converd.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { MasterIndustryComponent } from './master-industry/master-industry.component';
+import { MasterLeadSourceComponent } from './master-lead-source/master-lead-source.component';
+import { AccessDataComponent } from './access-data/access-data.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, data: { title: 'Dashboard' } },
@@ -43,8 +46,10 @@ const routes: Routes = [
  
   { path: 'accessRight', component: AccessRightComponent, data: { title: 'Access Rigth' }, canActivate: [ActiveGuardGuard] },
   { path: 'accessRight/:id', component: AccessRightDetailComponent, data: { title: 'Access Rigth' }, canActivate: [ActiveGuardGuard] },
+  
+  { path: 'accessData', component: AccessDataComponent, data: { title: 'Access Data Level' }, canActivate: [ActiveGuardGuard] },
  
-
+  
 
   { path: "activity", component: ActivityComponent,  data: { title: 'Activity' }, canActivate: [ActiveGuardGuard] },
 
@@ -91,6 +96,12 @@ const routes: Routes = [
   { path: "priceList/modal/:module", component: PriceListModalComponent, canActivate: [ActiveGuardGuard] },
   { path: "priceList/:id", component: PriceListDetailComponent, canActivate: [ActiveGuardGuard] },
   { path: "priceList/product/:id", component: PriceListProductComponent, canActivate: [ActiveGuardGuard] },
+
+  { path: "master/industry", component: MasterIndustryComponent, data: { title: 'Master Industry' }, canActivate: [ActiveGuardGuard]  }, 
+  { path: "master/leadSource", component: MasterLeadSourceComponent, data: { title: 'Master Lead Source' },  canActivate: [ActiveGuardGuard]  }, 
+  
+//  { path: "master/group", component: MasterLeadSourceComponent, data: { title: 'Master Lead Source' }, },
+ 
 
   { path: "warning/:path/:target", component: WarningComponent },
 

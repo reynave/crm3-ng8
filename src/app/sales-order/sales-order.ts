@@ -51,7 +51,7 @@ export class EditSalesOrder {
       public description:string,
       public discount : string,
       public tax: string,
-      public shipping : number, 
+      public shipping : string, 
       public id_user : string, 
       
       public email:string,

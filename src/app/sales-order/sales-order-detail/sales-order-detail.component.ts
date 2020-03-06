@@ -32,6 +32,7 @@ export class SalesOrderDetailComponent implements OnInit {
   attachment : any = [];
   user:any=[];
   contact :any= [];
+  sales_order_log:any=[];
   constructor(
     private http: HttpClient,
     private activatedRoute: ActivatedRoute,
@@ -74,7 +75,7 @@ export class SalesOrderDetailComponent implements OnInit {
       this.attachment = data['result']['attachment'];
       this.contact = data['result']['contact'];
       this.user = data['result']['user'];
-
+      this.sales_order_log = data['result']['sales_order_log'];
       this.quoteModel = new EditSalesOrder(
         data['result']['data']['name'],
         data['result']['data']['expired_date'],
@@ -228,10 +229,7 @@ export class SalesOrderDetailComponent implements OnInit {
       }).subscribe(
         data => {
           console.log(data);
-          this.loading = false;
-          this.items['id_sales_order_status'] = id_sales_order_status;
-          this.items['sales_order_status'] = data['result']['name'];
-          this.items['editable'] = data['result']['editable'];
+          this.httpGet();
           
         },
         error => {

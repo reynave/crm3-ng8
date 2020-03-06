@@ -45,10 +45,21 @@ export class AccessRightDetailComponent implements OnInit {
     });
   }
 
+  sync(){
+    this.loading = true;
+    this.http.get(this.configService.base_url() + 'access_right/sync/', {
+      headers: this.configService.headers()
+    }).subscribe(data => { 
+      this.httpGet();
+      console.log(data);  
+    });
+  }
+
   update(){
     this.loading = true;
     this.http.post(this.configService.base_url() + 'access_right/update',
       { 
+        "name" : this.items['name'],
         "id": this.items['id_user_access'],
         "data": this.items['user_access_rules']
       }, {

@@ -53,6 +53,9 @@ import { UserComponent } from './user/user.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { LeadConverdComponent } from './lead/lead-converd/lead-converd.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { MasterIndustryComponent } from './master-industry/master-industry.component';
+import { MasterLeadSourceComponent } from './master-lead-source/master-lead-source.component';
+import { AccessDataComponent } from './access-data/access-data.component';
 
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
@@ -108,7 +111,10 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     UserComponent,
     UserDetailComponent,
     LeadConverdComponent,
-    DashboardComponent
+    DashboardComponent,
+    MasterIndustryComponent,
+    MasterLeadSourceComponent,
+    AccessDataComponent
   ],
   imports: [
     BrowserModule,

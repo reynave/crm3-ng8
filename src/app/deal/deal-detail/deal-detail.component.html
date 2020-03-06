@@ -347,7 +347,7 @@
                         </div>
 
                         <div class="row mt-2" [hidden]="items.quote.id == '0'">
-                            <div class="col-12 mb-1"><b>Quotation </b></div>
+                            <div class="col-12 my-1"><b>Quotation </b></div>
                             <div class="col-12 mb-1">
                                 <table class="table-items">
 
@@ -374,9 +374,9 @@
                                 <hr class="p-0 m-0 mt-1">
                             </div>
 
-                            <div class="col-12 mb-1" [hidden]="!sales_order.lenght"><b>Sales Order </b></div>
+                            <div class="col-12 my-1" ><b>Sales Order </b></div>
                             <div class="col-12 mb-1">
-                                <table class="table-items mb-2" *ngFor="let x of sales_order">
+                                <table class="table-items mb-2 border-bottom" *ngFor="let x of sales_order">
                                     <tbody>
                                         <tr>
                                             <td> <a [routerLink]="[ '/salesOrder', x.id ]"> <b> {{x.so_number}}</b></a>
