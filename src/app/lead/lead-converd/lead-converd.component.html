@@ -4,31 +4,46 @@
 
 <div class="container-fluid bg-light border-bottom py-1">
     <div class="row">
-      <div class="col-12">
-        <small> You are here : <a [routerLink]="[ '/lead' ]">Lead</a> /
-          <a [routerLink]="[ '/convert/',id ]"> Converted </a> /  <a [routerLink]="[ '/convert/',id ]"> {{items.contact.name}} </a>  </small>
-      </div>
-    </div>
-  
-  </div>
-
-
-<div class="container-fluid">
-    
-    <div class="row">
         <div class="col-12">
+            <small> You are here : <a [routerLink]="[ '/lead' ]">Lead</a> /
+                <a [routerLink]="[ '/convert/',id ]"> Converted </a> / <a [routerLink]="[ '/convert/',id ]">
+                    {{items.contact.name}} </a> </small>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-12 py-4 mb-3 text-center">
             <h4>Converted Lead</h4>
-        </div>
+            <strong>Converted Date : {{items.input_date | date}}</strong>
+        </div> 
         <div class="col-4">
-            Contact  : <a [routerLink]="[ '/contact', items.contact.id ]"> {{items.contact.name}}</a> 
+            <p> <b>  Contact</b></p>
+            <div class="border p-3 bg-light shadow-sm"> 
+                <div><a [routerLink]="[ '/contact', items.contact.id ]"> <i class="far fa-user"></i>   {{items.contact.name}}</a></div>
+          
+            </div> 
         </div>
 
         <div class="col-4">
-            Company  : <a [routerLink]="[ '/company', items.company.id ]"> {{items.company.name}}</a> 
+            <p> <b>  Company</b></p>
+            <div class="border p-3 bg-light shadow-sm"> 
+                <div> <a [routerLink]="[ '/company', items.company.id ]"> <i class="far fa-building"></i>  {{items.company.name}}</a></div>
+            </div>
         </div>
 
         <div class="col-4">
-            Opportunity  : <a [routerLink]="[ '/opportunity', items.opportunity.id ]"> {{items.opportunity.name}}</a> 
+            <p> <b>  Opportunity</b></p>
+            <div class="border p-3 bg-light shadow-sm"> 
+                <div>  <a [routerLink]="[ '/opportunity', items.opportunity.id ]"><i class="far fa-flag"></i> {{items.opportunity.name}}</a></div>
+            </div>
         </div>
+
     </div>
 </div>

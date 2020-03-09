@@ -45,16 +45,16 @@
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" (click)="open(markUpdate); selectModal = '1';"> Update Lead Status</a>
-            <a class="dropdown-item" (click)="open(markUpdate); selectModal = '2';"> Delete</a>
-
+            <a class="dropdown-item" (click)="open(markUpdate); selectModal = '2';"> Delete</a> 
           </div>
         </span>
 
         <button type="button" class="btn btn-classic  btn-sm mx-1" (click)="httpGet();"> <i class="fas fa-sync-alt"></i>
-          Refresh</button>
-
-
-
+          Refresh</button> 
+          <span>
+             <small>Total Lead : {{total}} </small> 
+          </span>
+ 
       </div>
       <div class="col-4 text-right">
         <input type="text" class="form-control-sm form-radius" placeholder="Search">
@@ -172,6 +172,23 @@
           </div>
 
 
+          <div class="form-group row no-gutters">
+            <label for="h31" class="col-sm-4 col-form-label">Sex</label>
+            <div class="col-sm-8"> 
+              <select class="form-control border"   [(ngModel)]="model.sex"   id="sex" name="sex" >
+                <option value="1">Male</option>
+                <option value="2">Female</option>
+              </select> 
+            </div>
+          </div>
+ 
+          <div class="form-group row no-gutters">
+            <label for="h31" class="col-sm-4 col-form-label">Birthdate</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control border" id="birthdate"  [(ngModel)]="model.birthdate"  (click)="bd.toggle()"  ngbDatepicker #bd="ngbDatepicker"  name="birthdate"  [startDate]="{year: 1980, month: 1}" >
+            </div>
+          </div>
+
         </div>
 
         <div class="col-6">
@@ -212,7 +229,7 @@
           </div>
 
 
-          <div class="form-group row no-gutters">
+          <div class="form-group row no-gutters d-none">
             <label for="h6" class="col-sm-4 col-form-label"> Lead owner </label>
             <div class="col-sm-8">
               <select class="form-control border" [(ngModel)]="model.id_user" name="id_user" id="h6">
@@ -308,6 +325,9 @@
               </select>
             </div>
           </div>
+
+
+
 
 
          

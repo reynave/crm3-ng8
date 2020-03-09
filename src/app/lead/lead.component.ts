@@ -29,6 +29,7 @@ export class LeadComponent implements OnInit {
   id_lead_status:string = "1";
   id_user: string;
   model:any;
+  total:string;
   dbCompany: boolean = false;
   selectedCompany: any = [];
   constructor(
@@ -44,7 +45,7 @@ export class LeadComponent implements OnInit {
 
   ngOnInit() {
     this.id_user = this.configService.id_user();
-    this.model = new Newlead(this.id_user, '1', '1', '0', '', '', '', '', '', '', '', '','', '', '', '', '0','1',"","","","");
+    this.model = new Newlead(this.id_user, '1', '1', '0', '', '', '', '', '', '', '', '','', '', '', '', '0','1',"","","","","1",[]);
     this.httpGet();
     this.httpSelected();
   }
@@ -54,8 +55,9 @@ export class LeadComponent implements OnInit {
     this.itemsSelected = [];
     this.http.get<Lead[]>(this.configService.base_url() + 'lead', {
       headers: this.configService.headers()
-    }).subscribe(data => {
-     //  console.log(data);
+    }).subscribe(data => { 
+      
+      this.total = data['result']['total'];
       this.model['id_user'] = data['result']['id_user'];
       this.configService.errorToken(data);  
       this.items = data['result']['data']; 
@@ -103,7 +105,7 @@ export class LeadComponent implements OnInit {
           this.submit= false;
           if (value == 'next') {
             this.httpGet();
-            this.model = new Newlead(this.id_user, '1', '1', '0', '', '', '', '', '', '', '', '','', '', '', '', '0','1',"","","","");
+            this.model = new Newlead(this.id_user, '1', '1', '0', '', '', '', '', '', '', '', '','', '', '', '', '0','1',"","","","",'1',[]);
           }
           else {
             this.router.navigate(['/lead/',data['result']['id_lead'] ]);
@@ -113,8 +115,8 @@ export class LeadComponent implements OnInit {
 
         },
         error => {
-          // console.log(error);
-          // console.log(error.error.text);
+           console.log(error);
+           console.log(error.error.text);
         }
       );
   }

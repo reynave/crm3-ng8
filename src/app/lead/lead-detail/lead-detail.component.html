@@ -48,8 +48,7 @@
         </div>
 
         <div [hidden]="isReadOnly">
-          <button type="button" class="btn btn-classic btn-sm" (click)="isReadOnly=true" title="Done"><i
-              class="fas fa-check"></i> Finish Edit </button>
+          <button type="button" class="btn btn-classic btn-sm" (click)="isReadOnly=true" title="Done"> Cancel </button>
         </div>
 
       </div>
@@ -163,11 +162,32 @@
                                   [(ngModel)]="lead.mobile" name="mobile" [readonly]="isReadOnly"> </td>
                             </tr>
 
+                            <tr>
+                              <td><label>Sex</label></td>
+                              <td> 
+                                <select class="form-control form-modal"  [disabled]="isReadOnly"  id="sex" name="sex" [(ngModel)]="lead.sex" >
+                                  <option value="1">Male</option>
+                                  <option value="2">Female</option>
+                                </select>
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td><label>Birthdate</label></td>
+                              <td> 
+                                <span [hidden]="!isReadOnly">
+                                  <input type="text" class="form-control form-modal" value="{{lead.birthdate.year}}-{{lead.birthdate.month}}-{{lead.birthdate.day}}"  [readonly]="isReadOnly"> 
+                                </span>
+                                  <span [hidden]="isReadOnly">
+                                    <input type="text" class="form-control form-modal"  [(ngModel)]="lead.birthdate"  id="birthdate" (click)="bd.toggle()"  ngbDatepicker #bd="ngbDatepicker"  name="birthdate"  readonly [startDate]="{year: 1980, month: 1}" >
+                                  </span> 
+                              </td>
+                            </tr>
 
                           </tbody>
                         </table>
                       </div>
-
+ 
                       <div class="col-6">
                         <table class="table table-borderless">
                           <tbody>
@@ -184,9 +204,9 @@
                                   [(ngModel)]="lead.department" name="department" [readonly]="isReadOnly"> </td>
                             </tr>
                             <tr>
-                              <td width="30%"><label>Lead source</label></td>
+                              <td width="30%"><label>Lead Source</label></td>
                               <td>
-                                <select class="form-control form-modal" id="lead_source"
+                                <select class="form-control form-modal" id="lead_source" required
                                   [(ngModel)]="lead.id_lead_source" name="id_lead_source" [disabled]="isReadOnly">
                                   <option *ngFor="let x of lead_source" value="{{x.id}}"> {{x.name}} </option>
                                 </select>
@@ -195,10 +215,10 @@
                             </tr>
 
                             <tr>
-                              <td><label>Lead owner </label></td>
+                              <td><label>Lead Owner </label></td>
                               <td>
                                 <select class="form-control form-modal" id="id_user" [(ngModel)]="lead.id_user"
-                                  name="id_user" [disabled]="isReadOnly">
+                                  name="id_user" required disabled>
                                   <option *ngFor="let x of user" value="{{x.id}}"> {{x.name}} </option>
                                 </select>
                               </td>
@@ -322,7 +342,7 @@
                     <div class="container">
                       <div class="row">
                         <div class="col-12 text-center p-1">
-                          <a class="btn btn-outline-secondary m-1" (click)="isReadOnly=true">Finish Edit</a>
+                          <a class="btn btn-outline-secondary m-1" (click)="isReadOnly=true">Cancel</a>
                           <button type="submit" class="btn btn-primary m-1" (click)="isReadOnly=true"
                             [disabled]="!mainForm.form.valid">Save</button>
                         </div>
@@ -541,7 +561,7 @@
 
                 <div class="col-6">
                   <label class="mb-2">Amount</label>
-                  <input type="number" class="form-control mb-2" name="amount" [(ngModel)]="leadConvert.amount">
+                  <input type="text" class="form-control mb-2" name="amount" currencyMask [(ngModel)]="leadConvert.amount">
                 </div>
               </div>
             </div>
@@ -559,10 +579,9 @@
               </select>
             </div>
  
-            <div class="col-5 mt-2">
-              <label class="mb-2">Expecting Closing Date</label>
-          
-
+            <div class="col-5">
+              <label class="mb-2">Expecting Closing Date</label>  
+              
               <input type="text" class="form-control mb-2 border " readonly placeholder="YYYY-MM-DD" name="expecting_closing_date"
               [(ngModel)]="leadConvert.expecting_closing_date" ngbDatepicker #expecting_closing_date="ngbDatepicker"
               (click)="expecting_closing_date.toggle()">

@@ -14,7 +14,7 @@ export class SalesOrderComponent implements OnInit {
   public label: any;
   public items: any;
   public loading = true;
-
+total:string;
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -42,7 +42,7 @@ export class SalesOrderComponent implements OnInit {
     this.http.get(this.configService.base_url() + 'sales_order/', {
       headers: this.configService.headers()
     }).subscribe(data => {
-
+      this.total = data['result']['total']; 
       this.loading = false;
       this.items = data['result']['data']; 
    

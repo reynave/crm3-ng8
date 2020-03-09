@@ -151,7 +151,8 @@ export class Newlead {
         public position: string,
         public department: string,
         public fax: string, 
-        
+        public sex: string,
+        public birthdate: any, 
     ) { }
 
 }
@@ -206,7 +207,7 @@ export class LeadConvert{
         public lc_last_name: string,   
 
         public opportunity: string,
-        public amount: number,
+        public amount: string,
      
         public id_user: string,
         public expecting_closing_date: any,
@@ -240,9 +241,10 @@ export class UpdateLead {
         public amount: number,
         public id_company_class: string,
         public department: string,
-        public fax: string
+        public fax: string,
 
-        
+        public sex: string,
+        public birthdate: any,
     ) { }
 
 }

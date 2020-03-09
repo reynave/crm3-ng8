@@ -13,7 +13,7 @@ export class QuoteComponent implements OnInit {
   public label: any;
   public items: any;
   public loading = true;
-
+total :string;
   constructor(
     private http: HttpClient,
     private activatedRoute: ActivatedRoute, 
@@ -31,7 +31,7 @@ export class QuoteComponent implements OnInit {
     this.http.get(this.configService.base_url() + 'quote/', {
       headers: this.configService.headers()
     }).subscribe(data => {
-
+      this.total = data['result']['total']; 
       this.loading = false;
       this.items = data['result']['data']; 
       console.log(data);

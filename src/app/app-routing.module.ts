@@ -38,6 +38,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { MasterIndustryComponent } from './master-industry/master-industry.component';
 import { MasterLeadSourceComponent } from './master-lead-source/master-lead-source.component';
 import { AccessDataComponent } from './access-data/access-data.component';
+import { MasterClassComponent } from './master-class/master-class.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, data: { title: 'Dashboard' } },
@@ -99,6 +100,9 @@ const routes: Routes = [
 
   { path: "master/industry", component: MasterIndustryComponent, data: { title: 'Master Industry' }, canActivate: [ActiveGuardGuard]  }, 
   { path: "master/leadSource", component: MasterLeadSourceComponent, data: { title: 'Master Lead Source' },  canActivate: [ActiveGuardGuard]  }, 
+  { path: "master/class", component: MasterClassComponent, data: { title: 'Master Class' },  canActivate: [ActiveGuardGuard]  }, 
+ 
+  
   
 //  { path: "master/group", component: MasterLeadSourceComponent, data: { title: 'Master Lead Source' }, },
  

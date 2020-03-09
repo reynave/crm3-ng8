@@ -16,7 +16,7 @@ export class PriceListComponent implements OnInit {
   public loading = true;
   public model:any;
   public closeResult: string;
-  
+  total:string;
   objIndex:any=[];
   public itemsSelected: any = [];
   constructor(
@@ -31,7 +31,7 @@ export class PriceListComponent implements OnInit {
     config.keyboard = false;
   }
   ngOnInit() {
-    this.model = new Newpricelist('',1,'','','');
+    this.model = new Newpricelist('',"10",'','','');
     this.itemsSelected = [];
     this.httpGet(); 
   }
@@ -43,6 +43,7 @@ export class PriceListComponent implements OnInit {
       headers: this.configService.headers()
     }).subscribe(data => {
      //  console.log(data);
+     this.total =  data['result']['total']; 
       this.configService.errorToken(data);  
       this.items = data['result']['data']; 
       this.loading = false;
@@ -65,7 +66,7 @@ export class PriceListComponent implements OnInit {
           //  console.log(value);
           this.submit= false;
           if (value == 'next') {
-            this.model = new Newpricelist('',1,'','1','');
+            this.model = new Newpricelist('',"10",'','','');
             this.httpGet(); 
           }
           else {

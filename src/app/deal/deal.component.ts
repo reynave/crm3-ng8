@@ -24,7 +24,7 @@ export class DealComponent implements OnInit {
   selectModal:string= "0";
   id_user: string = "1";
   model:any;
-
+  total : string;
   dbCompany: boolean = false;
   selectedCompany: any = [];
   constructor(
@@ -49,8 +49,7 @@ export class DealComponent implements OnInit {
    
     this.modalService.dismissAll();
   }
-  
-  total:number;
+   
   httpGet() {
     this.loading = true;
     this.itemsSelected = [];

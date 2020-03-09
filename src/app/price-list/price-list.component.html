@@ -46,6 +46,10 @@
   
             </div>
           </span>
+
+          <span>
+            <small>Total : {{total}}</small>
+          </span>
       </div>
 
       <div class="col-4 text-right">
@@ -124,24 +128,28 @@
 
           <div class="form-group row no-gutters">
             <label for="ha" class="col-3 col-form-label"> Sku</label>
-            <div class="col-sm-8"> 
+            <div class="col-sm-3"> 
               <input type="text" class="form-control border" [(ngModel)]="model.sku" name="sku"
                 #sku="ngModel" id="ha" required>
               <small [hidden]="sku.valid || sku.pristine" class="text-danger"> Sku is  required</small>
             </div>
 
+
+            <label for="ha" class="col-2 col-form-label text-right pr-4"> Type </label>
+            <div class="col-sm-3"> 
+              <select class="form-control border"  [(ngModel)]="model.id_product_type" name="id_product_type">
+                <option value="10">Good</option>
+                <option value="20">Service</option>
+              </select>
+            </div>
+
           </div>
 
           <div class="form-group row no-gutters">
-            <label for="h2" class="col-sm-3 col-form-label"> Currency</label>
-            <div class="col-sm-2">
-              <select class="form-control border"  [(ngModel)]="model.id_currency" name="id_currency">
-                <option value="1">IDR (Rupiah)</option>
-              </select>
-            </div>
+            <label for="h2" class="col-sm-3 col-form-label"> Price </label>
+          
             <div class="col-sm-4">
-              <input type="number" class="form-control border mx-1" [(ngModel)]="model.price" name="price" autocomplete="off"
-                #price="ngModel" id="price" required>
+              <input type="text" class="form-control border" [(ngModel)]="model.price" name="price" autocomplete="off" #price="ngModel" id="price" currencyMask required>
                 <small [hidden]="price.valid || price.pristine" class="text-danger"> Price is  required</small>
             </div>
           </div>

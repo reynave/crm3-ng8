@@ -201,7 +201,8 @@ export class PriceListDetailComponent implements OnInit {
       data => { 
         console.log(data);   
         this.loading = false;
-        this.product_location = data['result']['product_location'];
+        this.httpGet();
+        //this.product_location = data['result']['product_location'];
       },
       error => {
         this.loading = false;

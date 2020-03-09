@@ -34,7 +34,7 @@
 
 
 
-                <div class="col-6 py-1">
+                <div class="col-6 py-1 d-none">
                   <label class="py-1">Assigned To</label>
                   <select class="form-control" [(ngModel)]="model.id_user" [ngModelOptions]="{standalone: true}">
                     <option value="{{x.id}}" *ngFor="let x of user"> {{x.name}}</option>
@@ -128,7 +128,7 @@
                 </div>
 
                 <div class="col-3 py-1 mt-1">
-                  <label class="py-1" id="j1"> Bugject Amount (IDR)</label>
+                  <label class="py-1" id="j1"> Budget  Amount (IDR)</label>
                 </div>
 
                 <div class="col-9 py-1 mt-1">
@@ -220,7 +220,7 @@
 
 
                 <div class="col-3 py-1 mt-1">
-                  <label class="py-1" id="j1"> Bugject Amount (IDR)</label>
+                  <label class="py-1" id="j1"> Budget  Amount (IDR)</label>
                 </div>
 
                 <div class="col-9 py-1 mt-1">
@@ -362,7 +362,7 @@
             {{x.activity_type.name}}</small> </a>
         <small class="mx-1"> &bull; </small>
         <a href="javascript:;" (click)="showLatest(i);"> <small
-            class="text-success">Replay</small> </a>
+            class="text-success">Reply</small> </a>
 
       </div>
 
@@ -428,7 +428,7 @@
 
       <div style="line-height: 90%;">
         <a href="javascript:;" (click)="showHistory(i)"> <small
-            class="text-success">Replay</small> </a>
+            class="text-success">Reply</small> </a>
       </div>
 
 

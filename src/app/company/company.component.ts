@@ -26,6 +26,7 @@ export class CompanyComponent implements OnInit {
   searchText: string;
   selectModal:string= "0";
   id_user: string = "1";
+  total : string ="";
   model = new NewCompany('','','','','','0','','','','','');
       
   dbCompany: boolean = false;
@@ -54,7 +55,7 @@ export class CompanyComponent implements OnInit {
       headers: this.configService.headers()
     }).subscribe(data => {
       this.items = data['result']['data'];
-     //  console.log(data);
+      this.total = data['result']['total'];
       this.loading = false;
     }, error => {
        console.log(error);

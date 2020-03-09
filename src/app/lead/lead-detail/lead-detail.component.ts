@@ -89,9 +89,7 @@ export class LeadDetailComponent implements OnInit {
       this.opportunity_stage =  data['result']['opportunity_stage'];
       this.company =  data['result']['company'];
       this.company_class =  data['result']['company_class'];
-      
-      
-
+       
 
       this.lead = new UpdateLead(
         data['result']['lead']['id_user'],
@@ -116,6 +114,9 @@ export class LeadDetailComponent implements OnInit {
         data['result']['lead']['id_company_class'],
         data['result']['lead']['department'],
         data['result']['lead']['fax'],
+
+        data['result']['lead']['sex'],
+        data['result']['lead']['birthdate'],
       );
 
       this.leadConvert = new LeadConvert(
@@ -231,7 +232,7 @@ export class LeadDetailComponent implements OnInit {
       headers: this.configService.headers()
     }).subscribe(
       data => {
-        // console.log(data);
+         console.log(data);
         this.loadingConvert = false;
         this.loading = false;
         this.modalService.dismissAll('just closed');

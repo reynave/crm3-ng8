@@ -26,10 +26,11 @@ export class ContactComponent implements OnInit {
   searchText: string;
   selectModal: string = "0";
   id_user: string = "1";
-  modelContact:any;
+  modelContact: any;
   dbCompany: boolean = false;
   selectedCompany: any = [];
-  amount:string;
+  amount: string;
+  total:string;
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -55,20 +56,21 @@ export class ContactComponent implements OnInit {
       headers: this.configService.headers()
     }).subscribe(data => {
       this.items = data['result']['data'];
-      
-    this.modelContact = new NewContact('0', '', '', '', '', '0', this.id_user,'0','','');
-     //  console.log(data);
+      this.total = data['result']['total'];
+
+      this.modelContact = new NewContact('0', '', '', '', '', '0', this.id_user, '0', '', '');
+      console.log(this.total);
       this.loading = false;
     }, error => {
-     //  console.log(error);
-     //  console.log(error.error.text);
+      //  console.log(error);
+      //  console.log(error.error.text);
     });
   }
 
-  
+
   requestEmit(event) {
-    if(event){
-      this.router.navigate(['contact',event]);
+    if (event) {
+      this.router.navigate(['contact', event]);
     }
     this.modalService.dismissAll();
   }
@@ -81,7 +83,7 @@ export class ContactComponent implements OnInit {
     }).subscribe(data => {
       this.loadingSelected = false;
       this.selected = data['result'];
-     //  console.log(this.selected);
+      //  console.log(this.selected);
     });
   }
 
@@ -89,26 +91,26 @@ export class ContactComponent implements OnInit {
 
   submit: boolean = false;
 
- 
-  
+
+
   fn_delete() {
 
     this.http.post(this.configService.base_url() + 'contact/fn_delete',
       {
         "data": this.itemsSelected
       }, {
-        headers: this.configService.headers()
-      }).subscribe(
-        data => {
-         //  console.log(data);
-          this.httpGet();
-          this.modalService.dismissAll();
-        },
-        error => {
-         //  console.log(error);
-         //  console.log(error.error.text);
-        }
-      );
+      headers: this.configService.headers()
+    }).subscribe(
+      data => {
+        //  console.log(data);
+        this.httpGet();
+        this.modalService.dismissAll();
+      },
+      error => {
+        //  console.log(error);
+        //  console.log(error.error.text);
+      }
+    );
 
 
 
@@ -118,7 +120,7 @@ export class ContactComponent implements OnInit {
     this.modalService.open(content, { size: 'lg' });
   }
 
- 
+
 
   fn_check(x) {
     this.objIndex = this.items.findIndex((obj => obj.id == x.id));
@@ -130,15 +132,15 @@ export class ContactComponent implements OnInit {
     var object = {
       'id': x.id,
       'name': x.name,
-      'company' : x.company,
+      'company': x.company,
     }
     var objectSelect = this.itemsSelected.findIndex((obj => obj.id == x.id));
     if (objectSelect == -1) {
       this.itemsSelected.push(object);
-    }else{
+    } else {
       this.itemsSelected.splice(objectSelect, 1);
     }
-   //  console.log(this.itemsSelected);
+    //  console.log(this.itemsSelected);
   }
 
   fn_removeItemSelected(x) {
@@ -152,6 +154,6 @@ export class ContactComponent implements OnInit {
     this.itemsSelected.splice(objectSelect, 1);
   }
 
- 
+
 
 }
