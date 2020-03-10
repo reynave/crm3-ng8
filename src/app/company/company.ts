@@ -123,11 +123,23 @@ export class NewCompany {
         public mobile: string,
         public email: string,
         public fax: string,
+
         public id_industry: string,
-        public address_street: string,
-        public address_city: string,
-        public address_state: string,
-        public address_code: string,
+        public id_company_class: string,
+        public id_user: string,
+
+        public bill_street: string,
+        public bill_city: string,
+        public bill_state: string,
+        public bill_code: string,
+        public bill_country: string,
+       
+        public ship_street: string,
+        public ship_city: string,
+        public ship_state: string,
+        public ship_code: string,
+        public ship_country: string,
+      
     ) { }
 
 }

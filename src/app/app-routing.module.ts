@@ -31,20 +31,24 @@ import { SalesOrderDetailComponent } from './sales-order/sales-order-detail/sale
 import { SalesOrderCreateComponent } from './sales-order/sales-order-create/sales-order-create.component';
 import { SalesOrderPrintComponent } from './sales-order/sales-order-print/sales-order-print.component';
 import { UserComponent } from './user/user.component';
-import { UserDetailComponent } from './user/user-detail/user-detail.component';
-import { leadConvert } from './lead/lead';
+import { UserDetailComponent } from './user/user-detail/user-detail.component'; 
 import { LeadConverdComponent } from './lead/lead-converd/lead-converd.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MasterIndustryComponent } from './master-industry/master-industry.component';
 import { MasterLeadSourceComponent } from './master-lead-source/master-lead-source.component';
 import { AccessDataComponent } from './access-data/access-data.component';
 import { MasterClassComponent } from './master-class/master-class.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, data: { title: 'Dashboard' } },
  
   { path: 'dashboard', component: DashboardComponent, data: { title: 'Dashboard' } },
+  { path: 'dashboard/:period', component: DashboardComponent, data: { title: 'Dashboard' } },
  
+  { path: 'profile', component: ProfileComponent, data: { title: 'My Profile' } },
+ 
+
   { path: 'accessRight', component: AccessRightComponent, data: { title: 'Access Rigth' }, canActivate: [ActiveGuardGuard] },
   { path: 'accessRight/:id', component: AccessRightDetailComponent, data: { title: 'Access Rigth' }, canActivate: [ActiveGuardGuard] },
   

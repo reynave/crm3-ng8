@@ -53,6 +53,7 @@ export class AccessDataComponent implements OnInit {
       headers: this.configService.headers()
     }).subscribe(
       data => {
+        this.httpGet();
         this.isUpdate = false;
       },
       error => {

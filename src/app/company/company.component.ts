@@ -27,7 +27,7 @@ export class CompanyComponent implements OnInit {
   selectModal:string= "0";
   id_user: string = "1";
   total : string ="";
-  model = new NewCompany('','','','','','0','','','','','');
+  model = new NewCompany('','','','','','','','','','','','','','','','','','','');
       
   dbCompany: boolean = false;
   selectedCompany: any = [];
@@ -54,20 +54,27 @@ export class CompanyComponent implements OnInit {
     this.http.get<Company[]>(this.configService.base_url() + 'company', {
       headers: this.configService.headers()
     }).subscribe(data => {
+    
       this.items = data['result']['data'];
       this.total = data['result']['total'];
-      this.loading = false;
+      this.loading = false; 
     }, error => {
        console.log(error);
        console.log(error.error.text);
     });
   }
-
+  user:any = [];
+  company_class:any=[];
   httpSelected() {
-
+  
     this.http.get<Selected[]>(this.configService.base_url() + 'company/selected', {
       headers: this.configService.headers()
     }).subscribe(data => {
+      console.log(data); 
+      this.id_user = data['result']['id_user']; 
+      this.model['id_user'] = data['result']['id_user']; 
+      this.user = data['result']['user'];
+      this.company_class = data['result']['company_class'];
       this.loadingSelected = false;
       this.selected = data['result'];
      //  console.log(this.selected);
@@ -92,7 +99,8 @@ export class CompanyComponent implements OnInit {
           this.submit= false;
           if (value == 'next') {
             this.httpGet();
-            this.model = new NewCompany('','','','','','0','','','','','');
+            this.model = new NewCompany('','','','','','','','','','','','','','','','','','','');
+            this.model['id_user'] = this.id_user; 
           }
           else {
            this.router.navigate(['/company/',data['result']['id'] ]);

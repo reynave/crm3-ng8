@@ -1,0 +1,8 @@
+.scroll-y{
+    overflow-y: auto;
+    max-height: 200px;
+}
+
+.scroll-y th{
+    background: #fff;
+}

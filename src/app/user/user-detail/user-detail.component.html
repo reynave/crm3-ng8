@@ -95,6 +95,17 @@
 
                                 <table class="table table-borderless">
                                     <tr>
+                                        <td>User Code</td>
+                                        <td>
+                                            <input type="text" class="form-control form-modal" [(ngModel)]="model.code"
+                                            id="code" name="code" #code="ngModel" required>
+                                        <div [hidden]="code.valid || code.pristine" class="alert alert-danger">
+                                            Code is required</div>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
                                         <td>User Access</td>
                                         <td>
                                             <select class="form-control form-modal" [(ngModel)]="model.id_user_access"

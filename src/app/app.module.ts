@@ -57,6 +57,7 @@ import { MasterIndustryComponent } from './master-industry/master-industry.compo
 import { MasterLeadSourceComponent } from './master-lead-source/master-lead-source.component';
 import { AccessDataComponent } from './access-data/access-data.component'; 
 import { MasterClassComponent } from './master-class/master-class.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
@@ -116,7 +117,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     MasterIndustryComponent,
     MasterLeadSourceComponent,
     AccessDataComponent, 
-    MasterClassComponent
+    MasterClassComponent, ProfileComponent
   ],
   imports: [
     BrowserModule,

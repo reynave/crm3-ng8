@@ -12,17 +12,49 @@
 
 <div class="container-fluid mt-3">
   <div class="row no-gutters">
-    <div class="col-12 text-center mb-4">
-      <h4> Data Per Quarter (3 Month)</h4> 
+    <div class="col-8 ">
+      <h4> Data this {{period}} </h4>
       <div>
-        <b>Account Manager : </b> <span *ngFor="let x of user"> {{x.name}}. </span>
+        <b>By </b> <span *ngFor="let x of account_manager"> {{x.name}}. </span>
       </div>
     </div>
+    <div class="col-4 text-right   mb-4">
+      <button type="button" class="btn btn-classic btn-sm mx-1" (click)="onPeriod('month');"  [routerLink]="[ '/dashboard/month' ]"  >This Month</button>
+
+      <button type="button" class="btn btn-classic btn-sm  mx-1"  (click)="onPeriod('quarter');"  [routerLink]="[ '/dashboard/quarter' ]">This Quarter </button>
+
+      <button type="button" class="btn btn-classic btn-sm  mx-1" (click)="onPeriod('year');"  [routerLink]="[ '/dashboard/year' ]">This Year</button>
+    </div> 
+
+  </div>
+
+</div>
+
+
+<div class="container-fluid mt-3">
+  <div class="row no-gutters">
+
+
+    <div class="col-2 my-3">
+      <b>Select Account Manager :</b>
+    </div>
+
+    <div class="col-10 my-3">
+
+      <span *ngFor="let x of user" class="px-2">
+        <a href="javascript:;" (click)="onUser(x.id)"> {{x.name}} </a>
+
+      </span>
+      <span class="px-2">
+        <a ref="javascript:;" (click)="onUser();">Show All</a>
+      </span>
+    </div>
+
     <div class="col-2  mb-3">
       <div class="bg-white  border border-top-black rounded p-2  m-1 text-center">
-        <div> 
-            <strong> New leads today</strong>
-            <h1>{{lead.today}}</h1>
+        <div>
+          <strong> New leads today</strong>
+          <h1>{{lead.today}}</h1>
         </div>
         <hr>
 
@@ -42,7 +74,7 @@
     </div>
     <div class="col-4   mb-3">
       <div class="bg-light  border border-top-red rounded p-2  m-1">
-        <div class="pb-1"> <strong> Funnel</strong></div>
+        <div class="pb-1"> <strong> Sales Funnel</strong></div>
 
         <div id="funnel"></div>
       </div>
@@ -65,48 +97,32 @@
     </div>
 
 
-    <div class="col-6  mb-3">
+    <div class="col-12  mb-3">
       <div class="bg-light  border border-top-blue rounded p-2  m-1">
 
-        <div class="pb-1"> <strong> Target Salesman</strong></div>
+        <div class="pb-1"> <strong> Target Salesman This Year</strong></div>
 
         <table class="table table-hover border bg-white border-top border-bottom pointer">
           <thead>
             <tr>
               <th>Target</th>
-              <th>Quarter 1 </th>
-              <th>Quarter 2 </th>
-              <th>Quarter 3</th>
-              <th>Quarter 4</th>
+              <th class="text-right">Quarter 1 </th>
+              <th class="text-right">Quarter 2 </th>
+              <th class="text-right">Quarter 3</th>
+              <th class="text-right">Quarter 4</th>
             </tr>
           </thead>
           <tbody>
-             <tr>
-               <td>Target Amount</td>
 
-               <td>250000000</td>
-               <td></td>
-               <td></td>
-               <td></td>
-             </tr>
+            <tr *ngFor="let x of target; let i = index">
+              <td>{{x.name}}</td>
 
-             <tr>
-              <td>Target Opportunity Submiteed</td>
-
-              <td>1250000000</td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td class="text-right"> <span [hidden]="x.q1 < 1"> {{i+1 < 3 ? "Rp":""}} {{x.q1 | number }} </span></td>
+              <td class="text-right"> <span [hidden]="x.q2 < 1"> {{i+1 < 3 ? "Rp":""}} {{x.q2 | number }} </span></td>
+              <td class="text-right"> <span [hidden]="x.q3 < 1"> {{i+1 < 3 ? "Rp":""}} {{x.q3 | number }} </span></td>
+              <td class="text-right"> <span [hidden]="x.q4 < 1"> {{i+1 < 3 ? "Rp":""}} {{x.q4 | number }} </span></td>
             </tr>
 
-            <tr>
-              <td>Target Leads Generated</td>
-
-              <td>50</td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
           </tbody>
         </table>
       </div>
@@ -130,9 +146,9 @@
           <tbody>
             <tr *ngFor="let x of recentwins; let i = index">
               <td>{{i+1}}</td>
-              <td>{{x.so_number }}</td>
+              <td> <a href="javascript:;" [routerLink]="[ '/salesOrder', x.id ]"> <b>{{x.so_number }} </b> </a> </td>
               <td>{{x.company }}</td>
-              <td>Rp {{x.grand_total }}</td>
+              <td>Rp {{x.grand_total | number }}</td>
               <td>{{x.input_date | date }}</td>
             </tr>
           </tbody>
@@ -143,53 +159,59 @@
     <div class="col-6 mb-3">
       <div class="bg-light  border border-top-yellow rounded p-2  m-1">
 
-        <div class="p-1"> <strong> Top 10 Recent Quotation on Process</strong></div>
-        <table class="table table-hover border bg-white border-top border-bottom pointer">
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Quote</th>
-              <th>Customer</th>
-              <th>Amount</th>
-              <th>Status</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let x of recentQuotation; let i = index">
-              <td>{{i+1}}</td>
-              <td>{{x.quotes_number }}</td>
-              <td>{{x.company }}</td>
-              <td>Rp {{x.grand_total }}</td>
-              <td>{{x.status }}</td>
-              <td>{{x.input_date | date }}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="p-1"> <strong> Top 5 Recent Quotation on Process</strong></div>
+        <div class="scroll-y">
+          <table class="table table-hover border bg-white border-top border-bottom pointer">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Quote</th>
+                <th>Customer</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let x of recentQuotation; let i = index">
+                <td>{{i+1}}</td>
+                <td> <a [routerLink]="[ '/quote', x.id ]"> <b> {{x.quotes_number }}</b></a> </td>
+                <td>{{x.company }}</td>
+                <td>Rp {{x.grand_total | number }}</td>
+                <td>{{x.status }}</td>
+                <td>{{x.input_date | date }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
     <div class="col-6   mb-3">
       <div class="bg-light  border border-top-green rounded p-2  m-1">
         <div class="p-1"> <strong>Must Event Next Month</strong></div>
-        <table class="table table-hover border bg-white border-top border-bottom pointer">
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Event</th>
-              <th>Customer</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody> 
-            <tr *ngFor="let x of event; let i = index">
-              <td>{{i+1}}</td>
-              <td>{{x.subject }}</td>
-              <td>{{x.name }}</td>
-              <td> {{x.start_datetime | date:'medium' }}</td> 
-            </tr>
-          </tbody>
-        </table>
+        <div class="scroll-y">
+
+
+          <table class="table table-hover border bg-white border-top border-bottom pointer">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Event</th>
+                <th>Customer</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let x of event; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{x.subject }}</td>
+                <td> <a [routerLink]="[ '/contact', x.id ]"> <b> {{x.name }}</b> </a> </td>
+                <td> {{x.start_datetime | date:'medium' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
     </div>
@@ -197,24 +219,28 @@
     <div class="col-6  mb-3">
       <div class="bg-light  border border-top-brown rounded p-2  m-1">
         <div class="p-1"> <strong>Must Visit Next Month</strong></div>
-        <table class="table table-hover border bg-white border-top border-bottom pointer">
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Event</th>
-              <th>Customer</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let x of visit; let i = index">
-              <td>{{i+1}}</td>
-              <td>{{x.subject }}</td>
-              <td>{{x.name }}</td>
-              <td> {{x.start_datetime | date:'medium' }}</td> 
-            </tr>
-          </tbody>
-        </table>
+        <div class="scroll-y">
+          <table class="table table-hover border bg-white border-top border-bottom pointer">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Event</th>
+                <th>Customer</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let x of visit; let i = index">
+                <td>{{i+1}}</td>
+                <td> {{x.subject }} </td>
+                <td> <a [routerLink]="[ '/contact', x.id ]"> <b> {{x.name }}</b> </a> </td>
+                <td> {{x.start_datetime | date:'medium' }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+
       </div>
 
 

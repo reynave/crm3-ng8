@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ConfigService } from './../service/config.service';
 
 declare var $;
@@ -26,9 +26,13 @@ export class DashboardComponent implements OnInit {
     quarter: "0",
     year: "0",
   }
+  id:string = "0";
+  period:string;
 
   constructor(
     private http: HttpClient,
+    
+    private activatedRoute: ActivatedRoute,
     private router: Router,
     private configService: ConfigService
   ) {
@@ -36,18 +40,37 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit() {
-    this.httpGet();
+    this.httpGet(0);
+    this.period = this.activatedRoute.snapshot.params.period;
+    console.log( this.activatedRoute.snapshot.params);
+    if( this.period == ""){
+      this.period = 'quarter';
+    }
   }
   
+  onPeriod(period){
+    this.period = period;
+    this.httpGet(this.id );
+  }
 
-  httpGet() {
+  onUser(id){
+   this.id = id;
+   this.httpGet(id );
+  }
+
+  account_manager:any=[];
+  target:any=[];
+  httpGet(id) {
     this.loading = true;
-    this.http.get(this.configService.base_url() + 'dashboard', {
+    this.http.get(this.configService.base_url() + 'dashboard/index/?id='+id, {
       headers: this.configService.headers()
     }).subscribe(data => {
       if(data['error'] == 400){
         window.location.href= this.configService.login();
       }
+      console.log(data); 
+      this.target  = data['result']['target'];
+      this.account_manager =  data['result']['account_manager'];
       this.lead = data['result']['lead'];
       this.user = data['result']['user'];
       this.event = data['result']['event'];

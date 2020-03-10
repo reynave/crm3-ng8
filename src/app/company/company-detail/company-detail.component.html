@@ -26,11 +26,11 @@
 
     <div class="col-9 bg-light text-right py-2">
       <div [hidden]="!isReadOnly">
-        <button type="button" class="btn btn-classic btn-sm  mr-1" [hidden]="!allow_access_data"
+        <button type="button" class="btn btn-classic btn-sm  mr-1" 
           (click)="isReadOnly=false; t.select('tab-selectbyid2')">
           <i class="fas fa-edit"></i> Edit </button>
 
-        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="fn_delete();"  [hidden]="!allow_access_data"> <i
+        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="fn_delete();" > <i
             class="fas fa-trash-alt"></i>
           Delete </button>
 
@@ -40,8 +40,7 @@
       </div>
 
       <div [hidden]="isReadOnly">
-        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="isReadOnly=true" title="Done"><i
-            class="fas fa-check"></i> Finish Edit </button>
+        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="isReadOnly=true" title="Done">  Cancel </button>
       </div>
 
     </div>
@@ -98,7 +97,7 @@
                 <div class="border-top py-2 my-2">
                   <div class="row">
                     <div class="col-12 bg-light my-2">
-                      <strong>Contact</strong>
+                      <strong>Information</strong>
                     </div>
 
                     <div class="col-6">
@@ -194,106 +193,89 @@
                       <table class="table table-borderless">
                         <tbody>
                           <tr>
-                            <td width="50%"><label>Bill To Address</label></td>
-                            <td> </td>
+                            <td width="30%"><label>Address</label></td>
+                            <td> <textarea class="form-control form-modal" [(ngModel)]="modealCompany.bill_street1"
+                                placeholder="Street" name="bill_street1" id="h21a"
+                                [readonly]="isReadOnly"> </textarea> </td>
                           </tr>
 
                           <tr>
-                            <td colspan="2">
-                              <textarea class="form-control form-modal" id="bill_street1"
-                                [(ngModel)]="modealCompany.bill_street1" name="bill_street1" [readonly]="isReadOnly"
-                                placeholder="Street"></textarea>
-                            </td>
+                            <td><label>City</label></td>
+                            <td> <input type="text" class="form-control form-modal" maxlength="250"
+                                [(ngModel)]="modealCompany.bill_city" placeholder="City" name="bill_city" id="h21b"
+                                [readonly]="isReadOnly"> </td>
                           </tr>
 
                           <tr>
-                            <td> City </td>
-                            <td> State </td>
-                          </tr>
-
-
-                          <tr>
-                            <td> <input type="text" class="form-control form-modal" id="bill_city"
-                                [(ngModel)]="modealCompany.bill_city" name="bill_city" [readonly]="isReadOnly"
-                                placeholder="City"> </td>
-
-                            <td> <input type="text" class="form-control form-modal" id="bill_state"
-                                [(ngModel)]="modealCompany.bill_state" name="bill_state" [readonly]="isReadOnly"
-                                placeholder="State"> </td>
-                          </tr>
-
-
-                          <tr>
-                            <td> Code </td>
-                            <td> Country </td>
+                            <td><label>State</label></td>
+                            <td> <input type="text" class="form-control form-modal" maxlength="250"
+                                [(ngModel)]="modealCompany.bill_state" placeholder="State" name="bill_state" id="h21b"
+                                [readonly]="isReadOnly"> </td>
                           </tr>
 
                           <tr>
-                            <td> <input type="text" class="form-control form-modal" id="bill_code"
-                                [(ngModel)]="modealCompany.bill_code" name="bill_code" [readonly]="isReadOnly"
-                                placeholder="Code"> </td>
-
-                            <td> <input type="text" class="form-control form-modal" id="bill_country"
-                                [(ngModel)]="modealCompany.bill_country" name="bill_country" [readonly]="isReadOnly"
-                                placeholder="Country"> </td>
+                            <td><label>Postal Code</label></td>
+                            <td> <input type="text" class="form-control form-modal" maxlength="250"
+                                [(ngModel)]="modealCompany.bill_code" placeholder="State" name="bill_code" id="h21b"
+                                [readonly]="isReadOnly"> </td>
                           </tr>
+
+                          <tr>
+                            <td><label>Country</label></td>
+                            <td> <input type="text" class="form-control form-modal" maxlength="250"
+                                [(ngModel)]="modealCompany.bill_country" placeholder="State" name="bill_country"
+                                id="h21b" [readonly]="isReadOnly"> </td>
+                          </tr> 
 
                         </tbody>
                       </table>
+
+
                     </div>
 
                     <div class="col-6">
-
-
+ 
                       <table class="table table-borderless">
                         <tbody>
                           <tr>
-                            <td width="50%"><label>Ship To Address</label></td>
-                            <td> </td>
+                            <td width="30%"><label>Address</label></td>
+                            <td> <textarea class="form-control form-modal" [(ngModel)]="modealCompany.ship_street1"
+                                placeholder="Street" name="ship_street1" id="h21a"
+                                [readonly]="isReadOnly"> </textarea> </td>
                           </tr>
 
                           <tr>
-                            <td colspan="2">
-                              <textarea class="form-control form-modal" id="ship_street1"
-                                [(ngModel)]="modealCompany.ship_street1" name="ship_street1" [readonly]="isReadOnly"
-                                placeholder="Street"></textarea>
-                            </td>
+                            <td><label>City</label></td>
+                            <td> <input type="text" class="form-control form-modal" maxlength="250"
+                                [(ngModel)]="modealCompany.ship_city" placeholder="City" name="ship_city" id="h21b"
+                                [readonly]="isReadOnly"> </td>
                           </tr>
 
                           <tr>
-                            <td> City </td>
-                            <td> State </td>
-                          </tr>
-
-
-                          <tr>
-                            <td> <input type="text" class="form-control form-modal" id="ship_city"
-                                [(ngModel)]="modealCompany.ship_city" name="ship_city" [readonly]="isReadOnly"
-                                placeholder="City"> </td>
-
-                            <td> <input type="text" class="form-control form-modal" id="ship_state"
-                                [(ngModel)]="modealCompany.ship_state" name="ship_state" [readonly]="isReadOnly"
-                                placeholder="State"> </td>
-                          </tr>
-
-
-                          <tr>
-                            <td> Code </td>
-                            <td> Country </td>
+                            <td><label>State</label></td>
+                            <td> <input type="text" class="form-control form-modal" maxlength="250"
+                                [(ngModel)]="modealCompany.ship_state" placeholder="State" name="ship_state" id="h21b"
+                                [readonly]="isReadOnly"> </td>
                           </tr>
 
                           <tr>
-                            <td> <input type="text" class="form-control form-modal" id="ship_code"
-                                [(ngModel)]="modealCompany.ship_code" name="ship_code" [readonly]="isReadOnly"
-                                placeholder="Code"> </td>
-
-                            <td> <input type="text" class="form-control form-modal" id="ship_country"
-                                [(ngModel)]="modealCompany.ship_country" name="ship_country" [readonly]="isReadOnly"
-                                placeholder="Country"> </td>
+                            <td><label>Postal Code</label></td>
+                            <td> <input type="text" class="form-control form-modal" maxlength="250"
+                                [(ngModel)]="modealCompany.ship_code" placeholder="State" name="ship_code" id="h21b"
+                                [readonly]="isReadOnly"> </td>
                           </tr>
+
+                          <tr>
+                            <td><label>Country</label></td>
+                            <td> <input type="text" class="form-control form-modal" maxlength="250"
+                                [(ngModel)]="modealCompany.ship_country" placeholder="State" name="ship_country"
+                                id="h21b" [readonly]="isReadOnly"> </td>
+                          </tr> 
 
                         </tbody>
                       </table>
+
+
                     </div>
 
                   </div>
@@ -304,7 +286,7 @@
                   <div class="container">
                     <div class="row">
                       <div class="col-12 text-center p-1">
-                        <a class="btn btn-outline-secondary m-1" (click)="isReadOnly=true">Finish Edit</a>
+                        <a class="btn btn-outline-secondary m-1" (click)="isReadOnly=true">Cancel</a>
                         <button type="submit" class="btn btn-primary m-1"  (click)="isReadOnly=true"
                           [disabled]="!mainForm.form.valid">Save</button>
                       </div>
@@ -315,61 +297,7 @@
               </form>
             </ng-template>
           </ngb-tab>
-          <!-- 
-          <ngb-tab>
-            <ng-template ngbTabTitle>Branches</ng-template>
-            <ng-template ngbTabContent>
-              <div class="border-top py-2 my-2">
- 
-                <div class=" bg-light  border border-top-gray rounded p-1 my-3">
-                  <div class="max-height mb-4">
-
-
-                    <table class="table table-hover border bg-white border-top border-bottom pointer">
-                      <thead class="thead-light">
-                        <tr>
-                          <th width="50">No</th>
-                          <th scope="col">ID</th>
-                          <th scope="col">Branch Name</th>
-                          <th scope="col" width="300">Address</th>
-                          <th scope="col">Phone</th>
-
-                          <th scope="col">Email</th>
-                          <th scope="col">Status</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let x of myBranch; let i = index">
-                          <td>{{ i + 1}}</td>
-                          <td> <a [routerLink]="[ '/branch/',x.id ]">{{x.id}}</a></td>
-                          <td> {{x.name}} </td>
-                          <td> {{x.address}} </td>
-                          <td> {{x.phone}}</td>
-                          <td> {{x.email}} </td>
-                          <td> {{x.status}} </td>
-                        </tr>
-
-
-                      </tbody>
-                      <tfoot>
-                        <tr>
-                          <td></td>
-                          <td colspan="6"> <button type="button" class="btn btn-classic btn-sm" (click)="open(branch);">
-                              <i class="fas fa-plus"></i> New Branch</button> </td>
-                        </tr>
-                      </tfoot>
-                    </table>
-
-
-                  </div>
-                </div>
-
-
-              </div>
-            </ng-template>
-          </ngb-tab>
--->
-
+       
           <ngb-tab>
             <ng-template ngbTabTitle>Contact Rules</ng-template>
             <ng-template ngbTabContent>
