@@ -32,8 +32,7 @@ export class WidgetActivityComponent implements OnInit {
   user: any = [];
   id_user : string;
   closeResult: any;
-  showNewActivity: boolean = false;
-  id_user: string = "";
+  showNewActivity: boolean = false; 
 
   activityLatest: Activity[] = [];
   activityHistory: Activity[] = [];
