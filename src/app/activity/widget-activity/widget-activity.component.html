@@ -1,4 +1,4 @@
-<div id="activityTabs" [hidden]="id == 'false'">
+<div id="activityTabs" [hidden]="module == 'activity'">
 
   <div class="border p-2 my-2 bg-light shadow-sm">
 
@@ -9,7 +9,7 @@
         <ngb-tab title="Log a Call" id="100">
           <ng-template ngbTabContent>
             <div class="border border-top-0 px-3 bg-white pb-3">
-              
+
               <div class="row">
                 <div class="col-12 py-1">
                   <label class="py-1"> Subject</label>
@@ -55,7 +55,7 @@
 
           </ng-template>
         </ngb-tab>
- 
+
         <!-- TASK -->
         <ngb-tab title="New Task" id="1">
           <ng-template ngbTabContent>
@@ -128,12 +128,12 @@
                 </div>
 
                 <div class="col-3 py-1 mt-1">
-                  <label class="py-1" id="j1"> Budget  Amount (IDR)</label>
+                  <label class="py-1" id="j1"> Budget Amount (IDR)</label>
                 </div>
 
                 <div class="col-9 py-1 mt-1">
-                  <input type="text" name="amount" class="form-control text-right w-25" [(ngModel)]="model.amount" j1="h1" currencyMask 
-                    (click)="showNewActivity=true;">
+                  <input type="text" name="amount" class="form-control text-right w-25" [(ngModel)]="model.amount"
+                    j1="h1" currencyMask (click)="showNewActivity=true;">
                 </div>
 
 
@@ -220,12 +220,12 @@
 
 
                 <div class="col-3 py-1 mt-1">
-                  <label class="py-1" id="j1"> Budget  Amount (IDR)</label>
+                  <label class="py-1" id="j1"> Budget Amount (IDR)</label>
                 </div>
 
                 <div class="col-9 py-1 mt-1">
-                  <input type="text" name="amount" class="form-control text-right w-25" [(ngModel)]="model.amount" j1="h1" currencyMask 
-                    (click)="showNewActivity=true;">
+                  <input type="text" name="amount" class="form-control text-right w-25" [(ngModel)]="model.amount"
+                    j1="h1" currencyMask (click)="showNewActivity=true;">
                 </div>
 
 
@@ -327,9 +327,10 @@
 
 </div>
 
-<div class="my-4">
 
-  <h5 class="inline-text" ><span class="text-warning">Activity</span></h5>
+<div class="my-4">
+  <div class="text-center" [hidden]="!loading"><small> Loading...</small> </div>
+  <h5 class="inline-text"><span class="text-warning">Activity</span></h5>
 
 
   <div class="bg-light px-2 mb-2"> <strong> Latest Activity</strong> </div>
@@ -338,14 +339,14 @@
     <div class="icon" [innerHTML]="x.activity_type.fas"></div>
     <div class="content">
       <div class="row">
-        <div class="col-12 col-md-8">
+        <div class="col-12 col-md-6">
           <a href="javascript:;" (click)="x.description ? showLatest(i) : false;"> <b
               class="text-primary">{{x.subject}}</b> </a>
           <a class="ml-2 text-gray py-0" [hidden]="!x.description" (click)="x.description ? showLatest(i) : false;"><i
               class="fas fa-caret-down"></i></a>
         </div>
 
-        <div class="col-12  col-md-4 text-right">
+        <div class="col-12  col-md-6 text-right">
           <small> {{x.input_date | date:'mediumDate'}}, {{x.input_date | date:'shortTime'}} </small>
         </div>
 
@@ -356,21 +357,30 @@
 
 
       <div style="line-height: 90%;">
-        <a href="javascript:;" (click)="fn_closed(x);"> <small>Closed {{x.activity_type.name}}</small> </a>
-        <small class="mx-1"> &bull; </small>
-        <a href="javascript:;" (click)="fn_remove(x);"> <small class="text-danger">Remove
-            {{x.activity_type.name}}</small> </a>
-        <small class="mx-1"> &bull; </small>
-        <a href="javascript:;" (click)="showLatest(i);"> <small
-            class="text-success">Reply</small> </a>
+        <span [hidden]="id_user != x.id_user">
+ 
+          <a href="javascript:;" (click)="fn_closed_area(i);"> <small>Closed {{x.activity_type.name}}</small> </a> 
+          <small class="mx-1"> &bull; </small>
 
+          <a href="javascript:;" (click)="fn_remove(x);"> <small class="text-danger">Remove {{x.activity_type.name}}</small> </a> 
+          <small class="mx-1"> &bull; </small>
+
+        </span>
+        <a href="javascript:;" (click)="showLatest(i);"> <small class="text-success">Reply</small> </a>
+
+        <span [hidden]="x.activity_comment.length < 1">
+          <small class="mx-1"> &bull; </small>
+          <a href="javascript:;" (click)="showLatest(i);"> <small> <i class="far fa-comments"></i>
+              {{x.activity_comment.length}} comments</small></a>
+        </span>
       </div>
 
-
-      <div [hidden]="x.activity_comment.length < 1">
-        <a href="javascript:;" (click)="x.description ? showLatest(i) : false;"> <small> <i class="far fa-comments"></i>
-            {{x.activity_comment.length}} comments</small></a>
+      <div [hidden]="!x.closed_area" class="text-right"> 
+  
+        <textarea class="form-control form-control-sm my-2 p-1" rows="8" [(ngModel)]="x.comment" placeholder="Closed this activity. Note your comment"></textarea> 
+        <button class="btn btn-sm btn-classic" (click)="fn_closed(x)" >Closed</button>
       </div>
+
 
       <div [hidden]="!x.show">
         <div class="p-2 mt-2 border rounded">
@@ -407,18 +417,19 @@
 
   <div [hidden]="module == 'activity'" class="bg-light px-2 mb-2"> <strong> History Activity</strong> </div>
 
-  <div [hidden]="module == 'activity'" class="activity-log act-{{x.activity_type.id}}" *ngFor="let x of activityHistory; let i = index">
+  <div [hidden]="module == 'activity'" class="activity-log act-{{x.activity_type.id}}"
+    *ngFor="let x of activityHistory; let i = index">
     <div class="icon" [innerHTML]="x.activity_type.fas"></div>
     <div class="content">
       <div class="row">
-        <div class="col-12 col-md-8">
+        <div class="col-12 col-md-6">
           <a href="javascript:;" (click)="x.description ? showHistory(i) : false;"> <b
               class="text-primary">{{x.subject}}</b> </a>
 
           <a class="ml-2 text-gray py-0" [hidden]="!x.description" (click)="x.description ? showHistory(i) : false;"><i
               class="fas fa-caret-down"></i></a>
         </div>
-        <div class="col-12  col-md-4 text-right">
+        <div class="col-12  col-md-6 text-right">
           <small>{{x.input_date | date:'mediumDate'}}, {{x.input_date | date:'shortTime'}}</small>
         </div>
       </div>
@@ -427,13 +438,13 @@
             {{x.person.name}} </span> </small></div>
 
       <div style="line-height: 90%;">
-        <a href="javascript:;" (click)="showHistory(i)"> <small
-            class="text-success">Reply</small> </a>
+        <a href="javascript:;" (click)="showHistory(i)"> <small class="text-success">Reply</small> </a>
       </div>
 
 
       <div [hidden]="x.activity_comment.length < 1">
-        <a href="javascript:;" (click)="x.description ? showHistory(i) : false;"> <small> <i class="far fa-comments"></i>
+        <a href="javascript:;" (click)="x.description ? showHistory(i) : false;"> <small> <i
+              class="far fa-comments"></i>
             {{x.activity_comment.length}} comments</small></a>
       </div>
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
@@ -14,6 +14,7 @@ declare var $: any;
   styleUrls: ['./widget-activity.component.css']
 })
 export class WidgetActivityComponent implements OnInit {
+ 
 
   loading: boolean = false;
   module: string;
@@ -29,15 +30,14 @@ export class WidgetActivityComponent implements OnInit {
   id_activity_type: string = "100";
   model: any = [];
   user: any = [];
+  id_user : string;
   closeResult: any;
   showNewActivity: boolean = false;
   id_user: string = "";
 
   activityLatest: Activity[] = [];
   activityHistory: Activity[] = [];
-
-
-
+ 
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -66,9 +66,20 @@ export class WidgetActivityComponent implements OnInit {
 
   }
 
+  start() {
+    console.log('masukk start()');
+   }
+
   httpHistory() { 
-    var link = this.configService.base_url() + 'activity/httpHistory/' + this.module + '/' + this.id;
-   
+    console.log('httpHistory Run !');
+    this.loading = true;
+    var link;
+    if( this.module == "activity" ){
+      link = this.configService.base_url() + 'activity/httpHistory/' + this.module + '/?f=' + this.id; 
+    }else{
+      link = this.configService.base_url() + 'activity/httpHistory/' + this.module + '/' + this.id
+    }
+    //console.log( this.id);
     this.http.get(link, {
       headers: this.configService.headers()
     }).subscribe(
@@ -79,13 +90,40 @@ export class WidgetActivityComponent implements OnInit {
         this.activityHistory = data['result']['history'];
       },
       error => {
-        // console.log(error);
+         console.log(error);
       }
     );
   }
 
-  httpGet() {
-    var link = this.configService.base_url() + 'activity/httpGet/' + this.module + '/' + this.id;
+  httpHistoryFilter(obj){
+    console.log('httpHistoryFilter Run !');
+    this.loading = true; 
+    var  link = this.configService.base_url() + 'activity/httpHistory/' + this.module + '/?f=' +obj; 
+     
+    //console.log( this.id);
+    this.http.get(link, {
+      headers: this.configService.headers()
+    }).subscribe(
+      data => { 
+        console.log(data);
+        this.id_user = data['result']['id_user'];
+        this.loading = false;
+        this.activityLatest = data['result']['latest'];
+        this.activityHistory = data['result']['history'];
+      },
+      error => {
+         console.log(error);
+      }
+    );
+  }
+
+  httpGet() { 
+    var link;
+    if( this.module == "activity" ){
+      link = this.configService.base_url() + 'activity/httpGet/' + this.module + '/?f=' + this.id; 
+    }else{
+      link = this.configService.base_url() + 'activity/httpGet/' + this.module + '/' + this.id
+    }
     // console.log('link',link, this.module );
     this.http.get(link, {
       headers: this.configService.headers()
@@ -175,7 +213,20 @@ export class WidgetActivityComponent implements OnInit {
 
   }
 
+
+  fn_closed_area(i){
+
+    if (this.activityLatest[i]['closed_area'] == false) {
+      this.activityLatest[i]['closed_area'] = true;
+    } else {
+      this.activityLatest[i]['closed_area'] = false;
+    }
+  }
+
+
   fn_closed(x) {
+
+
     var objIndex = this.activityLatest.findIndex((obj => obj.id == x.id));
     this.activityLatest.splice(objIndex, 1);
 

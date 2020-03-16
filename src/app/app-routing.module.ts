@@ -57,6 +57,8 @@ const routes: Routes = [
   
 
   { path: "activity", component: ActivityComponent,  data: { title: 'Activity' }, canActivate: [ActiveGuardGuard] },
+  { path: "activity/:filter", component: ActivityComponent,  data: { title: 'Activity By Filter' }, canActivate: [ActiveGuardGuard] },
+
 
   { path: 'lead', component: LeadComponent, data: { title: 'Lead' }, canActivate: [ActiveGuardGuard] },
   { path: 'lead/:id', component: LeadDetailComponent, data: { title: 'Lead Detail' }, canActivate: [ActiveGuardGuard] }, 

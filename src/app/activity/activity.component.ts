@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild   } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ConfigService } from './../service/config.service'; 
 import {NgbModal, ModalDismissReasons, NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
+import { WidgetActivityComponent } from './widget-activity/widget-activity.component';
 
 @Component({
   selector: 'app-activity',
@@ -10,8 +11,10 @@ import {NgbModal, ModalDismissReasons, NgbModalConfig} from '@ng-bootstrap/ng-bo
   styleUrls: ['./activity.component.css']
 })
 export class ActivityComponent implements OnInit {
+  @ViewChild(WidgetActivityComponent, { static: true }) childcomp: WidgetActivityComponent;
+
   public label: any;
-  public items: any;
+  public user: any = [];
   public itemsSelected: any = [];
   public loading = true;
   public id:number;
@@ -22,12 +25,20 @@ export class ActivityComponent implements OnInit {
   modalStatus:number;
   objIndex:any;
   searchText : string;
-
+  filter : any = { 
+    id_user : "0", 
+    id_activity_type : "0", 
+    date_select : "0",
+    id_related : "0",
+    comments : false ,
+  }
   showActivity:boolean=false;
+  parentMessage:string = "message from parent";
 
   constructor(
     private http: HttpClient,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private modalService: NgbModal,
     config: NgbModalConfig,
     private configService: ConfigService
@@ -36,74 +47,40 @@ export class ActivityComponent implements OnInit {
     config.keyboard = false;
   }
 
-  ngOnInit() { 
-    this.loading = false;
+  ngOnInit() {  
+    this.httpGet();
+    var objFilter = this.activatedRoute.snapshot.params.filter;
+    if(objFilter){
+      objFilter = JSON.parse(atob(objFilter));
+      this.filter['id_user'] = objFilter['id_user']; 
+      this.filter['id_activity_type'] = objFilter['id_activity_type']; 
+      this.filter['date_select'] = objFilter['date_select']; 
+      this.filter['id_related'] = objFilter['id_related']; 
+      this.filter['comments'] = objFilter['comments'];  
+    }
   }
 
 
   httpGet() {
-    this.loading = true;
-    this.itemsSelected = [];
+    this.loading = true; 
     this.http.get(this.configService.base_url() + 'activity', {
       headers: this.configService.headers()
     }).subscribe(data => {
-      console.log(data); 
-      this.items = data['result']['data']; 
+      console.log(data);  
+      this.user = data['result']['user']; 
       this.loading = false;
     });
   }
 
-  fn_next(){
-    this.router.navigate(['/lead/1']);
-    this.modalService.dismissAll();
-  }
-
-  modal_updateStatus(content, title, status) {
-    this.modalTitle = title;
-    this.modalStatus =  status;
-    this.modalService.open(content, {size: 'lg'});
-  }
-
-  open(content, json) {
+  fn_filter(){
+   var obj =  btoa(JSON.stringify(this.filter));  
     
-    this.json = json;
-    this.modalService.open(content, {size: 'lg'});
+   this.childcomp.httpHistoryFilter(obj);
+
+    this.router.navigate(['/activity/',obj ]);
+   
   }
 
   
-
-  
-  fn_check(x) {
-    this.objIndex = this.items.findIndex((obj => obj.id == x.id));
-    if (this.items[this.objIndex]['check'] == true) {
-      this.items[this.objIndex]['check'] = false;
-    } else {
-      this.items[this.objIndex]['check'] = true;
-    }
-    var object = {
-      'id': x.id,
-      'name': x.name,
-      'company': x.company,
-    }
-    var objectSelect = this.itemsSelected.findIndex((obj => obj.id == x.id));
-    if (objectSelect == -1) {
-      this.itemsSelected.push(object);
-    }else{
-      this.itemsSelected.splice(objectSelect, 1);
-    }
-    // console.log(this.itemsSelected);
-  }
-
-  fn_removeItemSelected(x) {
-    this.objIndex = this.items.findIndex((obj => obj.id == x.id));
-    var objectSelect = this.itemsSelected.findIndex((obj => obj.id == x.id));
-    if (this.items[this.objIndex]['check'] == false) {
-      this.items[this.objIndex]['check'] = true;
-    } else {
-      this.items[this.objIndex]['check'] = false;
-    }
-    this.itemsSelected.splice(objectSelect, 1);
-  }
-
 
 }
