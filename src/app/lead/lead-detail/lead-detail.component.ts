@@ -77,7 +77,7 @@ export class LeadDetailComponent implements OnInit {
     this.http.get<LeadDetail[]>(this.configService.base_url() + 'lead/detail/' + this.id, {
       headers: this.configService.headers()
     }).subscribe(data => {
-      console.log(data);
+    
       this.items = data['result']['lead'];
       this.title = data['result']['title'];
       this.lead_source = data['result']['lead_source'];

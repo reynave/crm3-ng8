@@ -24,7 +24,7 @@ export class ConfigService {
     }else{
       this.varToken = this.getCookie('cmr3ng8Token');
       this.varData = JSON.parse(atob(this.getCookie('cmr3ng8Access')));
-      console.log(this.varData);
+      
     }
 
  

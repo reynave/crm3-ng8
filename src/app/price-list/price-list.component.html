@@ -4,7 +4,7 @@
 <div class="container-fluid bg-light border-bottom py-1">
   <div class="row">
     <div class="col-6">
-      <small> You are here : <a [routerLink]="[ '/priceList' ]">Price List</a> </small>
+      <small> You are here : <a [routerLink]="[ '/priceList' ]">Products</a> </small>
     </div>
   </div>
 </div>
@@ -15,7 +15,7 @@
   <div class="container-header">
     <div class="row ">
       <div class="col-6">
-        <h5>PRODUCT PRICE LIST</h5>
+        <h5>PRODUCTS</h5>
       </div>
       <div class="col-6 text-right">
 
@@ -24,7 +24,7 @@
 
         <button type="button" class="btn btn-classic  btn-sm" (click)="open(newpricelist)"><i
           class="fas fa-plus"></i>
-        Add Product Price List</button>
+        New Product</button>
       </div>
       
     </div>
@@ -63,6 +63,7 @@
           <tr>
             <th width="50">No</th> 
             <th></th>
+            <th width="50" scope="col">ID</th>
             <th scope="col">SKU</th>
             <th scope="col">Name</th>
             <th scope="col">Price</th> 
@@ -76,7 +77,8 @@
             <td> {{i+1}} </td>
             <td width="50" (click)="fn_check(x);"> <span class="text-primary ">
               <i class=" {{ x.check ? 'fas fa-check-square' : 'far fa-square' }}"></i> </span>
-            </td>
+            </td> 
+            <td> {{x.id}} </td>
             <td> {{x.sku}} </td>
             <td> <a [routerLink]="[ '/priceList/',x.id]"> {{x.name}}</a> </td>
             <td>  {{x.currency}} {{x.price | number}} </td>

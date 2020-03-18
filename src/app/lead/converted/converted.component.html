@@ -1,0 +1,85 @@
+<ngx-loading [show]="loading"></ngx-loading>
+
+<app-navigator></app-navigator>
+
+<div class="container-fluid bg-light border-bottom py-1">
+  <div class="row">
+    <div class="col-12">
+      <small> You are here : <a [routerLink]="[ '/lead' ]">Leads</a> /   <a [routerLink]="[ '/lead/converted' ]">Conversion</a></small>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid  bg-white pb-3">
+  <div class="container-header">
+    <div class="row">
+      <div class="col-12 ">
+        <div class="module-name">
+          <h5>LEADS CONVERSION</h5>
+        </div>
+      </div>
+     
+    </div>
+
+  </div>
+
+  <div class=" bg-light  border border-top-brown rounded p-1">
+
+    <div class="row mb-3 ">
+      <div class="col-8">
+
+       
+        <button type="button" class="btn btn-classic  btn-sm mx-1" (click)="httpGet();"> <i class="fas fa-sync-alt"></i>
+          Refresh</button> 
+          <span>
+             <small>Total Lead  Conversion : {{total}} </small> 
+          </span>
+ 
+      </div>
+      <div class="col-4 text-right">
+        <input type="text" class="form-control-sm form-radius" placeholder="Search">
+      </div>
+    </div>
+
+    <div class="scroll-x scroll-style-2 max-height">
+
+      <table class="table table-hover border bg-white border-top border-bottom pointer">
+        <thead class="thead-light">
+          <tr>
+
+            <th class="text-center">No</th>  
+            <th scope="col">Lead Name</th>
+            <th scope="col">Contacts</th>
+            <th scope="col">Companies</th>
+            <th scope="col">Opporunities</th>
+            <th scope="col">Conversion date</th> 
+            <th scope="col">Account Manager</th> 
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of items; let i = index">  
+            <td> {{i+1}} </td> 
+           
+            <td> <a [routerLink]="[ '/lead/converted/',x.id_lead]"><b> {{x.lead}}</b> </a></td>
+            <td >{{x.contact}}</td>
+            <td >{{x.company}}</td>
+            <td >{{x.opporunity}}</td>
+            <td >{{x.convert_date | date}}</td> 
+            <td >{{x.user}}</td>
+
+
+          </tr>
+
+
+
+        </tbody>
+      </table>
+
+    </div>
+
+
+  </div>
+
+</div>
+ 

@@ -4,7 +4,7 @@
 <div class="container-fluid bg-light border-bottom py-1">
   <div class="row">
     <div class="col-12">
-      <small> You are here : <a [routerLink]="[ '/company' ]">Company</a> / <a [routerLink]="[ '/company/',id ]">
+      <small> You are here : <a [routerLink]="[ '/company' ]">Companies</a> / <a [routerLink]="[ '/company/',id ]">
           {{items.name}}</a> </small>
     </div>
   </div>
@@ -299,7 +299,7 @@
           </ngb-tab>
        
           <ngb-tab>
-            <ng-template ngbTabTitle>Contact Rules</ng-template>
+            <ng-template ngbTabTitle>Contacts</ng-template>
             <ng-template ngbTabContent>
               <div class="border-top py-2 my-2">
 
@@ -309,7 +309,7 @@
                     <div class="border py-1 px-2 border-top-brown rounded">
 
                       <div class="row">
-                        <div class="col-6"><strong>Contact Roles ({{myContact.length}}) </strong></div>
+                        <div class="col-6"><strong>Contacts ({{myContact.length}}) </strong></div>
                         <div class="col-6 text-right"> <button class="btn btn-classic btn-sm"
                             (click)="open(contact);"><i class="fas fa-plus"></i>
                             New</button> </div>

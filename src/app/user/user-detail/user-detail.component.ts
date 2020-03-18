@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; 
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfigService } from './../../service/config.service'; 
-import { EditUser } from './../user';
+import { EditUser,NewTargetAmount } from './../user';
 
 @Component({
   selector: 'app-user-detail',
@@ -16,9 +16,10 @@ export class UserDetailComponent implements OnInit {
   public loading: boolean = true;  
   id:string;
   model:any = [];
-  
+  newTargetAmount:any = new NewTargetAmount('','');
   user_access:any=[];
   user_group:any=[];
+  user_target:any=[];
 
   constructor(
     private http: HttpClient,
@@ -59,6 +60,7 @@ export class UserDetailComponent implements OnInit {
       
       this.user_access = data['result']['user_access'];
       this.user_group = data['result']['user_group'];
+      this.user_target = data['result']['user_target'];
       
       this.loading = false;
     }, error => {
@@ -73,11 +75,11 @@ export class UserDetailComponent implements OnInit {
       {
         "id"  : this.id,
         "data": this.model, 
+        "user_target" : this.user_target,
       }, {
       headers: this.configService.headers()
     }).subscribe(
-      data => {
-      
+      data => { 
         console.log(data);
         this.httpGet(); 
         this.loading = false;  
@@ -88,6 +90,29 @@ export class UserDetailComponent implements OnInit {
       }
     );
   }
+
+
+  fn_insertTargetAmount(){
+    this.loading = true; 
+    this.http.post(this.configService.base_url() + 'user/fn_insertTargetAmount',
+      {
+        "id"  : this.id,
+        "data": this.newTargetAmount, 
+      }, {
+      headers: this.configService.headers()
+    }).subscribe(
+      data => { 
+        console.log(data);
+        this.httpGet(); 
+        this.loading = false;  
+      },
+      error => {
+        console.log(error);
+        console.log(error.error.text);
+      }
+    );
+  }
+
 
    
 }

@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { ConfigService } from './../../service/config.service';
+import { ErrorhandleService } from './../../service/errorhandle.service';
+
 import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Activity, GetSelected, WidgetActivty, widgetList } from './../activity';
 
@@ -43,6 +45,7 @@ export class WidgetActivityComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private configService: ConfigService,
+    private errorhandleService : ErrorhandleService,
     private modalService: NgbModal,
     config: NgbModalConfig,
   ) {
@@ -65,17 +68,16 @@ export class WidgetActivityComponent implements OnInit {
 
   }
 
-  start() {
-    console.log('masukk start()');
-   }
-
+ 
   httpHistory() { 
-    console.log('httpHistory Run !');
+  
     this.loading = true;
     var link;
     if( this.module == "activity" ){
+      console.log('1');
       link = this.configService.base_url() + 'activity/httpHistory/' + this.module + '/?f=' + this.id; 
     }else{
+      console.log('2');
       link = this.configService.base_url() + 'activity/httpHistory/' + this.module + '/' + this.id
     }
     //console.log( this.id);
@@ -88,14 +90,14 @@ export class WidgetActivityComponent implements OnInit {
         this.activityLatest = data['result']['latest'];
         this.activityHistory = data['result']['history'];
       },
-      error => {
-         console.log(error);
+      error => { 
+         this.errorhandleService.log(error.error.text);
       }
     );
   }
 
   httpHistoryFilter(obj){
-    console.log('httpHistoryFilter Run !');
+  
     this.loading = true; 
     var  link = this.configService.base_url() + 'activity/httpHistory/' + this.module + '/?f=' +obj; 
      
@@ -233,6 +235,7 @@ export class WidgetActivityComponent implements OnInit {
     this.http.post(this.configService.base_url() + 'activity/fn_closed',
       {
         "id": x.id,
+        "data" : x,
       }, {
       headers: this.configService.headers()
     }).subscribe(

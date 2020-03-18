@@ -29,6 +29,12 @@ export class CompanyDetailComponent implements OnInit {
   industry:any = [];
   user:any = [];
   company_class:any=[];
+  deal:any =[];
+  archived:any =[];
+  allow_access_data:boolean = false;
+  myBranch:any = [];
+  myOpportunity:any = [];
+  priceList:any=[];
   
   constructor(
     private http: HttpClient,
@@ -63,12 +69,7 @@ export class CompanyDetailComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-  deal:any =[];
-  archived:any =[];
-  allow_access_data:boolean = false;
-  myBranch:any = [];
-  myOpportunity:any = [];
-  priceList:any=[];
+
   httpGet() {
     this.loading = true;
     this.http.get<CompanyDetail[]>(this.configService.base_url() + 'company/detail/'+ this.id, {

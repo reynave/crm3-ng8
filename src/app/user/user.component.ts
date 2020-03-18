@@ -3,7 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ConfigService } from './../service/config.service';
 import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-import { Contact, Selectedcompany, NewContact } from './../contact/contact';
+ 
+import { NewUser } from './user';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class UserComponent implements OnInit {
   dbCompany: boolean = false;
   selectedCompany: any = [];
   amount:string;
+  model : any = new NewUser("","","","");
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -43,8 +45,7 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.httpSelected();
+ 
     this.httpGet();
 
   }
@@ -74,45 +75,21 @@ export class UserComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
+  
 
-  httpSelected() {
-
-    this.http.get<Selectedcompany[]>(this.configService.base_url() + 'contact/selected', {
-      headers: this.configService.headers()
-    }).subscribe(data => {
-      this.loadingSelected = false;
-      this.selected = data['result'];
-      console.log(this.selected);
-    });
-  }
-
-
-
-  submit: boolean = false;
-
-  onSubmit(value = "") {
-
-    this.submit = true;
-    this.http.post(this.configService.base_url() + 'contact/insert',
+  fn_insert() { 
+    this.loading = true;
+    this.http.post(this.configService.base_url() + 'user/insert',
       {
-        "data": this.modelContact 
+        "data": this.model 
       }, {
         headers: this.configService.headers()
       }).subscribe(
-        data => {
+        data => { 
           console.log(data);
-          this.submit = false;
-          if (value == 'next') {
-            this.httpGet();
-            this.modelContact = new NewContact('0', '', '', '', '', '0','','0','','');
-          }
-          else {
-            this.router.navigate(['/contact/', data['result']['id']]);
-            this.modalService.dismissAll();
-
-          }
-
-
+          this.loading = false;
+          this.router.navigate(['/user/', data['result']['id']]); 
+          this.modalService.dismissAll();
         },
         error => {
           console.log(error);
@@ -120,9 +97,7 @@ export class UserComponent implements OnInit {
         }
       );
   }
-
-  get diagnostic() { return JSON.stringify(this.modelContact); }
-
+ 
 
   fn_delete() {
 
@@ -148,24 +123,10 @@ export class UserComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    this.modalService.open(content, { size: 'lg' });
   }
 
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
-
+ 
   fn_check(x) {
     this.objIndex = this.items.findIndex((obj => obj.id == x.id));
     if (this.items[this.objIndex]['check'] == true) {

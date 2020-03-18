@@ -58,7 +58,7 @@ export class LeadComponent implements OnInit {
     this.http.get<Lead[]>(this.configService.base_url() + 'lead', {
       headers: this.configService.headers()
     }).subscribe(data => { 
-      
+      console.log(data);
       this.total = data['result']['total'];
       this.model['id_user'] = data['result']['id_user'];
       this.configService.errorToken(data);  

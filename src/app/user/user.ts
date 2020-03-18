@@ -5,14 +5,9 @@ export class User {
 export class NewUser {
     constructor(
         public first_name:string,
-        public last_name:string,
-       
-        public id_user_access:number,
-        public id_user_group:number,
-        public code:string,
-        public max_discount:number,
+        public last_name:string, 
         public email:string,
-        public status:boolean, 
+        public password:string, 
     ){}
 
 }
@@ -38,3 +33,10 @@ export class EditUser {
 
 }
 
+
+export class NewTargetAmount{
+    constructor(
+        public year:string,
+        public amount :string,
+    ){}
+}

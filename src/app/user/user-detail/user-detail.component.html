@@ -1,169 +1,208 @@
-
 <ngx-loading [show]="loading"></ngx-loading>
 
 <app-navigator></app-navigator>
 
 <div class="container-fluid bg-light border-bottom py-1">
-  <div class="row">
-    <div class="col-12">
-      <small> You are here : <a [routerLink]="[ '/User' ]">User</a> </small>
+    <div class="row">
+        <div class="col-12">
+            <small> You are here : <a [routerLink]="[ '/User' ]">User</a> </small>
+        </div>
     </div>
-  </div>
 </div>
 
- 
+
 
 <div class="container mt-5">
-    
+
     <div class="row">
-        <div class="col-12 border">
+        <div class="col-12 border shadow-sm rounded">
 
             <form (ngSubmit)="fn_update()" #modalForm="ngForm">
 
                 <div class="modal-header">
-                    <strong class="modal-title" id="modal-basic-title">User Detail </strong>
-                    <button type="button" class="close" aria-label="Close" [routerLink]="[ '/user' ]" >
+                    <h4 id="modal-basic-title">User Detail </h4>
+                    <button type="button" class="close" aria-label="Close" [routerLink]="[ '/user' ]">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body bg-white">
-                     
 
-                        <div class="row">
-                            <div class="col-12 bg-light">
-                                <strong>Information</strong>
-                            </div>
-                            <div class="col-6">
-                                <table class="table table-borderless">
-                                    <tr>
-                                        <td width="40%">First Name</td>
-                                        <td>
-                                            <input type="text" class="form-control form-modal"
-                                                [(ngModel)]="model.first_name" id="first_name" name="first_name"
-                                                #first_name="ngModel" required>
-                                            <div [hidden]="first_name.valid || first_name.pristine"
-                                                class="alert alert-danger">First Name is required</div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Last Name</td>
-                                        <td>
-                                            <input type="text" class="form-control form-modal"
-                                                [(ngModel)]="model.last_name" id="last_name" name="last_name"
-                                                #last_name="ngModel">
-                                            <div [hidden]="last_name.valid || last_name.pristine"
-                                                class="alert alert-danger">Last Name is required</div>
-                                        </td>
-                                    </tr>
+                    <div class="row">
+                        <div class="col-12 bg-light">
+                            <h4>Information</h4>
+                        </div>
+                        <div class="col-6">
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td width="40%">First Name</td>
+                                    <td>
+                                        <input type="text" class="form-control form-modal"
+                                            [(ngModel)]="model.first_name" id="first_name" name="first_name"
+                                            #first_name="ngModel" required>
+                                        <div [hidden]="first_name.valid || first_name.pristine"
+                                            class="alert alert-danger">First Name is required</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Last Name</td>
+                                    <td>
+                                        <input type="text" class="form-control form-modal" [(ngModel)]="model.last_name"
+                                            id="last_name" name="last_name" #last_name="ngModel">
+                                        <div [hidden]="last_name.valid || last_name.pristine"
+                                            class="alert alert-danger">Last Name is required</div>
+                                    </td>
+                                </tr>
 
-                                    <tr>
-                                        <td>Email</td>
-                                        <td>
-                                            <input type="text" class="form-control form-modal" [(ngModel)]="model.email"
-                                                id="email" name="email" #email="ngModel" required>
-                                            <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
-                                                Email is required</div>
+                                <tr>
+                                    <td>Email</td>
+                                    <td>
+                                        <input type="text" class="form-control form-modal" [(ngModel)]="model.email"
+                                            id="email" name="email" #email="ngModel" required>
+                                        <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+                                            Email is required</div>
 
-                                        </td>
-                                    </tr>
+                                    </td>
+                                </tr>
 
-                                    <tr>
-                                        <td>Max discount (%)</td>
-                                        <td>
-                                            <input type="number" class="form-control form-modal w-25"
-                                                [(ngModel)]="model.max_discount" id="max_discount" name="max_discount"
-                                                required>
+                                <tr>
+                                    <td>Max discount (%)</td>
+                                    <td>
+                                        <input type="number" class="form-control form-modal w-25"
+                                            [(ngModel)]="model.max_discount" id="max_discount" name="max_discount"
+                                            required>
 
-                                        </td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <td>Target Amount per Year </td>
-                                        <td>
-                                            <input type="text" class="form-control form-modal"  currencyMask 
-                                                [(ngModel)]="model.target_amount_year" id="target_amount_year" name="target_amount_year"
-                                                required>
-
-                                        </td>
-                                    </tr>
-
-                                </table>
-
-                            </div>
-                            <div class="col-6">
-
-                                <table class="table table-borderless">
-                                    <tr>
-                                        <td>User Code</td>
-                                        <td>
-                                            <input type="text" class="form-control form-modal" [(ngModel)]="model.code"
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-6">
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td>User Code</td>
+                                    <td>
+                                        <input type="text" class="form-control form-modal" [(ngModel)]="model.code"
                                             id="code" name="code" #code="ngModel" required>
                                         <div [hidden]="code.valid || code.pristine" class="alert alert-danger">
                                             Code is required</div>
 
-                                        </td>
-                                    </tr>
+                                    </td>
+                                </tr>
 
-                                    <tr>
-                                        <td>User Access</td>
-                                        <td>
-                                            <select class="form-control form-modal" [(ngModel)]="model.id_user_access"
-                                                id="id_user_access" name="id_user_access" required
-                                                [ngModelOptions]="{standalone: true}">
-                                                <option value="{{x.id}}" *ngFor="let x of user_access">{{x.name}}
-                                                </option>
-                                            </select>
+                                <tr>
+                                    <td>User Access</td>
+                                    <td>
+                                        <select class="form-control form-modal" [(ngModel)]="model.id_user_access"
+                                            id="id_user_access" name="id_user_access" required
+                                            [ngModelOptions]="{standalone: true}">
+                                            <option value="{{x.id}}" *ngFor="let x of user_access">{{x.name}}
+                                            </option>
+                                        </select>
 
-                                        </td>
-                                    </tr>
+                                    </td>
+                                </tr>
 
-                                    <tr>
-                                        <td>User Group</td>
-                                        <td>
-                                            <select class="form-control form-modal" [(ngModel)]="model.id_user_group"
-                                                id="id_user_group" name="id_user_group" required
-                                                [ngModelOptions]="{standalone: true}">
-                                                <option value="{{x.id}}" *ngFor="let x of user_group">{{x.name}}
-                                                </option>
-                                            </select>
+                                <tr>
+                                    <td>User Group</td>
+                                    <td>
+                                        <select class="form-control form-modal" [(ngModel)]="model.id_user_group"
+                                            id="id_user_group" name="id_user_group" required
+                                            [ngModelOptions]="{standalone: true}">
+                                            <option value="{{x.id}}" *ngFor="let x of user_group">{{x.name}}
+                                            </option>
+                                        </select>
 
-                                        </td>
-                                    </tr>
+                                    </td>
+                                </tr>
 
-                                    <tr width="40%">
-                                        <td>Status  </td>
-                                        <td>
-                                            <select class="form-control form-modal" [(ngModel)]="model.status"
-                                                id="status" name="id_user_access" required>
-                                                <option value="0">False</option>
-                                                <option value="1">True</option>
-                                            </select>
+                                <tr width="40%">
+                                    <td>Status </td>
+                                    <td>
+                                        <select class="form-control form-modal" [(ngModel)]="model.status" id="status"
+                                            name="id_user_access" required>
+                                            <option value="0">False</option>
+                                            <option value="1">True</option>
+                                        </select>
 
-                                        </td>
-                                    </tr>
+                                    </td>
+                                </tr>
 
-                                    <tr>
-                                        <td> Password </td>
-                                        <td>  <input type="password" class="form-control" [(ngModel)]="model.pass"
-                                            id="pass" name="pass" > </td>
-                                    </tr>
-                                </table>
-
-                            </div>
+                                <tr>
+                                    <td> Password </td>
+                                    <td> <input type="password" class="form-control" [(ngModel)]="model.pass" id="pass"
+                                            name="pass"> </td>
+                                </tr>
+                            </table>
                         </div>
- 
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-12 bg-light">
+                            <h4>Target Amount per Year</h4>
+                        </div>
+
+                        <div class="col-8">
+                            <table class="table my-2 border" [hidden]="user_target.length == 0">
+                                <thead>
+                                    <tr>
+                                        <th width="20%"> Years </th>
+                                        <th> Amount </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngFor="let x of user_target">
+                                        <td> <input type="number" class="form-control form-control-sm"
+                                                [(ngModel)]="x.year" [ngModelOptions]="{standalone: true}"> </td>
+                                        <td> <input type="text" class="form-control form-control-sm"
+                                                [(ngModel)]="x.amount" currencyMask
+                                                [ngModelOptions]="{standalone: true}"> </td>
+                                    </tr>
+                                </tbody>
+
+
+                            </table>
+
+
+
+
+
+                            <table>
+
+                                <tr>
+                                    <td>Year</td>
+                                    <Td>Amount</Td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+
+                                    <td> <input type="number" maxlength="4" class="form-control form-control-sm"
+                                            [(ngModel)]="newTargetAmount.year" [ngModelOptions]="{standalone: true}">
+                                    </td>
+                                    <td> <input type="text" class="form-control form-control-sm" currencyMask
+                                            [(ngModel)]="newTargetAmount.amount" [ngModelOptions]="{standalone: true}">
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-primary" (click)="fn_insertTargetAmount()">
+                                            Add Target </button>
+                                    </td>
+                                </tr>
+                            </table>
+
+                           
+                        </div>
+                    </div>
                 </div>
 
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-outline-dark" [routerLink]="[ '/user' ]">Closed</button>
+                    <button type="button" class="btn btn-sm btn-outline-dark" [routerLink]="[ '/user' ]">Back</button>
 
-                    <button type="submit" class="btn btn-primary" [disabled]="!modalForm.form.valid">Submit</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!modalForm.form.valid">Update</button>
                 </div>
             </form>
 
- 
+
         </div>
     </div>
 </div>

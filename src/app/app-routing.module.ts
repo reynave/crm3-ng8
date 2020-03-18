@@ -39,6 +39,7 @@ import { MasterLeadSourceComponent } from './master-lead-source/master-lead-sour
 import { AccessDataComponent } from './access-data/access-data.component';
 import { MasterClassComponent } from './master-class/master-class.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ConvertedComponent } from './lead/converted/converted.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, data: { title: 'Dashboard' } },
@@ -56,38 +57,39 @@ const routes: Routes = [
  
   
 
-  { path: "activity", component: ActivityComponent,  data: { title: 'Activity' }, canActivate: [ActiveGuardGuard] },
-  { path: "activity/:filter", component: ActivityComponent,  data: { title: 'Activity By Filter' }, canActivate: [ActiveGuardGuard] },
+  { path: "activity", component: ActivityComponent,  data: { title: 'Activities' }, canActivate: [ActiveGuardGuard] },
+  { path: "activity/:filter", component: ActivityComponent,  data: { title: 'Activities By Filter' }, canActivate: [ActiveGuardGuard] },
 
 
-  { path: 'lead', component: LeadComponent, data: { title: 'Lead' }, canActivate: [ActiveGuardGuard] },
+  { path: 'lead', component: LeadComponent, data: { title: 'Leads' }, canActivate: [ActiveGuardGuard] }, 
+  { path: 'lead/converted', component: ConvertedComponent, data: { title: 'Conversion Leads' }, canActivate: [ActiveGuardGuard] }, 
+  { path: 'lead/converted/:id', component: LeadConverdComponent, data: { title: 'Conversion Lead Detail' }, canActivate: [ActiveGuardGuard] },
   { path: 'lead/:id', component: LeadDetailComponent, data: { title: 'Lead Detail' }, canActivate: [ActiveGuardGuard] }, 
-  { path: 'lead/converted/:id', component: LeadConverdComponent, data: { title: 'Lead Converted' }, canActivate: [ActiveGuardGuard] },
 
   { path: "contact", component: ContactComponent, data: { title: 'Contact' }, canActivate: [ActiveGuardGuard] },
   { path: "contact/:id", component: ContactDetailComponent, data: { title: 'Contact' }, canActivate: [ActiveGuardGuard] },
 
-  { path: "company", component: CompanyComponent, canActivate: [ActiveGuardGuard] },
-  { path: "company/:id", component: CompanyDetailComponent, canActivate: [ActiveGuardGuard] },
+  { path: "company", component: CompanyComponent, data: { title: 'Companies' },canActivate: [ActiveGuardGuard] },
+  { path: "company/:id", component: CompanyDetailComponent, data: { title: 'Company Detail' },canActivate: [ActiveGuardGuard] },
 
-  { path: "CCPriceList", component: ClassPriceListComponent, canActivate: [ActiveGuardGuard] },
-  { path: "CCPriceList/:id", component: ClassPriceListComponent, canActivate: [ActiveGuardGuard] },
+  { path: "CCPriceList", component: ClassPriceListComponent, data: { title: 'Price by Class' },canActivate: [ActiveGuardGuard] },
+  { path: "CCPriceList/:id", component: ClassPriceListComponent,data: { title: 'Price by Class' }, canActivate: [ActiveGuardGuard] },
 
-  { path: "opportunity", component: OpportunityComponent, canActivate: [ActiveGuardGuard] },
-  { path: "opportunity/:id", component: OpportunityDetailComponent, canActivate: [ActiveGuardGuard] },
-  { path: "opportunity/edit/:id", component: OpportunityEditComponent, canActivate: [ActiveGuardGuard] },
-  { path: "opportunity/new/:id_company/:id_contact", component: OpportunityNewComponent, canActivate: [ActiveGuardGuard] },
+  { path: "opportunity", component: OpportunityComponent, data: { title: 'Opportunities' },canActivate: [ActiveGuardGuard] },
+  { path: "opportunity/:id", component: OpportunityDetailComponent,data: { title: 'Opportunity Detail' }, canActivate: [ActiveGuardGuard] },
+  { path: "opportunity/edit/:id", component: OpportunityEditComponent, data: { title: 'Contact' },canActivate: [ActiveGuardGuard] },
+  { path: "opportunity/new/:id_company/:id_contact", component: OpportunityNewComponent, data: { title: 'New Opportunity' },canActivate: [ActiveGuardGuard] },
 
 
-  { path: "deal", component: DealComponent, canActivate: [ActiveGuardGuard] },
-  { path: "deal/:id", component: DealDetailComponent, canActivate: [ActiveGuardGuard] },
+  { path: "deal", component: DealComponent,data: { title: 'Deals' }, canActivate: [ActiveGuardGuard] },
+  { path: "deal/:id", component: DealDetailComponent, data: { title: 'Deal Detail' },canActivate: [ActiveGuardGuard] },
 
-  { path: "lose", component: LoseComponent, canActivate: [ActiveGuardGuard] },
-  { path: "lose/:id", component: LoseComponent, canActivate: [ActiveGuardGuard] },
+  { path: "lose", component: LoseComponent, data: { title: 'Loses' },canActivate: [ActiveGuardGuard] },
+  { path: "lose/:id", component: LoseComponent,data: { title: 'Lose Detail' }, canActivate: [ActiveGuardGuard] },
 
-  { path: "quote", component: QuoteComponent, data: { title: 'Quote' }, canActivate: [ActiveGuardGuard] },
-  { path: "quote/:id", component: QuoteDetailComponent, data: { title: 'Quote' }, canActivate: [ActiveGuardGuard] },
-  { path: "quote/print/:id", component: QuotePrintComponent, data: { title: 'Print Quote' }, canActivate: [ActiveGuardGuard] },
+  { path: "quote", component: QuoteComponent, data: { title: 'Quotations' }, canActivate: [ActiveGuardGuard] },
+  { path: "quote/:id", component: QuoteDetailComponent, data: { title: 'Quotation Detail' }, canActivate: [ActiveGuardGuard] },
+  { path: "quote/print/:id", component: QuotePrintComponent, data: { title: 'Print Quotation' }, canActivate: [ActiveGuardGuard] },
 
 
   { path: "salesOrder", component: SalesOrderComponent, data: { title: 'Sales Order' }, canActivate: [ActiveGuardGuard] },
@@ -95,14 +97,14 @@ const routes: Routes = [
   { path: "salesOrder/:id", component: SalesOrderDetailComponent, data: { title: 'Sales Order' }, canActivate: [ActiveGuardGuard] },
   { path: "salesOrder/print/:id", component: SalesOrderPrintComponent, data: { title: 'Print Sales Order' }, canActivate: [ActiveGuardGuard] },
 
-  { path: "user", component: UserComponent, canActivate: [ActiveGuardGuard] },
-  { path: "user/:id", component: UserDetailComponent, canActivate: [ActiveGuardGuard] },
+  { path: "user", component: UserComponent, data: { title: 'Users' },canActivate: [ActiveGuardGuard] },
+  { path: "user/:id", component: UserDetailComponent,data: { title: 'User Detail' }, canActivate: [ActiveGuardGuard] },
   
 
-  { path: "priceList", component: PriceListComponent, canActivate: [ActiveGuardGuard] },
-  { path: "priceList/modal/:module", component: PriceListModalComponent, canActivate: [ActiveGuardGuard] },
-  { path: "priceList/:id", component: PriceListDetailComponent, canActivate: [ActiveGuardGuard] },
-  { path: "priceList/product/:id", component: PriceListProductComponent, canActivate: [ActiveGuardGuard] },
+  { path: "priceList", component: PriceListComponent,data: { title: 'Products' }, canActivate: [ActiveGuardGuard] },
+  { path: "priceList/modal/:module", component: PriceListModalComponent, data: { title: 'Products List' },canActivate: [ActiveGuardGuard] },
+  { path: "priceList/:id", component: PriceListDetailComponent, data: { title: 'Product Detail' },canActivate: [ActiveGuardGuard] },
+  { path: "priceList/product/:id", component: PriceListProductComponent, data: { title: 'Product Detail' },canActivate: [ActiveGuardGuard] },
 
   { path: "master/industry", component: MasterIndustryComponent, data: { title: 'Master Industry' }, canActivate: [ActiveGuardGuard]  }, 
   { path: "master/leadSource", component: MasterLeadSourceComponent, data: { title: 'Master Lead Source' },  canActivate: [ActiveGuardGuard]  }, 

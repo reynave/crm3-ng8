@@ -61,7 +61,7 @@
         </tr>
 
         <tr>
-          <td> <b class="text-primary"> {{items.company}} </b> </td>
+          <td> <b class="text-primary"> <a [routerLink]="[ '/company/', items.id_company ]">{{items.company}}</a>  </b> </td>
           <td> <b class="text-primary"> {{items.position}} </b> </td>
           <td> <b class="text-primary"> {{items.mobile}} </b> </td>
           <td> <b class="text-primary"> {{items.email}} </b> </td>

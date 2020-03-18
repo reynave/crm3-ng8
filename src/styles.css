@@ -315,6 +315,8 @@ table ul{
 .text-black{   color: #000 !important; }
 .text-yellowgreen{   color: yellowgreen !important; }
 .text-yellow{   color: yellow !important; }
+.text-grey {    color: #b9b9b9  !important; }
+
 
 .bg-blue{   background-color: #007BFF !important; }
 .bg-red{   background-color: red !important; }
