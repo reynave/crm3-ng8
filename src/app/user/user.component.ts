@@ -12,9 +12,12 @@ import { NewUser } from './user';
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
+
+
+
 export class UserComponent implements OnInit {
   public label: any;
-  public items: any;
+  public items: any = [];
   public itemsSelected: any = [];
   public loading: boolean = true;
   loadingSelected: boolean = true;
@@ -32,7 +35,7 @@ export class UserComponent implements OnInit {
   dbCompany: boolean = false;
   selectedCompany: any = [];
   amount:string;
-  model : any = new NewUser("","","","");
+  model : any = new NewUser("","","","","");
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -45,7 +48,7 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
- 
+    console.log(this.items);
     this.httpGet();
 
   }
@@ -57,7 +60,7 @@ export class UserComponent implements OnInit {
       headers: this.configService.headers()
     }).subscribe(data => {
       this.items = data['result']['data'];
-      
+      console.log(this.items);
      // this.modelContact = new NewContact('0', '', '', '', '', '0', this.id_user,'0');
       console.log(data);
       this.loading = false;
@@ -161,4 +164,27 @@ export class UserComponent implements OnInit {
 
  
 
+}
+
+
+class ItemsClass {
+  public id: string; 
+  public user_access: any; 
+  public user_group: any; 
+  public code: string; 
+  public max_discount: string;  
+  public currency: string; 
+  public target_amount_year: string; 
+  public name: string; 
+  public email: string; 
+  public input_date: string; 
+  public status: string;  
+  public child: ItemsClass[];
+}
+
+
+class NavigationModel {
+  public title: string;
+  public url?: string;
+  public children: NavigationModel[];
 }

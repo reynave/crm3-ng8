@@ -28,73 +28,66 @@
   <div class=" bg-light  border border-top-brown rounded p-1 my-3">
 
     <div class="row mb-3">
-      <div class="col-8">
+     
 
-
-        <span class="dropdown">
-          <button class="btn btn-classic btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-cog"></i>
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" (click)="open(markUpdate)"> Mart to Delete</a>
-          </div>
-        </span>
-
-      </div>
-
-      <div class="col-4 text-right">
+      <div class="col-4">
         <input type="text" class="form-control-sm form-radius" placeholder="Search">
       </div>
 
     </div>
 
-    <div class="scroll-x scroll-style-2 max-height">
 
-      <table class="table table-hover border bg-white border-top border-bottom pointer">
-        <thead class="thead-light">
-          <tr>
+    <div class="scroll-x scroll-style-2 bg-white border userItems">
 
-            <th class="text-center">No</th>
-            <th></th>
+      <div>
 
-            <th scope="col">Name / Email</th>
-            <th scope="col">user_access</th>
-            <th scope="col">user_group</th>
-            <th scope="col" class="text-right"> Target Amount Per Year </th>
-            <th scope="col" class="text-right">Max discount </th>
-            <th scope="col">Created Date</th>
-            <th scope="col">Status</th>
+        <div class="itemInfo itemInfoHeader px-2 py-1 text-right mr-3">
+          <span class="itemInfoName">Name / Email</span>
+          <span class="text-left w100"> Access</span>
+          <span class="text-left w100">Group</span>
+          <span class="text-right w200"> target amount year</span>
+          <span class="text-right"> discount</span>
+          <span>Created Date</span>
+          <span><strong> Status </strong> </span>
+        </div>
+      </div>
 
+      <ol>
+        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ $implicit: items }"></ng-container>
+      </ol>
 
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let x of items; let i = index" (click)="fn_check(x);">
-            <td> <a [routerLink]="[ '/user/',x.id]"> {{i+1}} </a> </td>
-            <td width="50"> <span class="text-primary ">
-                <i class=" {{ x.check ? 'fas fa-check-square' : 'far fa-square' }}"></i> </span>
-            </td>
-
-            <td> <a [routerLink]="[ '/user/',x.id]"> <b> {{x.name}} </b></a>
-              <div>{{x.email}}</div>
-            </td>
-            <td>{{x.user_access.name}}</td>
-            <td>{{x.user_group.name}}</td>
-            <td class="text-right"> {{x.currency}} {{x.target_amount_year | number}}</td>
-            <td class="text-right">{{x.max_discount}} %</td>
-            <td>{{x.input_date | date}}</td>
-
-            <td><strong> {{x.status}} </strong> </td>
-
-          </tr>
+      <ng-template #recursiveListTmpl let-items>
+        <li *ngFor="let item of items" class="border-top py-1">
+          <div class="name">
+            <a [routerLink]="[ '/user/',item.id]"> <b> {{item.name}} </b></a>
+            <div>{{item.email}}</div>
+          </div>
+          <div class="  itemInfo p-2 text-right mr-3">
 
 
+            <span class="text-left w100">{{item.user_access.name}}</span>
+            <span class="text-left w100">{{item.user_group.name}}</span>
+            <span class="text-right w200"> {{item.currency}} {{item.target_amount_year | number}}</span>
+            <span class="text-right">{{item.max_discount}} %</span>
+            <span>{{item.input_date | date}}</span>
+            <span><strong> {{item.status}} </strong> </span>
+          </div>
 
-        </tbody>
-      </table>
 
+          <ol *ngIf="item.child.length > 0">
+            <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ $implicit: item.child }"></ng-container>
+          </ol>
+        </li>
+      </ng-template>
     </div>
+
+
+
+
+
+
+
+
 
 
   </div>
@@ -170,6 +163,21 @@
     <div class="modal-body bg-white">
 
       <table class="table table-borderless">
+
+
+
+        <tr>
+          <td>Parent User</td>
+          <td>
+            <select class="form-control form-modal" [(ngModel)]="model.id_parent" id="firstid_parent_name"
+              name="id_parent">
+              <option> - </option>
+              <option value="{{x.id}}" *ngFor="let x of items"> {{x.name}} </option>
+            </select>
+
+          </td>
+        </tr>
+
         <tr>
           <td width="40%">First Name</td>
           <td>
@@ -212,7 +220,7 @@
     </div>
 
     <div class="modal-footer">
-      
+
       <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
 
       <button type="submit" class="btn btn-primary" [disabled]="!modalForm.form.valid">Submit</button>

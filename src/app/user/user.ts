@@ -4,6 +4,7 @@ export class User {
 
 export class NewUser {
     constructor(
+        public id_parent : string,
         public first_name:string,
         public last_name:string, 
         public email:string,
@@ -15,6 +16,7 @@ export class NewUser {
 
 export class EditUser {
     constructor(
+        public id_parent:string,
         public first_name:string,
         public last_name:string,
        

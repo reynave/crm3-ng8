@@ -28,6 +28,7 @@ export class ProfileComponent implements OnInit {
   id:string;
   model:any = [];
   items:any= [];
+  list:any= [];
   user_access:any=[];
   user_group:any=[];
 
@@ -51,6 +52,7 @@ export class ProfileComponent implements OnInit {
     }).subscribe(data => {
       console.log(data);
       this.items = data['result']['data'];
+      this.list =  data['result']['list'];
       this.model = new EditUser(
         data['result']['data']['first_name'],
         data['result']['data']['last_name'], 

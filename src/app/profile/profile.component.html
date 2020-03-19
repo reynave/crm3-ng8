@@ -13,119 +13,145 @@
 
 
 <div class="container mt-5">
-    
+
     <div class="row">
-        <div class="col-12 border">
+        <div class="col-12 border rounded shadow-sm">
 
             <form (ngSubmit)="fn_update()" #modalForm="ngForm">
 
-                <div class="modal-header">
-                    <strong class="modal-title" id="modal-basic-title">My Profile </strong> 
-                </div>
-                <div class="modal-body bg-white">
-                     
+                <div class="row py-1 border-bottom">
+                    <div class="col-6">
+                        <h5>Profile </h5> 
+                    </div>
 
-                        <div class="row">
-                         
-                            <div class="col-6">
-                                <table class="table table-borderless">
-                                    <tr>
-                                        <td width="40%">First Name</td>
-                                        <td>
-                                            <input type="text" class="form-control form-modal"
-                                                [(ngModel)]="model.first_name" id="first_name" name="first_name"
-                                                #first_name="ngModel" required>
-                                            <div [hidden]="first_name.valid || first_name.pristine"
-                                                class="alert alert-danger">First Name is required</div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Last Name</td>
-                                        <td>
-                                            <input type="text" class="form-control form-modal"
-                                                [(ngModel)]="model.last_name" id="last_name" name="last_name"
-                                                #last_name="ngModel">
-                                            <div [hidden]="last_name.valid || last_name.pristine"
-                                                class="alert alert-danger">Last Name is required</div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Email</td>
-                                        <td>
-                                            <input type="text" class="form-control border bg-light" value="{{items.email}}" disabled  readonly >
-                                          
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Max discount</td>
-                                        <td>
-                                            <input type="text" class="form-control border bg-light w-25" value="{{items.max_discount}} %" disabled  readonly>
-
-                                        </td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <td>Target Amount per Year </td>
-                                        <td>
-                                            <input type="text" class="form-control border bg-light text-right" value="{{items.currency}} {{items.target_amount_year | number}}"  disabled  readonly>
-
-                                        </td>
-                                    </tr>
-
-                                </table>
-
-                            </div>
-                            <div class="col-6">
-
-                                <table class="table table-borderless">
-                                    <tr >
-                                        <td  width="40%">Code</td>
-                                        <td>
-                                            <input type="text" class="form-control border bg-light"  value="{{items.code}}"   disabled  readonly>
-
-                                        </td>
-                                    </tr>
-                                    <tr >
-                                        <td  width="40%">User Access</td>
-                                        <td>
-                                            <input type="text" class="form-control border bg-light"  value="{{items.user_access}}"   disabled  readonly>
-
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>User Group</td>
-                                        <td>
-                                            <input type="text" class="form-control border bg-light" value="{{items.user_group}}"  disabled  readonly>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td colspan="2">
-                                            <hr>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>New Password* </td>
-                                        <td>  <input type="password" class="form-control" [(ngModel)]="model.password" id="pass" name="pass" > </td>
-                                    </tr>
-                                </table>
-
-                            </div>
-                        </div>
- 
+                    <div class="col-6 text-right"> 
+                        <button type="submit" class="btn btn-primary" [disabled]="!modalForm.form.valid">Update</button> 
+                    </div>
                 </div>
 
 
-                <div class="modal-footer">
+                <div class="row py-4">
+
+                    <div class="col-6">
+                        <table class="table table-borderless">
+                            <tr>
+                                <td width="40%">First Name</td>
+                                <td>
+                                    <input type="text" class="form-control form-modal" [(ngModel)]="model.first_name"
+                                        id="first_name" name="first_name" #first_name="ngModel" required>
+                                    <div [hidden]="first_name.valid || first_name.pristine" class="alert alert-danger">
+                                        First Name is required</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Last Name</td>
+                                <td>
+                                    <input type="text" class="form-control form-modal" [(ngModel)]="model.last_name"
+                                        id="last_name" name="last_name" #last_name="ngModel">
+                                    <div [hidden]="last_name.valid || last_name.pristine" class="alert alert-danger">
+                                        Last Name is required</div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Email</td>
+                                <td>
+                                    <input type="text" class="form-control border bg-light" value="{{items.email}}"
+                                        disabled readonly>
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Max discount</td>
+                                <td>
+                                    <input type="text" class="form-control border bg-light w-25"
+                                        value="{{items.max_discount}} %" disabled readonly>
+
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td>Target Amount per Year </td>
+                                <td>
+                                    <input type="text" class="form-control border bg-light text-right"
+                                        value="{{items.currency}} {{items.target_amount_year | number}}" disabled
+                                        readonly>
+
+                                </td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+                    <div class="col-6">
+
+                        <table class="table table-borderless">
+                            <tr>
+                                <td width="40%">Code</td>
+                                <td>
+                                    <input type="text" class="form-control border bg-light" value="{{items.code}}"
+                                        disabled readonly>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="40%">User Access</td>
+                                <td>
+                                    <input type="text" class="form-control border bg-light"
+                                        value="{{items.user_access}}" disabled readonly>
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>User Group</td>
+                                <td>
+                                    <input type="text" class="form-control border bg-light" value="{{items.user_group}}"
+                                        disabled readonly>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2">
+                                    <hr>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>New Password* </td>
+                                <td> <input type="password" class="form-control" [(ngModel)]="model.password" id="pass"
+                                        name="pass"> </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+
+
+                <div> 
+                     <h5>My Team </h5> 
+                </div>
+
+                <div>
+
+                    <ul>
+                        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ $implicit: list }"></ng-container>
+                    </ul>
                     
-                    <button type="submit" class="btn btn-primary" [disabled]="!modalForm.form.valid">Update</button>
+                    <ng-template #recursiveListTmpl let-list>
+                        <li *ngFor="let item of list">
+                            {{item.name}}
+                            <ul *ngIf="item.child.length > 0">
+                                <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ $implicit: item.child }"></ng-container>
+                            </ul>
+                        </li>
+                    </ng-template>
                 </div>
+
+
             </form>
- 
+
         </div>
     </div>
 </div>

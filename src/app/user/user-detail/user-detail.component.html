@@ -34,6 +34,19 @@
                         <div class="col-6">
                             <table class="table table-borderless">
                                 <tr>
+                                    <td>ID Parent</td>
+                                    <td>
+                                        <select class="form-control form-modal" [(ngModel)]="model.id_parent"
+                                            id="id_parent" name="id_parent" required
+                                            [ngModelOptions]="{standalone: true}">
+                                            <option value="{{x.id}}" *ngFor="let x of parent">{{x.name}}
+                                            </option>
+                                        </select>
+
+                                    </td>
+                                </tr>
+
+                                <tr>
                                     <td width="40%">First Name</td>
                                     <td>
                                         <input type="text" class="form-control form-modal"
@@ -141,7 +154,7 @@
                             <h4>Target Amount per Year</h4>
                         </div>
 
-                        <div class="col-8">
+                        <div class="col-6">
                             <table class="table my-2 border" [hidden]="user_target.length == 0">
                                 <thead>
                                     <tr>
@@ -162,11 +175,7 @@
 
 
                             </table>
-
-
-
-
-
+   
                             <table>
 
                                 <tr>
@@ -191,6 +200,10 @@
 
                            
                         </div>
+
+
+                        
+
                     </div>
                 </div>
 

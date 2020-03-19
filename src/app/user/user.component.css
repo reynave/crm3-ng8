@@ -1,0 +1,33 @@
+.userItems li{
+    position: relative;
+}
+
+.userItems .itemInfoHeader{ 
+    font-family: 'Source Sans Pro', sans-serif !important;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+ol {
+    margin: 0px;
+    padding: 0px;
+    margin-left: 24px;
+}
+.name{
+    
+    font-size: 13px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.userItems li .itemInfo{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    min-width: 600px; 
+    font-size: 13px;
+    font-family: 'Open Sans', sans-serif;
+}
+.itemInfo .itemInfoName{      left: 27px;
+    position: absolute; }
+.itemInfo span{   min-width: 100px;   display: inline-block;}
+.itemInfo .w200{  min-width: 200px; }
+.itemInfo .w100{  min-width: 150px; }
