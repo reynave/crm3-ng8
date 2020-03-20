@@ -16,7 +16,7 @@ export class UserDetailComponent implements OnInit {
   public loading: boolean = true;
   id: string;
   model: any = [];
-  newTargetAmount: any = new NewTargetAmount('', '');
+  newTargetAmount: any = new NewTargetAmount('', '0', '0', '0', '0');
   user_access: any = [];
   user_group: any = [];
   user_target: any = [];
@@ -46,7 +46,7 @@ export class UserDetailComponent implements OnInit {
       console.log(data);
       this.model = new EditUser(
         data['result']['data']['id_parent'],
-        
+
         data['result']['data']['first_name'],
         data['result']['data']['last_name'],
 
@@ -96,6 +96,26 @@ export class UserDetailComponent implements OnInit {
     );
   }
 
+  fn_delete(id) {
+    var objIndex = this.user_target.findIndex((obj => obj.id == id));
+    this.user_target.splice(objIndex, 1);
+    this.http.post(this.configService.base_url() + 'user/fn_deleteTarget',
+      {
+        "id": id
+      }, {
+      headers: this.configService.headers()
+    }).subscribe(
+      data => {
+        console.log(data); 
+      },
+      error => {
+        console.log(error);
+        console.log(error.error.text);
+      }
+    );
+
+
+  }
 
   fn_insertTargetAmount() {
     this.loading = true;

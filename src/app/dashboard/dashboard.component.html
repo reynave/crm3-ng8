@@ -10,21 +10,35 @@
 </div>
 
 
-<div class="container-fluid mt-3">
+<div class="container-fluid mt-3   mb-4">
   <div class="row no-gutters">
-    <div class="col-8 ">
+    <div class="col-12 ">
       <h4> Data this {{period}} </h4>
+
+    </div>
+
+
+    <div class="col-6 col-md-3  pr-2">
+      <label> Select User : </label>
+      <select class="form-control form-control-sm" (change)="onUser($event.target.value)" [(ngModel)]="id_user_select">
+        <option value="0">All My Access</option>
+        <option *ngFor="let x of user" value="{{x.id}}"> {{x.name}} </option>
+      </select>
+    </div>
+
+    <div class="col-6   col-md-4 ">
+      <label> Select Period : </label>
       <div>
-        <b>By </b> <span *ngFor="let x of account_manager"> {{x.name}}. </span>
+        <button type="button" class="btn btn-classic btn-sm mr-1" (click)="onPeriod('month');"
+          [routerLink]="[ '/dashboard/month' ]">This Month</button>
+
+        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="onPeriod('quarter');"
+          [routerLink]="[ '/dashboard/quarter' ]">This Quarter </button>
+
+        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="onPeriod('year');"
+          [routerLink]="[ '/dashboard/year' ]">This Year</button>
       </div>
     </div>
-    <div class="col-4 text-right   mb-4">
-      <button type="button" class="btn btn-classic btn-sm mx-1" (click)="onPeriod('month');"  [routerLink]="[ '/dashboard/month' ]"  >This Month</button>
-
-      <button type="button" class="btn btn-classic btn-sm  mx-1"  (click)="onPeriod('quarter');"  [routerLink]="[ '/dashboard/quarter' ]">This Quarter </button>
-
-      <button type="button" class="btn btn-classic btn-sm  mx-1" (click)="onPeriod('year');"  [routerLink]="[ '/dashboard/year' ]">This Year</button>
-    </div> 
 
   </div>
 
@@ -35,20 +49,6 @@
   <div class="row no-gutters">
 
 
-    <div class="col-2 my-3">
-      <b>Select Account Manager :</b>
-    </div>
-
-    <div class="col-10 my-3">
-
-      <span *ngFor="let x of user" class="px-2">
-        <a href="javascript:;" (click)="onUser(x.id)"> {{x.name}} </a>
-
-      </span>
-      <span class="px-2">
-        <a ref="javascript:;" (click)="onUser(0);">Show All</a>
-      </span>
-    </div>
 
     <div class="col-2  mb-3">
       <div class="bg-white  border border-top-black rounded p-2  m-1 text-center">
@@ -106,10 +106,14 @@
           <thead>
             <tr>
               <th>Target</th>
-              <th class="text-right">Quarter 1 </th>
-              <th class="text-right">Quarter 2 </th>
-              <th class="text-right">Quarter 3</th>
-              <th class="text-right">Quarter 4</th>
+              <th class="text-right">Quarter 1 <div><small>Achieve / Target</small></div>
+              </th>
+              <th class="text-right">Quarter 2 <div><small>Achieve / Target</small></div>
+              </th>
+              <th class="text-right">Quarter 3 <div><small>Achieve / Target</small></div>
+              </th>
+              <th class="text-right">Quarter 4 <div><small>Achieve / Target</small></div>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -117,16 +121,47 @@
             <tr *ngFor="let x of target; let i = index">
               <td>{{x.name}}</td>
 
-              <td class="text-right"> <span [hidden]="x.q1 < 1"> {{i+1 < 3 ? "Rp":""}} {{x.q1 | number }} </span></td>
-              <td class="text-right"> <span [hidden]="x.q2 < 1"> {{i+1 < 3 ? "Rp":""}} {{x.q2 | number }} </span></td>
-              <td class="text-right"> <span [hidden]="x.q3 < 1"> {{i+1 < 3 ? "Rp":""}} {{x.q3 | number }} </span></td>
-              <td class="text-right"> <span [hidden]="x.q4 < 1"> {{i+1 < 3 ? "Rp":""}} {{x.q4 | number }} </span></td>
+              <td class="text-right"> <span [hidden]="i+1 > 1">{{currency}} </span> {{x.q1.target |number}} / <span
+                  [hidden]="i+1 > 1">{{currency}} </span> {{x.q1.achieve |number}} </td>
+              <td class="text-right"> <span [hidden]="i+1 > 1">{{currency}} </span> {{x.q2.target |number}} / <span
+                  [hidden]="i+1 > 1">{{currency}} </span> {{x.q2.achieve |number}} </td>
+              <td class="text-right"> <span [hidden]="i+1 > 1">{{currency}} </span> {{x.q3.target |number}} / <span
+                  [hidden]="i+1 > 1">{{currency}} </span> {{x.q3.achieve |number}} </td>
+              <td class="text-right"> <span [hidden]="i+1 > 1">{{currency}} </span> {{x.q4.target |number}} / <span
+                  [hidden]="i+1 > 1">{{currency}} </span>{{x.q4.achieve |number}} </td>
             </tr>
 
           </tbody>
         </table>
+         
+       
+        <div class="row">
+          <div class="col-6 ">
+            <div class="pb-1"> <strong>Bar Target Salesman This Year</strong></div>
+            <div class="bg-white p-1 border">
+             
+              <canvas id="targetSalesAmount"></canvas>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="pb-1"> <strong>Bar Target Leads, Opportunities, and Quotes This Year</strong></div>
+            <div class="bg-white p-1 border"> 
+             
+              <canvas id="targetSalesQty"></canvas>
+            </div>
+
+          </div>
+        </div>
+
+
+
+
       </div>
     </div>
+
+
+
 
     <div class="col-6   mb-3">
       <div class="bg-light  border border-top-blue rounded p-2  m-1">

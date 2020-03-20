@@ -40,5 +40,10 @@ export class NewTargetAmount{
     constructor(
         public year:string,
         public amount :string,
+
+        public leads :string,
+        public opportunities :string,
+        public quotes :string,
+        
     ){}
 }

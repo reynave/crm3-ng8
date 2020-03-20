@@ -29,7 +29,7 @@
 
                     <div class="row">
                         <div class="col-12 bg-light">
-                            <h4>Information</h4>
+                            <h5>Information</h5>
                         </div>
                         <div class="col-6">
                             <table class="table table-borderless">
@@ -151,58 +151,103 @@
 
                     <div class="row">
                         <div class="col-12 bg-light">
-                            <h4>Target Amount per Year</h4>
+                            <h5>Target per year</h5>
                         </div>
 
-                        <div class="col-6">
+                        <div class="col-12">
                             <table class="table my-2 border" [hidden]="user_target.length == 0">
                                 <thead>
                                     <tr>
-                                        <th width="20%"> Years </th>
+                                        <th> Years </th>
                                         <th> Amount </th>
+                                        <th> Leads (Qty) </th>
+                                        <th> Opportunities (Qty) </th>
+                                        <th> Quotes (Qty) </th>
+                                        <th width="10"> <i class="far fa-trash-alt"></i> </th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr *ngFor="let x of user_target">
-                                        <td> <input type="number" class="form-control form-control-sm"
+                                        <td> <input type="number" class="form-control form-control-sm w-75"
                                                 [(ngModel)]="x.year" [ngModelOptions]="{standalone: true}"> </td>
-                                        <td> <input type="text" class="form-control form-control-sm"
+                                        <td> <input type="text" class="form-control form-control-sm w-100"
                                                 [(ngModel)]="x.amount" currencyMask
                                                 [ngModelOptions]="{standalone: true}"> </td>
+
+                                        <td> <input type="number" class="form-control form-control-sm  w-75 text-right"
+                                                [(ngModel)]="x.leads" [ngModelOptions]="{standalone: true}"> </td>
+                                        <td> <input type="number" class="form-control form-control-sm  w-75 text-right"
+                                                [(ngModel)]="x.opportunities" [ngModelOptions]="{standalone: true}">
+                                        </td>
+                                        <td> <input type="number" class="form-control form-control-sm  w-75 text-right"
+                                                [(ngModel)]="x.quotes" [ngModelOptions]="{standalone: true}"> </td>
+                                        <td>
+                                            <a href="javascript:;" (click)="fn_delete(x.id);"><i class="far fa-trash-alt"></i></a>
+                                        </td>
                                     </tr>
                                 </tbody>
 
 
                             </table>
-   
-                            <table>
 
-                                <tr>
-                                    <td>Year</td>
-                                    <Td>Amount</Td>
-                                    <td></td>
-                                </tr>
-                                <tr>
+                            <div class="mt-5">
 
-                                    <td> <input type="number" maxlength="4" class="form-control form-control-sm"
-                                            [(ngModel)]="newTargetAmount.year" [ngModelOptions]="{standalone: true}">
-                                    </td>
-                                    <td> <input type="text" class="form-control form-control-sm" currencyMask
-                                            [(ngModel)]="newTargetAmount.amount" [ngModelOptions]="{standalone: true}">
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-sm btn-primary" (click)="fn_insertTargetAmount()">
-                                            Add Target </button>
-                                    </td>
-                                </tr>
-                            </table>
+                                <h5>Create new target</h5>
+                                <table class="table border bg-light">
 
-                           
+                                    <tr>
+                                        <th>Year</th>
+                                        <th>Amount</th>
+                                        <th>Leads</th>
+                                        <th>Opportunities</th>
+                                        <th>Quotes</th>
+                                    </tr>
+                                    <tr>
+
+                                        <td> <input type="number" maxlength="4" class="form-control form-control-sm"
+                                                [(ngModel)]="newTargetAmount.year"
+                                                [ngModelOptions]="{standalone: true}">
+                                        </td>
+
+
+                                        <td> <input type="text" class="form-control form-control-sm" currencyMask
+                                                [(ngModel)]="newTargetAmount.amount"
+                                                [ngModelOptions]="{standalone: true}">
+                                        </td>
+
+                                        <td> <input type="text" class="form-control form-control-sm" 
+                                                [(ngModel)]="newTargetAmount.leads"
+                                                [ngModelOptions]="{standalone: true}">
+                                        </td>
+
+
+                                        <td> <input type="text" class="form-control form-control-sm" 
+                                                [(ngModel)]="newTargetAmount.opportunities"
+                                                [ngModelOptions]="{standalone: true}">
+                                        </td>
+
+
+                                        <td> <input type="text" class="form-control form-control-sm" 
+                                                [(ngModel)]="newTargetAmount.quotes"
+                                                [ngModelOptions]="{standalone: true}">
+                                        </td>
+ 
+                                    </tr>
+                                </table>
+
+                                <div class="text-right">
+                                    <button type="button" class="btn btn-sm btn-primary"
+                                    (click)="fn_insertTargetAmount()">
+                                    Add Target </button>
+                                </div>
+
+                            </div>
                         </div>
 
 
-                        
+
 
                     </div>
                 </div>
