@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http'; 
+import { Router, ActivatedRoute } from '@angular/router'; 
 import { ConfigService } from './../service/config.service';
 import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Contact, Selectedcompany, NewContact } from './contact';
 
+declare var $;
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
@@ -31,42 +32,106 @@ export class ContactComponent implements OnInit {
   selectedCompany: any = [];
   amount: string;
   total:string;
+  companies:any= [];
+  id_company:string = "0";
   constructor(
     private http: HttpClient,
     private router: Router,
     private modalService: NgbModal,
     config: NgbModalConfig,
-    private configService: ConfigService
+    private configService: ConfigService, 
+    private activatedRoute: ActivatedRoute, 
   ) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
 
+  filter:any = "";
   ngOnInit() {
-
+     
+    this.filter = this.activatedRoute.snapshot.params.filter;
     this.httpSelected();
     this.httpGet();
-
+     
   }
-
+ 
+  
   httpGet() {
-    this.loading = true;
-    this.itemsSelected = [];
-    this.http.get<Contact[]>(this.configService.base_url() + 'contact', {
-      headers: this.configService.headers()
-    }).subscribe(data => {
-      this.items = data['result']['data'];
-      this.total = data['result']['total'];
+    this.loading = false;
+ 
 
-      this.modelContact = new NewContact('0', '', '', '', '', '0', this.id_user, '0', '', '');
-      console.log(this.total);
-      this.loading = false;
-    }, error => {
-      //  console.log(error);
-      //  console.log(error.error.text);
+    $('#dtable').DataTable({
+      //  stateSave: true,
+      ajax: {
+        url: this.configService.base_url() + "contact/index/",
+        type: 'GET',
+        headers: {
+          'Key': this.configService.key(),
+          'Token': this.configService.token(),
+          'Content-Type': 'application/json'
+        },
+
+      },
+      aoColumnDefs: [{ "asSorting": false, "aTargets": [0] }],
+      lengthMenu: [50, 100, 200],
+      order: [[1, "asc"]],
+      columnDefs: [
+       
+        {
+          "targets": 1,
+          "render": function (data, type, row, meta) {
+            return '<a href="#/contact/' + row[0] + '"><b>' + data + '</b></a>';
+          }
+        }, 
+        
+      ],
+      initComplete: function () {
+
+        this.api().columns('.select-filter').every(function () {
+          var column = this;
+          var select = $('<select><option value="">Show all</option></select>')
+            .appendTo($(column.footer()).empty())
+            .on('change', function () {
+              var val = $.fn.dataTable.util.escapeRegex(
+                $(this).val()
+              );
+
+              column
+                .search(val ? '^' + val + '$' : '', true, false)
+                .draw();
+            });
+
+          column.data().unique().sort().each(function (d, j) {
+            select.append('<option value="' + d + '">' + d + '</option>')
+          });
+        });
+      }
     });
+
   }
 
+  fnFilterDecode(){
+   
+    if( this.filter ){
+      var filter = JSON.parse(atob(this.filter));
+      console.log('fnFilterDecode' );
+      this.id_company = filter['id_company'];
+    } 
+    
+  }
+
+
+  fnFilterByCompanies(e){
+    console.log(e.target.value);
+
+    var filter = {
+      id_company : e.target.value
+    }
+
+    this.filter = btoa(JSON.stringify(filter));
+    this.router.navigate(['contact/filter/', this.filter]);
+    this.httpGet(); 
+  }
 
   requestEmit(event) {
     if (event) {

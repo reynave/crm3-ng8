@@ -5,6 +5,9 @@ import { ConfigService } from './../service/config.service';
 import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Company, NewCompany, Selected } from './company';
 
+
+declare var $;
+
 @Component({
   selector: 'app-company',
   templateUrl: './company.component.html',
@@ -24,11 +27,11 @@ export class CompanyComponent implements OnInit {
   modalStatus: number;
   objIndex: any;
   searchText: string;
-  selectModal:string= "0";
+  selectModal: string = "0";
   id_user: string = "1";
-  total : string ="";
-  model = new NewCompany('','','','','','','','','','','','','','','','','','','');
-      
+  total: string = "";
+  model = new NewCompany('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+
   dbCompany: boolean = false;
   selectedCompany: any = [];
   constructor(
@@ -47,89 +50,121 @@ export class CompanyComponent implements OnInit {
     this.httpSelected();
     this.httpGet();
   }
-  
+
   httpGet() {
-    this.loading = true;
-    this.itemsSelected = [];
-    this.http.get<Company[]>(this.configService.base_url() + 'company', {
-      headers: this.configService.headers()
-    }).subscribe(data => {
-    
-      this.items = data['result']['data'];
-      this.total = data['result']['total'];
-      this.loading = false; 
-    }, error => {
-       console.log(error);
-       console.log(error.error.text);
+    this.loading = false;
+    $('#dtable').DataTable({
+      //  stateSave: true,
+      ajax: {
+        url: this.configService.base_url() + "company/index/",
+        type: 'GET',
+        headers: {
+          'Key': this.configService.key(),
+          'Token': this.configService.token(),
+          'Content-Type': 'application/json'
+        },
+
+      },
+      aoColumnDefs: [{ "asSorting": false, "aTargets": [0] }],
+      lengthMenu: [50, 100, 200],
+      order: [[1, "asc"]],
+      columnDefs: [ {
+        "targets": 1,
+        "render": function (data, type, row, meta) {
+          return '<a href="#/company/' + row[0] + '"><b>' + data + '</b></a>';
+        }
+      }],
+      initComplete: function () {
+
+        this.api().columns('.select-filter').every(function () {
+          var column = this;
+          var select = $('<select><option value=""> - Show All - </option></select>')
+            .appendTo($(column.footer()).empty())
+            .on('change', function () {
+              var val = $.fn.dataTable.util.escapeRegex(
+                $(this).val()
+              );
+
+              column
+                .search(val ? '^' + val + '$' : '', true, false)
+                .draw();
+            });
+
+          column.data().unique().sort().each(function (d, j) {
+            select.append('<option value="' + d + '">' + d + '</option>')
+          });
+        });
+      }
     });
+
   }
-  user:any = [];
-  company_class:any=[];
+  user: any = [];
+  company_class: any = [];
   httpSelected() {
-  
+
     this.http.get<Selected[]>(this.configService.base_url() + 'company/selected', {
       headers: this.configService.headers()
     }).subscribe(data => {
-      console.log(data); 
-      this.id_user = data['result']['id_user']; 
-      this.model['id_user'] = data['result']['id_user']; 
+      console.log(data);
+      this.id_user = data['result']['id_user'];
+      this.model['id_user'] = data['result']['id_user'];
       this.user = data['result']['user'];
       this.company_class = data['result']['company_class'];
       this.loadingSelected = false;
       this.selected = data['result'];
-     //  console.log(this.selected);
+      //  console.log(this.selected);
     });
   }
-  
 
 
-  submit:boolean= false;
-  
+
+  submit: boolean = false;
+
   onSubmit(value = "") {
 
-    this.submit= true;
+    this.submit = true;
     this.http.post(this.configService.base_url() + 'company/insert',
       {
         "data": this.model
       }, {
-        headers: this.configService.headers()
-      }).subscribe(
-        data => {
-         //  console.log(data);
-          this.submit= false;
-          if (value == 'next') {
-            this.httpGet();
-            this.model = new NewCompany('','','','','','','','','','','','','','','','','','','');
-            this.model['id_user'] = this.id_user; 
-          }
-          else {
-           this.router.navigate(['/company/',data['result']['id'] ]);
-            this.modalService.dismissAll();
-        
-          }
-        
-
-        },
-        error => {
-          console.log(error);
-          console.log(error.error.text);
+      headers: this.configService.headers()
+    }).subscribe(
+      data => {
+        //  console.log(data);
+        this.submit = false;
+        if (value == 'next') {
+          this.httpGet();
+          this.model = new NewCompany('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+          this.model['id_user'] = this.id_user;
         }
-      );
+        else {
+          this.router.navigate(['/company/', data['result']['id']]);
+          this.modalService.dismissAll();
+
+        }
+
+
+      },
+      error => {
+        console.log(error);
+        console.log(error.error.text);
+      }
+    );
   }
 
   get diagnostic() { return JSON.stringify(this.model); }
 
 
   fn_delete() {
-  
+
     this.http.post(this.configService.base_url() + 'company/fn_delete',
-    {
-      "data": this.itemsSelected
-    }, {
+      {
+        "data": this.itemsSelected
+      }, {
       headers: this.configService.headers()
     }).subscribe(
       data => {
-       //  console.log(data);
+        //  console.log(data);
         this.httpGet();
         this.modalService.dismissAll();
       },
@@ -144,23 +179,18 @@ export class CompanyComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    this.modalService.open(content, { size: 'lg' });
   }
- 
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
+  copyAddress() {
+    this.model['ship_street'] = this.model['bill_street'];
+    this.model['ship_city'] = this.model['bill_city'];
+    this.model['ship_state'] = this.model['bill_state'];
+    this.model['ship_code'] = this.model['bill_code'];
+    this.model['ship_country'] = this.model['bill_country'];
+
   }
+
 
   fn_check(x) {
     this.objIndex = this.items.findIndex((obj => obj.id == x.id));
@@ -176,10 +206,10 @@ export class CompanyComponent implements OnInit {
     var objectSelect = this.itemsSelected.findIndex((obj => obj.id == x.id));
     if (objectSelect == -1) {
       this.itemsSelected.push(object);
-    }else{
+    } else {
       this.itemsSelected.splice(objectSelect, 1);
     }
-   //  console.log(this.itemsSelected);
+    //  console.log(this.itemsSelected);
   }
 
   fn_removeItemSelected(x) {

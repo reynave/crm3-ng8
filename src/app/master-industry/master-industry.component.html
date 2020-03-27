@@ -44,6 +44,7 @@
                   <tr> 
                     <th class="text-center" width="50">No</th>
                     <th>Name</th> 
+                    <th>Background Color</th> 
                     <th width="50"></th>
          
                   </tr>
@@ -58,6 +59,15 @@
                         
 
                     </td> 
+
+
+                    <td>
+                        <div [hidden]="!isReadonly">  {{x.backgroundColor}}  </div>
+
+                        <input type="text" class="form-control form-control-sm border-0" (change)="update(x);" [hidden]="isReadonly" [(ngModel)]="x.backgroundColor" >
+                    </td>
+
+
                     <td>
                         <a href="javascript:;" (click)="fn_delete(x);"  [hidden]="isReadonly">  <i class="far fa-trash-alt"></i> </a>
                     </td> 

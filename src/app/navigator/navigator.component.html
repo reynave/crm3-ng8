@@ -1,5 +1,5 @@
 <nav class="border-bottom shadow-sm navbar navbar-expand fixed-top navbar-dark bg-dark navbar-themes">
-  <a class="navbar-brand" href="#" >SalesTrax <small>ver 0.2.380</small></a>
+  <a class="navbar-brand" href="#" >SalesTrax <small>ver 0.331 dev</small></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -51,6 +51,14 @@
       <li class="nav-item {{current == 'salesOrder' ? 'active' : false}}">
         <a class="nav-link py-0" href="javascript:;" [routerLink]="[ '/salesOrder']">Sales Orders</a>
       </li> 
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle py-0" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">Reports</a>
+        <div class="dropdown-menu" aria-labelledby="dropdown01">
+          <a class="dropdown-item" href="javascript:;" [routerLink]="[ '/reports/salesTarget']">Sales Target</a> 
+        </div>
+      </li>
 
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle py-0" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"

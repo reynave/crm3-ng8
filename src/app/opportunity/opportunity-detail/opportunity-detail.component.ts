@@ -489,6 +489,7 @@ export class OpportunityDetailComponent implements OnInit {
           // console.log(data); 
           this.attachment = data['result']['attachment'];
           this.httpGet();
+          this.selectedFile = "";
         }
 
       );

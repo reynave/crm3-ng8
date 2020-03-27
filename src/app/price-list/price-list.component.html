@@ -30,69 +30,43 @@
     </div>
   </div>
 
-  <div class=" bg-light  border border-top-brown rounded p-1">
-    <div class="row my-2 ">
-      <div class="col-8">
-      
-
-          <span class="dropdown">
-            <button class="btn btn-classic btn-sm dropdown-toggle mx-1" type="button" id="dropdownMenuButton"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-cog"></i>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> 
-              <a class="dropdown-item" (click)="open(markUpdate)"> Mart to
-                Delete</a>
   
-            </div>
-          </span>
+  <div class=" bg-light  border border-top-brown rounded p-1">
+ 
+    <table id="dtable" class="table table-hover border bg-white border-top border-bottom pointer">
+      <thead class="thead-light">
+        <tr>
 
-          <span>
-            <small>Total : {{total}}</small>
-          </span>
-      </div>
+          <th>ID</th>
+          <th width="50">SKU</th>
+          <th scope="col">Name</th> 
 
-      <div class="col-4 text-right">
-        <input type="text" class="form-control-sm form-radius" placeholder="Search">
-      </div>
-    </div>
-
-    <div class="scroll-x max-height"> 
-      <table class="table table-hover border bg-white border-top border-bottom pointer">
-        <thead class="thead-light">
-          <tr>
-            <th width="50">No</th> 
-            <th></th>
-            <th width="50" scope="col">ID</th>
-            <th scope="col">SKU</th>
-            <th scope="col">Name</th>
-            <th scope="col">Price</th> 
-            <th scope="col">Type</th> 
-            <th scope="col">Qty</th>   
-
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let x of items;let i = index;">
-            <td> {{i+1}} </td>
-            <td width="50" (click)="fn_check(x);"> <span class="text-primary ">
-              <i class=" {{ x.check ? 'fas fa-check-square' : 'far fa-square' }}"></i> </span>
-            </td> 
-            <td> {{x.id}} </td>
-            <td> {{x.sku}} </td>
-            <td> <a [routerLink]="[ '/priceList/',x.id]"> {{x.name}}</a> </td>
-            <td>  {{x.currency}} {{x.price | number}} </td>
-            <td>{{x.product_type}}</td>
-            <td> <span [hidden]="x.id_product_type != 10"> {{x.qty}} </span> </td>
-          </tr>
-        </tbody>
-      </table>
+          <th scope="col"  class="select-filter">Currency</th> 
+          <th scope="col">Price</th>
+          <th scope="col"  class="select-filter">Type</th>
 
 
 
-    </div>
+        </tr>
+      </thead>
 
+      <tfoot>
+        <tr>
+ 
+          <th></th>
+          <th></th>
+          <th></th>
 
+          <th></th>
+          <th></th>
+          <th></th>
+ 
+
+        </tr>
+      </tfoot>
+
+    </table>
+ 
   </div>
 
 

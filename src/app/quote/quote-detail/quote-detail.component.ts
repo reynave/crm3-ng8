@@ -320,7 +320,7 @@ export class QuoteDetailComponent implements OnInit {
           this.uploadLoading = false;
           console.log(data);
           this.attachment = data['result']['attachment'];
-
+          this.selectedFile = "";
         }
 
       );

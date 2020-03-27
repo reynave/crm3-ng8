@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  domain : "https://www.crm.co.id",
+  root : "http://localhost:4200/home",
+  api : "http://localhost/application/crm3-ng8/api-v1/",
+  login : "http://localhost/application/crm3-ng8/login/"
 };
 
 /*

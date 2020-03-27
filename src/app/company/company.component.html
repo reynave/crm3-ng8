@@ -28,71 +28,46 @@
 
 
   <div class=" bg-light  border border-top-brown rounded p-1">
+  
+    <table id="dtable" class="table table-hover border bg-white border-top border-bottom pointer" style="width:100%">
+      <thead class="thead-light">
+        <tr>
+          <th>ID</th>
+          <th >Companies</th>
+          <th>website</th> 
+          <th>Customer Code</th> 
+          <th class="select-filter">Industry</th> 
+          <th class="select-filter">Customer Class</th> 
+          <th class="select-filter">Account Manager</th> 
+         
+        </tr>
+      </thead>
 
-    <div class="row mb-3">
-      <div class="col-8">
-      
-        <span class="dropdown">
-          <button class="btn btn-classic btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-cog"></i>
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" (click)="open(markUpdate)"> Mart to
-              Delete</a>
-          </div>
-        </span>
+      <tfoot>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th> 
+          <th></th> 
+          <th></th> 
+          <th></th> 
+          <th></th> 
+        </tr>
+      </tfoot>
+    </table>
 
-        <label class="pl-2">Total Count : {{total}}</label>
-      </div>
 
-      <div class="col-4 text-right">
-        <input type="text" class="form-control-sm form-radius" placeholder="Search">
-      </div>
 
-    </div>
 
-    <div class="scroll-x max-height">
-
-      <table class="table table-hover border bg-white border-top border-bottom pointer">
-        <thead class="thead-light">
-          <tr>
-            <th>No</th>
-            <th class="text-center"></th>
-            <th scope="col">Company</th>
-            <th scope="col">Industry</th>
-            <th scope="col">Website</th>
-            <th scope="col">Phone</th>
-            <th scope="col">fax</th>
-            <th scope="col">Email</th>
-
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let x of items; let i = index" (click)="fn_check(x);">
-            <td><a [routerLink]="[ '/company/',x.id]"> {{i+1}} </a></td>
-            <td width="50"> <span class="text-primary ">
-                <i class=" {{ x.check ? 'fas fa-check-square' : 'far fa-square' }}"></i> </span>
-            </td>
-
-            <td> <a [routerLink]="[ '/company/',x.id]"> <b> {{x.name}} </b> </a></td>
-            <td>{{x.website}}</td>
-            <td>{{x.industry}}</td>
-            <td>{{x.phone}}</td>
-            <td>{{x.fax}}</td>
-            <td>{{x.email}}</td>
-
-          </tr>
-        </tbody>
-      </table>
-
-    </div>
+ 
 
 
   </div>
 
 </div>
 
+
+  
 
 <ng-template #newCompany let-modal>
   <div class="modal-header">
@@ -161,8 +136,7 @@
           <div class="form-group row no-gutters">
             <label for="h24x" class="col-sm-4 col-form-label">Industry</label>
             <div class="col-sm-8">
-              <select class="form-control border" id="h24x" [(ngModel)]="model.id_industry" name="id_industry">
-                <option value="0"> - Select - </option>
+              <select class="form-control border" id="h24x" [(ngModel)]="model.id_industry" name="id_industry"> 
                 <option [ngValue]="x.id" *ngFor="let x of selected.industry">{{x.name}}</option>
 
               </select>
@@ -172,8 +146,8 @@
           <div class="form-group row no-gutters">
             <label for="h24y" class="col-sm-4 col-form-label">Company Class</label>
             <div class="col-sm-8">
-              <select class="form-control border" id="h24y" [(ngModel)]="model.id_company_class" name="id_company_class">
-                <option value="0"> - Select - </option>
+              <select class="form-control border" id="h24y" [(ngModel)]="model.id_company_class"
+                name="id_company_class"> 
                 <option [ngValue]="x.id" *ngFor="let x of selected.company_class">{{x.name}}</option>
 
               </select>
@@ -185,7 +159,7 @@
             <label for="h24z" class="col-sm-4 col-form-label">Company Owner</label>
             <div class="col-sm-8">
               <select class="form-control border" id="h24z" [(ngModel)]="model.id_user" name="id_user">
-                <option value="0"> - Select - </option>
+            
                 <option [ngValue]="x.id" *ngFor="let x of selected.user">{{x.name}}</option>
               </select>
             </div>
@@ -251,7 +225,8 @@
 
         <div class="col-6">
           <div class="mb-3">
-            <strong> Address Ship </strong>
+            <strong class="mr-2"> Address Ship </strong> 
+            <a href="javascript:;" (click)="copyAddress();"><small>Copy from Address Bill</small></a>
           </div>
 
           <div class="form-group row no-gutters">
@@ -303,7 +278,7 @@
     </form>
 
 
- 
+
 
   </div>
   <div class="modal-footer">

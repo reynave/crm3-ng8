@@ -35,7 +35,8 @@ export class CompanyDetailComponent implements OnInit {
   myBranch:any = [];
   myOpportunity:any = [];
   priceList:any=[];
-  
+  attachment:any=[];
+
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -86,7 +87,7 @@ export class CompanyDetailComponent implements OnInit {
       this.industry =  data['result']['industry'];
       this.user =  data['result']['user'];
       this.company_class =  data['result']['company_class'];
-       
+      this.attachment = data['result']['attachment'];
       this.modealCompany = new UpdateCompany(
         data['result']['data']['bill_country'],
         data['result']['data']['bill_city'],
@@ -236,6 +237,63 @@ export class CompanyDetailComponent implements OnInit {
           console.log(error.error.text);
         }
       );
+  }
+
+
+  selectedFile = null;
+  onFileSelected(event) {
+    this.selectedFile = event.target.files[0];
+  }
+  onUpload(target) {
+    const fd = new FormData();
+    fd.append('files', this.selectedFile, this.selectedFile.name);
+    fd.append('token', this.configService.token()); 
+    fd.append('module', target);
+    fd.append('id', this.id);
+
+    console.log(fd, this.configService.token());
+    this.http.post(this.configService.base_url() + 'upload/attachment', fd, {
+      //    reportProgress: true,
+      //  observe: 'events'
+    })
+      .subscribe(
+        /*  event => {
+            if(event.type === HttpEventType.UploadProgress){
+              console.log(event ); // handle event here
+            }else if( event.type === HttpEventType.Response ){
+              console.log(event ); // handle event here
+            }
+           
+          },*/
+        data => {
+          // console.log(data); 
+          this.attachment = data['result']['attachment'];
+          this.httpGet();
+          this.selectedFile = "";
+        }
+
+      );
+  }
+  fn_attach_delete(x) {
+    this.loading = true;
+
+    this.http.post(this.configService.base_url() + 'pricelist/fn_attach_delete',
+      {
+        "id": x.id,
+      }, {
+      headers: this.configService.headers()
+    }).subscribe(
+      data => {
+        console.log(data);
+        this.loading = false;
+        var objIndex = this.attachment.findIndex((obj => obj.id == x.id));
+        this.attachment.splice(objIndex, 1);
+      },
+      error => {
+        console.log(error);
+        console.log(error.error.text);
+      }
+    );
   }
 
 }

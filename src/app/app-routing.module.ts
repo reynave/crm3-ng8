@@ -40,6 +40,7 @@ import { AccessDataComponent } from './access-data/access-data.component';
 import { MasterClassComponent } from './master-class/master-class.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ConvertedComponent } from './lead/converted/converted.component';
+import { SalesTargetComponent } from './reports/sales-target/sales-target.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, data: { title: 'Dashboard' } },
@@ -50,8 +51,8 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent, data: { title: 'My Profile' } },
  
 
-  { path: 'accessRight', component: AccessRightComponent, data: { title: 'Access Rigth' }, canActivate: [ActiveGuardGuard] },
-  { path: 'accessRight/:id', component: AccessRightDetailComponent, data: { title: 'Access Rigth' }, canActivate: [ActiveGuardGuard] },
+  { path: 'accessRight', component: AccessRightComponent, data: { title: 'Access Right' }, canActivate: [ActiveGuardGuard] },
+  { path: 'accessRight/:id', component: AccessRightDetailComponent, data: { title: 'Access Right' }, canActivate: [ActiveGuardGuard] },
   
   { path: 'accessData', component: AccessDataComponent, data: { title: 'Access Data Level' }, canActivate: [ActiveGuardGuard] },
  
@@ -68,6 +69,9 @@ const routes: Routes = [
 
   { path: "contact", component: ContactComponent, data: { title: 'Contact' }, canActivate: [ActiveGuardGuard] },
   { path: "contact/:id", component: ContactDetailComponent, data: { title: 'Contact' }, canActivate: [ActiveGuardGuard] },
+
+  { path: "contact/filter/:filter", component: ContactComponent, data: { title: 'Contact Filter' }, canActivate: [ActiveGuardGuard] },
+
 
   { path: "company", component: CompanyComponent, data: { title: 'Companies' },canActivate: [ActiveGuardGuard] },
   { path: "company/:id", component: CompanyDetailComponent, data: { title: 'Company Detail' },canActivate: [ActiveGuardGuard] },
@@ -114,6 +118,7 @@ const routes: Routes = [
   
 //  { path: "master/group", component: MasterLeadSourceComponent, data: { title: 'Master Lead Source' }, },
  
+{ path: "reports/salesTarget", component: SalesTargetComponent,data: { title: 'Sales Target' } },
 
   { path: "warning/:path/:target", component: WarningComponent },
 

@@ -5,7 +5,7 @@
 <div class="container-fluid bg-light border py-1">
   <div class="row">
     <div class="col-12">
-      <small> You are here : <a [routerLink]="[ '/opportunity' ]">Opportunity</a> </small>
+      <small> You are here : <a [routerLink]="[ '/opportunity' ]">Opportunities</a> </small>
     </div>
   </div>
 </div>
@@ -19,7 +19,7 @@
 
       <div class="col-6">
         <div class="module-name">
-          <h5>OPPORTUNITY</h5>
+          <h5>OPPORTUNITIES</h5>
         </div>
       </div>
       <div class="col-6 text-right">
@@ -32,71 +32,41 @@
   
   <div class=" bg-light  border border-top-brown rounded p-1">
 
-    <div class="row mb-3">
-      <div class="col-8">
+    
+     
+    <table id="dtable" class="table table-hover border bg-white border-top border-bottom pointer" style="width:100%">
+      <thead class="thead-light">
+        <tr>
+          <th>ID</th> 
+          <th scope="col">Opportunity Name</th>
+          <th scope="col" class="select-filter">Company</th>
 
-        <span class="dropdown">
-          <button class="btn btn-classic btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-cog"></i>
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" (click)="open(markUpdate)"> Mart to delete</a>
+          <th scope="col" class="select-filter">Stage</th>
+          <th scope="col" class="select-filter">Progress</th>
+          <th scope="col" class="">Amount</th>
 
-          </div>
-        </span>
+          <th scope="col">Expecting Close Date</th>
+          <th scope="col" class="select-filter">Account Manager</th>
+         
+        </tr>
+      </thead>
 
-        <label class="pl-2">Total Count :{{total}} </label>
-      </div>
+      <tfoot>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th> 
 
-      <div class="col-4 text-right">
-        <input type="text" class="form-control-sm form-radius" placeholder="Search">
-      </div>
+          <th></th> 
+          <th></th> 
+          <th></th> 
 
-    </div>
-
-    <div class="scroll-x max-height">
-
-      <table class="table table-hover border bg-white border-top border-bottom pointer">
-        <thead class="thead-light">
-          <tr>
-            <th>No</th>
-            <th></th>
-
-            <th scope="col">Opportunity Name</th>
-            <th scope="col">Company</th>
-            <th scope="col">Stage</th>
-            <th scope="col" class="text-right">Progress</th>
-            <th scope="col" class="text-right" colspan="2">Amount</th>
-
-            <th scope="col">Expecting Close Date</th>
-            <th scope="col">Account Manager</th>
-
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let x of items; let i = index" (click)="fn_check(x);">
-            <td width="50"> {{ i + 1}} </td>
-            <td width="50"> <span class="text-primary ">
-                <i class=" {{ x.check ? 'fas fa-check-square' : 'far fa-square' }}"></i> </span>
-            </td>
-
-            <td><a [routerLink]="[ '/opportunity/',x.id]"><b> {{x.name}} </b> </a></td>
-            <td> {{x.company}} </td>
-            <td><strong> {{x.stage}}</strong></td>
-            <td class="text-right">{{x.progress}}%</td>
-            <td width="50">{{x.currency}}</td>
-            <td class="text-right">{{x.amount | number:''}},-</td>
-            <td>{{x.expecting_closing_date | date }}</td>
-            <td>{{x.user}}</td>
-
-          </tr>
-
-        </tbody>
-
-      </table>
-
-    </div>
+          <th></th> 
+          <th></th> 
+        </tr>
+      </tfoot>
+      
+    </table>
 
 
   </div>

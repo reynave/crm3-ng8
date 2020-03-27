@@ -73,11 +73,9 @@ export class WidgetActivityComponent implements OnInit {
   
     this.loading = true;
     var link;
-    if( this.module == "activity" ){
-      console.log('1');
+    if( this.module == "activity" ){ 
       link = this.configService.base_url() + 'activity/httpHistory/' + this.module + '/?f=' + this.id; 
-    }else{
-      console.log('2');
+    }else{ 
       link = this.configService.base_url() + 'activity/httpHistory/' + this.module + '/' + this.id
     }
     //console.log( this.id);

@@ -14,7 +14,7 @@ export class LeadDetailComponent implements OnInit {
   public label: any;
   public items: any = [];
   public loading = true;
-  public id: number;
+  public id: string;
   public closeResult: string;
   newContact: boolean = false;
   modalTitle: string = "";
@@ -37,7 +37,7 @@ export class LeadDetailComponent implements OnInit {
   company:any = []; 
   user: any = [];
   contacts:any=[];
-  
+  attachment:any=[];
   company_class:any=[];
   product: any = [];
   accessRules : any = [];
@@ -90,7 +90,7 @@ export class LeadDetailComponent implements OnInit {
       this.company =  data['result']['company'];
       this.company_class =  data['result']['company_class'];
        
-
+      this.attachment = data['result']['attachment'];
       this.lead = new UpdateLead(
         data['result']['lead']['id_user'],
         data['result']['lead']['id_title'],
@@ -273,6 +273,63 @@ export class LeadDetailComponent implements OnInit {
 
   fn_newActivity(){
     this.showNewActivity=true;
+  }
+
+ 
+  selectedFile = null;
+  onFileSelected(event) {
+    this.selectedFile = event.target.files[0];
+  }
+  onUpload(target) {
+    const fd = new FormData();
+    fd.append('files', this.selectedFile, this.selectedFile.name);
+    fd.append('token', this.configService.token()); 
+    fd.append('module', target);
+    fd.append('id', this.id);
+
+    console.log(fd, this.configService.token());
+    this.http.post(this.configService.base_url() + 'upload/attachment', fd, {
+      //    reportProgress: true,
+      //  observe: 'events'
+    })
+      .subscribe(
+        /*  event => {
+            if(event.type === HttpEventType.UploadProgress){
+              console.log(event ); // handle event here
+            }else if( event.type === HttpEventType.Response ){
+              console.log(event ); // handle event here
+            }
+           
+          },*/
+        data => {
+          // console.log(data); 
+          this.attachment = data['result']['attachment'];
+          this.httpGet();
+          this.selectedFile = "";
+        }
+
+      );
+  }
+  fn_attach_delete(x) {
+    this.loading = true;
+
+    this.http.post(this.configService.base_url() + 'pricelist/fn_attach_delete',
+      {
+        "id": x.id,
+      }, {
+      headers: this.configService.headers()
+    }).subscribe(
+      data => {
+        console.log(data);
+        this.loading = false;
+        var objIndex = this.attachment.findIndex((obj => obj.id == x.id));
+        this.attachment.splice(objIndex, 1);
+      },
+      error => {
+        console.log(error);
+        console.log(error.error.text);
+      }
+    );
   }
 
   

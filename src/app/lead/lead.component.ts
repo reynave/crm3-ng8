@@ -5,6 +5,8 @@ import { ConfigService } from './../service/config.service';
 import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Lead, Selected, Company, Newlead } from './lead';
 
+declare var $;
+
 @Component({
   selector: 'app-lead',
   templateUrl: './lead.component.html',
@@ -51,21 +53,74 @@ export class LeadComponent implements OnInit {
     this.httpGet();
     this.httpSelected();
   }
-  
+
+
   httpGet() {
-    this.loading = true;
-    this.itemsSelected = [];
-    this.http.get<Lead[]>(this.configService.base_url() + 'lead', {
-      headers: this.configService.headers()
-    }).subscribe(data => { 
-      console.log(data);
-      this.total = data['result']['total'];
-      this.model['id_user'] = data['result']['id_user'];
-      this.configService.errorToken(data);  
-      this.items = data['result']['data']; 
-      this.loading = false;
+    this.loading = false;
+ 
+
+    $('#dtable').DataTable({
+      //  stateSave: true,
+      ajax: {
+        url: this.configService.base_url() + "lead/index/",
+        type: 'GET',
+        headers: {
+          'Key': this.configService.key(),
+          'Token': this.configService.token(),
+          'Content-Type': 'application/json'
+        },
+
+      },
+      aoColumnDefs: [{ "asSorting": false, "aTargets": [0] }],
+      lengthMenu: [50, 100, 200],
+      order: [[1, "asc"]],
+      columnDefs: [
+        {
+          "targets": 0, 
+          "render": function (data, type, row, meta) {
+            return data +  ' <span class="ml-2 text-'+row[8]+'"><i class="fas fa-square-full"></i></span>';
+          }
+        },
+        {
+          "targets": 1,
+          "render": function (data, type, row, meta) {
+            return  data;
+          }
+        }, 
+        {
+          "targets": 2,
+          "render": function (data, type, row, meta) {
+            return '<a href="#/lead/' + row[0] + '"><b>' + data + '</b></a>';
+          }
+        }, 
+        
+      ],
+      initComplete: function () {
+
+        this.api().columns('.select-filter').every(function () {
+          var column = this;
+          var select = $('<select><option value="">Show all</option></select>')
+            .appendTo($(column.footer()).empty())
+            .on('change', function () {
+              var val = $.fn.dataTable.util.escapeRegex(
+                $(this).val()
+              );
+
+              column
+                .search(val ? '^' + val + '$' : '', true, false)
+                .draw();
+            });
+
+          column.data().unique().sort().each(function (d, j) {
+            select.append('<option value="' + d + '">' + d + '</option>')
+          });
+        });
+      }
     });
+
   }
+
+ 
 
   httpSelected() {
 
@@ -125,8 +180,7 @@ export class LeadComponent implements OnInit {
       );
   }
 
-  get diagnostic() { return JSON.stringify(this.model); }
-
+  
   fn_updateLeadStatus() {
     this.http.post(this.configService.base_url() + 'lead/fn_updateLeadStatus',
     {

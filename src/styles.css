@@ -297,7 +297,36 @@ table ul{
     border: 1px solid #ccc!important;
     
 }
+#dtable a{
+    text-decoration: none;;
+}
+a.paginate_button.current {
+    padding: 0px !important;
+    margin: 0px;
+}
+table.dataTable thead th, table.dataTable thead td {
+    padding: 4px 10px;
+    border-bottom: 1px solid #a4bad0;  
+}
+table.dataTable tfoot th{
+    padding: 4px 10px;
+}
+table.dataTable tbody th, table.dataTable tbody td {
+    padding: 4px 10px;
+}
 
+input[type="search"] {
+    border: 1px solid #ccc;
+    padding: 3px 5px;
+    min-width: 240px; 
+    margin-bottom: 5px;
+}
+
+.dataTables_length select {
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+    padding: 3px 5px;
+}
 .border-top-blue{    border-top: 5px solid #007BFF !important; }
 .border-top-red{    border-top: 5px solid red !important; }
 .border-top-brown{    border-top: 5px solid brown !important; }

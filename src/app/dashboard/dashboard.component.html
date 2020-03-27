@@ -13,15 +13,14 @@
 <div class="container-fluid mt-3   mb-4">
   <div class="row no-gutters">
     <div class="col-12 ">
-      <h4> Data this {{period}} </h4>
-
+      <h4> Dashboard this {{period}} </h4> 
     </div>
 
 
     <div class="col-6 col-md-3  pr-2">
       <label> Select User : </label>
       <select class="form-control form-control-sm" (change)="onUser($event.target.value)" [(ngModel)]="id_user_select">
-        <option value="0">All My Access</option>
+        <option value="0">All Group</option>
         <option *ngFor="let x of user" value="{{x.id}}"> {{x.name}} </option>
       </select>
     </div>
@@ -83,7 +82,7 @@
     <div class="col-3   mb-3">
       <div class="bg-light  border border-top-yellowgreen rounded p-2  m-1">
 
-        <div class="pb1"> <strong> Leads per distribution per quarter</strong></div>
+        <div class="pb1"> <strong> Leads per distribution per {{period}}</strong></div>
         <canvas class="leadPerDistribution" id="leadPerDistribution" width="300" height="300"></canvas>
       </div>
     </div>
@@ -91,7 +90,7 @@
     <div class="col-3   mb-3">
       <div class="bg-light  border border-top-gray rounded p-2  m-1">
 
-        <div class="pb-1"> <strong>Leads per industry per quarter</strong></div>
+        <div class="pb-1"> <strong>Leads per industry per {{period}}</strong></div>
         <canvas class="leadPerIndustry" id="leadPerIndustry" width="300" height="300"></canvas>
       </div>
     </div>
@@ -119,7 +118,7 @@
           <tbody>
 
             <tr *ngFor="let x of target; let i = index">
-              <td>{{x.name}}</td>
+              <td> <span [ngStyle]="{'color': x.background}">  <i class="fas fa-square"></i> </span> {{x.name}}</td>
 
               <td class="text-right"> <span [hidden]="i+1 > 1">{{currency}} </span> {{x.q1.target |number}} / <span
                   [hidden]="i+1 > 1">{{currency}} </span> {{x.q1.achieve |number}} </td>
@@ -138,16 +137,14 @@
         <div class="row">
           <div class="col-6 ">
             <div class="pb-1"> <strong>Bar Target Salesman This Year</strong></div>
-            <div class="bg-white p-1 border">
-             
+            <div class="bg-white p-1 border"> 
               <canvas id="targetSalesAmount"></canvas>
             </div>
           </div>
 
           <div class="col-6">
             <div class="pb-1"> <strong>Bar Target Leads, Opportunities, and Quotes This Year</strong></div>
-            <div class="bg-white p-1 border"> 
-             
+            <div class="bg-white p-1 border">  
               <canvas id="targetSalesQty"></canvas>
             </div>
 

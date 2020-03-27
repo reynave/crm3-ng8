@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-declare var api: any;
-declare var login: any;
-
+import { environment } from './../../environments/environment';
+ 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigService {
-
+ 
   varKey: string = "mXTSxrEKSErYnZb33LyBus5RpVtGNfcgEBqxp5Unk5azj4ZgdWfhkfVDKJ3KSLFG7DtecSehXe7Q67NGFWGehU3ANexas3ZbrkfU";
   varToken: string;
   varHeaders: any = [];
@@ -47,7 +45,7 @@ export class ConfigService {
 
 
   base_url() {
-    return api;
+    return environment.api;
   }
 
   headers() {
@@ -72,7 +70,7 @@ export class ConfigService {
 
 
   login() {
-    return login;
+    return environment.login;
   }
 
 

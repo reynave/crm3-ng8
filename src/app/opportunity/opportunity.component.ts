@@ -5,6 +5,7 @@ import { ConfigService } from './../service/config.service';
 import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Opportunity } from './opportunity';
 
+declare var $;
 
 @Component({
   selector: 'app-opportunity',
@@ -22,9 +23,9 @@ export class OpportunityComponent implements OnInit {
   public closeResult: string;
   newContact: boolean = false;
   objIndex: any;
-  selectModal:string= "0";
+  selectModal: string = "0";
   id_user: string = "1";
-  model:any;
+  model: any;
 
   dbCompany: boolean = false;
   selectedCompany: any = [];
@@ -39,46 +40,98 @@ export class OpportunityComponent implements OnInit {
     config.keyboard = false;
   }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.httpGet();
   }
 
   requestEmit(event) {
-    if(event){
-      this.router.navigate(['opportunity',event]);
+    if (event) {
+      this.router.navigate(['opportunity', event]);
     }
-   
+
     this.modalService.dismissAll();
   }
-  
-  total:number;
+
+  total: number;
+
+
   httpGet() {
-    this.loading = true;
-    this.itemsSelected = [];
-    this.http.get<Opportunity[]>(this.configService.base_url() + 'opportunity', {
-      headers: this.configService.headers()
-    }).subscribe(data => {
-      this.items = data['result']['data'];
-      this.total = data['result']['total'];
-     //  console.log(data);
-      this.loading = false;
-    }, error => {
-      console.log(error);
-      console.log(error.error.text);
+    this.loading = false;
+
+    var formatter = new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
     });
+
+    $('#dtable').DataTable({
+      //  stateSave: true,
+      ajax: {
+        url: this.configService.base_url() + "opportunity/index/",
+        type: 'GET',
+        headers: {
+          'Key': this.configService.key(),
+          'Token': this.configService.token(),
+          'Content-Type': 'application/json'
+        },
+
+      },
+      aoColumnDefs: [{ "asSorting": false, "aTargets": [0] }],
+      lengthMenu: [50, 100, 200],
+      order: [[1, "asc"]],
+      columnDefs: [
+       
+        {
+          "targets": 1,
+          "render": function (data, type, row, meta) {
+            return '<a href="#/opportunity/' + row[0] + '"><b>' + data + '</b></a>';
+          }
+        },
+
+        {
+          "targets": 5,
+          "render": function (data, type, row, meta) {
+            return '<div class="text-right">'+formatter.format(data)+'</div>';
+          },
+        }
+
+        
+      ],
+      initComplete: function () {
+
+        this.api().columns('.select-filter').every(function () {
+          var column = this;
+          var select = $('<select><option value=""> - Show All - </option></select>')
+            .appendTo($(column.footer()).empty())
+            .on('change', function () {
+              var val = $.fn.dataTable.util.escapeRegex(
+                $(this).val()
+              );
+
+              column
+                .search(val ? '^' + val + '$' : '', true, false)
+                .draw();
+            });
+
+          column.data().unique().sort().each(function (d, j) {
+            select.append('<option value="' + d + '">' + d + '</option>')
+          });
+        });
+      }
+    });
+
   }
 
 
   fn_delete() {
-  
+
     this.http.post(this.configService.base_url() + 'opportunity/fn_delete',
-    {
-      "data": this.itemsSelected
-    }, {
+      {
+        "data": this.itemsSelected
+      }, {
       headers: this.configService.headers()
     }).subscribe(
       data => {
-       //  console.log(data);
+        //  console.log(data);
         this.httpGet();
         this.modalService.dismissAll();
       },
@@ -93,23 +146,9 @@ export class OpportunityComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    this.modalService.open(content, { size: 'lg' });
   }
- 
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
 
   fn_check(x) {
     this.objIndex = this.items.findIndex((obj => obj.id == x.id));
@@ -123,15 +162,15 @@ export class OpportunityComponent implements OnInit {
       'name': x.name,
       'contact': x.contact,
       'company': x.company,
-      
+
     }
     var objectSelect = this.itemsSelected.findIndex((obj => obj.id == x.id));
     if (objectSelect == -1) {
       this.itemsSelected.push(object);
-    }else{
+    } else {
       this.itemsSelected.splice(objectSelect, 1);
     }
-   //  console.log(this.itemsSelected);
+    //  console.log(this.itemsSelected);
   }
 
   fn_removeItemSelected(x) {
@@ -145,7 +184,4 @@ export class OpportunityComponent implements OnInit {
     this.itemsSelected.splice(objectSelect, 1);
   }
 
-  fn_next(){
-    
-  }
 }

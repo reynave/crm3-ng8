@@ -227,6 +227,57 @@
                 </form>
               </ng-template>
             </ngb-tab>
+ 
+            
+            <ngb-tab>
+              <ng-template ngbTabTitle>Related</ng-template>
+              <ng-template ngbTabContent>
+                <div class="border bg-light p-1 my-2 rounded-sm">
+                  <div class="row">
+                    <div class="col-3">
+                      <strong>Attachment</strong>
+                    </div>
+                    <div class="col-7 text-right">
+
+                      <input class="form-control form-control-sm" type="file" (change)="onFileSelected($event)">
+
+                    </div>
+                    <div class="col-1">
+                      <button type="button" class="btn btn-classic btn-sm"
+                        (click)="onUpload('contact');">Upload</button>
+                    </div>
+
+                    <div class="col-12">
+                      <table class="table table-list table-bordered table-striped">
+                        <thead class="thead-light border-top-brown">
+                          <tr>
+                            <th>Files</th>
+                            <th width="100">Size</th>
+                            <th width="50"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let x of attachment">
+                            <td> <a href="{{x.url}}" target="_blank"> {{x.file_name}}</a> </td>
+                            <td> {{x.size }} </td>
+                            <td>
+                              <div [hidden]="isReadOnly">
+                                <a href="javascript:;" (click)="fn_attach_delete(x);"><i
+                                    class="fas fa-trash-alt"></i></a>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+
+
+                      </table>
+                    </div>
+                  </div>
+
+                </div>
+              </ng-template>
+            </ngb-tab>
+
 
           </ngb-tabset>
 
@@ -242,46 +293,43 @@
     <!-- right side-->
     <div class="col-3 col-md-4 border-left">
 
-      <!-- Product -->
+     
       <div class="row py-2">
-        <div class="col-12 ">
+        
+        <div class="col-12 mb-3">
           <div class="border py-1 px-2 border-top-brown rounded">
 
             <div class="row">
-              <div class="col-6"><strong>Opportunity </strong></div>
-              <div class="col-6 text-right"> <button class="btn btn-classic btn-sm" (click)="open(opportunity)"><i
-                    class="fas fa-plus"></i>
-                  New</button> </div>
+              <div class="col-6"><strong>Opportunities ({{dataOpportunity.length}}) </strong></div>
+              <div class="col-6 text-right"> <button class="btn btn-classic btn-sm" (click)="open(opportunity);"><i
+                    class="fas fa-plus"></i> New</button> </div>
             </div>
 
-
             <div class="row">
-              <div class="col-12 mb-2" *ngFor="let x of dataOpportunity">
+              <div class="col-12 mb-2" *ngFor="let x of dataOpportunity; let i = index">
 
+                <hr [hidden]=" i < 1" class="p-0 m-0 mb-1">
                 <table class="table-items">
                   <thead>
                     <tr>
-                      <th colspan="2"> <a href="javascript:;" [routerLink]="[ '/opportunity', x.id ]">{{x.name}} </a>
+                      <th colspan="2"> <a href="javascript:;" [routerLink]="[ '/opportunity/',x.id ]">{{x.name}}</a>
                       </th>
+
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td width="100">Amount</td>
-                      <td>: {{x.currency}} {{x.amount}}</td>
+                      <td colspan="2">By {{x.user}} </td>
                     </tr>
                     <tr>
-                      <td>Status</td>
-                      <td>: {{x.stage}}</td>
+                      <td>Stage : <b>{{x.stage}} </b> </td>
+                      <td class="text-right"> <small>Created Date : {{x.input_date | date}}</small> </td>
                     </tr>
                   </tbody>
                 </table>
 
-                <hr class="p-0 m-0 mt-2">
               </div>
-
             </div>
-
 
           </div>
         </div>

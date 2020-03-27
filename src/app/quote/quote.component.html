@@ -25,57 +25,41 @@
   </div>
 
   <div class=" bg-light  border border-top-brown rounded p-1">
+ 
+    <table  id="dtable"  class="table table-hover border bg-white border-top border-bottom pointer">
+      <thead class="thead-light">
+        <tr>
 
-    <div class="row mb-3">
-      <div class="col-8">
+          <th width="50">ID</th>  
+          <th >Quote Number</th>
+          <th  class="select-filter">Company</th>
 
+          <th scope="col">Total</th>
+          <th scope="col">Expired</th> 
 
-        <label class="pl-2">Total : {{total}} </label>
-      </div>
+          <th scope="col"  class="select-filter">Status</th> 
+          <th scope="col"  class="select-filter">Account Manager</th>
+     
+        </tr>
+      </thead>
 
-      <div class="col-4 text-right">
-        <input type="text" class="form-control-sm form-radius" placeholder="Search">
-      </div>
+      <tfoot>
+        <tr>
+          <th></th> 
+          <th></th>  
+          <th></th>
 
-    </div>
+          <th></th>
+          <th></th> 
 
-    <div class="scroll-x max-height">
-
-      <table class="table table-hover border bg-white border-top border-bottom pointer">
-        <thead class="thead-light">
-          <tr>
-            <th>No</th>
-
-            <th scope="col">Quote No</th>
-            <th scope="col">Company</th>
-            <th scope="col">Expired</th>
-            <th scope="col" class="text-right" colspan="2">Grand Total</th>
-            <th scope="col">Account Manager</th>
-            <th scope="col">Status</th>
-
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let x of items; let i = index">
-            <td width="50"> {{ i + 1}} </td>
-            <td><a [routerLink]="[ '/quote/',x.id]"><b> {{x.quotes_number}} {{x.version}} </b> </a>
-              <div> {{x.name}} </div>
-            </td>
-
-            <td>{{x.company}}</td>
-            <td>{{x.expired_date | date}}</td>
-            <td width="50">{{x.currency}}</td>
-            <td class="text-right">{{x.grand_total | number:''}},-</td>
-            <td>{{x.user}}</td>
-            <td>{{x.status}}</td>
-          </tr>
-
-        </tbody>
-
-      </table>
-
-    </div>
-
+          <th></th> 
+          <th></th> 
+ 
+        </tr>
+      </tfoot>
+    
+    </table>
+ 
 
   </div>
 

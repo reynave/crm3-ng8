@@ -1,0 +1,72 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<app-navigator></app-navigator>
+
+
+<div class="container-fluid bg-light border-bottom py-1">
+    <div class="row">
+        <div class="col-12">
+            <small> You are here : <a [routerLink]="[ '/reports' ]">Reports</a> /  <a
+                    [routerLink]="[ '/reports/salesTarget' ]">Sales Target</a> </small>
+        </div>
+    </div>
+</div>
+ 
+<div class="container-fluid border shadow-sm bg-white">
+
+    <div class="row py-3">
+        <div class="col-12 ">
+            <div class="module-name">
+                <h5>Global Sales Target {{year}}</h5>
+            </div>
+        </div>
+       
+    </div>
+
+
+    <div class=" bg-light  border border-top-brown rounded p-1 my-3">
+
+      
+
+        <div class="scroll-x scroll-style-2 bg-white border userItems">
+
+            <div>
+
+                <div class="itemInfo itemInfoHeader px-2 py-1 text-right mr-3">
+                    <span class="itemInfoName">Name</span>
+                    <span class="text-right  w125"> Team Target</span>
+                    <span class="text-right  w125">Team Leads</span>
+                    <span class="text-right  w125">Team Opportunities</span>
+                    <span class="text-right  w125">Team Quotations</span> 
+                </div>
+            </div>
+
+            <ol>
+                <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ $implicit: items }"></ng-container>
+            </ol>
+
+            <ng-template #recursiveListTmpl let-items>
+                <li *ngFor="let item of items" class="border-top py-1">
+                    <div class="name">  <b> {{item.name}} </b>   </div>
+                    <div class="  itemInfo p-2 text-right mr-3"> 
+                        <span class="text-right  w125"> {{item.currency}}  {{item.team.amount | number}}</span>
+                        <span class="text-right w125">{{item.team.leads | number}}</span>
+                        <span class="text-right  w125"> {{item.team.opportunities | number}}  </span>
+                        <span class="text-right w125">  {{item.team.quotes | number}} </span> 
+                    </div>
+
+
+                    <ol *ngIf="item.child.length > 0">
+                        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ $implicit: item.child }">
+                        </ng-container>
+                    </ol>
+                </li>
+            </ng-template>
+        </div>
+ 
+
+
+    </div>
+
+</div>
+
+ 

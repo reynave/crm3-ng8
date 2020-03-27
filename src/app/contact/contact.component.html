@@ -28,76 +28,49 @@
 
 
   <div class=" bg-light  border border-top-brown rounded p-1">
+ 
+    <table id="dtable" class="table table-hover border bg-white border-top border-bottom pointer">
+      <thead class="thead-light">
+        <tr>
 
-    <div class="row mb-3">
-      <div class="col-8">
+          <th>ID</th>
+          <th width="50">Name</th>
+          <th scope="col" class="select-filter">Company</th> 
 
+          <th scope="col">Postion</th>
+          <th scope="col">Department</th>
+          
+          <th scope="col">Mobile</th>
+          <th scope="col">Phone</th> 
+          <th scope="col">Email</th>
 
-        <span class="dropdown">
-          <button class="btn btn-classic btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-cog"></i>
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" (click)="open(markUpdate)"> Mart to
-              Delete</a>
-          </div>
-        </span>
-
-        <label class="pl-2">Total Count : {{total}}</label>
-      </div>
-
-      <div class="col-4 text-right">
-        <input type="text" class="form-control-sm form-radius" placeholder="Search">
-      </div>
-
-    </div>
-
-    <div class="scroll-x scroll-style-2 max-height">
-
-      <table class="table table-hover border bg-white border-top border-bottom pointer">
-        <thead class="thead-light">
-          <tr>
-
-            <th class="text-center">No</th>
-            <th></th>
-
-            <th scope="col">Name</th>
-            <th scope="col">Company</th>
-            <th scope="col">Email</th>
-            <th scope="col"> Mobile</th>
-            <th scope="col">Phone </th>
-
-            <th scope="col">Contact Onwer</th>
-
-
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let x of items; let i = index" (click)="fn_check(x);">
-            <td> <a [routerLink]="[ '/contact/',x.id]"> {{i+1}} </a> </td>
-            <td width="50"> <span class="text-primary ">
-                <i class=" {{ x.check ? 'fas fa-check-square' : 'far fa-square' }}"></i> </span>
-            </td>
-
-            <td> <a [routerLink]="[ '/contact/',x.id]"> <b> {{x.name}} </b></a></td>
-            <td>{{x.company}}</td>
-            <td>{{x.email}}</td>
-            <td>{{x.mobile}}</td>
-            <td>{{x.phone}}</td>
-
-            <td>{{x.user}}</td>
-
-          </tr>
+          <th scope="col" class="select-filter">Account Manager</th>
 
 
 
-        </tbody>
-      </table>
+        </tr>
+      </thead>
 
-    </div>
+      <tfoot>
+        <tr>
+ 
+          <th></th>
+          <th></th>
+          <th></th>
 
+          <th></th>
+          <th></th>
+          <th></th>
 
+          <th></th>
+          <th></th>
+          <th></th>
+
+        </tr>
+      </tfoot>
+
+    </table>
+ 
   </div>
 
 </div>

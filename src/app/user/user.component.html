@@ -15,7 +15,7 @@
   <div class="row py-3">
     <div class="col-6 ">
       <div class="module-name">
-        <h5>USER</h5>
+        <h5>USERS</h5>
       </div>
     </div>
     <div class="col-6 text-right">
@@ -45,16 +45,20 @@
           <span class="itemInfoName">Name / Email</span>
           <span class="text-left w100"> Access</span>
           <span class="text-left w100">Group</span>
-          <span class="text-right w200"> target amount year</span>
+          <span class="text-right w100"> target amount year</span>
+    
+          
+          <span>Leads</span>
+          <span>Opportunities</span>
+          <span>Quotes</span>
           <span class="text-right"> discount</span>
-          <span>Created Date</span>
           <span><strong> Status </strong> </span>
         </div>
       </div>
 
-      <ol>
+      <ul>
         <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ $implicit: items }"></ng-container>
-      </ol>
+      </ul>
 
       <ng-template #recursiveListTmpl let-items>
         <li *ngFor="let item of items" class="border-top py-1">
@@ -67,16 +71,20 @@
 
             <span class="text-left w100">{{item.user_access.name}}</span>
             <span class="text-left w100">{{item.user_group.name}}</span>
-            <span class="text-right w200"> {{item.currency}} {{item.target_amount_year | number}}</span>
+            <span class="text-right w100"> {{item.currency}} {{item.target_amount_year | number}}</span>
+ 
+
+            <span>{{item.target_leads | number}}</span>
+            <span>{{item.target_opportunities | number}}</span>
+            <span>{{item.target_quotes | number}}</span>
             <span class="text-right">{{item.max_discount}} %</span>
-            <span>{{item.input_date | date}}</span>
             <span><strong> {{item.status}} </strong> </span>
           </div>
 
 
-          <ol *ngIf="item.child.length > 0">
+          <ul *ngIf="item.child.length > 0">
             <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ $implicit: item.child }"></ng-container>
-          </ol>
+          </ul>
         </li>
       </ng-template>
     </div>
@@ -215,8 +223,7 @@
 
           </td>
         </tr>
-      </table>
-      {{model | json}}
+      </table> 
     </div>
 
     <div class="modal-footer">

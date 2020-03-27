@@ -30,57 +30,44 @@
 
   </div>
 
-
   <div class=" bg-light  border border-top-brown rounded p-1">
-    <div class="row mb-3">
-      <div class="col-8">
-        <label class="pl-2">Total : {{total}} </label>
-      </div>
 
-      <div class="col-4 text-right">
-        <input type="text" class="form-control-sm form-radius" placeholder="Search">
-      </div>
+    <table id="dtable" class="table table-hover border bg-white border-top border-bottom pointer">
+      <thead class="thead-light">
+        <tr>
 
-    </div>
+          <th  width="50">ID</th>
+          <th>SO Number</th>
+          <th>Name</th>
+          <th scope="col" class="select-filter">Company</th>
+          <th scope="col">Total</th>
 
-    <div class="scroll-x max-height">
-
-      <table class="table table-hover border bg-white border-top border-bottom pointer">
-        <thead class="thead-light">
-          <tr>
-            <th>No</th>
-
-            <th scope="col">Sales Order No</th>
-            <th scope="col">Name</th>
-            <th scope="col">Company</th>
-            <th scope="col" class="text-right">Grand Total</th>
-            <th scope="col">Status</th>
-            <th scope="col">Created Date</th>
-            <th scope="col">Account Manager</th>
-
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let x of items; let i = index">
-            <td width="50"> {{ i + 1}} </td>
-            <td><a [routerLink]="[ '/salesOrder/',x.id]"> <b> {{x.so_number}} </b></a></td>
-            <td>{{x.name}}</td>
-            <td>{{x.company}}</td>
-            <td class="text-right">{{x.currency}} {{x.grand_total | number:''}},-</td>
+          <th scope="col">Commitment Date</th>
+          <th scope="col"  class="select-filter">Status</th>
+          <th scope="col" class="select-filter">Account Manager</th>
 
 
-            <td> {{x.sales_order_status}} </td>
-            <td>{{x.input_date | date}}</td>
-            <td>{{x.user}}</td>
 
-          </tr>
+        </tr>
+      </thead>
 
-        </tbody>
+      <tfoot>
+        <tr>
+          <th></th>
+          <th></th>
 
-      </table>
+          <th></th>
+          <th></th>
+          <th></th>
 
-    </div>
+          <th></th>
+          <th></th>
+          <th></th>
 
+        </tr>
+      </tfoot>
+
+    </table>
 
   </div>
 

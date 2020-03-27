@@ -31,89 +31,44 @@
   </div>
 
   <div class=" bg-light  border border-top-brown rounded p-1">
-
-    <div class="row mb-3 ">
-      <div class="col-8">
-
-        <select class="border form-control-sm  mr-1" [(ngModel)]="leadStatus">
-          <option value="0">Lead Status : All</option>
-          <option [ngValue]="x.id" *ngFor="let x of selected.status">{{x.name}}</option>
-        </select>
-
-
-        <span class="dropdown">
-          <button class="btn btn-classic btn-sm dropdown-toggle mx-1" type="button" id="dropdownMenuButton"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-cog"></i>
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" (click)="open(markUpdate); selectModal = '1';"> Update Lead Status</a>
-            <a class="dropdown-item" (click)="open(markUpdate); selectModal = '2';"> Delete</a> 
-          </div>
-        </span>
-
-        <button type="button" class="btn btn-classic  btn-sm mx-1" (click)="httpGet();"> <i class="fas fa-sync-alt"></i>
-          Refresh</button> 
-          <span>
-             <small>Total Lead : {{total}} </small> 
-          </span>
  
-      </div>
-      <div class="col-4 text-right">
-        <input type="text" class="form-control-sm form-radius" placeholder="Search">
-      </div>
-    </div>
+    <table  id="dtable"  class="table table-hover border bg-white border-top border-bottom pointer">
+      <thead class="thead-light">
+        <tr>
 
-    <div class="scroll-x scroll-style-2 max-height">
+          <th>ID</th>  
+          <th width="50"  class="select-filter">Status</th>
+          <th >Name</th>
+          <th scope="col">Company</th> 
+          <th scope="col">Website</th>
 
-      <table class="table table-hover border bg-white border-top border-bottom pointer">
-        <thead class="thead-light">
-          <tr>
-
-            <th class="text-center">No</th>
-            <th></th>
-
-            <th width="50" scope="col">Status</th>
-            <th scope="col">Lead Name</th>
-            <th scope="col">Company</th>
-            <th scope="col">Website</th>
-            <th scope="col">Industry</th>
-            <th scope="col">Email</th>
-            <th scope="col">Phone</th>
-            <th scope="col">Mobile</th>
+          <th scope="col">Postion</th>
+          <th scope="col">Departement</th>
+          <th scope="col"  class="select-filter">Account Manager</th>
+    
 
 
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let x of items; let i = index">
+        </tr>
+      </thead>
 
-            <td> <a [routerLink]="[ '/lead/',x.id]"> {{i+1}} </a> </td>
-            <td width="50" (click)="fn_check(x);"> <span class="text-primary ">
-                <i class=" {{ x.check ? 'fas fa-check-square' : 'far fa-square' }}"></i> </span>
-            </td>
-            <td (click)="fn_check(x);" class="text-center"> <span title="{{x.lead_status}}"
-                class="text-{{x.lead_status_color}}">
-                <i class="fas fa-square"></i> </span> </td>
-            <td> <a [routerLink]="[ '/lead/',x.id]"><b> {{x.name}}</b> </a></td>
-            <td (click)="fn_check(x);">{{x.company}}</td>
-            <td (click)="fn_check(x);">{{x.website}}</td>
-            <td (click)="fn_check(x);">{{x.industry}}</td>
-            <td (click)="fn_check(x);">{{x.email}}</td>
-            <td (click)="fn_check(x);">{{x.phone}}</td>
-            <td (click)="fn_check(x);">{{x.mobile}}</td>
+      <tfoot>
+        <tr>
+          <th></th> 
+          <th></th> 
+          
+          <th></th>
+          <th></th>
+          <th></th> 
 
-
-          </tr>
-
-
-
-        </tbody>
-      </table>
-
-    </div>
-
-
+          <th></th> 
+          <th></th> 
+          <th></th> 
+ 
+        </tr>
+      </tfoot>
+    
+    </table>
+ 
   </div>
 
 </div>
@@ -384,11 +339,10 @@
 
     <span [hidden]="!submit">Saving, Please wait...</span>
     <button type="button" class="btn btn-light" (click)="modal.dismiss('Cross click')">Cancel</button>
-    <button type="submit" class="btn btn-outline-primary" (click)="onSubmit('next');"
+   <!-- <button type="submit" class="btn btn-outline-primary" (click)="onSubmit('next');"
       [disabled]="!myForm.form.valid">Save &
-      Next</button>
-    <button type="submit" class="btn btn-primary" (click)="onSubmit();" [disabled]="!myForm.form.valid">Save &
-      Go To Detail</button>
+      Next</button>--> 
+    <button type="submit" class="btn btn-primary" (click)="onSubmit();" [disabled]="!myForm.form.valid">Save</button>
   </div>
 
 </ng-template>

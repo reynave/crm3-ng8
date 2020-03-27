@@ -66,7 +66,7 @@ export class ActivityComponent implements OnInit {
     this.http.get(this.configService.base_url() + 'activity', {
       headers: this.configService.headers()
     }).subscribe(data => {
-      console.log(data);  
+    
       this.user = data['result']['user']; 
       this.loading = false;
     });

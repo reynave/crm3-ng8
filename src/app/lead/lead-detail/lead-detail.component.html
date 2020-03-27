@@ -354,6 +354,56 @@
                 </ng-template>
               </ngb-tab>
 
+
+              <ngb-tab>
+                <ng-template ngbTabTitle>Related</ng-template>
+                <ng-template ngbTabContent>
+                  <div class="border bg-light p-1 my-2 rounded-sm">
+                    <div class="row">
+                      <div class="col-3">
+                        <strong>Attachment</strong>
+                      </div>
+                      <div class="col-7 text-right">
+  
+                        <input class="form-control form-control-sm" type="file" (change)="onFileSelected($event)">
+  
+                      </div>
+                      <div class="col-1">
+                        <button type="button" class="btn btn-classic btn-sm"
+                          (click)="onUpload('lead');">Upload</button>
+                      </div>
+  
+                      <div class="col-12">
+                        <table class="table table-list table-bordered table-striped">
+                          <thead class="thead-light border-top-brown">
+                            <tr>
+                              <th>Files</th>
+                              <th width="100">Size</th>
+                              <th width="50"></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let x of attachment">
+                              <td> <a href="{{x.url}}" target="_blank"> {{x.file_name}}</a> </td>
+                              <td> {{x.size }} </td>
+                              <td>
+                                <div [hidden]="isReadOnly">
+                                  <a href="javascript:;" (click)="fn_attach_delete(x);"><i
+                                      class="fas fa-trash-alt"></i></a>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+  
+  
+                        </table>
+                      </div>
+                    </div>
+  
+                  </div>
+                </ng-template>
+              </ngb-tab>
+
             </ngb-tabset>
 
 
