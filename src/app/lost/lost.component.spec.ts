@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LoseComponent } from './lose.component';
+import { LostComponent } from './lost.component';
 
-describe('LoseComponent', () => {
-  let component: LoseComponent;
-  let fixture: ComponentFixture<LoseComponent>;
+describe('LostComponent', () => {
+  let component: LostComponent;
+  let fixture: ComponentFixture<LostComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoseComponent ]
+      declarations: [ LostComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoseComponent);
+    fixture = TestBed.createComponent(LostComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

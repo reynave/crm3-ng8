@@ -31,8 +31,7 @@ import { PriceListModalComponent } from './price-list/price-list-modal/price-lis
 import { PriceListProductComponent } from './price-list/price-list-product/price-list-product.component';
 
 import { QuoteComponent } from './quote/quote.component';
-import { DealComponent } from './deal/deal.component';
-import { LoseComponent } from './lose/lose.component';
+import { DealComponent } from './deal/deal.component'; 
 import { DealDetailComponent } from './deal/deal-detail/deal-detail.component';
 import { QuoteDetailComponent } from './quote/quote-detail/quote-detail.component';
 import { NavigatorComponent } from './navigator/navigator.component';
@@ -60,6 +59,9 @@ import { MasterClassComponent } from './master-class/master-class.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ConvertedComponent } from './lead/converted/converted.component';
 import { SalesTargetComponent } from './reports/sales-target/sales-target.component';
+import { MasterOpportunityClosedComponent } from './master-opportunity-closed/master-opportunity-closed.component';
+import { LostComponent } from './lost/lost.component';
+import { LostDetailComponent } from './lost/lost-detail/lost-detail.component';
 
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
@@ -95,8 +97,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     PriceListModalComponent,
     PriceListProductComponent,
     QuoteComponent,
-    DealComponent,
-    LoseComponent,
+    DealComponent, 
     DealDetailComponent,
     QuoteDetailComponent,
     NavigatorComponent,
@@ -119,7 +120,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     MasterIndustryComponent,
     MasterLeadSourceComponent,
     AccessDataComponent, 
-    MasterClassComponent, ProfileComponent, ConvertedComponent, SalesTargetComponent
+    MasterClassComponent, ProfileComponent, ConvertedComponent, SalesTargetComponent, MasterOpportunityClosedComponent, LostComponent, LostDetailComponent
   ],
   imports: [
     BrowserModule,

@@ -12,146 +12,355 @@
 </div>
 
 
-<div class="container mt-5">
+<div class="container py-2">
 
     <div class="row">
-        <div class="col-12 border rounded shadow-sm">
 
+        <div class="col-12 ">
             <form (ngSubmit)="fn_update()" #modalForm="ngForm">
-
-                <div class="row py-1 border-bottom">
+                <div class="row">
                     <div class="col-6">
-                        <h5>Profile </h5> 
+                        <h5>Profile </h5>
                     </div>
 
-                    <div class="col-6 text-right"> 
-                        <button type="submit" class="btn btn-primary" [disabled]="!modalForm.form.valid">Update</button> 
+                    <div class="col-6 text-right">
+                        <button type="submit" class="btn btn-primary" [disabled]="!modalForm.form.valid">Update</button>
                     </div>
                 </div>
 
+                <div class=" bg-white  border border-top-brown rounded p-1 my-3">
 
-                <div class="row py-4">
+                    <div class="row ">
 
-                    <div class="col-6">
-                        <table class="table table-borderless">
-                            <tr>
-                                <td width="40%">First Name</td>
-                                <td>
-                                    <input type="text" class="form-control form-modal" [(ngModel)]="model.first_name"
-                                        id="first_name" name="first_name" #first_name="ngModel" required>
-                                    <div [hidden]="first_name.valid || first_name.pristine" class="alert alert-danger">
-                                        First Name is required</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Last Name</td>
-                                <td>
-                                    <input type="text" class="form-control form-modal" [(ngModel)]="model.last_name"
-                                        id="last_name" name="last_name" #last_name="ngModel">
-                                    <div [hidden]="last_name.valid || last_name.pristine" class="alert alert-danger">
-                                        Last Name is required</div>
-                                </td>
-                            </tr>
+                        <div class="col-6">
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td>Parent Accocunt</td>
+                                    <td> <input type="text" class="form-control form-modal bg-light" disabled
+                                            value="{{data.parent}}"> </td>
 
-                            <tr>
-                                <td>Email</td>
-                                <td>
-                                    <input type="text" class="form-control border bg-light" value="{{items.email}}"
-                                        disabled readonly>
+                                </tr>
+                                <tr>
+                                    <td width="40%">First Name</td>
+                                    <td>
+                                        <input type="text" class="form-control form-modal"
+                                            [(ngModel)]="model.first_name" id="first_name" name="first_name"
+                                            #first_name="ngModel" required>
+                                        <div [hidden]="first_name.valid || first_name.pristine"
+                                            class="alert alert-danger">
+                                            First Name is required</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Last Name</td>
+                                    <td>
+                                        <input type="text" class="form-control form-modal" [(ngModel)]="model.last_name"
+                                            id="last_name" name="last_name" #last_name="ngModel">
+                                        <div [hidden]="last_name.valid || last_name.pristine"
+                                            class="alert alert-danger">
+                                            Last Name is required</div>
+                                    </td>
+                                </tr>
 
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td>
+                                        <input type="text" class="form-control border bg-light" value="{{data.email}}"
+                                            disabled readonly>
 
-                            <tr>
-                                <td>Max discount</td>
-                                <td>
-                                    <input type="text" class="form-control border bg-light w-25"
-                                        value="{{items.max_discount}} %" disabled readonly>
+                                    </td>
+                                </tr>
 
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>Max discount</td>
+                                    <td>
+                                        <input type="text" class="form-control border bg-light w-25"
+                                            value="{{data.max_discount}} %" disabled readonly>
+
+                                    </td>
+                                </tr>
 
 
-                            <tr>
-                                <td>Target Amount per Year </td>
-                                <td>
-                                    <input type="text" class="form-control border bg-light text-right"
-                                        value="{{items.currency}} {{items.target_amount_year | number}}" disabled
-                                        readonly>
 
-                                </td>
-                            </tr>
 
-                        </table>
+                            </table>
 
+                        </div>
+                        <div class="col-6">
+
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td width="40%">Code</td>
+                                    <td>
+                                        <input type="text" class="form-control border bg-light" value="{{data.code}}"
+                                            disabled readonly>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="40%">User Access</td>
+                                    <td>
+                                        <input type="text" class="form-control border bg-light"
+                                            value="{{data.user_access}}" disabled readonly>
+
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>User Group</td>
+                                    <td>
+                                        <input type="text" class="form-control border bg-light"
+                                            value="{{data.user_group}}" disabled readonly>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Status User</td>
+                                    <td>
+                                        <input type="text" class="form-control border bg-light" value="{{data.status}}"
+                                            disabled readonly>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2">
+                                        <hr>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>New Password* </td>
+                                    <td> <input type="password" class="form-control" [(ngModel)]="model.password"
+                                            id="pass" name="pass"> </td>
+                                </tr>
+                            </table>
+
+                        </div>
                     </div>
-                    <div class="col-6">
 
-                        <table class="table table-borderless">
-                            <tr>
-                                <td width="40%">Code</td>
-                                <td>
-                                    <input type="text" class="form-control border bg-light" value="{{items.code}}"
-                                        disabled readonly>
+                    <div class="row">
+                        <div class="col-12 ">
+                            <div class="px-2">
 
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="40%">User Access</td>
-                                <td>
-                                    <input type="text" class="form-control border bg-light"
-                                        value="{{items.user_access}}" disabled readonly>
 
-                                </td>
-                            </tr>
+                                <h5>Personal Target</h5>
+                                <table class="table border">
+                                    <tr class="bg-light">
+                                        <th> Years </th>
+                                        <th> Amount </th>
+                                        <th> Leads (Qty) </th>
+                                        <th> Opportunities (Qty) </th>
+                                        <th> Quotes (Qty)</th>
+                                    </tr>
 
-                            <tr>
-                                <td>User Group</td>
-                                <td>
-                                    <input type="text" class="form-control border bg-light" value="{{items.user_group}}"
-                                        disabled readonly>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td colspan="2">
-                                    <hr>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>New Password* </td>
-                                <td> <input type="password" class="form-control" [(ngModel)]="model.password" id="pass"
-                                        name="pass"> </td>
-                            </tr>
-                        </table>
+                                    <tr *ngFor="let x of target">
+                                        <td> {{x.years}} </td>
+                                        <td> {{data.currency}} {{x.amount | number}} </td>
+                                        <td> {{x.leads | number}} </td>
+                                        <td> {{x.opportunities | number}} </td>
+                                        <td> {{x.quotes | number}} </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
+            </form>
+        </div>
 
 
-                <div> 
-                     <h5>My Team </h5> 
-                </div>
+        <div class="col-12">
+            <div>
+                <h5>My Team </h5>
+            </div>
 
-                <div>
+
+            <div class=" bg-light  border border-top-brown rounded p-1 my-3">
+
+
+
+                <div class="scroll-x scroll-style-2 bg-white border userItems">
+
+                    <div>
+
+                        <div class="itemInfo itemInfoHeader px-2 py-1 text-right mr-3">
+                            <span class="itemInfoName">Name / Email</span>
+                            <span class="text-left w100">Group</span>
+                            <span class="text-right w100"> target amount year</span>
+
+
+                            <span>Leads</span>
+                            <span>Opportunities</span>
+                            <span>Quotes</span>
+                            <span class="text-right"> discount</span>
+                            <span><strong> Status </strong> </span>
+                        </div>
+                    </div>
 
                     <ul>
-                        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ $implicit: list }"></ng-container>
+                        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ $implicit: items }">
+                        </ng-container>
                     </ul>
-                    
-                    <ng-template #recursiveListTmpl let-list>
-                        <li *ngFor="let item of list">
-                            {{item.name}}
+
+                    <ng-template #recursiveListTmpl let-items>
+                        <li *ngFor="let item of items" class="border-top py-1">
+                            <div class="name">
+                                <a href="javascript:;" (click)="fnOpen(item.id)"> <b> {{item.name}} </b></a>
+                                <div><a href="javascript:;" (click)="fnOpen(item.id);"><i class="far fa-edit"></i>   Update Target</a></div>
+                            </div>
+                            <div class="  itemInfo p-2 text-right mr-3">
+
+                                <span class="text-left w100">{{item.user_group.name}}</span>
+                                <span class="text-right w100"> {{item.currency}}
+                                    {{item.target_amount_year | number}}</span>
+
+
+                                <span>{{item.target_leads | number}}</span>
+                                <span>{{item.target_opportunities | number}}</span>
+                                <span>{{item.target_quotes | number}}</span>
+                                <span class="text-right">{{item.max_discount}} %</span>
+                                <span><strong> {{item.status}} </strong> </span>
+                            </div>
+
+
                             <ul *ngIf="item.child.length > 0">
-                                <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ $implicit: item.child }"></ng-container>
+                                <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ $implicit: item.child }">
+                                </ng-container>
                             </ul>
                         </li>
                     </ng-template>
                 </div>
 
 
-            </form>
+
+
+
+
+
+
+
+
+            </div>
 
         </div>
     </div>
 </div>
+
+
+
+<ng-template #content let-modal>
+
+    <div class="modal-header">
+        <strong class="modal-title" id="modal-basic-title">Update Target</strong>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body bg-white">
+        <div class="container">
+            <div class="row"> 
+                <div class="col-12">
+                    <h5>{{user_name}}</h5>
+                </div>
+                <div class="col-12">
+                    <table class="table my-2 border" [hidden]="user_target.length == 0">
+                        <thead>
+                            <tr>
+                                <th> Years </th>
+                                <th> Amount </th>
+                                <th> Leads (Qty) </th>
+                                <th> Opportunities (Qty) </th>
+                                <th> Quotes (Qty) </th>
+                                <th width="10"> <i class="far fa-trash-alt"></i> </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr *ngFor="let x of user_target">
+                                <td> <input type="number" class="form-control form-control-sm w-75" [(ngModel)]="x.year"
+                                        [ngModelOptions]="{standalone: true}"> </td>
+                                <td> <input type="text" class="form-control form-control-sm w-100"
+                                        [(ngModel)]="x.amount" currencyMask [ngModelOptions]="{standalone: true}"> </td>
+
+                                <td> <input type="number" class="form-control form-control-sm  w-75 text-right"
+                                        [(ngModel)]="x.leads" [ngModelOptions]="{standalone: true}"> </td>
+                                <td> <input type="number" class="form-control form-control-sm  w-75 text-right"
+                                        [(ngModel)]="x.opportunities" [ngModelOptions]="{standalone: true}">
+                                </td>
+                                <td> <input type="number" class="form-control form-control-sm  w-75 text-right"
+                                        [(ngModel)]="x.quotes" [ngModelOptions]="{standalone: true}"> </td>
+                                <td>
+                                    <a href="javascript:;" (click)="fn_tergetDelete(x.id);"><i
+                                            class="far fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+
+
+                    </table>
+
+                    <div class="mt-5">
+
+                        <h5>Create new target</h5>
+                        <table class="table border bg-light">
+
+                            <tr>
+                                <th>Year</th>
+                                <th>Amount</th>
+                                <th>Leads</th>
+                                <th>Opportunities</th>
+                                <th>Quotes</th>
+                            </tr>
+                            <tr>
+
+                                <td> <input type="number" maxlength="4" class="form-control form-control-sm"
+                                        [(ngModel)]="newTargetAmount.year" [ngModelOptions]="{standalone: true}">
+                                </td>
+
+
+                                <td> <input type="text" class="form-control form-control-sm" currencyMask
+                                        [(ngModel)]="newTargetAmount.amount" [ngModelOptions]="{standalone: true}">
+                                </td>
+
+                                <td> <input type="text" class="form-control form-control-sm"
+                                        [(ngModel)]="newTargetAmount.leads" [ngModelOptions]="{standalone: true}">
+                                </td>
+
+
+                                <td> <input type="text" class="form-control form-control-sm"
+                                        [(ngModel)]="newTargetAmount.opportunities"
+                                        [ngModelOptions]="{standalone: true}">
+                                </td>
+
+
+                                <td> <input type="text" class="form-control form-control-sm"
+                                        [(ngModel)]="newTargetAmount.quotes" [ngModelOptions]="{standalone: true}">
+                                </td>
+
+                            </tr>
+                        </table>
+
+                        <div class="text-right">
+                            <button type="button" class="btn btn-sm btn-primary" (click)="fn_insertTargetAmount()">
+                                Add Target </button>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+        <button type="submit" class="btn btn-primary" (click)="fn_targetUpdate();">Update</button>
+    </div>
+
+</ng-template>

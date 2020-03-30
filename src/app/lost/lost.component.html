@@ -1,0 +1,64 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<app-navigator></app-navigator>
+
+
+<div class="container-fluid bg-light border py-1">
+    <div class="row">
+        <div class="col-12">
+            <small> You are here : <a [routerLink]="[ '/lost' ]">Lost Opportunities</a> </small>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid  bg-white pb-3">
+    <div class="container-header">
+      <div class="row">
+        <div class="col-6 ">
+          <div class="module-name">
+            <h5>OPPORTUNITIES LOST</h5>
+          </div>
+        </div>
+        
+      </div>
+  
+    </div>
+  
+    <div class=" bg-light  border border-top-brown rounded p-1">
+   
+      <table  id="dtable"  class="table table-hover border bg-white border-top border-bottom pointer">
+        <thead class="thead-light">
+          <tr>
+  
+            <th width="50" >ID</th>   
+            <th >Companies</th>
+            <th >Opportunities Name</th> 
+            <th scope="col">Timeline (days)</th>  
+            <th scope="col"> Amount</th>   
+
+            <th scope="col"  class="select-filter">Reason Lost</th>
+
+            <th scope="col"  class="select-filter">Account Manager</th>
+       
+          </tr>
+        </thead>
+  
+        <tfoot>
+          <tr>
+            <th></th> 
+            <th></th>  
+            <th></th>  
+
+            <th></th>
+            <th></th> 
+            <th></th>
+            <th></th>
+          </tr>
+        </tfoot>
+      
+      </table>
+   
+    </div>
+  
+  </div>
+  

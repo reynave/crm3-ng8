@@ -12,8 +12,7 @@ import { OpportunityDetailComponent } from './opportunity/opportunity-detail/opp
 import { OpportunityEditComponent } from './opportunity/opportunity-edit/opportunity-edit.component';
 import { OpportunityNewComponent } from './opportunity/opportunity-new/opportunity-new.component';
 import { DealComponent } from './deal/deal.component';
-import { DealDetailComponent } from './deal/deal-detail/deal-detail.component';
-import { LoseComponent } from './lose/lose.component';
+import { DealDetailComponent } from './deal/deal-detail/deal-detail.component'; 
 import { QuoteComponent } from './quote/quote.component';
 import { QuoteDetailComponent } from './quote/quote-detail/quote-detail.component';
 import { PriceListComponent } from './price-list/price-list.component'; 
@@ -41,6 +40,9 @@ import { MasterClassComponent } from './master-class/master-class.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ConvertedComponent } from './lead/converted/converted.component';
 import { SalesTargetComponent } from './reports/sales-target/sales-target.component';
+import { MasterOpportunityClosedComponent } from './master-opportunity-closed/master-opportunity-closed.component';
+import { LostComponent } from './lost/lost.component';
+import { LostDetailComponent } from './lost/lost-detail/lost-detail.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, data: { title: 'Dashboard' } },
@@ -88,8 +90,8 @@ const routes: Routes = [
   { path: "deal", component: DealComponent,data: { title: 'Deals' }, canActivate: [ActiveGuardGuard] },
   { path: "deal/:id", component: DealDetailComponent, data: { title: 'Deal Detail' },canActivate: [ActiveGuardGuard] },
 
-  { path: "lose", component: LoseComponent, data: { title: 'Loses' },canActivate: [ActiveGuardGuard] },
-  { path: "lose/:id", component: LoseComponent,data: { title: 'Lose Detail' }, canActivate: [ActiveGuardGuard] },
+  { path: "lost", component: LostComponent, data: { title: 'Lost' },canActivate: [ActiveGuardGuard] },
+  { path: "lost/:id", component: LostDetailComponent,data: { title: 'Lost Detail' }, canActivate: [ActiveGuardGuard] },
 
   { path: "quote", component: QuoteComponent, data: { title: 'Quotations' }, canActivate: [ActiveGuardGuard] },
   { path: "quote/:id", component: QuoteDetailComponent, data: { title: 'Quotation Detail' }, canActivate: [ActiveGuardGuard] },
@@ -113,6 +115,7 @@ const routes: Routes = [
   { path: "master/industry", component: MasterIndustryComponent, data: { title: 'Master Industry' }, canActivate: [ActiveGuardGuard]  }, 
   { path: "master/leadSource", component: MasterLeadSourceComponent, data: { title: 'Master Lead Source' },  canActivate: [ActiveGuardGuard]  }, 
   { path: "master/class", component: MasterClassComponent, data: { title: 'Master Class' },  canActivate: [ActiveGuardGuard]  }, 
+  { path: "master/opportunityClosed", component: MasterOpportunityClosedComponent, data: { title: 'Master Opportunities Closed ' },  canActivate: [ActiveGuardGuard]  }, 
  
   
   

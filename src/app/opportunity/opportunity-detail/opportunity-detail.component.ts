@@ -40,6 +40,11 @@ export class OpportunityDetailComponent implements OnInit {
   quoteModel: any = [];
   quotes: any;
   business: any = [];
+
+  reason : string = "";
+  reason_win: any = [];
+  reason_lose: any = [];
+  id_closed_reason:string;
   model: any = [];
   lead_source: any = [];
   updateOpportunity: any = [];
@@ -144,7 +149,8 @@ export class OpportunityDetailComponent implements OnInit {
         false
       );
 
-
+      this.reason_win = data['result']['reason_win'];
+      this.reason_lose = data['result']['reason_lose'];
 
       this.lead_source = data['result']['lead_source'];
       this.attachment = data['result']['attachment'];
@@ -281,6 +287,35 @@ export class OpportunityDetailComponent implements OnInit {
     );
 
 
+  }
+
+  closeOpportunity(id){
+     
+
+    this.loading = true;
+    this.http.post(this.configService.base_url() + 'opportunity/closeOpportunity',
+      {
+        "id_opportunity": this.id,
+        "id_stage": this.id_stage,
+        "id_closed_reason": this.id_closed_reason,
+        "data": this.updateOpportunity,
+      }, {
+      headers: this.configService.headers()
+    }).subscribe(
+      data => {
+        this.loading = false;
+        console.log(data);
+        if (data['result']['id_stage'] == 1000) {
+          this.router.navigate(['deal/', this.id]);
+        } else if (data['result']['id_stage'] == 3000) {
+          this.router.navigate(['lost/', this.id]);
+        }   
+      },
+      error => {
+        console.log(error);
+        console.log(error.error.text);
+      }
+    );
   }
 
   nextStage(x) {

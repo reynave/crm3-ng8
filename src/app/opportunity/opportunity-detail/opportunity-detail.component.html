@@ -103,24 +103,24 @@
 
 
           <div class="col-12">
- 
+
             <div [hidden]="id_stage != '100'">
-              
+
               <div class="form-group row">
                 <label for="c01" class="col-sm-3 col-12 col-form-label"> Expecting Closing Date </label>
                 <div class="col-sm-3">
-                  <input type="text" class="form-control form-modal border" placeholder="yyyy-mm-dd" 
-                    (click)="dd.toggle()" readonly name="dd" id="c01"  
+                  <input type="text" class="form-control form-modal border" placeholder="yyyy-mm-dd"
+                    (click)="dd.toggle()" readonly name="dd" id="c01"
                     [(ngModel)]="updateOpportunity.expecting_closing_date" ngbDatepicker #dd="ngbDatepicker">
-                    <a href="javascript:;" (click)="updateQuiz();"> <small>Update</small> </a>
+                  <a href="javascript:;" (click)="updateQuiz();"> <small>Update</small> </a>
                 </div>
               </div>
 
               <div class="form-group row">
                 <label for="c02" class="col-sm-3 col-12 col-form-label"> Opportunity Budget (IDR) </label>
                 <div class="col-sm-6">
-                  <input type="text" class="form-control form-modal border w-50" name="budget" currencyMask (change)="updateQuiz();"  
-                    [(ngModel)]="updateOpportunity.budget" id="c02">
+                  <input type="text" class="form-control form-modal border w-50" name="budget" currencyMask
+                    (change)="updateQuiz();" [(ngModel)]="updateOpportunity.budget" id="c02">
                 </div>
               </div>
 
@@ -129,7 +129,8 @@
                   ({{product.length}})</label>
                 <div class="col-sm-9">
                   <span *ngFor="let x of product; let i = index" class="btn btn-classic mr-1 mb-1">
-                    {{x.product.name}} <a href="javascript:;" (click)="fn_delete_prorduct(x);" class="text-danger"> <i class="far fa-trash-alt"></i> </a>
+                    {{x.product.name}} <a href="javascript:;" (click)="fn_delete_prorduct(x);" class="text-danger"> <i
+                        class="far fa-trash-alt"></i> </a>
                   </span>
                   <div>
                     <button class="btn btn-classic btn-sm" (click)="open(addPriceList);"><i class="fas fa-plus"></i>
@@ -141,7 +142,7 @@
               <div class="form-group row">
                 <label for="c091" class="col-sm-3 col-12 col-form-label">Competitor</label>
                 <div class="col-sm-8">
-                  <input type="text" class="form-control form-modal border" name="competitor"  (change)="updateQuiz();"
+                  <input type="text" class="form-control form-modal border" name="competitor" (change)="updateQuiz();"
                     [(ngModel)]="updateOpportunity.competitor" id="c091">
                 </div>
               </div>
@@ -149,8 +150,8 @@
               <div class="form-group row">
                 <label for="c02123" class="col-sm-3 col-12 col-form-label"> Contact Person</label>
                 <div class="col-sm-6">
-                  <select id="c02123" class="form-control form-modal" [(ngModel)]="updateOpportunity.id_contact"  (change)="updateQuiz();"
-                    [ngModelOptions]="{standalone: true}">
+                  <select id="c02123" class="form-control form-modal" [(ngModel)]="updateOpportunity.id_contact"
+                    (change)="updateQuiz();" [ngModelOptions]="{standalone: true}">
                     <option value="{{x.id}}" *ngFor="let x of contact">{{x.name}} </option>
                   </select>
                 </div>
@@ -177,7 +178,7 @@
               <div class="form-group row ">
                 <label for="b101" class="col-sm-3 col-form-label">Comparison with competitor </label>
                 <div class="col-sm-6">
-                  <textarea  class="form-control border" name="comparison_with_competitor"  (change)="updateQuiz();"
+                  <textarea class="form-control border" name="comparison_with_competitor" (change)="updateQuiz();"
                     [(ngModel)]="updateOpportunity.comparison_with_competitor" id="b101"></textarea>
                 </div>
               </div>
@@ -187,7 +188,7 @@
               <div class="form-group row ">
                 <label for="b102" class="col-sm-3 col-form-label">Critical point </label>
                 <div class="col-sm-6">
-                  <textarea   class="form-control border" name="critical_point"  (change)="updateQuiz();"
+                  <textarea class="form-control border" name="critical_point" (change)="updateQuiz();"
                     [(ngModel)]="updateOpportunity.critical_point" id="b102"></textarea>
                 </div>
               </div>
@@ -195,8 +196,8 @@
               <div class="form-group row ">
                 <label for="b103" class="col-sm-3 col-form-label">Our proposal </label>
                 <div class="col-sm-6">
-                  <textarea class="form-control border" name="our_proposal" [(ngModel)]="updateOpportunity.our_proposal"  (change)="updateQuiz();"
-                    id="b103"></textarea>
+                  <textarea class="form-control border" name="our_proposal" [(ngModel)]="updateOpportunity.our_proposal"
+                    (change)="updateQuiz();" id="b103"></textarea>
                 </div>
               </div>
 
@@ -204,8 +205,8 @@
               <div class="form-group row ">
                 <label for="b104" class="col-sm-3 col-form-label">Other </label>
                 <div class="col-sm-6">
-                  <textarea class="form-control border" name="notes1" [(ngModel)]="updateOpportunity.notes1"  (change)="updateQuiz();"
-                    id="b104"></textarea>
+                  <textarea class="form-control border" name="notes1" [(ngModel)]="updateOpportunity.notes1"
+                    (change)="updateQuiz();" id="b104"></textarea>
                 </div>
               </div>
 
@@ -218,8 +219,7 @@
                   <button type="button" (click)="updateStep(101,0)" class="btn btn-primary"> Done and Next Step
                   </button>
 
-                  
-                  {{loadingUpdateQuiz}}
+ 
                 </div>
               </div>
 
@@ -230,8 +230,8 @@
               <div class="form-group row ">
                 <label for="b301" class="col-sm-3 col-form-label">Quotation</label>
                 <div class="col-sm-6">
-                  <select id="b301" class="form-control border" [(ngModel)]="updateOpportunity.id_quote"  (change)="updateQuiz();"
-                    name="c_id_quote" required [ngModelOptions]="{standalone: true}">
+                  <select id="b301" class="form-control border" [(ngModel)]="updateOpportunity.id_quote"
+                    (change)="updateQuiz();" name="c_id_quote" required [ngModelOptions]="{standalone: true}">
                     <option value="{{x.id}}" *ngFor="let x of quotes">{{x.quotes_number}} ver {{x.version}} - {{x.name}}
                       {{x.syncing ? "(Syncing)":""}}
                     </option>
@@ -271,8 +271,8 @@
               <div class="form-group row ">
                 <label for="b304" class="col-sm-3 col-form-label">Notes </label>
                 <div class="col-sm-6">
-                  <textarea class="form-control border" name="notes2" [(ngModel)]="updateOpportunity.notes2"  (change)="updateQuiz();"
-                    id="b304"></textarea>
+                  <textarea class="form-control border" name="notes2" [(ngModel)]="updateOpportunity.notes2"
+                    (change)="updateQuiz();" id="b304"></textarea>
                 </div>
               </div>
 
@@ -284,7 +284,7 @@
 
                   <button type="button" (click)="updateStep(103,0)" class="btn btn-primary"> Done and Next Step
                   </button>
-                  {{loadingUpdateQuiz}}
+                 
                 </div>
               </div>
 
@@ -324,10 +324,50 @@
               <div class="form-group row ">
                 <label for="d104" class="col-sm-3 col-form-label">Notes </label>
                 <div class="col-sm-6">
-                  <textarea class="form-control border" name="notes3" [(ngModel)]="updateOpportunity.notes3"  (change)="updateQuiz();"
-                    id="d104"></textarea>
+                  <textarea class="form-control border" name="notes3" [(ngModel)]="updateOpportunity.notes3"
+                    (change)="updateQuiz();" id="d104"></textarea>
                 </div>
               </div>
+
+              <div class="form-group row ">
+                <label for="d104" class="col-sm-3 col-form-label"> Final Decision</label>
+                <div class="col-lg-2 col-3">
+                  <input type="radio" id="z01" name="closed_lose" value="0" [(ngModel)]="reason">
+                  <label for="z01" class="px-2 text-danger">
+                    <i class="fas fa-thumbs-down"></i>  &nbsp;  <b class="">Closed Lose </b>
+                  </label>
+
+                </div>
+                <div class="col-lg-2 col-3">
+                  <input type="radio" id="z02" name="closed_deal" value="1" [(ngModel)]="reason">
+                  <label for="z02" class="px-2 text-primary">
+                    <i class="fas fa-thumbs-up"></i> &nbsp; <b class=""> Closed Deal</b>
+                  </label>
+                </div>
+               
+              </div>
+              <div class="form-group row" [hidden]="!reason">
+ 
+
+                  <label for="d104" class="col-sm-3 col-form-label" [hidden]="reason != '1'"> Reason</label>
+                  <div class="col-sm-4" [hidden]="reason != '1'">
+                    <label> Why lose project ?</label>
+                    <select class="form-control form-control-sm" [(ngModel)]="id_closed_reason">
+                      <option *ngFor="let x of reason_win" value="{{x.id}}">{{x.note}}</option>
+                    </select>
+                  </div>
+ 
+ 
+                  <label for="d104" class="col-sm-3 col-form-label" [hidden]="reason != '0'"> Reason</label>
+                  <div class="col-sm-4" [hidden]="reason != '0'">
+                    <label> Why win project ?</label>
+                    <select class="form-control form-control-sm" [(ngModel)]="id_closed_reason">  
+                      <option *ngFor="let x of reason_lose" value="{{x.id}}">{{x.note}}</option>
+                    </select>
+                  </div> 
+ 
+              </div>
+
 
 
               <div class="form-group row ">
@@ -335,16 +375,12 @@
                 <div class="col-sm-6">
                   <button type="button" (click)="updateQuiz();" class="btn btn-outline-primary mr-2"> Save Only
                   </button>
+ 
+                  <button type="button" (click)="closeOpportunity(104);" [disabled]="!id_closed_reason" class="btn btn-primary mr-2"><b><i class="fas fa-check"></i>  Submit</b>
+                  </button>
 
-
-                  <button type="button" class="btn btn-danger  btn-lg mr-1" (click)="updateStep(104,3000)"> <i
-                      class="fas fa-thumbs-down"></i> <b> Closed Lose </b> </button>
-
-                  <button type="button" class="btn btn-success btn-lg  mr-1" (click)="updateStep(104,1000)"> <i
-                      class="fas fa-thumbs-up"></i>
-                    <b> Closed Deal</b> </button>
-
-                    {{loadingUpdateQuiz}}
+               
+             
                 </div>
               </div>
 
@@ -478,7 +514,7 @@
 
                             <span [hidden]="!isReadOnly">
                               <input type="text" class="form-control form-modal w-75"
-                                value=" {{updateOpportunity.expecting_closing_date.day}}/{{updateOpportunity.expecting_closing_date.month}}/{{updateOpportunity.expecting_closing_date.year}}" 
+                                value=" {{updateOpportunity.expecting_closing_date.day}}/{{updateOpportunity.expecting_closing_date.month}}/{{updateOpportunity.expecting_closing_date.year}}"
                                 [readonly]="isReadOnly">
                             </span>
 
@@ -504,33 +540,38 @@
                           <td>
                             {{items.currency}}
 
-                            <input type="text" class="form-control form-modal w-75" style="display: inline-block;" currencyMask
-                              id="amount" [(ngModel)]="updateOpportunity.amount" name="amount" [readonly]="isReadOnly" >
+                            <input type="text" class="form-control form-modal w-75" style="display: inline-block;"
+                              currencyMask id="amount" [(ngModel)]="updateOpportunity.amount" name="amount"
+                              [readonly]="isReadOnly">
 
                           </td>
                         </tr>
 
                         <tr>
                           <td>Stage</td>
-                          <td>  <input type="text" readonly  class="form-control form-modal" value="{{items.stage}}" > </td>
+                          <td> <input type="text" readonly class="form-control form-modal" value="{{items.stage}}">
+                          </td>
                         </tr>
 
                         <tr>
                           <td>Probability (%)</td>
-                          <td>  <input type="text" readonly  class="form-control form-modal" value="{{items.progress}} % " > </td>
+                          <td> <input type="text" readonly class="form-control form-modal"
+                              value="{{items.progress}} % "> </td>
                         </tr>
                         <tr>
                           <td><label>Created Date</label></td>
                           <td>
-                            <input type="text" readonly  class="form-control form-modal" value="{{items.input_date | date:'d MMM y  hh:mm a'}}" > 
+                            <input type="text" readonly class="form-control form-modal"
+                              value="{{items.input_date | date:'d MMM y  hh:mm a'}}">
                             <small> by {{items.input_by}}</small>
                           </td>
                         </tr>
                         <tr [hidden]="items.update_by == false">
                           <td><label>Update Date</label></td>
-                          <td> 
-                            <input type="text" readonly  class="form-control form-modal" value="{{items.update_date | date:'d MMM y  hh:mm a'}}" > 
-                            
+                          <td>
+                            <input type="text" readonly class="form-control form-modal"
+                              value="{{items.update_date | date:'d MMM y  hh:mm a'}}">
+
                             <small> by {{items.update_by}}
                             </small>
                           </td>
@@ -548,7 +589,7 @@
                     <div class="row">
                       <div class="col-12 text-center p-1">
                         <a class="btn btn-outline-secondary m-1" (click)="isReadOnly=true">Finish Edit</a>
-                        <button type="submit" class="btn btn-primary m-1" (click)="isReadOnly=true" 
+                        <button type="submit" class="btn btn-primary m-1" (click)="isReadOnly=true"
                           [disabled]="!mainForm.form.valid">Save</button>
                       </div>
                     </div>
@@ -603,7 +644,7 @@
                     </div>
                   </div>
                 </div>
- 
+
 
 
                 <div class="border bg-light p-1 my-2 rounded-sm">
@@ -737,10 +778,11 @@
                 <table class="table-items">
                   <thead>
                     <tr>
-                      <th> 
-                        <a [routerLink]="[ '/contact', x.id ]">{{x.name}} <span [hidden]="!x.active"> <i class="fas fa-check"></i>
+                      <th>
+                        <a [routerLink]="[ '/contact', x.id ]">{{x.name}} <span [hidden]="!x.active"> <i
+                              class="fas fa-check"></i>
                           </span></a>
-                        </th>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -808,7 +850,7 @@
     </div>
     <div class="modal-body bg-white">
       <div class="container-fluid">
-       
+
         <div class="row">
           <div class="col-12 bg-light">
             <strong>Quotes Information</strong>
@@ -887,7 +929,8 @@
             <table class="table table-borderless">
               <tr>
                 <td width="40%">Contact Name</td>
-                <td><select class="form-control form-modal" [(ngModel)]="quoteModel.id_contact" name="q_id_contact" (change)="lookingContact($event)">
+                <td><select class="form-control form-modal" [(ngModel)]="quoteModel.id_contact" name="q_id_contact"
+                    (change)="lookingContact($event)">
                     <option value="{{x.id}}" *ngFor="let x of contact">{{x.name}}</option>
                   </select></td>
               </tr>
