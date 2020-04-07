@@ -5,7 +5,7 @@
 <div class="container-fluid bg-light border-bottom py-1">
     <div class="row">
         <div class="col-12">
-            <small> You are here : <a [routerLink]="[ '/master/industry' ]">Master Industries</a> </small>
+            <small> You are here : <a [routerLink]="[ '/master/industry' ]">Currency</a> </small>
         </div>
     </div>
 
@@ -16,12 +16,11 @@
     <div class="row"> 
         <div class="col-3 py-2">
             <div class="module-name">
-                <h4>Master Industries</h4>
+                <h4>Currency</h4>
             </div>
         </div>
     </div>
 </div>
-
 
 <div class="container  bg-light my-4 border py-2 shadow-sm rounded">
     <div class="row">
@@ -43,8 +42,12 @@
                 <thead class="thead-light">
                   <tr> 
                     <th class="text-center" width="50">No</th>
+                    <th class="text-center" width="50"></th> 
                     <th>Name</th> 
-                    <th>Background Color</th> 
+                    <th>symbol</th> 
+                    <th>code</th> 
+                    <th>value</th>  
+                    
                     <th width="50"></th>
          
                   </tr>
@@ -52,21 +55,30 @@
                 <tbody>
                   <tr *ngFor="let x of items; let i = index"> 
                     <td class="text-center">{{i+1}}</td>
+                    <td class="text-center">   {{x.isDefault == '1' ? 'Active' : ''}} </td>
+                    
                     <td>
-                        <div [hidden]="!isReadonly">  {{x.name}}  </div>
-
-                        <input type="text" class="form-control form-control-sm border-0" (change)="update(x);" [hidden]="isReadonly" [(ngModel)]="x.name" >
-                        
-
+                        <div [hidden]="!isReadonly">  {{x.name}}  </div> 
+                        <input type="text" class="form-control form-control-sm border-0" (change)="update(x);" [hidden]="isReadonly" [(ngModel)]="x.name" > 
                     </td> 
 
+                    <td>
+                        <div [hidden]="!isReadonly">  {{x.symbol}}  </div> 
+                        <input type="text" class="form-control form-control-sm border-0" (change)="update(x);" [hidden]="isReadonly" [(ngModel)]="x.symbol" > 
+                    </td> 
+         
+
 
                     <td>
-                        <div [hidden]="!isReadonly">  {{x.backgroundColor}}  </div>
+                        <div [hidden]="!isReadonly">  {{x.code}}  </div> 
+                        <input type="text" class="form-control form-control-sm border-0" (change)="update(x);" [hidden]="isReadonly" [(ngModel)]="x.code" > 
+                    </td> 
 
-                        <input type="text" class="form-control form-control-sm border-0" (change)="update(x);" [hidden]="isReadonly" [(ngModel)]="x.backgroundColor" >
-                    </td>
-
+                    <td>
+                        <div [hidden]="!isReadonly">  {{x.value | number}}  </div> 
+                        <input type="text" class="form-control form-control-sm border-0" (change)="update(x);" [hidden]="isReadonly" [(ngModel)]="x.value" > 
+                    </td> 
+ 
 
                     <td>
                         <a href="javascript:;" (click)="fn_delete(x);"  [hidden]="isReadonly">  <i class="far fa-trash-alt"></i> </a>
@@ -78,9 +90,9 @@
 
         <div class="col-12 text-right" [hidden]="isReadonly" >
 
-            <input type="text" class="form-control form-control-sm w-25 inline" [(ngModel)]="newName" placeholder="New Industry Name"  >
+            <input type="text" class="form-control form-control-sm w-25 inline" [(ngModel)]="newName" placeholder="Name of Currency"  >
                         
-            <a href="javascript:;" class="btn btn-classic  mx-1" (click)="insert();"><i class="fas fa-plus"></i>  Add Industry </a>
+            <a href="javascript:;" class="btn btn-classic  mx-1" (click)="insert();"><i class="fas fa-plus"></i>  Add Currency </a>
         </div>
         
     </div>

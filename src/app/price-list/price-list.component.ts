@@ -4,8 +4,9 @@ import { Router } from '@angular/router';
 import { ConfigService } from './../service/config.service';
 import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Newpricelist } from './price-list';
-
+ 
 declare var $;
+
 @Component({
   selector: 'app-price-list',
   templateUrl: './price-list.component.html',
@@ -42,7 +43,7 @@ export class PriceListComponent implements OnInit {
     this.loading = false;
     var formatter = new Intl.NumberFormat('id-ID', );
 
-    $('#dtable').DataTable({
+      $('#dtable').DataTable({
       //  stateSave: true,
       ajax: {
         url: this.configService.base_url() + "pricelist/index/",
@@ -68,14 +69,13 @@ export class PriceListComponent implements OnInit {
 
         {
           "targets": 3,
-          "render": function (data, type, row, meta) {
-            return '<div class="text-right">'+data+'</div>';
-          }
-        }, 
+          "bSortable": false,
+        },
+ 
         {
           "targets": 4,
           "render": function (data, type, row, meta) {
-            return '<div class="text-right">'+formatter.format(data)+'</div>';
+            return '<div class="text-right">' +  formatter.format(data)+'</div>';
           },
         }
         
@@ -106,6 +106,7 @@ export class PriceListComponent implements OnInit {
   }
 
 
+  
   submit:boolean= false;
   
   onSubmit(value = "") {
@@ -120,14 +121,15 @@ export class PriceListComponent implements OnInit {
         data => {
           //  console.log(value);
           this.submit= false;
-          if (value == 'next') {
-            this.model = new Newpricelist('',"10",'','','');
-            this.httpGet(); 
-          }
-          else {
+          // if (value == 'next') {
+          //   this.model = new Newpricelist('',"10",'','','');
+          //   this.httpGet(); 
+            
+          // }
+          // else {
             this.router.navigate(['/priceList/',data['result']['id'] ]);
             this.modalService.dismissAll();
-          }
+          //}
         
 
         },

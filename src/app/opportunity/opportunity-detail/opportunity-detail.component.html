@@ -51,8 +51,7 @@
 
 
       <div [hidden]="isReadOnly">
-        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="isReadOnly=true" title="Done"><i
-            class="fas fa-check"></i> Finish Edit </button>
+        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="isReadOnly=true" title="Done">Cancel </button>
       </div>
     </div>
 
@@ -60,7 +59,7 @@
       <table class="table-p0">
         <tr>
           <td> <small> Company</small> </td>
-          <td> <small> Expecting Closing Date </small> </td>
+          <td> <small> Expected Close Date </small> </td>
           <td> <small> Amount </small> </td>
           <td> <small> Opportunity Owner </small></td>
         </tr>
@@ -107,7 +106,7 @@
             <div [hidden]="id_stage != '100'">
 
               <div class="form-group row">
-                <label for="c01" class="col-sm-3 col-12 col-form-label"> Expecting Closing Date </label>
+                <label for="c01" class="col-sm-3 col-12 col-form-label"> Expected Close Date  </label>
                 <div class="col-sm-3">
                   <input type="text" class="form-control form-modal border" placeholder="yyyy-mm-dd"
                     (click)="dd.toggle()" readonly name="dd" id="c01"
@@ -351,7 +350,7 @@
 
                   <label for="d104" class="col-sm-3 col-form-label" [hidden]="reason != '1'"> Reason</label>
                   <div class="col-sm-4" [hidden]="reason != '1'">
-                    <label> Why lose project ?</label>
+                    <label> Why win project ?</label>
                     <select class="form-control form-control-sm" [(ngModel)]="id_closed_reason">
                       <option *ngFor="let x of reason_win" value="{{x.id}}">{{x.note}}</option>
                     </select>
@@ -360,7 +359,7 @@
  
                   <label for="d104" class="col-sm-3 col-form-label" [hidden]="reason != '0'"> Reason</label>
                   <div class="col-sm-4" [hidden]="reason != '0'">
-                    <label> Why win project ?</label>
+                    <label> Why lose project ?</label>
                     <select class="form-control form-control-sm" [(ngModel)]="id_closed_reason">  
                       <option *ngFor="let x of reason_lose" value="{{x.id}}">{{x.note}}</option>
                     </select>
@@ -495,7 +494,7 @@
                           <td>
                             <span [hidden]="!isReadOnly">
                               <input type="text" class="form-control form-modal w-75"
-                                value=" {{updateOpportunity.start_date.day}}/{{updateOpportunity.start_date.month}}/{{updateOpportunity.start_date.year}}"
+                                value="{{updateOpportunity.start_date.day}}/{{updateOpportunity.start_date.month}}/{{updateOpportunity.start_date.year}}"
                                 [readonly]="isReadOnly">
                             </span>
 
@@ -509,7 +508,7 @@
 
 
                         <tr>
-                          <td>Expecting Closing Date</td>
+                          <td>Expected Close Date</td>
                           <td>
 
                             <span [hidden]="!isReadOnly">
@@ -538,8 +537,7 @@
                         <tr>
                           <td width="40%">Amount</td>
                           <td>
-                            {{items.currency}}
-
+                          
                             <input type="text" class="form-control form-modal w-75" style="display: inline-block;"
                               currencyMask id="amount" [(ngModel)]="updateOpportunity.amount" name="amount"
                               [readonly]="isReadOnly">
@@ -588,7 +586,7 @@
                   <div class="container">
                     <div class="row">
                       <div class="col-12 text-center p-1">
-                        <a class="btn btn-outline-secondary m-1" (click)="isReadOnly=true">Finish Edit</a>
+                        <a class="btn btn-outline-secondary m-1" (click)="isReadOnly=true"> Cancel</a>
                         <button type="submit" class="btn btn-primary m-1" (click)="isReadOnly=true"
                           [disabled]="!mainForm.form.valid">Save</button>
                       </div>

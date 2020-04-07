@@ -43,6 +43,8 @@ import { SalesTargetComponent } from './reports/sales-target/sales-target.compon
 import { MasterOpportunityClosedComponent } from './master-opportunity-closed/master-opportunity-closed.component';
 import { LostComponent } from './lost/lost.component';
 import { LostDetailComponent } from './lost/lost-detail/lost-detail.component';
+import { AccountComponent } from './account/account.component';
+import { MasterCurrencyComponent } from './master-currency/master-currency.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, data: { title: 'Dashboard' } },
@@ -66,13 +68,13 @@ const routes: Routes = [
 
   { path: 'lead', component: LeadComponent, data: { title: 'Leads' }, canActivate: [ActiveGuardGuard] }, 
   { path: 'lead/converted', component: ConvertedComponent, data: { title: 'Conversion Leads' }, canActivate: [ActiveGuardGuard] }, 
-  { path: 'lead/converted/:id', component: LeadConverdComponent, data: { title: 'Conversion Lead Detail' }, canActivate: [ActiveGuardGuard] },
-  { path: 'lead/:id', component: LeadDetailComponent, data: { title: 'Lead Detail' }, canActivate: [ActiveGuardGuard] }, 
+  { path: 'lead/converted/:id', component: LeadConverdComponent, data: { title: 'Conversion Leads Detail' }, canActivate: [ActiveGuardGuard] },
+  { path: 'lead/:id', component: LeadDetailComponent, data: { title: 'Leads Detail' }, canActivate: [ActiveGuardGuard] }, 
 
-  { path: "contact", component: ContactComponent, data: { title: 'Contact' }, canActivate: [ActiveGuardGuard] },
-  { path: "contact/:id", component: ContactDetailComponent, data: { title: 'Contact' }, canActivate: [ActiveGuardGuard] },
+  { path: "contact", component: ContactComponent, data: { title: 'Contacts' }, canActivate: [ActiveGuardGuard] },
+  { path: "contact/:id", component: ContactDetailComponent, data: { title: 'Contacts' }, canActivate: [ActiveGuardGuard] },
 
-  { path: "contact/filter/:filter", component: ContactComponent, data: { title: 'Contact Filter' }, canActivate: [ActiveGuardGuard] },
+  { path: "contact/filter/:filter", component: ContactComponent, data: { title: 'Contacts Filter' }, canActivate: [ActiveGuardGuard] },
 
 
   { path: "company", component: CompanyComponent, data: { title: 'Companies' },canActivate: [ActiveGuardGuard] },
@@ -104,7 +106,7 @@ const routes: Routes = [
   { path: "salesOrder/print/:id", component: SalesOrderPrintComponent, data: { title: 'Print Sales Order' }, canActivate: [ActiveGuardGuard] },
 
   { path: "user", component: UserComponent, data: { title: 'Users' },canActivate: [ActiveGuardGuard] },
-  { path: "user/:id", component: UserDetailComponent,data: { title: 'User Detail' }, canActivate: [ActiveGuardGuard] },
+  { path: "user/:id", component: UserDetailComponent,data: { title: 'Users Detail' }, canActivate: [ActiveGuardGuard] },
   
 
   { path: "priceList", component: PriceListComponent,data: { title: 'Products' }, canActivate: [ActiveGuardGuard] },
@@ -112,10 +114,14 @@ const routes: Routes = [
   { path: "priceList/:id", component: PriceListDetailComponent, data: { title: 'Product Detail' },canActivate: [ActiveGuardGuard] },
   { path: "priceList/product/:id", component: PriceListProductComponent, data: { title: 'Product Detail' },canActivate: [ActiveGuardGuard] },
 
+
+  { path: "master/currency", component: MasterCurrencyComponent, data: { title: 'Master Currency' }, canActivate: [ActiveGuardGuard]  }, 
   { path: "master/industry", component: MasterIndustryComponent, data: { title: 'Master Industry' }, canActivate: [ActiveGuardGuard]  }, 
   { path: "master/leadSource", component: MasterLeadSourceComponent, data: { title: 'Master Lead Source' },  canActivate: [ActiveGuardGuard]  }, 
   { path: "master/class", component: MasterClassComponent, data: { title: 'Master Class' },  canActivate: [ActiveGuardGuard]  }, 
   { path: "master/opportunityClosed", component: MasterOpportunityClosedComponent, data: { title: 'Master Opportunities Closed ' },  canActivate: [ActiveGuardGuard]  }, 
+ 
+  { path: "master/account", component: AccountComponent, data: { title: 'Account' }  }, 
  
   
   

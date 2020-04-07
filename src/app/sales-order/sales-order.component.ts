@@ -65,7 +65,7 @@ total:string;
         {
           "targets": 1,
           "render": function (data, type, row, meta) {
-            return '<a href="#/lead/' + row[0] + '"><b>' + data + '</b></a>';
+            return '<a href="#/salesOrder/' + row[0] + '"><b>' + data + '</b></a>';
           }
         }, 
 

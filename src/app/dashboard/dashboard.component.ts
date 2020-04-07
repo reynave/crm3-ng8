@@ -32,7 +32,8 @@ export class DashboardComponent implements OnInit {
   account_manager: any = [];
   target: any = [];
   id_user_select: string;
-
+  totalLS : number = 0;
+  totalLI : number = 0;
   constructor(
     private http: HttpClient,
     private activatedRoute: ActivatedRoute,
@@ -42,39 +43,42 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit() {
-    this.httpGet(0);
-    this.period = this.activatedRoute.snapshot.params.period;
-    console.log(this.activatedRoute.snapshot.params);
+  
+    this.period = this.activatedRoute.snapshot.params.period; 
     if (!this.activatedRoute.snapshot.params.period) {
       this.period = 'quarter';
-    }
-    console.log('  this.period ' + this.period);
-
-
+    } 
+    this.httpGet(0);
 
   }
 
   onPeriod(period) {
     this.period = period;
     this.httpGet(this.id);
+
+   /* this.router.navigate(['/dashboard/',period ]);
+    setInterval(function(){ 
+      window.location.reload(); 
+     }, 100);*/
+
   }
 
   onUser(id) {
     this.id = id;
     this.httpGet(id);
   }
-
+ 
   httpGet(id) {
     this.loading = true;
     var url = this.configService.base_url() + 'dashboard/index/?id=' + id + "&period=" + this.period;
-    console.log(url);
+ 
     this.http.get(url, {
       headers: this.configService.headers()
     }).subscribe(data => {
       if (data['error'] == 400) {
         window.location.href = this.configService.login();
       }
-
+  
       this.currency = data['result']['currency'];
       this.id_user_select = id;
       this.target = data['result']['target'];
@@ -87,8 +91,12 @@ export class DashboardComponent implements OnInit {
       this.recentQuotation = data['result']['recentQuotation'];
 
       this.funnel(data['result']['funnel']);
-      this.leadPerIndustry(data['result']['leadPerIndustry']);
+      
       this.leadPerDistribution(data['result']['leadPerDistribution']);
+      this.totalLS = data['result']['totalLS'];
+
+      this.leadPerIndustry(data['result']['leadPerIndustry']);
+      this.totalLI = data['result']['totalLI'];
 
       var chartColors = {
         style1a: 'rgb(30, 178, 166)',
@@ -159,7 +167,7 @@ export class DashboardComponent implements OnInit {
 
       };
 
-
+      console.log(data['result']['barChartDataAmount'], data['result']['barChartDataQty']);
       this.salesTarget(data['result']['barChartDataAmount'], data['result']['barChartDataQty'], data['result']['currency']);
       this.loading = false;
     });
@@ -172,6 +180,43 @@ export class DashboardComponent implements OnInit {
     new Chart(ctx, {
       type: 'pie',
       data: leadPerIndustry,
+      options: {
+        datalabels: {
+             formatter: (value, ctx) => {
+                 let sum = 0;
+                 let dataArr = ctx.chart.data.datasets[0].data;
+                 dataArr.map(data => {
+                     sum += data;
+                 });
+                 let percentage = (value*100 / sum).toFixed(2)+"%";
+                 return percentage;
+             },
+             color: '#fff',
+         },
+       tooltips: {
+         mode: 'index',
+         intersect: false,
+         callbacks: {
+           label: function(tooltipItem, data) {
+             //get the concerned dataset
+             var dataset = data.datasets[tooltipItem.datasetIndex];
+             //calculate the total of this data set
+             var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+               return previousValue + currentValue;
+             });
+             //get the current items value
+             var currentValue = dataset.data[tooltipItem.index];
+             //calculate the precentage based on the total and current item, also this does a rough rounding to give a whole number
+             var percentage = Math.floor(((currentValue/total) * 100)+0.5);
+        
+
+             var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+             return percentage + "%" + label;
+           }
+         }
+       },
+     }
     });
   }
 
@@ -181,9 +226,41 @@ export class DashboardComponent implements OnInit {
       type: 'pie',
       data: leadPerDistribution,
       options: {
-        onClick: function (data) {
-          console.log('masuk ', data);
-        }
+         datalabels: {
+              formatter: (value, ctx) => {
+                  let sum = 0;
+                  let dataArr = ctx.chart.data.datasets[0].data;
+                  dataArr.map(data => {
+                      sum += data;
+                  });
+                  let percentage = (value*100 / sum).toFixed(2)+"%";
+                  return percentage;
+              },
+              color: '#fff',
+          },
+        tooltips: {
+          mode: 'index',
+          intersect: false,
+          callbacks: {
+            label: function(tooltipItem, data) {
+              //get the concerned dataset
+              var dataset = data.datasets[tooltipItem.datasetIndex];
+              //calculate the total of this data set
+              var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                return previousValue + currentValue;
+              });
+              //get the current items value
+              var currentValue = dataset.data[tooltipItem.index];
+              //calculate the precentage based on the total and current item, also this does a rough rounding to give a whole number
+              var percentage = Math.floor(((currentValue/total) * 100)+0.5);
+         
+
+              var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+              return percentage + "%" + label;
+            }
+          }
+        },
       }
     });
 

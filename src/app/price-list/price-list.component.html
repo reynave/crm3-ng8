@@ -18,7 +18,7 @@
         <h5>PRODUCTS</h5>
       </div>
       <div class="col-6 text-right">
-
+       
         <button type="button" class="btn btn-classic  btn-sm mx-1" disabled><i class="fas fa-download"></i> 
         Sync for ERP</button>
 
@@ -37,12 +37,11 @@
       <thead class="thead-light">
         <tr>
 
-          <th>ID</th>
-          <th width="50">SKU</th>
-          <th scope="col">Name</th> 
-
-          <th scope="col"  class="select-filter">Currency</th> 
-          <th scope="col">Price</th>
+          <th width="50">ID</th>
+          <th width="100">SKU</th>
+          <th scope="col">Name</th>  
+          <th scope="col" width="50"></th>
+          <th scope="col"  width="80">Price</th>
           <th scope="col"  class="select-filter">Type</th>
 
 
@@ -56,7 +55,7 @@
           <th></th>
           <th></th>
           <th></th>
-
+ 
           <th></th>
           <th></th>
           <th></th>
@@ -149,11 +148,8 @@
   </div>
   <div class="modal-footer">
     <span [hidden]="!submit">Saving, Please wait...</span>
-    <button type="button" class="btn btn-light" (click)="modal.dismiss('Cross click')">Cancel</button>
-    <button type="submit" class="btn btn-outline-primary" (click)="onSubmit('next');"
-      [disabled]="!myForm.form.valid">Save</button>
-    <button type="submit" class="btn btn-primary" (click)="onSubmit();" [disabled]="!myForm.form.valid">Save &
-      Go To price list product</button>
+    <button type="button" class="btn btn-light" (click)="modal.dismiss('Cross click')">Cancel</button> 
+    <button type="submit" class="btn btn-primary" (click)="onSubmit();" [disabled]="!myForm.form.valid">Save Product</button>
   </div>
 </ng-template>
 

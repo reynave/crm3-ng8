@@ -5,7 +5,7 @@
 <div class="container-fluid bg-light border-bottom py-1">
   <div class="row">
     <div class="col-12">
-      <small> You are here : <a [routerLink]="[ '/contact' ]">Contact</a> / <a [routerLink]="[ '/contact/',id ]">
+      <small> You are here : <a [routerLink]="[ '/contact' ]">Contacts</a> / <a [routerLink]="[ '/contact/',id ]">
           {{items.name}}</a> </small>
     </div>
   </div>
@@ -41,8 +41,7 @@
       </div>
 
       <div [hidden]="isReadOnly">
-        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="isReadOnly=true" title="Done"><i
-            class="fas fa-check"></i> Finish Edit </button>
+        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="isReadOnly=true" title="Done"> Cancel </button>
       </div>
 
     </div>
@@ -216,7 +215,7 @@
                     <div class="container">
                       <div class="row">
                         <div class="col-12 text-center p-1">
-                          <a class="btn btn-outline-secondary m-1" (click)="isReadOnly=true">Finish Edit</a>
+                          <a class="btn btn-outline-secondary m-1" (click)="isReadOnly=true"> Cancel </a>
                           <button type="submit" class="btn btn-primary m-1" (click)="isReadOnly=true"
                             [disabled]="!mainForm.form.valid">Save</button>
                         </div>

@@ -62,6 +62,8 @@ import { SalesTargetComponent } from './reports/sales-target/sales-target.compon
 import { MasterOpportunityClosedComponent } from './master-opportunity-closed/master-opportunity-closed.component';
 import { LostComponent } from './lost/lost.component';
 import { LostDetailComponent } from './lost/lost-detail/lost-detail.component';
+import { AccountComponent } from './account/account.component';
+import { MasterCurrencyComponent } from './master-currency/master-currency.component';
 
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
@@ -120,7 +122,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     MasterIndustryComponent,
     MasterLeadSourceComponent,
     AccessDataComponent, 
-    MasterClassComponent, ProfileComponent, ConvertedComponent, SalesTargetComponent, MasterOpportunityClosedComponent, LostComponent, LostDetailComponent
+    MasterClassComponent, ProfileComponent, ConvertedComponent, SalesTargetComponent, MasterOpportunityClosedComponent, LostComponent, LostDetailComponent, AccountComponent, MasterCurrencyComponent
   ],
   imports: [
     BrowserModule,

@@ -106,7 +106,8 @@ export class CompanyDetailComponent implements OnInit {
         data['result']['data']['phone'],
         data['result']['data']['website'],
         data['result']['data']['id_user'],
-        data['result']['data']['id_company_class'] 
+        data['result']['data']['id_company_class'],
+        data['result']['data']['code_number'],
         
       );
       this.myBranch = data['result']['branch'];

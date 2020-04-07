@@ -117,6 +117,12 @@
                           </tr>
 
                           <tr>
+                            <td><label>Customer Code</label></td>
+                            <td> <input type="text" class="form-control form-modal" id="code_number"
+                                [(ngModel)]="modealCompany.code_number" name="code_number" [readonly]="isReadOnly"> </td>
+                          </tr>
+
+                          <tr>
                             <td><label>Email</label></td>
                             <td> <input type="text" class="form-control form-modal" id="email"
                                 [(ngModel)]="modealCompany.email" name="email" [readonly]="isReadOnly"> </td>
@@ -499,7 +505,7 @@
           <div class="border py-1 px-2 border-top-brown rounded">
 
             <div class="row">
-              <div class="col-6"><strong>Deal ({{deal.length}}) </strong></div>
+              <div class="col-6"><strong>Deals ({{deal.length}}) </strong></div>
            
             </div>
 
@@ -537,7 +543,7 @@
           <div class="border py-1 px-2 border-top-brown rounded">
 
             <div class="row">
-              <div class="col-6"><strong>Archived ({{archived.length}}) </strong></div>
+              <div class="col-6"><strong>Archives ({{archived.length}}) </strong></div>
      
             </div>
 

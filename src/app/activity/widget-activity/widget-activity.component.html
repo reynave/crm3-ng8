@@ -377,7 +377,7 @@
 
       <div>
         
-        <small class="btn btn-sm btn-classic py-0 mr-2">{{x.person.origin}}</small>
+        <small class="btn btn-sm btn-classic py-0 mr-2"  [hidden]="!x.person.origin">{{x.person.origin}}</small>
         <small>Assigned To <span class="text-primary"> {{x.user}}</span> for <span class="text-primary">
             {{x.person.name}} </span>  <span [hidden]="!x.person.company"> ({{x.person.company}}) </span>   </small> 
 
@@ -473,7 +473,7 @@
 
       <div>
        
-        <small class="btn btn-sm btn-classic py-0 mr-2">{{x.person.origin}}</small>
+        <small class="btn btn-sm btn-classic py-0 mr-2" [hidden]="!x.person.origin">{{x.person.origin}}</small>
         <small>Assigned To <span class="text-primary"> {{x.user}}</span> for <span class="text-primary">
             {{x.person.name}} </span>  <span [hidden]="!x.person.company"> ({{x.person.company}}) </span> </small>
           

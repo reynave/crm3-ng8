@@ -283,10 +283,7 @@
   </div>
   <div class="modal-footer">
     <span [hidden]="!submit">Saving, Please wait...</span>
-    <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">Cancel</button>
-    <button type="submit" class="btn btn-outline-primary" (click)="onSubmit('next');"
-      [disabled]="!myForm.form.valid">Save &
-      Next</button>
+    <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">Cancel</button> 
     <button type="submit" class="btn btn-primary" (click)="onSubmit();" [disabled]="!myForm.form.valid">Save &
       Go To Detail</button>
   </div>

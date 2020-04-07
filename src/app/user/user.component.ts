@@ -47,12 +47,11 @@ export class UserComponent implements OnInit {
     config.keyboard = false;
   }
 
-  ngOnInit() {
-    console.log(this.items);
+  ngOnInit() { 
     this.httpGet();
 
   }
-
+  parent : any = [];
   httpGet() {
     this.loading = true;
     this.itemsSelected = [];
@@ -60,7 +59,8 @@ export class UserComponent implements OnInit {
       headers: this.configService.headers()
     }).subscribe(data => {
       this.items = data['result']['data'];
-      console.log(this.items);
+      this.parent = data['result']['parent'];
+    
      // this.modelContact = new NewContact('0', '', '', '', '', '0', this.id_user,'0');
       console.log(data);
       this.loading = false;

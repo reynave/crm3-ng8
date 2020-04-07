@@ -153,6 +153,7 @@ export class Newlead {
         public fax: string, 
         public sex: string,
         public birthdate: any, 
+        public isDuplicate : boolean,
     ) { }
 
 }
@@ -198,7 +199,7 @@ export class LeadEdit {
 
 export class LeadConvert{
     constructor(
-        public isNewCompany: string,
+        public isDuplicate: string,
         public newCompany: boolean,
         public cl_id_company: string,
         public cl_id_company_class: string,

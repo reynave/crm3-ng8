@@ -82,8 +82,8 @@ export class WidgetActivityComponent implements OnInit {
     this.http.get(link, {
       headers: this.configService.headers()
     }).subscribe(
-      data => { 
-        console.log(data);
+      data => {  
+       // console.log(data);
         this.loading = false;
         this.activityLatest = data['result']['latest'];
         this.activityHistory = data['result']['history'];
@@ -104,7 +104,7 @@ export class WidgetActivityComponent implements OnInit {
       headers: this.configService.headers()
     }).subscribe(
       data => { 
-        console.log(data);
+        //console.log(data);
         this.id_user = data['result']['id_user'];
         this.loading = false;
         this.activityLatest = data['result']['latest'];

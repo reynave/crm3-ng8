@@ -1,0 +1,90 @@
+<ngx-loading [show]="loading"></ngx-loading>
+
+<app-navigator></app-navigator>
+
+<div class="container-fluid bg-light border-bottom py-1">
+    <div class="row">
+        <div class="col-12">
+            <small> You are here : <a [routerLink]="[ '/master/account' ]">Acccount</a> </small>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="container-fluid  ">
+    <div class="row">
+        <div class="col-3 py-2">
+            <div class="module-name">
+                <h4>Account</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form (ngSubmit)="onSubmit()" #myForm="ngForm">
+    <div class="container  bg-light my-4 border py-2 shadow-sm rounded">
+        <div class="row">
+
+            <div class="col-12">
+                <table class="table">
+                    <tbody>
+                       
+                        <tr>
+                            <td><label for="h0">Company Name</label> </td>
+                            <td><input type="text" class="form-control" id="h0" [(ngModel)]="model.company"
+                                    name="company"  #company="ngModel" required> 
+                            <small [hidden]="company.valid || company.pristine" class="text-danger"> Company name is
+                                required</small>
+                            </td>
+                        </tr>
+
+
+
+
+
+                        <tr>
+                            <td><label for="h2">Address</label> </td>
+                            <td><textarea type="text" class="form-control" id="h2" [(ngModel)]="model.address"
+                                    name="address"></textarea> </td>
+                        </tr>
+
+
+                        <tr>
+                            <td><label for="h3">Key CRM</label> </td>
+                            <td><input type="text" class="form-control" id="h3" [(ngModel)]="model.key" name="key"></td>
+                        </tr>
+
+                        <tr>
+                            <td><label for="h4">Machine ID</label> </td>
+                            <td><input type="text" class="form-control" id="h4" [(ngModel)]="model.uniqueMachineID"
+                                    name="uniqueMachineID"></td>
+                        </tr>
+
+
+                        <tr>
+                            <td><label for="h51">Start Date</label> </td>
+                            <td><input type="date" class="form-control w-50" id="h51" [(ngModel)]="model.start_date"
+                                    name="start_date"></td>
+                        </tr>
+
+
+                        <tr>
+                            <td><label for="h52">Expired Date</label> </td>
+                            <td><input type="date" class="form-control w-50" id="h52" [(ngModel)]="model.expired_date"
+                                    name="expired_date"></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+
+            <div class="col-12 text-right">
+
+                <button type="submit" class="btn btn-primary m-1" [disabled]="!myForm.form.valid">Submit</button>
+            </div>
+
+        </div>
+    </div>
+</form>

@@ -5,7 +5,7 @@
 <div class="container-fluid bg-light border-bottom py-1">
   <div class="row">
     <div class="col-12">
-      <small> You are here : <a [routerLink]="[ '/user' ]">User</a> </small>
+      <small> You are here : <a [routerLink]="[ '/user' ]">Users</a> </small>
     </div>
   </div>
 </div>
@@ -54,7 +54,7 @@
       </ul>
 
       <ng-template #recursiveListTmpl let-items>
-        <li *ngFor="let item of items" class="border-top py-1">
+        <li *ngFor="let item of items" class="border-top py-1 liUser">
           <div class="name">
             <a [routerLink]="[ '/user/',item.id]"> <b> {{item.name}} </b></a>
             <div>{{item.email}}</div>
@@ -173,7 +173,7 @@
             <select class="form-control form-modal" [(ngModel)]="model.id_parent" id="firstid_parent_name"
               name="id_parent">
               <option> - </option>
-              <option value="{{x.id}}" *ngFor="let x of items"> {{x.name}} </option>
+              <option value="{{x.id}}" *ngFor="let x of parent"> {{x.name}} </option>
             </select>
 
           </td>
@@ -221,7 +221,7 @@
 
     <div class="modal-footer">
 
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
 
       <button type="submit" class="btn btn-primary" [disabled]="!modalForm.form.valid">Submit</button>
     </div>

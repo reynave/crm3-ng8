@@ -21,7 +21,8 @@
       <div class="col-6 text-right">
         <span [hidden]="!loadingSelected">Loading Attribute...</span>
 
-        <a [routerLink]="[ '/lead/converted' ]" class="mr-3 btn btn-sm"> <i class="fas fa-archive"></i> Leads Conversion</a>
+        <a [routerLink]="[ '/lead/converted' ]" class="mr-3 btn btn-sm"> <i class="fas fa-archive"></i> Leads
+          Conversion</a>
 
         <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="open(newLead)"> <i class="fas fa-plus"></i>
           New Lead </button>
@@ -31,21 +32,21 @@
   </div>
 
   <div class=" bg-light  border border-top-brown rounded p-1">
- 
-    <table  id="dtable"  class="table table-hover border bg-white border-top border-bottom pointer">
+
+    <table id="dtable" class="table table-hover border bg-white border-top border-bottom pointer">
       <thead class="thead-light">
         <tr>
 
-          <th>ID</th>  
-          <th width="50"  class="select-filter">Status</th>
-          <th >Name</th>
-          <th scope="col">Company</th> 
+          <th>ID</th>
+          <th width="50" class="select-filter">Status</th>
+          <th>Name</th>
+          <th scope="col">Company</th>
           <th scope="col">Website</th>
 
-          <th scope="col">Postion</th>
-          <th scope="col">Departement</th>
-          <th scope="col"  class="select-filter">Account Manager</th>
-    
+          <th scope="col" class="select-filter">Industries</th>
+          <th scope="col" class="select-filter">Lead Source</th>
+          <th scope="col" class="select-filter">Account Manager</th>
+
 
 
         </tr>
@@ -53,22 +54,22 @@
 
       <tfoot>
         <tr>
-          <th></th> 
-          <th></th> 
-          
           <th></th>
           <th></th>
-          <th></th> 
 
-          <th></th> 
-          <th></th> 
-          <th></th> 
- 
+          <th></th>
+          <th></th>
+          <th></th>
+
+          <th></th>
+          <th></th>
+          <th></th>
+
         </tr>
       </tfoot>
-    
+
     </table>
- 
+
   </div>
 
 </div>
@@ -132,18 +133,20 @@
 
           <div class="form-group row no-gutters">
             <label for="h31" class="col-sm-4 col-form-label">Sex</label>
-            <div class="col-sm-8"> 
-              <select class="form-control border"   [(ngModel)]="model.sex"   id="sex" name="sex" >
+            <div class="col-sm-8">
+              <select class="form-control border" [(ngModel)]="model.sex" id="sex" name="sex">
                 <option value="1">Male</option>
                 <option value="2">Female</option>
-              </select> 
+              </select>
             </div>
           </div>
- 
+
           <div class="form-group row no-gutters">
             <label for="h31" class="col-sm-4 col-form-label">Birthdate</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control border" id="birthdate"  [(ngModel)]="model.birthdate"  (click)="bd.toggle()"  ngbDatepicker #bd="ngbDatepicker"  name="birthdate"  [startDate]="{year: 1980, month: 1}" >
+              <input type="text" class="form-control border" id="birthdate" [(ngModel)]="model.birthdate"
+                (click)="bd.toggle()" ngbDatepicker #bd="ngbDatepicker" name="birthdate"
+                [startDate]="{year: 1980, month: 1}">
             </div>
           </div>
 
@@ -196,7 +199,7 @@
             </div>
           </div>
 
-  
+
         </div>
 
       </div>
@@ -211,8 +214,7 @@
             <div class="form-group row no-gutters">
               <label for="h20" class="col-sm-4 col-form-label">Company*</label>
               <div class="col-sm-8">
-                <select class="form-control border" id="h14" [(ngModel)]="model.id_company" name="id_company" id="h20"
-                  required>
+                <select class="form-control border" id="h14" [(ngModel)]="model.id_company" name="id_company" id="h20"  required (change)="fnRequestCompanyData();">
                   <option [ngValue]="x.id" *ngFor="let x of selectedCompany">{{x.name}}</option>
                 </select>
                 <div>
@@ -272,7 +274,7 @@
               <input type="text" class="form-control border" [(ngModel)]="model.fax" name="fax" id="h4">
             </div>
           </div>
- 
+
           <div class="form-group row no-gutters">
             <label for="h14" class="col-sm-4 col-form-label">Industry</label>
             <div class="col-sm-8">
@@ -288,11 +290,11 @@
 
 
 
-         
+
 
         </div>
 
-        <div class="col-6"> 
+        <div class="col-6">
 
           <div class="form-group row no-gutters">
             <label for="h21" class="col-sm-4 col-form-label">Address</label>
@@ -300,24 +302,36 @@
               <textarea class="form-control border" [(ngModel)]="model.address_street" placeholder="Street"
                 name="address_street" id="h21a"> </textarea>
             </div>
+          </div>
 
-            <div class="col-sm-8 offset-4 mb-1">
-              
+          <div class="form-group row no-gutters">
+            <label for="h21b" class="col-sm-4 col-form-label">City</label>
+            <div class="col-sm-8 mb-1">
               <input type="text" class="form-control border" maxlength="250" [(ngModel)]="model.address_city"
                 placeholder="City" name="address_city" id="h21b">
             </div>
+          </div>
 
-            <div class="col-sm-8 offset-4 mb-1">
+
+          <div class="form-group row no-gutters">
+            <label for="h21c" class="col-sm-4 col-form-label">State</label>
+            <div class="col-sm-8 mb-1">
               <input type="text" class="form-control border" maxlength="250" [(ngModel)]="model.address_state"
                 placeholder="State" name="address_state" id="h21c">
             </div>
+          </div>
 
-            <div class="col-sm-8 offset-4 mb-1">
+          <div class="form-group row no-gutters">
+            <label for="h21d" class="col-sm-4 col-form-label">Code</label>
+            <div class="col-sm-8 mb-1">
               <input type="text" class="form-control border" maxlength="6" [(ngModel)]="model.address_code"
                 placeholder="Postal Code" name="address_code" id="h21d">
             </div>
+          </div>
 
-            <div class="col-sm-8 offset-4 mb-1">
+          <div class="form-group row no-gutters">
+            <label for="h21e" class="col-sm-4 col-form-label">Country</label>
+            <div class="col-sm-8 mb-1">
               <input type="text" class="form-control border" maxlength="250" [(ngModel)]="model.address_country"
                 placeholder="Country" name="address_country" id="h21e">
             </div>
@@ -339,9 +353,9 @@
 
     <span [hidden]="!submit">Saving, Please wait...</span>
     <button type="button" class="btn btn-light" (click)="modal.dismiss('Cross click')">Cancel</button>
-   <!-- <button type="submit" class="btn btn-outline-primary" (click)="onSubmit('next');"
+    <!-- <button type="submit" class="btn btn-outline-primary" (click)="onSubmit('next');"
       [disabled]="!myForm.form.valid">Save &
-      Next</button>--> 
+      Next</button>-->
     <button type="submit" class="btn btn-primary" (click)="onSubmit();" [disabled]="!myForm.form.valid">Save</button>
   </div>
 

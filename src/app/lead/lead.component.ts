@@ -49,7 +49,7 @@ export class LeadComponent implements OnInit {
     this.id_user = this.configService.id_user();
     this.model = new Newlead(this.id_user, '1', '1', '0', '', '', '', '', '', '', '', '','', '', '', '', '0','1',"","","","","1",{ "year": 1980,
     "month": 3,
-    "day": 5});
+    "day": 5},false);
     this.httpGet();
     this.httpSelected();
   }
@@ -146,6 +146,34 @@ export class LeadComponent implements OnInit {
     });
   }
 
+  fnRequestCompanyData(){
+    console.log(this.model['id_company']);
+    this.loading = true;
+    this.http.get(this.configService.base_url() + 'lead/getCompany/?id='+this.model['id_company'], {
+      headers: this.configService.headers()
+    }).subscribe(data => {
+      this.loading = false;
+      console.log(data);
+      this.model['isDuplicate'] = true;
+      this.model['website'] = data['result']['data'][0]['website'];
+      this.model['phone'] = data['result']['data'][0]['phone'];
+      this.model['fax'] = data['result']['data'][0]['fax'];
+      this.model['website'] = data['result']['data'][0]['website'];
+      this.model['id_company_class'] = data['result']['data'][0]['id_company_class'];
+
+      this.model['address_street'] = data['result']['data'][0]['bill_street1'];
+      this.model['address_city'] = data['result']['data'][0]['bill_city'];
+      this.model['address_state'] = data['result']['data'][0]['bill_state'];
+      this.model['address_code'] = data['result']['data'][0]['bill_code'];
+      this.model['address_country'] = data['result']['data'][0]['bill_country']; 
+
+    
+     // this.selectedCompany = data['result']['data'];
+      // console.log(this.selectedCompany);
+    });
+  }
+
+
   submit:boolean= false;
   
   onSubmit(value = "") {
@@ -164,7 +192,7 @@ export class LeadComponent implements OnInit {
             this.httpGet();
             this.model = new Newlead(this.id_user, '1', '1', '0', '', '', '', '', '', '', '', '','', '', '', '', '0','1',"","","","",'1',{ "year": 1980,
             "month": 3,
-            "day": 5});
+            "day": 5},false);
           }
           else {
             this.router.navigate(['/lead/',data['result']['id_lead'] ]);

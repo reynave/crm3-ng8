@@ -22,7 +22,7 @@
         </div>
         <div class="col-4 ">
             <div>
-                <label>Compnay Class </label>
+                <label>Companies Class </label>
             </div>
             <select class="form-control form-control-sm border" [(ngModel)]="id_company_class" (change)="productlist(); ">
                 <option *ngFor="let x of company_class" value="{{x.id}}"> {{x.name}}</option>

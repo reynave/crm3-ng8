@@ -193,6 +193,7 @@ export class UpdateCompany {
         public website: string,
         public id_user: string,
         public id_company_class: string,
+      public code_number: string,
       
     ) { }
 

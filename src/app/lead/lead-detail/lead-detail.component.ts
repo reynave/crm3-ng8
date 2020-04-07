@@ -59,6 +59,7 @@ export class LeadDetailComponent implements OnInit {
     //console.log('accessRules',this.accessRules);
     this.httpGet(); 
   }
+
   httpGet() {
     this.items = {
       company: {
@@ -77,7 +78,7 @@ export class LeadDetailComponent implements OnInit {
     this.http.get<LeadDetail[]>(this.configService.base_url() + 'lead/detail/' + this.id, {
       headers: this.configService.headers()
     }).subscribe(data => {
-    
+      console.log(data);
       this.items = data['result']['lead'];
       this.title = data['result']['title'];
       this.lead_source = data['result']['lead_source'];
@@ -120,7 +121,7 @@ export class LeadDetailComponent implements OnInit {
       );
 
       this.leadConvert = new LeadConvert(
-        "1",
+        data['result']['lead']['isDuplicate'],
         data['result']['lead']['company'],
         data['result']['lead']['id_company'], 
         data['result']['lead']['id_company_class'],
@@ -280,6 +281,7 @@ export class LeadDetailComponent implements OnInit {
   onFileSelected(event) {
     this.selectedFile = event.target.files[0];
   }
+
   onUpload(target) {
     const fd = new FormData();
     fd.append('files', this.selectedFile, this.selectedFile.name);
@@ -310,6 +312,7 @@ export class LeadDetailComponent implements OnInit {
 
       );
   }
+
   fn_attach_delete(x) {
     this.loading = true;
 

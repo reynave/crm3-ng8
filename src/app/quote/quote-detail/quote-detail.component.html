@@ -59,8 +59,7 @@
       </div>
 
       <div [hidden]="isReadOnly">
-        <button type="button" class="btn btn-classic btn-sm" (click)="isReadOnly=true" title="Done"><i
-            class="fas fa-check"></i> Finish Edit </button>
+        <button type="button" class="btn btn-classic btn-sm" (click)="isReadOnly=true" title="Done"> Cancel </button>
       </div>
 
     </div>
@@ -611,7 +610,7 @@
     <div class="container">
       <div class="row">
         <div class="offset-1 col-10 text-center p-1">
-          <a class="btn btn-outline-secondary m-1" (click)="isReadOnly=true">Finish update</a>
+          <a class="btn btn-outline-secondary m-1" (click)="isReadOnly=true">Cancel</a>
           <button type="submit" class="btn btn-primary m-1" [disabled]="!quoteForm.form.valid" (click)="isReadOnly=true">Save</button>
         </div>
         <div class="col-1">

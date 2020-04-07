@@ -13,7 +13,7 @@
 <div class="container-fluid mt-3   mb-4">
   <div class="row no-gutters">
     <div class="col-12 ">
-      <h4> Dashboard this {{period}} </h4> 
+      <h4> Dashboard this {{period}} </h4>
     </div>
 
 
@@ -82,16 +82,31 @@
     <div class="col-3   mb-3">
       <div class="bg-light  border border-top-yellowgreen rounded p-2  m-1">
 
-        <div class="pb1"> <strong> Leads per distribution per {{period}}</strong></div>
-        <canvas class="leadPerDistribution" id="leadPerDistribution" width="300" height="300"></canvas>
+        <div class="pb1"> <strong> Leads by Source per {{period}}</strong></div>
+
+        <div [hidden]="totalLS < 1">
+          <canvas class="leadPerDistribution" id="leadPerDistribution" width="300" height="300"></canvas>
+        </div>
+        <div [hidden]="totalLS > 1">
+          <div class="text-center py-5"> No Data </div>
+        </div>
       </div>
     </div>
 
     <div class="col-3   mb-3">
       <div class="bg-light  border border-top-gray rounded p-2  m-1">
 
-        <div class="pb-1"> <strong>Leads per industry per {{period}}</strong></div>
-        <canvas class="leadPerIndustry" id="leadPerIndustry" width="300" height="300"></canvas>
+        <div class="pb-1"> <strong>Leads by Industry per {{period}}</strong></div>
+
+
+        <div [hidden]="totalLI < 1">
+          <canvas class="leadPerIndustry" id="leadPerIndustry" width="300" height="300"></canvas>
+        </div>
+        <div [hidden]="totalLI > 1">
+          <div class="text-center py-5"> No Data </div>
+        </div>
+
+
       </div>
     </div>
 
@@ -118,33 +133,33 @@
           <tbody>
 
             <tr *ngFor="let x of target; let i = index">
-              <td> <span [ngStyle]="{'color': x.background}">  <i class="fas fa-square"></i> </span> {{x.name}}</td>
+              <td> <span [ngStyle]="{'color': x.background}"> <i class="fas fa-square"></i> </span> {{x.name}}</td>
 
-              <td class="text-right"> <span [hidden]="i+1 > 1">{{currency}} </span> {{x.q1.target |number}} / <span
-                  [hidden]="i+1 > 1">{{currency}} </span> {{x.q1.achieve |number}} </td>
-              <td class="text-right"> <span [hidden]="i+1 > 1">{{currency}} </span> {{x.q2.target |number}} / <span
-                  [hidden]="i+1 > 1">{{currency}} </span> {{x.q2.achieve |number}} </td>
-              <td class="text-right"> <span [hidden]="i+1 > 1">{{currency}} </span> {{x.q3.target |number}} / <span
-                  [hidden]="i+1 > 1">{{currency}} </span> {{x.q3.achieve |number}} </td>
-              <td class="text-right"> <span [hidden]="i+1 > 1">{{currency}} </span> {{x.q4.target |number}} / <span
-                  [hidden]="i+1 > 1">{{currency}} </span>{{x.q4.achieve |number}} </td>
+              <td class="text-right"> <span [hidden]="i+1 > 1">{{currency}} </span> {{x.q1.achieve |number}} / <span
+                  [hidden]="i+1 > 1">{{currency}} </span> {{x.q1.target |number}} </td>
+              <td class="text-right"> <span [hidden]="i+1 > 1">{{currency}} </span> {{x.q2.achieve |number}} / <span
+                  [hidden]="i+1 > 1">{{currency}} </span> {{x.q2.target |number}} </td>
+              <td class="text-right"> <span [hidden]="i+1 > 1">{{currency}} </span> {{x.q3.achieve |number}} / <span
+                  [hidden]="i+1 > 1">{{currency}} </span> {{x.q3.target |number}} </td>
+              <td class="text-right"> <span [hidden]="i+1 > 1">{{currency}} </span> {{x.q4.achieve |number}} / <span
+                  [hidden]="i+1 > 1">{{currency}} </span>{{x.q4.target |number}} </td>
             </tr>
 
           </tbody>
         </table>
-         
-       
+
+
         <div class="row">
           <div class="col-6 ">
             <div class="pb-1"> <strong>Bar Target Salesman This Year</strong></div>
-            <div class="bg-white p-1 border"> 
+            <div class="bg-white p-1 border">
               <canvas id="targetSalesAmount"></canvas>
             </div>
           </div>
 
           <div class="col-6">
             <div class="pb-1"> <strong>Bar Target Leads, Opportunities, and Quotes This Year</strong></div>
-            <div class="bg-white p-1 border">  
+            <div class="bg-white p-1 border">
               <canvas id="targetSalesQty"></canvas>
             </div>
 
@@ -221,7 +236,7 @@
 
     <div class="col-6   mb-3">
       <div class="bg-light  border border-top-green rounded p-2  m-1">
-        <div class="p-1"> <strong>Must Event Next Month</strong></div>
+        <div class="p-1"> <strong>Must Event This Month</strong></div>
         <div class="scroll-y">
 
 
@@ -250,7 +265,7 @@
 
     <div class="col-6  mb-3">
       <div class="bg-light  border border-top-brown rounded p-2  m-1">
-        <div class="p-1"> <strong>Must Visit Next Month</strong></div>
+        <div class="p-1"> <strong>Must Visit This Month</strong></div>
         <div class="scroll-y">
           <table class="table table-hover border bg-white border-top border-bottom pointer">
             <thead>

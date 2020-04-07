@@ -503,7 +503,7 @@
   <div class="modal-body bg-light">
     <form (ngSubmit)="onConvert()" #myFormConvert="ngForm">
       <div class="row">
-
+      
         <div class="col-12 mb-3">
           <div class="row">
             <div class="col-2">
@@ -514,18 +514,18 @@
               <div class="row">
 
                 <div class="col-6">
-                  <input type="radio" name="companyNew" [(ngModel)]="leadConvert.isNewCompany" value="1" id="a1"> <label for="a1" class="mx-1"> Create
+                  <input type="radio" name="companyNew" [(ngModel)]="leadConvert.isDuplicate" value="0" id="a1"> <label for="a1" class="mx-1"> Create
                     New</label>
                 </div>
 
                 <div class="col-6">
-                  <input type="radio" name="companyNew" [(ngModel)]="leadConvert.isNewCompany" value="0" id="a2"> <label for="a2" class="mx-1">Choose Exesting
+                  <input type="radio" name="companyNew" [(ngModel)]="leadConvert.isDuplicate" value="1" id="a2"> <label for="a2" class="mx-1">Choose Existing
                   </label>
                 </div>
 
 
                 <div class="col-6" >
-                  <div class="border p-3 mt-2 " [ngClass]="{'bg-white': leadConvert.isNewCompany == '1'}">
+                  <div class="border p-3 mt-2 " [ngClass]="{'bg-white': leadConvert.isDuplicate == '0'}">
                     <label class="mb-2">Company Name</label>
                     <input type="text" class="form-control mb-2" name="newCompany" [(ngModel)]="leadConvert.newCompany" >
 
@@ -630,7 +630,7 @@
             </div>
  
             <div class="col-5">
-              <label class="mb-2">Expecting Closing Date</label>  
+              <label class="mb-2">Expected Closing Date</label>  
               
               <input type="text" class="form-control mb-2 border " readonly placeholder="YYYY-MM-DD" name="expecting_closing_date"
               [(ngModel)]="leadConvert.expecting_closing_date" ngbDatepicker #expecting_closing_date="ngbDatepicker"
