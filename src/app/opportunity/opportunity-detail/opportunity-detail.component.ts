@@ -41,10 +41,10 @@ export class OpportunityDetailComponent implements OnInit {
   quotes: any;
   business: any = [];
 
-  reason : string = "";
+  reason: string = "";
   reason_win: any = [];
   reason_lose: any = [];
-  id_closed_reason:string;
+  id_closed_reason: string;
   model: any = [];
   lead_source: any = [];
   updateOpportunity: any = [];
@@ -92,95 +92,97 @@ export class OpportunityDetailComponent implements OnInit {
     this.http.get(this.configService.base_url() + 'opportunity/detail/' + this.id, {
       headers: this.configService.headers()
     }).subscribe(data => {
-      console.log(data);
+
       this.loading = false;
 
-      if (data['result']['data']['closed'] == true) {
-        if (data['result']['data']['id_stage'] == 1000) {
-          this.router.navigate(['deal/', this.id]);
-        } else if (data['result']['data']['id_stage'] == 3000) {
-          this.router.navigate(['lose/', this.id]);
+      if (data['error'] != 0) {
+        this.router.navigate(['warning/access/user']);
+      } else {
+
+        if (data['result']['data']['closed'] == true) {
+          if (data['result']['data']['id_stage'] == 1000) {
+            this.router.navigate(['deal/', this.id]);
+          } else if (data['result']['data']['id_stage'] == 3000) {
+            this.router.navigate(['lose/', this.id]);
+          }
         }
+ 
+        this.items = data['result']['data'];
+        this.stage = data['result']['stage'];
+        this.quotes = data['result']['quotes'];
+        this.width = data['result']['width'];
+        this.id_stage = data['result']['data']['id_stage'];
+        this.product = data['result']['product'];
+        this.business = data['result']['business'];
+ 
+        this.contact = data['result']['contact'];
+        this.user = data['result']['user'];
+
+
+
+        this.quoteModel = new Newquote(
+          data['result']['data']['name'],
+          [],
+          "",
+          data['result']['data']['id_user'],
+          data['result']['data']['id_contact'],
+
+
+          data['result']['data']['contact']['email'],
+          data['result']['data']['contact']['phone'],
+          data['result']['information']['fax'],
+
+          data['result']['information']['bill_name'],
+          data['result']['information']['bill_street1'],
+          data['result']['information']['bill_city'],
+          data['result']['information']['bill_state'],
+          data['result']['information']['bill_code'],
+          data['result']['information']['bill_country'],
+
+          data['result']['information']['ship_name'],
+          data['result']['information']['ship_street1'],
+          data['result']['information']['ship_city'],
+          data['result']['information']['ship_state'],
+          data['result']['information']['ship_code'],
+          data['result']['information']['ship_country'],
+
+          false
+        );
+
+        this.reason_win = data['result']['reason_win'];
+        this.reason_lose = data['result']['reason_lose'];
+
+        this.lead_source = data['result']['lead_source'];
+        this.attachment = data['result']['attachment'];
+        this.attachmentPO = data['result']['attachmentPO'];
+
+        this.updateOpportunity = new UpdateOpportunity(
+          data['result']['data']['id_user'],
+          data['result']['data']['id_opportunity_business'],
+          data['result']['data']['id_lead_source'],
+          data['result']['data']['name'],
+          data['result']['data']['amount'],
+          data['result']['data']['closed_date'],
+          data['result']['data']['start_date'],
+          data['result']['data']['id_contact'],
+          data['result']['data']['expecting_closing_date'],
+          data['result']['data']['budget'],
+          data['result']['data']['comparison_with_competitor'],
+          data['result']['data']['competitor'],
+          data['result']['data']['critical_point'],
+          data['result']['data']['our_proposal'],
+          data['result']['data']['po'],
+          data['result']['data']['notes1'],
+          data['result']['data']['notes2'],
+          data['result']['data']['notes3'],
+          data['result']['data']['id_quote'],
+
+        );
+
+
+        this.model = new OpportunityUpdate(data['result']['data']['name'], data['result']['data']['id_lead_source'], data['result']['data']['id_user'], data['result']['data']['id_contact']);
+
       }
-
-
-
-
-      this.items = data['result']['data'];
-      this.stage = data['result']['stage'];
-      this.quotes = data['result']['quotes'];
-      this.width = data['result']['width'];
-      this.id_stage = data['result']['data']['id_stage'];
-      this.product = data['result']['product'];
-      this.business = data['result']['business'];
-
-
-      this.contact = data['result']['contact'];
-      this.user = data['result']['user'];
-
-
-
-      this.quoteModel = new Newquote(
-        data['result']['data']['name'],
-        [],
-        "",
-        data['result']['data']['id_user'],
-        data['result']['data']['id_contact'],
-
-
-        data['result']['data']['contact']['email'],
-        data['result']['data']['contact']['phone'],
-        data['result']['information']['fax'],
-
-        data['result']['information']['bill_name'],
-        data['result']['information']['bill_street1'],
-        data['result']['information']['bill_city'],
-        data['result']['information']['bill_state'],
-        data['result']['information']['bill_code'],
-        data['result']['information']['bill_country'],
-
-        data['result']['information']['ship_name'],
-        data['result']['information']['ship_street1'],
-        data['result']['information']['ship_city'],
-        data['result']['information']['ship_state'],
-        data['result']['information']['ship_code'],
-        data['result']['information']['ship_country'],
-
-        false
-      );
-
-      this.reason_win = data['result']['reason_win'];
-      this.reason_lose = data['result']['reason_lose'];
-
-      this.lead_source = data['result']['lead_source'];
-      this.attachment = data['result']['attachment'];
-      this.attachmentPO = data['result']['attachmentPO'];
-
-      this.updateOpportunity = new UpdateOpportunity(
-        data['result']['data']['id_user'],
-        data['result']['data']['id_opportunity_business'],
-        data['result']['data']['id_lead_source'],
-        data['result']['data']['name'],
-        data['result']['data']['amount'],
-        data['result']['data']['closed_date'],
-        data['result']['data']['start_date'],
-        data['result']['data']['id_contact'],
-        data['result']['data']['expecting_closing_date'],
-        data['result']['data']['budget'],
-        data['result']['data']['comparison_with_competitor'],
-        data['result']['data']['competitor'],
-        data['result']['data']['critical_point'],
-        data['result']['data']['our_proposal'],
-        data['result']['data']['po'],
-        data['result']['data']['notes1'],
-        data['result']['data']['notes2'],
-        data['result']['data']['notes3'],
-        data['result']['data']['id_quote'],
-
-      );
-
-
-      this.model = new OpportunityUpdate(data['result']['data']['name'], data['result']['data']['id_lead_source'], data['result']['data']['id_user'], data['result']['data']['id_contact']);
     }, error => {
       console.log(error);
       console.log(error.error.text);
@@ -222,14 +224,14 @@ export class OpportunityDetailComponent implements OnInit {
   }
 
 
-  lookingContact(e){
+  lookingContact(e) {
     console.log(e.target.value);
     console.log(this.contact);
 
-    var objIndex = this.contact.findIndex((obj => obj.id == e.target.value ));
+    var objIndex = this.contact.findIndex((obj => obj.id == e.target.value));
     this.quoteModel['phone'] = this.contact[objIndex]['phone'];
-    this.quoteModel['email']= this.contact[objIndex]['email'];
-    
+    this.quoteModel['email'] = this.contact[objIndex]['email'];
+
 
   }
 
@@ -289,8 +291,8 @@ export class OpportunityDetailComponent implements OnInit {
 
   }
 
-  closeOpportunity(id){
-     
+  closeOpportunity(id) {
+
 
     this.loading = true;
     this.http.post(this.configService.base_url() + 'opportunity/closeOpportunity',
@@ -309,7 +311,7 @@ export class OpportunityDetailComponent implements OnInit {
           this.router.navigate(['deal/', this.id]);
         } else if (data['result']['id_stage'] == 3000) {
           this.router.navigate(['lost/', this.id]);
-        }   
+        }
       },
       error => {
         console.log(error);
@@ -346,16 +348,16 @@ export class OpportunityDetailComponent implements OnInit {
     var objIndex = this.product.findIndex((obj => obj.id == data.id));
     this.product.splice(objIndex, 1);
 
-    
+
     this.http.post(this.configService.base_url() + 'opportunity/fn_delete_prorduct',
       {
-        "id_opportunity": this.id, 
+        "id_opportunity": this.id,
         "data": data,
       }, {
       headers: this.configService.headers()
     }).subscribe(
-      data => { 
-        console.log(data); 
+      data => {
+        console.log(data);
       },
       error => {
         console.log(error);
@@ -444,9 +446,9 @@ export class OpportunityDetailComponent implements OnInit {
     );
   }
 
-  loadingUpdateQuiz:string="";
+  loadingUpdateQuiz: string = "";
   updateQuiz() {
-    this.loadingUpdateQuiz="Saving...";
+    this.loadingUpdateQuiz = "Saving...";
     this.http.post(this.configService.base_url() + 'opportunity/update',
       {
         "id": this.id,
@@ -455,7 +457,7 @@ export class OpportunityDetailComponent implements OnInit {
       headers: this.configService.headers()
     }).subscribe(
       data => {
-        this.loadingUpdateQuiz="";
+        this.loadingUpdateQuiz = "";
         console.log(data);
       },
       error => {

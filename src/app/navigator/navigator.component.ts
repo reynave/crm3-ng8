@@ -16,6 +16,7 @@ export class NavigatorComponent implements OnInit {
   current :string;
   rules:any;
   nav : any = [];
+  accessRight :any = [];
   username : string;
   constructor(
     private http: HttpClient,
@@ -35,6 +36,12 @@ export class NavigatorComponent implements OnInit {
     this.username =  this.configService.username();
     this.nav = this.activatedRoute.snapshot.routeConfig.path.split("/")
     this.current = this.nav[0];
+
+    this.accessRight = this.configService.access_right();
+    console.log(this.accessRight );
+    console.log(this.configService.access_right());
+   
+  
   }
 
   signout(){

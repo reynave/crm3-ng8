@@ -35,7 +35,7 @@
                         <div class="col-6">
                             <table class="table table-borderless">
                                 <tr [hidden]="!data.parent">
-                                    <td>Parent Accocunt</td>
+                                    <td>Parent Account</td>
                                     <td> <input type="text" class="form-control form-modal bg-light" disabled
                                             value="{{data.parent}}"> </td>
 
@@ -141,10 +141,10 @@
                         <div class="col-12 ">
                             <div class="px-2">
 
-
-                                <h5>Personal Target</h5>
+ 
                                 <table class="table border">
                                     <tr class="bg-light">
+                                        <th> Target </th>
                                         <th> Years </th>
                                         <th> Amount </th>
                                         <th> Leads (Qty) </th>
@@ -153,13 +153,24 @@
                                     </tr>
 
                                     <tr *ngFor="let x of target">
+                                        <th>  Personal </th>
                                         <td> {{x.years}} </td>
                                         <td> {{data.currency}} {{x.amount | number}} </td>
                                         <td> {{x.leads | number}} </td>
                                         <td> {{x.opportunities | number}} </td>
                                         <td> {{x.quotes | number}} </td>
                                     </tr>
+
+                                    <tr>
+                                        <th> Team </th>
+                                        <td> {{totalTeamTarget.year}} </td>
+                                        <td> {{data.currency}} {{totalTeamTarget.amount | number}} </td>
+                                        <td> {{totalTeamTarget.leads | number}} </td>
+                                        <td> {{totalTeamTarget.opportunities | number}} </td>
+                                        <td> {{totalTeamTarget.quotes | number}} </td>
+                                    </tr>
                                 </table>
+ 
                             </div>
                         </div>
 

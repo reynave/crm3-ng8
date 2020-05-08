@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ConfigService } from './../service/config.service';
 import { NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Opportunity } from './../opportunity/opportunity';
-
+declare var $;
 @Component({
   selector: 'app-deal',
   templateUrl: './deal.component.html',
@@ -51,20 +51,71 @@ export class DealComponent implements OnInit {
   }
    
   httpGet() {
-    this.loading = true;
-    this.itemsSelected = [];
-    this.http.get(this.configService.base_url() + 'deal', {
-      headers: this.configService.headers()
-    }).subscribe(data => {
-      this.items = data['result']['data'];
-      this.total = data['result']['total'];
-     //  console.log(data);
-      this.loading = false;
-    }, error => {
-      console.log(error);
-      console.log(error.error.text);
+    this.loading = false;
+
+    var formatter = new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
     });
+
+    $('#dtable').DataTable({
+      //  stateSave: true,
+      ajax: {
+        url: this.configService.base_url() + "deal/index/",
+        type: 'GET',
+        headers: {
+          'Key': this.configService.key(),
+          'Token': this.configService.token(),
+          'Content-Type': 'application/json'
+        },
+
+      },
+      aoColumnDefs: [{ "asSorting": false, "aTargets": [0] }],
+      lengthMenu: [50, 100, 200],
+      order: [[1, "asc"]],
+      columnDefs: [
+       
+        {
+          "targets": 1,
+          "render": function (data, type, row, meta) {
+            return '<a href="#/deal/' + row[0] + '"><b>' + data + '</b></a>';
+          }
+        },
+
+        {
+          "targets": 3,
+          "render": function (data, type, row, meta) {
+            return '<div class="text-right">'+formatter.format(data)+'</div>';
+          },
+        }
+
+        
+      ],
+      initComplete: function () {
+
+        this.api().columns('.select-filter').every(function () {
+          var column = this;
+          var select = $('<select><option value=""> - Show All - </option></select>')
+            .appendTo($(column.footer()).empty())
+            .on('change', function () {
+              var val = $.fn.dataTable.util.escapeRegex(
+                $(this).val()
+              );
+
+              column
+                .search(val ? '^' + val + '$' : '', true, false)
+                .draw();
+            });
+
+          column.data().unique().sort().each(function (d, j) {
+            select.append('<option value="' + d + '">' + d + '</option>')
+          });
+        });
+      }
+    });
+
   }
+
 
 
   fn_delete() {

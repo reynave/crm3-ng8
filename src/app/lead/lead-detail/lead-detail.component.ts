@@ -24,23 +24,23 @@ export class LeadDetailComponent implements OnInit {
   isReadOnly: boolean = true;
   lead: any = [];
   lead_status: any = [];
-  customer_class : any = [];
+  customer_class: any = [];
   title: any = [];
   lead_source: any = [];
   industry: any = [];
-  showNewActivity :boolean=false;
-  activity:any=[];
-  opportunity_stage:any = [];
-  leadConvert:any = [];
-  
+  showNewActivity: boolean = false;
+  activity: any = [];
+  opportunity_stage: any = [];
+  leadConvert: any = [];
+
   loadingConvert: boolean = false;
-  company:any = []; 
+  company: any = [];
   user: any = [];
-  contacts:any=[];
-  attachment:any=[];
-  company_class:any=[];
+  contacts: any = [];
+  attachment: any = [];
+  company_class: any = [];
   product: any = [];
-  accessRules : any = [];
+  accessRules: any = [];
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -57,7 +57,7 @@ export class LeadDetailComponent implements OnInit {
     this.id = this.activatedRoute.snapshot.params.id;
     this.accessRules = this.configService.access_right();
     //console.log('accessRules',this.accessRules);
-    this.httpGet(); 
+    this.httpGet();
   }
 
   httpGet() {
@@ -78,78 +78,86 @@ export class LeadDetailComponent implements OnInit {
     this.http.get<LeadDetail[]>(this.configService.base_url() + 'lead/detail/' + this.id, {
       headers: this.configService.headers()
     }).subscribe(data => {
-      console.log(data);
-      this.items = data['result']['lead'];
-      this.title = data['result']['title'];
-      this.lead_source = data['result']['lead_source'];
-      this.industry = data['result']['industry'];
-      this.user = data['result']['user'];
-      this.lead_status = data['result']['lead_status'];
-      this.product = data['result']['product'];
-      this.customer_class = data['result']['customer_class'];
-      this.opportunity_stage =  data['result']['opportunity_stage'];
-      this.company =  data['result']['company'];
-      this.company_class =  data['result']['company_class'];
-       
-      this.attachment = data['result']['attachment'];
-      this.lead = new UpdateLead(
-        data['result']['lead']['id_user'],
-        data['result']['lead']['id_title'],
-        data['result']['lead']['id_lead_source'],
-        data['result']['lead']['id_industry'],
-        data['result']['lead']['first_name'],
-        data['result']['lead']['last_name'],
-        data['result']['lead']['email'],
-        data['result']['lead']['mobile'],
-        data['result']['lead']['phone'],
-        data['result']['lead']['company'],
-        data['result']['lead']['website'],
-        data['result']['lead']['address_street'],
-        data['result']['lead']['address_city'],
-        data['result']['lead']['address_state'],
-        data['result']['lead']['address_code'],
-        data['result']['lead']['address_country'],
-        data['result']['lead']['opportunity'], 
-        data['result']['lead']['position'],
-        data['result']['lead']['amount'],
-        data['result']['lead']['id_company_class'],
-        data['result']['lead']['department'],
-        data['result']['lead']['fax'],
-
-        data['result']['lead']['sex'],
-        data['result']['lead']['birthdate'],
-      );
-
-      this.leadConvert = new LeadConvert(
-        data['result']['lead']['isDuplicate'],
-        data['result']['lead']['company'],
-        data['result']['lead']['id_company'], 
-        data['result']['lead']['id_company_class'],
-        data['result']['lead']['first_name'],
-        data['result']['lead']['last_name'],
       
-        data['result']['lead']['opportunity'],
-        data['result']['lead']['amount'],
-        data['result']['lead']['id_user'],
-        [],
-        
-      );
+
+      if (data['error'] != 0) {
+        this.router.navigate(['warning/access/user']);
+      } else {
  
+        this.items = data['result']['lead'];
+        this.title = data['result']['title'];
+        this.lead_source = data['result']['lead_source'];
+        this.industry = data['result']['industry'];
+        this.user = data['result']['user'];
+        this.lead_status = data['result']['lead_status'];
+        this.product = data['result']['product'];
+        this.customer_class = data['result']['customer_class'];
+        this.opportunity_stage = data['result']['opportunity_stage'];
+        this.company = data['result']['company'];
+        this.company_class = data['result']['company_class'];
+
+        this.attachment = data['result']['attachment'];
+        this.lead = new UpdateLead(
+          data['result']['lead']['id_user'],
+          data['result']['lead']['id_title'],
+          data['result']['lead']['id_lead_source'],
+          data['result']['lead']['id_industry'],
+          data['result']['lead']['first_name'],
+          data['result']['lead']['last_name'],
+          data['result']['lead']['email'],
+          data['result']['lead']['mobile'],
+          data['result']['lead']['phone'],
+          data['result']['lead']['company'],
+          data['result']['lead']['website'],
+          data['result']['lead']['address_street'],
+          data['result']['lead']['address_city'],
+          data['result']['lead']['address_state'],
+          data['result']['lead']['address_code'],
+          data['result']['lead']['address_country'],
+          data['result']['lead']['opportunity'],
+          data['result']['lead']['position'],
+          data['result']['lead']['amount'],
+          data['result']['lead']['id_company_class'],
+          data['result']['lead']['department'],
+          data['result']['lead']['fax'],
+
+          data['result']['lead']['sex'],
+          data['result']['lead']['birthdate'],
+        );
+
+        this.leadConvert = new LeadConvert(
+          data['result']['lead']['isDuplicate'],
+          data['result']['lead']['company'],
+          data['result']['lead']['id_company'],
+          data['result']['lead']['id_company_class'],
+          data['result']['lead']['first_name'],
+          data['result']['lead']['last_name'],
+
+          data['result']['lead']['opportunity'],
+          data['result']['lead']['amount'],
+          data['result']['lead']['id_user'],
+          [],
+
+        );
+      }
       this.loading = false;
+    }, error => {
+      console.log(error);
+      console.log(error.error.text);
     });
   }
 
-  fn_selectContact(id){ 
+  fn_selectContact(id) {
     this.loading = true;
     this.http.get(this.configService.base_url() + 'lead/selectContact/' + id, {
       headers: this.configService.headers()
-    }).subscribe(data => { 
-      
-      this.contacts = data['result']['contacts'];   
+    }).subscribe(data => {
+
+      this.contacts = data['result']['contacts'];
       this.loading = false;
     });
   }
- 
+
   onChangeLeadStatus(id) {
 
     id = id.replace(/ +/g, "");
@@ -161,7 +169,7 @@ export class LeadDetailComponent implements OnInit {
       }, {
       headers: this.configService.headers()
     }).subscribe(
-      data => { 
+      data => {
         this.items['lead_status']['color'] = data['result']['data']['color'];
         this.items['lead_status']['name'] = data['result']['data']['name'];
 
@@ -177,7 +185,7 @@ export class LeadDetailComponent implements OnInit {
     this.modalService.open(content, { size: "lg" });
   }
 
- 
+
 
   fn_delete() {
     if (confirm('Delete this lead ?')) {
@@ -188,7 +196,7 @@ export class LeadDetailComponent implements OnInit {
         }, {
         headers: this.configService.headers()
       }).subscribe(
-        data => { 
+        data => {
           this.router.navigate(['/lead/']);
 
         },
@@ -203,7 +211,7 @@ export class LeadDetailComponent implements OnInit {
 
   fn_deleteProduct(x) {
 
-    var objIndex = this.product.findIndex((obj => obj.id == x.id ));
+    var objIndex = this.product.findIndex((obj => obj.id == x.id));
     this.product.splice(objIndex, 1);
 
     this.http.post(this.configService.base_url() + 'lead/fn_deleteProduct',
@@ -212,11 +220,11 @@ export class LeadDetailComponent implements OnInit {
       }, {
       headers: this.configService.headers()
     }).subscribe(
-      data => { 
+      data => {
       },
       error => {
-         console.log(error);
-         console.log(error.error.text);
+        console.log(error);
+        console.log(error.error.text);
       }
     );
   }
@@ -228,20 +236,20 @@ export class LeadDetailComponent implements OnInit {
     this.http.post(this.configService.base_url() + 'lead/convert',
       {
         "id": this.id,
-        "data" : this.leadConvert
+        "data": this.leadConvert
       }, {
       headers: this.configService.headers()
     }).subscribe(
       data => {
-         console.log(data);
+        console.log(data);
         this.loadingConvert = false;
         this.loading = false;
         this.modalService.dismissAll('just closed');
         this.router.navigate(['/lead/converted/', this.id]);
       },
       error => {
-         console.log(error);
-         console.log(error.error.text);
+        console.log(error);
+        console.log(error.error.text);
       }
     );
   }
@@ -255,7 +263,7 @@ export class LeadDetailComponent implements OnInit {
       }, {
       headers: this.configService.headers()
     }).subscribe(
-      data => {  
+      data => {
         this.httpGet();
       },
       error => {
@@ -272,11 +280,11 @@ export class LeadDetailComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-  fn_newActivity(){
-    this.showNewActivity=true;
+  fn_newActivity() {
+    this.showNewActivity = true;
   }
 
- 
+
   selectedFile = null;
   onFileSelected(event) {
     this.selectedFile = event.target.files[0];
@@ -285,7 +293,7 @@ export class LeadDetailComponent implements OnInit {
   onUpload(target) {
     const fd = new FormData();
     fd.append('files', this.selectedFile, this.selectedFile.name);
-    fd.append('token', this.configService.token()); 
+    fd.append('token', this.configService.token());
     fd.append('module', target);
     fd.append('id', this.id);
 
@@ -335,5 +343,5 @@ export class LeadDetailComponent implements OnInit {
     );
   }
 
-  
+
 }

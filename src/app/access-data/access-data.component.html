@@ -48,7 +48,6 @@
                         <th class="text-center" width="50">No</th>
                         <th>Name</th>
                         <th class="text-center">All Access</th>
-                        <th class="text-center">Sharing Team Access</th>
                         <th width="50"></th>
 
                     </tr>
@@ -70,15 +69,7 @@
                                 [(ngModel)]="x.all_access">
                         </td>
 
-                        <td class="text-center">
-                            <span [hidden]="!isReadonly">
-                                <span [hidden]="!x.sharing_team_access"><i class="fas fa-check"></i> </span>
-                            </span>
-
-                            <input type="checkbox" value="1" (change)="update(x);" [hidden]="isReadonly"
-                                [(ngModel)]="x.sharing_team_access">
-                        </td>
-
+                      
                         <td>
                             <a href="javascript:;" (click)="fn_delete(x);" [hidden]="isReadonly"> <i
                                     class="far fa-trash-alt"></i> </a>

@@ -57,15 +57,17 @@ export class ProfileComponent implements OnInit {
     this.id = this.activatedRoute.snapshot.params.id;
     this.httpGet(); 
   }
-
+  totalTeamTarget  :any;
   httpGet() {
     this.loading = true; 
     this.http.get(this.configService.base_url() + 'profile/', {
       headers: this.configService.headers()
     }).subscribe(data => { 
+      console.log(data);
       this.data = data['result']['data'];
       this.items =  data['result']['list'];
       this.target = data['result']['target'];
+      this.totalTeamTarget = data['result']['totalTeamTarget'];
       this.model = new EditUser(
         data['result']['data']['first_name'],
         data['result']['data']['last_name'], 

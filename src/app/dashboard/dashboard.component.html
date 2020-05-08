@@ -15,29 +15,29 @@
     <div class="col-12 ">
       <h4> Dashboard this {{period}} </h4>
     </div>
+    <div class="col-12 mb-2">
+      <b> Select Period : </b>
+      <div>
+        <button type="button" class="btn  btn-sm mr-1" [ngClass]="{'btn-primary': period === 'month', 'btn-classic'  : period != 'month' }" (click)="onPeriod('month');"
+          [routerLink]="[ '/dashboard/month' ]">This Month</button>
 
+        <button type="button" class="btn  btn-sm  mr-1" [ngClass]="{'btn-primary': period === 'quarter', 'btn-classic'  : period != 'quarter' }"  (click)="onPeriod('quarter');"
+          [routerLink]="[ '/dashboard/quarter' ]">This Quarter </button>
 
-    <div class="col-6 col-md-3  pr-2">
-      <label> Select User : </label>
+        <button type="button" class="btn  btn-sm  mr-1"  [ngClass]="{'btn-primary': period === 'year', 'btn-classic'  : period != 'year' }"  (click)="onPeriod('year');"
+          [routerLink]="[ '/dashboard/year' ]">This Year</button>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-5">
+      <b> Select User : </b>
       <select class="form-control form-control-sm" (change)="onUser($event.target.value)" [(ngModel)]="id_user_select">
         <option value="0">All Group</option>
         <option *ngFor="let x of user" value="{{x.id}}"> {{x.name}} </option>
       </select>
     </div>
 
-    <div class="col-6   col-md-4 ">
-      <label> Select Period : </label>
-      <div>
-        <button type="button" class="btn btn-classic btn-sm mr-1" (click)="onPeriod('month');"
-          [routerLink]="[ '/dashboard/month' ]">This Month</button>
-
-        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="onPeriod('quarter');"
-          [routerLink]="[ '/dashboard/quarter' ]">This Quarter </button>
-
-        <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="onPeriod('year');"
-          [routerLink]="[ '/dashboard/year' ]">This Year</button>
-      </div>
-    </div>
+   
 
   </div>
 
@@ -73,7 +73,7 @@
     </div>
     <div class="col-4   mb-3">
       <div class="bg-light  border border-top-red rounded p-2  m-1">
-        <div class="pb-1"> <strong> Sales Funnel</strong></div>
+        <div class="pb-1"> <strong> Sales Funnel this year</strong></div>
 
         <div id="funnel"></div>
       </div>
