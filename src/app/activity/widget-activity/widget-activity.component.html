@@ -361,15 +361,15 @@
     <div class="icon" [innerHTML]="x.activity_type.fas"></div>
     <div class="content">
       <div class="row">
-        <div class="col-12 col-md-9">
+        <div class="col-12 col-md-7">
           <a href="javascript:;" (click)="x.description ? showLatest(i) : false;"> <b
               class="text-primary">{{x.subject}}</b> </a>
           <a class="ml-2 text-gray py-0" [hidden]="!x.description" (click)="x.description ? showLatest(i) : false;"><i
               class="fas fa-caret-down"></i></a>
         </div>
 
-        <div class="col-12  col-md-3 text-right">
-          <small> {{x.due_date | date:'mediumDate'}} </small>
+        <div class="col-12  col-md-5 text-right">
+          <small> {{x.input_date | date:'mediumDate'}}, {{x.input_date | date:'shortTime'}} </small>
  
         </div>
 
@@ -456,7 +456,7 @@
     <div class="icon" [innerHTML]="x.activity_type.fas"></div>
     <div class="content">
       <div class="row">
-        <div class="col-12 col-md-9">
+        <div class="col-12 col-md-7">
           <a href="javascript:;" (click)="showHistory(i)"> <b
               class="text-primary">{{x.subject}}</b> </a>
 
@@ -464,8 +464,8 @@
               class="fas fa-caret-down"></i></a>
         </div>
        
-        <div class="col-12  col-md-3 text-right">
-          <small> {{x.due_date | date:'mediumDate'}}    <span [hidden]="x.activity_type.id != 100"> {{x.due_date | date:'shortTime'}} </span></small>
+        <div class="col-12  col-md-5 text-right">
+          <small> {{x.input_date | date:'mediumDate'}}, {{x.input_date | date:'shortTime'}} </small>
  
         </div>
       </div>

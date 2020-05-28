@@ -73,12 +73,12 @@ export class LeadComponent implements OnInit {
       },
       aoColumnDefs: [{ "asSorting": false, "aTargets": [0] }],
       lengthMenu: [50, 100, 200],
-      order: [[1, "asc"]],
+      order: [[2, "asc"]],
       columnDefs: [
         {
           "targets": 0, 
           "render": function (data, type, row, meta) {
-            return data +  ' <span class="ml-2 text-'+row[8]+'"><i class="fas fa-square-full"></i></span>';
+            return data +  ' <span class="ml-2 text-white text-'+row[8]+'"><i class="fas fa-circle"></i></span>';
           }
         },
         {

@@ -57,7 +57,7 @@ export class PriceListComponent implements OnInit {
       },
       aoColumnDefs: [{ "asSorting": false, "aTargets": [0] }],
       lengthMenu: [50, 100, 200],
-      order: [[1, "asc"]],
+      order: [[2, "asc"]],
       columnDefs: [
         
         {

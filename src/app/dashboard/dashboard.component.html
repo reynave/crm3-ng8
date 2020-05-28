@@ -154,7 +154,10 @@
             <div class="pb-1"> <strong>Bar Target Salesman This Year</strong></div>
             <div class="bg-white p-1 border">
               <canvas id="targetSalesAmount"></canvas>
+              
+               <div class="px-3"><small>in 100 million</small> </div> 
             </div>
+           
           </div>
 
           <div class="col-6">
@@ -162,7 +165,7 @@
             <div class="bg-white p-1 border">
               <canvas id="targetSalesQty"></canvas>
             </div>
-
+           
           </div>
         </div>
 
@@ -253,7 +256,7 @@
               <tr *ngFor="let x of event; let i = index">
                 <td>{{i+1}}</td>
                 <td>{{x.subject }}</td>
-                <td> <a [routerLink]="[ '/contact', x.id ]"> <b> {{x.name }}</b> </a> </td>
+                <td> <a [routerLink]="[ '/',x.module, x.id_person]"> <b> {{x.name }}</b> </a> </td>
                 <td> {{x.start_datetime | date:'medium' }}</td>
               </tr>
             </tbody>
@@ -279,8 +282,8 @@
             <tbody>
               <tr *ngFor="let x of visit; let i = index">
                 <td>{{i+1}}</td>
-                <td> {{x.subject }} </td>
-                <td> <a [routerLink]="[ '/contact', x.id ]"> <b> {{x.name }}</b> </a> </td>
+                <td> {{x.subject }}</td>
+                <td> <a [routerLink]="[ '/', x.module, x.id_person ]"> <b> {{x.name }}</b> </a> </td>
                 <td> {{x.start_datetime | date:'medium' }}</td>
               </tr>
             </tbody>

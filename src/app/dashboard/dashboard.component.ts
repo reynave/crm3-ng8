@@ -273,7 +273,7 @@ export class DashboardComponent implements OnInit {
               var label = data.datasets[tooltipItem.datasetIndex].label || '';
 
               if (label) {
-                label += ' : ' + currency + ' ';
+                label += ' : ' + currency + ' thousand million';
               }
               label += formatter.format(Math.round(tooltipItem.yLabel * 100) / 100);
               console.log(label);
