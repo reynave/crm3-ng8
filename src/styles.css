@@ -9,7 +9,9 @@ body {  min-height: 100vh;
 .navbar { 
     padding: 0px 10px;
 }
-
+.bg-primary{
+    background:#0075AA !important;
+}
 @media (min-width: 576px){
     .modal-dialog {
         max-width: 95%;
@@ -98,9 +100,14 @@ body {  min-height: 100vh;
     font-size: 14px; 
 }
 
-
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255,255,255,.5);
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+}
 .navbar-themes {
-    border-bottom: 3px solid #008000!important;
+    border-bottom: 3px solid #ffa556!important;
 }
 
 .font-open-sand{

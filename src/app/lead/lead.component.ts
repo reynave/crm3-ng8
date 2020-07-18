@@ -58,7 +58,7 @@ export class LeadComponent implements OnInit {
   httpGet() {
     this.loading = false;
  
-
+    
     $('#dtable').DataTable({
       //  stateSave: true,
       ajax: {

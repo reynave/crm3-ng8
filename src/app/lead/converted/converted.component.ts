@@ -39,6 +39,11 @@ export class ConvertedComponent implements OnInit {
     }).subscribe(data => {  
       this.total = data['result']['total'];  
       this.items = data['result']['data']; 
+      this.items.sort(function(a, b){
+        if(a. lead < b. lead) { return -1; }
+        if(a. lead > b. lead) { return 1; }
+        return 0;
+      })
       this.loading = false;
     });
   }

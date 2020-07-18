@@ -31,7 +31,7 @@
       <div class="col-9 bg-light text-right py-2">
         <div [hidden]="!isReadOnly">
           <button type="button" class="btn btn-classic btn-sm  mr-1" (click)="open(convert)"
-            [hidden]="!accessRules.opportunity.insert"> <i class="fas fa-funnel-dollar"></i> Convert To Opportunity
+            [hidden]="!accessRules.opportunity.insert"> <i class="fas fa-funnel-dollar"></i> Convert Lead
           </button>
 
           <button type="button" class="btn btn-classic btn-sm  mr-1" [hidden]="!accessRules.lead.update"
@@ -495,7 +495,7 @@
 
 <ng-template #convert let-modal>
   <div class="modal-header">
-    <strong class="modal-title" id="modal-basic-title">Convert to Opportunity</strong>
+    <strong class="modal-title" id="modal-basic-title">Convert Lead</strong>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -559,9 +559,7 @@
               <div class="row">
                 <div class="col-12">
 
-                  <input type="radio" name="contactNew" value="1" id="b1" checked> <label for="b1" class="mx-1">
-                    Create
-                    New</label>
+                 
 
                   <div class="mt-2">
                     <div class="row">
