@@ -4,7 +4,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 # mengatasi ERROR version pada nodejs ver 24
 
-``` $env:NODE_OPTIONS="--openssl-legacy-provider" 
+``` 
+$env:NODE_OPTIONS="--openssl-legacy-provider" 
 ```
  
 ## build and serve
