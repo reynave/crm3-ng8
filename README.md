@@ -16,3 +16,6 @@ $env:NODE_OPTIONS="--openssl-legacy-provider"
 "ng build --source-map=false",
 
 ```
+
+# dist
+folder dist sudah bisa dipakai production, setting connnection ada di assets/config.js
