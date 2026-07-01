@@ -64,6 +64,8 @@ import { LostComponent } from './lost/lost.component';
 import { LostDetailComponent } from './lost/lost-detail/lost-detail.component';
 import { AccountComponent } from './account/account.component';
 import { MasterCurrencyComponent } from './master-currency/master-currency.component';
+import { LoginComponent } from './login/login.component';
+import { NotfoundComponent } from './notfound/notfound.component';
 
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
@@ -122,7 +124,9 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     MasterIndustryComponent,
     MasterLeadSourceComponent,
     AccessDataComponent, 
-    MasterClassComponent, ProfileComponent, ConvertedComponent, SalesTargetComponent, MasterOpportunityClosedComponent, LostComponent, LostDetailComponent, AccountComponent, MasterCurrencyComponent
+    MasterClassComponent, ProfileComponent, ConvertedComponent, SalesTargetComponent, 
+    MasterOpportunityClosedComponent, LostComponent, LostDetailComponent, AccountComponent, 
+    MasterCurrencyComponent, LoginComponent, NotfoundComponent
   ],
   imports: [
     BrowserModule,

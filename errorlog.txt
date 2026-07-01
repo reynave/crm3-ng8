@@ -1,0 +1,33 @@
+Node.js v24.11.1
+PS C:\xampp7433\htdocs\crm.co.id\crm3-ng8> ng build
+10% building 4/4 modules 0 active(node:14068) [DEP0060] DeprecationWarning: The `util._extend` API is deprecated. Please use Object.assign() instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+10% building 4/5 modules 1 active ...odules\@angular-devkit\build-angular\src\angular-cli-files\models\es5-polyfills.jsnode:internal/crypto/hash:103
+  this[kHandle] = new _Hash(algorithm, xofLen, algorithmId, getHashCache());
+                  ^
+
+Error: error:0308010C:digital envelope routines::unsupported
+    at new Hash (node:internal/crypto/hash:103:19)
+    at Object.createHash (node:crypto:145:10)
+    at module.exports (C:\xampp7433\htdocs\crm.co.id\crm3-ng8\node_modules\webpack\lib\util\createHash.js:135:53)
+    at NormalModule._initBuildHash (C:\xampp7433\htdocs\crm.co.id\crm3-ng8\node_modules\webpack\lib\NormalModule.js:412:16)
+    at C:\xampp7433\htdocs\crm.co.id\crm3-ng8\node_modules\webpack\lib\NormalModule.js:444:10
+    at C:\xampp7433\htdocs\crm.co.id\crm3-ng8\node_modules\webpack\lib\NormalModule.js:320:13
+    at C:\xampp7433\htdocs\crm.co.id\crm3-ng8\node_modules\loader-runner\lib\LoaderRunner.js:367:11
+    at C:\xampp7433\htdocs\crm.co.id\crm3-ng8\node_modules\loader-runner\lib\LoaderRunner.js:203:19
+    at VirtualFileSystemDecorator.readFile (C:\xampp7433\htdocs\crm.co.id\crm3-ng8\node_modules\@ngtools\webpack\src\virtual_file_system_decorator.js:46:13)
+    at processResource (C:\xampp7433\htdocs\crm.co.id\crm3-ng8\node_modules\loader-runner\lib\LoaderRunner.js:202:11)
+    at iteratePitchingLoaders (C:\xampp7433\htdocs\crm.co.id\crm3-ng8\node_modules\loader-runner\lib\LoaderRunner.js:158:10)
+    at runLoaders (C:\xampp7433\htdocs\crm.co.id\crm3-ng8\node_modules\loader-runner\lib\LoaderRunner.js:365:2)
+    at NormalModule.doBuild (C:\xampp7433\htdocs\crm.co.id\crm3-ng8\node_modules\webpack\lib\NormalModule.js:292:3)
+    at NormalModule.build (C:\xampp7433\htdocs\crm.co.id\crm3-ng8\node_modules\webpack\lib\NormalModule.js:438:15)
+    at Compilation.buildModule (C:\xampp7433\htdocs\crm.co.id\crm3-ng8\node_modules\webpack\lib\Compilation.js:702:10)
+    at C:\xampp7433\htdocs\crm.co.id\crm3-ng8\node_modules\webpack\lib\Compilation.js:944:14 {
+  opensslErrorStack: [
+    'error:03000086:digital envelope routines::initialization error',
+    'error:0308010C:digital envelope routines::unsupported'
+  ],
+  library: 'digital envelope routines',
+  reason: 'unsupported',
+  code: 'ERR_OSSL_EVP_UNSUPPORTED'
+}

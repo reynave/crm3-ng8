@@ -56,7 +56,7 @@ export class LeadDetailComponent implements OnInit {
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params.id;
     this.accessRules = this.configService.access_right();
-    //console.log('accessRules',this.accessRules);
+    console.log('accessRules',this.accessRules);
     this.httpGet();
   }
 

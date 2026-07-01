@@ -1,0 +1,54 @@
+<div class="login-wrapper d-flex align-items-center justify-content-center">
+  <div class="card shadow-sm" style="width: 380px;">
+    <div class="card-body p-4">
+
+      <div class="text-center mb-4">
+        <h4 class="font-weight-bold">Login</h4>
+        <p class="text-muted small mb-0">Masuk untuk melanjutkan</p>
+      </div>
+
+      <div class="alert alert-danger py-2" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            class="form-control"
+            [(ngModel)]="username"
+            placeholder="Masukkan username"
+            required
+            autocomplete="username">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-control"
+            [(ngModel)]="password"
+            placeholder="Masukkan password"
+            required
+            autocomplete="current-password">
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-primary btn-block"
+          [disabled]="isLoading">
+          <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-2"></span>
+          {{ isLoading ? 'Memproses...' : 'Login' }}
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+</div>

@@ -45,9 +45,12 @@ import { LostComponent } from './lost/lost.component';
 import { LostDetailComponent } from './lost/lost-detail/lost-detail.component';
 import { AccountComponent } from './account/account.component';
 import { MasterCurrencyComponent } from './master-currency/master-currency.component';
+import { LoginComponent } from './login/login.component';
+import { NotfoundComponent } from './notfound/notfound.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, data: { title: 'Dashboard' } },
+   { path: 'login', component: LoginComponent, data: { title: 'Login' } },
  
   { path: 'dashboard', component: DashboardComponent, data: { title: 'Dashboard' } },
   { path: 'dashboard/:period', component: DashboardComponent, data: { title: 'Dashboard' } },
@@ -131,6 +134,7 @@ const routes: Routes = [
 
   { path: "warning/:path/:target", component: WarningComponent },
 
+    { path: '**', component: NotfoundComponent, data: { title: '' } },
 ];
 
 @NgModule({

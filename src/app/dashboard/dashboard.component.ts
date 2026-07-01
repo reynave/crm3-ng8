@@ -27,11 +27,11 @@ export class DashboardComponent implements OnInit {
     year: "0",
   }
   id: string = "0";
-  period: string;
-  currency: string;
+  period: string= '';
+  currency: string = '';
   account_manager: any = [];
   target: any = [];
-  id_user_select: string;
+  id_user_select: string = '';
   totalLS : number = 0;
   totalLI : number = 0;
   constructor(
@@ -52,7 +52,7 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  onPeriod(period) {
+  onPeriod(period :any) {
     //this.period = period;
     //this.httpGet(this.id);
     this.loading = true;
@@ -63,21 +63,19 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  onUser(id) {
+  onUser(id:any) {
     this.id = id;
     this.httpGet(id);
   }
  
-  httpGet(id) {
+  httpGet(id:any) {
     this.loading = true;
     var url = this.configService.base_url() + 'dashboard/index/?id=' + id + "&period=" + this.period;
  
     this.http.get(url, {
       headers: this.configService.headers()
-    }).subscribe(data => {
-      if (data['error'] == 400) {
-        window.location.href = this.configService.login();
-      }
+    }).subscribe((data :any)=> {
+     
   
       this.currency = data['result']['currency'];
       this.id_user_select = id;
@@ -174,7 +172,7 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  leadPerIndustry(leadPerIndustry) {
+  leadPerIndustry(leadPerIndustry:any) {
     // this.datasetsLeadPerIndustry = []; 
     var ctx = document.getElementById('leadPerIndustry');
     new Chart(ctx, {
@@ -198,7 +196,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  leadPerDistribution(leadPerDistribution) {
+  leadPerDistribution(leadPerDistribution:any) {
     var ctx = document.getElementById('leadPerDistribution');
     new Chart(ctx, {
       type: 'pie',
@@ -222,7 +220,7 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  funnel(dataFunnel) {
+  funnel(dataFunnel:any) {
 
 
     const options = {
@@ -245,7 +243,7 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  salesTarget(barChartDataAmount, barChartDataQty, currency) {
+  salesTarget(barChartDataAmount:any, barChartDataQty:any, currency:any) {
 
     var formatter = new Intl.NumberFormat('en-US');
 
