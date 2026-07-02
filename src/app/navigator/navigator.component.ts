@@ -13,11 +13,11 @@ import { Title } from '@angular/platform-browser';
 })
 export class NavigatorComponent implements OnInit {
   public loading = true;
-  current :string;
-  rules:any;
+  current :string = ''
+  rules:any = [];
   nav : any = [];
   accessRight :any = [];
-  username : string;
+  username : string = '';
   constructor(
     private http: HttpClient,
     private activatedRoute: ActivatedRoute, 
@@ -44,10 +44,10 @@ export class NavigatorComponent implements OnInit {
   
   }
 
-  signout(){
-    
-
-    window.location.href= this.configService.base_url()+'login/signout';
+  signout(){ 
+     this.router.navigate(['login/relogin']).then(() => {
+      localStorage.removeItem('tokenCrmCoId');
+    });
   }
 
 }

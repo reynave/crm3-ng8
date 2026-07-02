@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+import { ConfigService } from '../service/config.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private configService : ConfigService
   ) { }
 
   ngOnInit() {
@@ -53,10 +55,13 @@ export class LoginComponent implements OnInit {
 
           if (res && res.token) {
             localStorage.setItem('tokenCrmCoId', res.token);
-         //   localStorage.setItem('user', JSON.stringify(res.user || {}));
-           // this.router.navigate(['/dashboard']);
+          //   localStorage.setItem('user', JSON.stringify(res.user || {}));
+         
+            this.configService.loadToken(); // refresh varToken & varData di service
+            this.router.navigate(['/dashboard']);
+
           } else {
-            this.errorMessage = 'Login gagal, response tidak valid.';
+            this.errorMessage = 'Login failed, invalid response.';
           }
         },
         (err) => {
@@ -64,9 +69,9 @@ export class LoginComponent implements OnInit {
           this.isLoading = false;
 
           if (err.status === 401 || err.status === 400) {
-            this.errorMessage = 'Username atau password salah.';
+            this.errorMessage = 'Wrong Username or password!';
           } else {
-            this.errorMessage = 'Terjadi kesalahan pada server. Coba lagi nanti.';
+            this.errorMessage = 'An error occurred on the server. Please try again later.';
           }
         }
       );

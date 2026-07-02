@@ -66,6 +66,7 @@ import { AccountComponent } from './account/account.component';
 import { MasterCurrencyComponent } from './master-currency/master-currency.component';
 import { LoginComponent } from './login/login.component';
 import { NotfoundComponent } from './notfound/notfound.component';
+import { ReloginComponent } from './login/relogin/relogin.component';
 
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
@@ -126,7 +127,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     AccessDataComponent, 
     MasterClassComponent, ProfileComponent, ConvertedComponent, SalesTargetComponent, 
     MasterOpportunityClosedComponent, LostComponent, LostDetailComponent, AccountComponent, 
-    MasterCurrencyComponent, LoginComponent, NotfoundComponent
+    MasterCurrencyComponent, LoginComponent, NotfoundComponent, ReloginComponent
   ],
   imports: [
     BrowserModule,

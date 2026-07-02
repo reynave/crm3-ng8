@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "./../../environments/environment";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: "root",
@@ -11,30 +12,50 @@ export class ConfigService {
   varToken: any = "";
   varHeaders: any = [];
   rules: any;
-  varData: any = [];
-  constructor(private http: HttpClient) {
+  varData: any = null;
+
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) {
+    this.loadToken();
+
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'tokenCrmCoId') {
+        this.loadToken();
+      }
+    });
+  }
+
+  loadToken() {
     this.varToken = localStorage.getItem("tokenCrmCoId");
 
     if (this.varToken) {
       try {
         const token = this.parseJwt(this.varToken);
-        console.log("varData:", token);
+        this.varData = token;
 
-        this.varData =token;
-        // optional: cek token sudah expired atau belum
-        if (this.varData.exp && Date.now() / 1000 > this.varData.exp) {
+        if (this.varData && this.varData.exp && Date.now() / 1000 > this.varData.exp) {
           throw new Error("Token expired");
         }
       } catch (e) {
         console.error("Invalid or expired token, redirecting to login...", e);
-        // localStorage.removeItem('cmr3ng8Token');
-        // window.location.href = environment.login;
+        this.varData = null;
+        this.router.navigate(['login/relogin']).then(() => {
+          localStorage.removeItem('tokenCrmCoId');
+        });
       }
     } else {
-      // Belum login atau session expired
       console.log("Belum login atau session expired");
-      // window.location.href = environment.login;
+     
     }
+  }
+
+  logout() {
+    localStorage.removeItem("tokenCrmCoId");
+    this.varToken = "";
+    this.varData = null;
+    this.router.navigate(['login']);
   }
 
   parseJwt(token: string): any {
@@ -50,10 +71,8 @@ export class ConfigService {
 
     const payload = parts[1];
 
-    // base64url -> base64 standar
     const base64 = payload.replace(/-/g, "+").replace(/_/g, "/");
 
-    // padding kalau perlu
     const padded = base64.padEnd(
       base64.length + ((4 - (base64.length % 4)) % 4),
       "=",
@@ -66,17 +85,41 @@ export class ConfigService {
 
   // UNTUK NAVIGATOR & ACTIVE GUARD
   access_rules(module: any) {
-    console.log(this.varData)
-    return this.varData["data"]["access_rules"]['result']['access_rules'][module]["access"];
+    if (!this.varData || !this.varData["data"]) {
+      console.warn("varData belum siap saat access_rules() dipanggil", this.varData);
+      return null;
+    }
+    try {
+      return this.varData["data"]["access_rules"]["result"]["access_rules"][module]["access"];
+    } catch (e) {
+      console.warn("Struktur access_rules tidak sesuai", e);
+      return null;
+    }
   }
 
   username() {
-    return this.varData["data"]["access_rules"]['result']["name"];
+    if (!this.varData || !this.varData["data"]) {
+      console.warn("varData belum siap saat username() dipanggil");
+      return null;
+    }
+    try {
+      return this.varData["data"]["access_rules"]["name"];
+    } catch (e) {
+      return null;
+    }
   }
 
   // UNTUK ACTION BUTTON
   access_right() {
-    return this.varData["data"]["access_rules"]['result']['access_rules'];
+    if (!this.varData || !this.varData["data"]) {
+      console.warn("varData belum siap saat access_right() dipanggil");
+      return null;
+    }
+    try {
+      return this.varData["data"]["access_rules"]["result"]["access_rules"];
+    } catch (e) {
+      return null;
+    }
   }
 
   base_url() {
@@ -85,7 +128,7 @@ export class ConfigService {
 
   headers() {
     return (this.varHeaders = new HttpHeaders({
-      "Content-Type": "application/json", 
+      "Content-Type": "application/json",
       "Token": this.varToken,
     }));
   }
@@ -93,6 +136,7 @@ export class ConfigService {
   key() {
     return this.varKey;
   }
+
   token() {
     return this.varToken;
   }
@@ -107,7 +151,7 @@ export class ConfigService {
 
   errorToken(data: any) {
     if (data["error"] == 400) {
-      //  window.location.href = "login";
+      this.logout();
     }
   }
 

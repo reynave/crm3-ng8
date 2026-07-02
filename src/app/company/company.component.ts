@@ -58,8 +58,7 @@ export class CompanyComponent implements OnInit {
       ajax: {
         url: this.configService.base_url() + "company/index/",
         type: 'GET',
-        headers: {
-          'Key': this.configService.key(),
+        headers: { 
           'Token': this.configService.token(),
           'Content-Type': 'application/json'
         },

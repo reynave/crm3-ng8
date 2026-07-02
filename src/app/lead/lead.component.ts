@@ -57,18 +57,17 @@ export class LeadComponent implements OnInit {
 
   httpGet() {
     this.loading = false;
- 
-    
+    const header =      { 
+          'Content-Type': 'application/json', 
+          'Token': this.configService.token(), 
+        };
+      console.log('header Lead',header)
     $('#dtable').DataTable({
       //  stateSave: true,
       ajax: {
         url: this.configService.base_url() + "lead/index/",
         type: 'GET',
-        headers: {
-          'Key': this.configService.key(),
-          'Token': this.configService.token(),
-          'Content-Type': 'application/json'
-        },
+        headers: header,
 
       },
       aoColumnDefs: [{ "asSorting": false, "aTargets": [0] }],
