@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
           //   localStorage.setItem('user', JSON.stringify(res.user || {}));
          
             this.configService.loadToken(); // refresh varToken & varData di service
-            this.router.navigate(['/dashboard']);
+            this.router.navigate(['/']);
 
           } else {
             this.errorMessage = 'Login failed, invalid response.';

@@ -12,7 +12,7 @@ export const environment = {
  // root: "https://s01.crm.co.id/app/",
  // api: "https://s01.crm.co.id/api-v1/",
 
-  login : "http://localhost:4200/error"
+  login : "http://localhost:7344/crm.co.id/login/"
 };
 
 /*

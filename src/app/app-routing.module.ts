@@ -50,14 +50,14 @@ import { NotfoundComponent } from './notfound/notfound.component';
 import { ReloginComponent } from './login/relogin/relogin.component';
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent, data: { title: 'Dashboard' } },
+  { path: '', component: DashboardComponent, data: { title: 'Dashboard' },canActivate: [ActiveGuardGuard]  },
    { path: 'login', component: LoginComponent, data: { title: 'Login' } },
     { path: 'login/relogin', component: ReloginComponent, data: { title: 'Login' } },
  
-  { path: 'dashboard', component: DashboardComponent, data: { title: 'Dashboard' } },
-  { path: 'dashboard/:period', component: DashboardComponent, data: { title: 'Dashboard' } },
+  { path: 'dashboard', component: DashboardComponent, data: { title: 'Dashboard' }, canActivate: [ActiveGuardGuard]  },
+  { path: 'dashboard/:period', component: DashboardComponent, data: { title: 'Dashboard' } , canActivate: [ActiveGuardGuard] },
  
-  { path: 'profile', component: ProfileComponent, data: { title: 'My Profile' } },
+  { path: 'profile', component: ProfileComponent, data: { title: 'My Profile' } ,canActivate: [ActiveGuardGuard] },
  
 
   { path: 'accessRight', component: AccessRightComponent, data: { title: 'Access Right' }, canActivate: [ActiveGuardGuard] },

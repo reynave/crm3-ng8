@@ -6,37 +6,45 @@ import { ConfigService } from '../service/config.service';
   providedIn: 'root'
 })
 export class ActiveGuardGuard implements CanActivate {
-  
+
   constructor(
     private router: Router,
     private configService: ConfigService
   ) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (this.configService.token()) {  
-     // console.log(   this.configService.access_rules(route.url[0].path)  );  
-      
-     // console.warn("route.url[0].path : "+route.url[0].path);
+    const token = this.configService.token();
 
-      if(  this.configService.access_rules(route.url[0].path) ){
-        console.warn("ENABLE");
-        return true;
-      }else{
-        console.warn("DISABLE"); 
-        this.router.navigate(['/warning/access/',route.url[0].path ]);
-        return false;
-      }
-    
-
-     
-
-    } else {
-      console.warn("YOUR ARE NOT LOGGED!");
-      // not logged in so redirect to login page with the return url
-     // this.router.navigate(['/login']);
-      return true;
+    // 1. Tidak ada token sama sekali -> belum login
+    if (!token) {
+      console.warn("YOU ARE NOT LOGGED IN!");
+      this.router.navigate(['login/relogin']);
+      return false;
     }
 
-  }
+    // 2. Token ada, tapi varData null -> expired / gagal parse
+    //    (loadToken() di service sudah set varData = null untuk kasus ini)
+    if (!this.configService.varData) {
+      console.warn("TOKEN EXPIRED OR INVALID");
+      this.router.navigate(['login/relogin']);
+      return false;
+    }
 
+    // 3. route.url[0] bisa undefined kalau path kosong / route container
+    if (!route.url || route.url.length === 0 || !route.url[0]) {
+      console.warn("Route tidak punya path segment, skip access check");
+      return true; // atau false, tergantung kamu mau treat gimana - lihat catatan di bawah
+    }
+
+    // 4. Token valid, cek hak akses module
+    const modulePath = route.url[0].path;
+    if (this.configService.access_rules(modulePath)) {
+      console.warn("ENABLE");
+      return true;
+    } else {
+      console.warn("DISABLE");
+      this.router.navigate(['/warning/access/', modulePath]);
+      return false;
+    } 
+  }
 }

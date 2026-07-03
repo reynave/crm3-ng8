@@ -40,13 +40,11 @@ export class ConfigService {
         }
       } catch (e) {
         console.error("Invalid or expired token, redirecting to login...", e);
-        this.varData = null;
-        this.router.navigate(['login/relogin']).then(() => {
-          localStorage.removeItem('tokenCrmCoId');
-        });
+        this.varData = null;  
+        localStorage.removeItem('tokenCrmCoId'); 
       }
     } else {
-      console.log("Belum login atau session expired");
+      console.error("Belum login atau session expired");
      
     }
   }
