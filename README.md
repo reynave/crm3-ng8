@@ -18,9 +18,9 @@ $env:NODE_OPTIONS="--openssl-legacy-provider"
 ## build and serve
 
 ```
-"ng serve --source-map=false",
+ng serve --source-map=false
 
-"ng build --source-map=false",
+ng build --source-map=false
 
 ```
 

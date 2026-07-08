@@ -38,7 +38,7 @@ export class ActiveGuardGuard implements CanActivate {
 
     // 4. Token valid, cek hak akses module
     const modulePath = route.url[0].path;
-    if (this.configService.access_rules(modulePath)) {
+    if (this.configService.access_rules(modulePath) || modulePath == 'profile') {
       console.warn("ENABLE");
       return true;
     } else {
