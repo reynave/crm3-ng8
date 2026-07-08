@@ -4,15 +4,15 @@
 
 export const environment = {
   production: false,
-  domain : "https://www.crm.co.id",
-  root : "http://localhost:4200/home",
-  api : "http://localhost:7344/crm.co.id/api-v1/",
-
-  //  domain: "https://www.crm.co.id",
- // root: "https://s01.crm.co.id/app/",
- // api: "https://s01.crm.co.id/api-v1/",
-
-  login : "http://localhost:7344/crm.co.id/login/"
+  // domain : "https://www.crm.co.id",
+  // root : "http://localhost:4200/home",
+  // api : "http://localhost:7344/crm.co.id/api-v1/",
+  // login : "http://localhost:7344/crm.co.id/login/"
+  
+   domain: "https://www.crm.co.id",
+  root: "https://s01.crm.co.id/app/",
+  api: "https://s01.crm.co.id/api-v1/",
+  login: "https://s01.crm.co.id/login/"
 };
 
 /*

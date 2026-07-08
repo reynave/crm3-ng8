@@ -23,12 +23,12 @@ export class EditUser {
 })
 export class ProfileComponent implements OnInit { 
 
-  @ViewChild('content', { static: true }) private content;
+  @ViewChild('content', { static: true }) private content : any;
 
   public label: any; 
   public itemsSelected: any = [];
   public loading: boolean = true;  
-  id:string;
+  id:string = '';
   model:any = [];
   items:any= [];
   data:any= [];
@@ -37,8 +37,8 @@ export class ProfileComponent implements OnInit {
   user_access:any=[];
   user_group:any=[];
   user_target:any=[];
-  user_name:string;
-  id_user : string;
+  user_name:string = '';
+  id_user : string = '';
   newTargetAmount: any = new NewTargetAmount('', '0', '0', '0', '0');
   constructor(
     private http: HttpClient,
@@ -57,10 +57,10 @@ export class ProfileComponent implements OnInit {
     this.id = this.activatedRoute.snapshot.params.id;
     this.httpGet(); 
   }
-  totalTeamTarget  :any;
+  totalTeamTarget  :any = [];
   httpGet() {
     this.loading = true; 
-    this.http.get(this.configService.base_url() + 'profile/', {
+    this.http.get<any>(this.configService.base_url() + 'profile/', {
       headers: this.configService.headers()
     }).subscribe(data => { 
       console.log(data);
