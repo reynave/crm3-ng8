@@ -102,7 +102,7 @@
 
 
           <div class="col-12">
-
+            <!-- PROSPECTING -->
             <div [hidden]="id_stage != '100'">
 
               <div class="form-group row">
@@ -156,6 +156,17 @@
                 </div>
               </div>
 
+              <div class="form-group row">
+                <label for="c2610281" class="col-sm-3 col-12 col-form-label"> Sales Stage</label>
+                <div class="col-sm-6">
+                  <select id="c2610281" class="form-control form-modal"
+                    [(ngModel)]="updateOpportunity.id_opportunity_sales_stage" (change)="updateQuiz();"
+                    [ngModelOptions]="{standalone: true}">
+                    <option value="{{x.id}}" *ngFor="let x of sales_stage">{{x.name}} ({{x.probability}}%)</option>
+                  </select>
+                </div>
+              </div>
+
               <div class="row">
                 <div class="offset-3 col-6">
 
@@ -172,10 +183,12 @@
               </div>
 
             </div>
+            <!-- END : PROSPECTING -->
 
+             <!-- ANALYSIS -->
             <div [hidden]="id_stage != '101'">
               <div class="form-group row ">
-                <label for="b101" class="col-sm-3 col-form-label">Comparison with competitor </label>
+                <label for="b101" class="col-sm-3 col-form-label">Budget </label>
                 <div class="col-sm-6">
                   <textarea class="form-control border" name="comparison_with_competitor" (change)="updateQuiz();"
                     [(ngModel)]="updateOpportunity.comparison_with_competitor" id="b101"></textarea>
@@ -185,7 +198,7 @@
 
 
               <div class="form-group row ">
-                <label for="b102" class="col-sm-3 col-form-label">Critical point </label>
+                <label for="b102" class="col-sm-3 col-form-label">Authority  </label>
                 <div class="col-sm-6">
                   <textarea class="form-control border" name="critical_point" (change)="updateQuiz();"
                     [(ngModel)]="updateOpportunity.critical_point" id="b102"></textarea>
@@ -193,7 +206,7 @@
               </div>
 
               <div class="form-group row ">
-                <label for="b103" class="col-sm-3 col-form-label">Our proposal </label>
+                <label for="b103" class="col-sm-3 col-form-label">Needs </label>
                 <div class="col-sm-6">
                   <textarea class="form-control border" name="our_proposal" [(ngModel)]="updateOpportunity.our_proposal"
                     (change)="updateQuiz();" id="b103"></textarea>
@@ -202,13 +215,22 @@
 
 
               <div class="form-group row ">
-                <label for="b104" class="col-sm-3 col-form-label">Other </label>
+                <label for="b104" class="col-sm-3 col-form-label">Timeline </label>
                 <div class="col-sm-6">
                   <textarea class="form-control border" name="notes1" [(ngModel)]="updateOpportunity.notes1"
                     (change)="updateQuiz();" id="b104"></textarea>
                 </div>
               </div>
-
+<div class="form-group row">
+                <label for="c2610281" class="col-sm-3 col-12 col-form-label"> Sales Stage</label>
+                <div class="col-sm-6">
+                  <select id="c2610281" class="form-control form-modal"
+                    [(ngModel)]="updateOpportunity.id_opportunity_sales_stage" (change)="updateQuiz();"
+                    [ngModelOptions]="{standalone: true}">
+                    <option value="{{x.id}}" *ngFor="let x of sales_stage">{{x.name}} ({{x.probability}}%)</option>
+                  </select>
+                </div>
+              </div>
 
               <div class="row">
                 <div class="offset-3 col-6">
@@ -223,7 +245,9 @@
               </div>
 
             </div>
+            <!-- END : ANALYSIS -->
 
+             <!-- PROPOSAL -->
             <div [hidden]="id_stage != '103'">
 
               <div class="form-group row ">
@@ -274,7 +298,16 @@
                     (change)="updateQuiz();" id="b304"></textarea>
                 </div>
               </div>
-
+<div class="form-group row">
+                <label for="c2610281" class="col-sm-3 col-12 col-form-label"> Sales Stage</label>
+                <div class="col-sm-6">
+                  <select id="c2610281" class="form-control form-modal"
+                    [(ngModel)]="updateOpportunity.id_opportunity_sales_stage" (change)="updateQuiz();"
+                    [ngModelOptions]="{standalone: true}">
+                    <option value="{{x.id}}" *ngFor="let x of sales_stage">{{x.name}} ({{x.probability}}%)</option>
+                  </select>
+                </div>
+              </div>
 
               <div class="row">
                 <div class="offset-3 col-6">
@@ -288,6 +321,8 @@
               </div>
 
             </div>
+            <!-- END : PROPOSAL -->
+
 
             <div [hidden]="id_stage != '104'">
 
@@ -344,6 +379,17 @@
                   </label>
                 </div>
                
+                
+              </div>
+              <div class="form-group row">
+                <label for="c2610281" class="col-sm-3 col-12 col-form-label"> Sales Stage</label>
+                <div class="col-sm-6">
+                  <select id="c2610281" class="form-control form-modal"
+                    [(ngModel)]="updateOpportunity.id_opportunity_sales_stage" (change)="updateQuiz();"
+                    [ngModelOptions]="{standalone: true}">
+                    <option value="{{x.id}}" *ngFor="let x of sales_stage">{{x.name}} ({{x.probability}}%)</option>
+                  </select>
+                </div>
               </div>
               <div class="form-group row" [hidden]="!reason">
  
@@ -385,6 +431,7 @@
 
 
             </div>
+
           </div>
 
 

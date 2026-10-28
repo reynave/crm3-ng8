@@ -21,6 +21,8 @@ $env:NODE_OPTIONS="--openssl-legacy-provider"
 ng serve --source-map=false
 
 ng build --source-map=false
+atau 
+ng build --prod
 
 ```
 

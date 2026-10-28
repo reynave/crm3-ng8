@@ -40,6 +40,7 @@ export class OpportunityDetailComponent implements OnInit {
   quoteModel: any = [];
   quotes: any;
   business: any = [];
+  sales_stage: any = [];
 
   reason: string = "";
   reason_win: any = [];
@@ -114,6 +115,7 @@ export class OpportunityDetailComponent implements OnInit {
         this.id_stage = data['result']['data']['id_stage'];
         this.product = data['result']['product'];
         this.business = data['result']['business'];
+        this.sales_stage = data['result']['sales_stage'];
  
         this.contact = data['result']['contact'];
         this.user = data['result']['user'];
@@ -178,6 +180,8 @@ export class OpportunityDetailComponent implements OnInit {
           data['result']['data']['id_quote'],
 
         );
+
+        this.updateOpportunity['id_opportunity_sales_stage'] = data['result']['data']['id_opportunity_sales_stage'];
 
 
         this.model = new OpportunityUpdate(data['result']['data']['name'], data['result']['data']['id_lead_source'], data['result']['data']['id_user'], data['result']['data']['id_contact']);
